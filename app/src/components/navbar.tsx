@@ -42,6 +42,7 @@ export default () => (
   <NavBar>
     <NavBarList>
       <NavBarItem to="/">Home</NavBarItem>
+      <NavBarItem to="/mamechishiki/">豆知識</NavBarItem>
       <NavBarItem to="/tegami/">手紙</NavBarItem>
     </NavBarList>
   </NavBar>
