@@ -1,7 +1,7 @@
 // Follow Ant Design
 // https://ant.design/docs/spec/colors
 
-export const poiblue = "#47a0ed"
+export const poiblue = "#9bc7ee"
 export const poiblue1 = "#f0faff"
 export const poiblue2 = "#f0faff"
 export const poiblue3 = "#c7eaff"
