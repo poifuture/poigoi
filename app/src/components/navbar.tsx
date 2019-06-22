@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import { Helmet } from "react-helmet"
 import { poiblue, poiblue5 } from "../utils/poicolor"
 
 const NavBar = styled.nav`
@@ -40,6 +41,9 @@ const NavBarItem = styled(UnstyledNavBarItem)`
 
 export default () => (
   <NavBar>
+    <Helmet>
+      <title>PoiGoi</title>
+    </Helmet>
     <NavBarList>
       <NavBarItem to="/">Home</NavBarItem>
       <NavBarItem to="/mamechishiki/">豆知識</NavBarItem>
