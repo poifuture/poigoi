@@ -18,20 +18,19 @@ export const SimpleDictionary: GoiJaDictionaryType = {
       wapuro: "au",
       audio: [{ cv: "Hikari", wav: "" }],
       pos: "VERB_GODAN_JIDOSHI",
-      translation: [
-        {
-          from: "SimpleDictionary",
+      translation: {
+        SimpleDictionary: {
           translation: { zh: "见" },
           hint: {
             zh:
               "【同训异字】<ruby>会<rt>あ</rt></ruby>う：见到人或事；<ruby>逢<rt>あ</rt></ruby>う：相逢爱人；<ruby>遭<rt>あ</rt></ruby>う：遭遇坏事；<ruby>遇<rt>あ</rt></ruby>う：遇见意外",
           },
         },
-        {
-          from: "Xinbian",
+
+        Xinbian: {
           translation: { zh: "遇见" },
         },
-      ],
+      },
       katsuyo: {
         keigo: "<ruby>会<rt>あ</rt></ruby>います",
       },
@@ -70,10 +69,10 @@ export const SimpleDictionary: GoiJaDictionaryType = {
       wapuro: "ie",
       audio: [{ cv: "Hikari", wav: "" }],
       pos: "NOUN",
-      translation: [
-        { from: "SimpleDictionary", translation: { zh: "家" } },
-        { from: "Xinbian", translation: { zh: "家" } },
-      ],
+      translation: {
+        SimpleDictionary: { translation: { zh: "家" } },
+        Xinbian: { translation: { zh: "家" } },
+      },
       sentences: [
         {
           from: "JishoOrg",
@@ -99,10 +98,10 @@ export const SimpleDictionary: GoiJaDictionaryType = {
       wapuro: "ue",
       audio: [{ cv: "Hikari", wav: "" }],
       pos: "NOUN",
-      translation: [
-        { from: "SimpleDictionary", translation: { zh: "上" } },
-        { from: "Xinbian", translation: { zh: "上、上面" } },
-      ],
+      translation: {
+        SimpleDictionary: { translation: { zh: "上" } },
+        Xinbian: { translation: { zh: "上、上面" } },
+      },
       sentences: [
         {
           from: "GooJisho",

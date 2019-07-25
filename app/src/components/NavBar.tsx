@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 import { Helmet } from "react-helmet"
-import { poiblue, poiblue5 } from "../utils/poicolor"
+import { poisky, poisky5 } from "../utils/poicolor"
 
 const NavBar = styled.nav`
   top: 0;
@@ -14,7 +14,7 @@ const NavBarList = styled.ul`
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: ${poiblue};
+  background-color: ${poisky};
 `
 
 const NavBarLink = styled(Link)`
@@ -25,7 +25,7 @@ const NavBarLink = styled(Link)`
   text-decoration: none;
 
   :hover {
-    background-color: ${poiblue5};
+    background-color: ${poisky5};
   }
 `
 

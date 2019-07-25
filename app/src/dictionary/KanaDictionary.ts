@@ -16,15 +16,14 @@ export const KanaDictionary: GoiJaDictionaryType = {
       wapuro: "a",
       audio: [{ cv: "Hikari", wav: "" }],
       pos: "KANA",
-      translation: [
-        {
-          from: "KanaDictionary",
+      translation: {
+        KanaDictionary: {
           translation: { ja: "あ" },
           hint: {
             ja: "安；<ruby>愛<rt>あい</rt></ruby>",
           },
         },
-      ],
+      },
       textbook: ["KANA-HIRAGANA-00001"],
     },
     い: {
@@ -36,15 +35,14 @@ export const KanaDictionary: GoiJaDictionaryType = {
       wapuro: "i",
       audio: [{ cv: "Hikari", wav: "" }],
       pos: "KANA",
-      translation: [
-        {
-          from: "KanaDictionary",
+      translation: {
+        KanaDictionary: {
           translation: { ja: "い" },
           hint: {
             ja: "以；<ruby>家<rt>いえ</rt></ruby>",
           },
         },
-      ],
+      },
       textbook: ["KANA-HIRAGANA-00002"],
     },
   },

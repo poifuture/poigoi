@@ -3,11 +3,11 @@ import styled from "styled-components"
 import { graphql } from "gatsby"
 import NavBar from "../components/NavBar"
 import Header from "../components/Header"
-import { poiblue3 } from "../utils/poicolor"
+import { poisky3 } from "../utils/poicolor"
 
 const Card = styled.div``
 const CardHeader = styled.div`
-  background: ${poiblue3};
+  background: ${poisky3};
 `
 const CardBody = styled.div``
 

@@ -9,10 +9,11 @@ export interface GoiWordType {
   }[]
   pos: POS
   translation: {
-    from: string
-    translation: { en?: string; zh?: string; ja?: string }
-    hint?: { en?: string; zh?: string; ja?: string }
-  }[]
+    [from: string]: {
+      translation: { en?: string; zh?: string; ja?: string }
+      hint?: { en?: string; zh?: string; ja?: string }
+    }
+  }
   sentences?: {
     from: string
     sentence: string
