@@ -31,21 +31,45 @@ export class WordCard extends React.Component<WordCardPropsType> {
         : this.props.status === "review"
         ? "black"
         : "black"
-    return this.props.word.pos === "KANA" ? (
+    return (
       <div className="word-card">
-        <h1>
-          {this.props.display !== "test-common" && (
-            <span
-              dangerouslySetInnerHTML={{ __html: this.props.word.common }}
-            ></span>
-          )}
-        </h1>
-        <div style={{ color: statusColor }}>
-          {this.props.word.translation.KanaDictionary.translation.ja}
-        </div>
+        {this.props.word.pos === "KANA" ? (
+          <>
+            <div className="word-card-common">
+              {this.props.display !== "test-common" && (
+                <span
+                  dangerouslySetInnerHTML={{ __html: this.props.word.common }}
+                ></span>
+              )}
+            </div>
+            <div
+              className="word-card-translation"
+              style={{ color: statusColor }}
+            >
+              {this.props.word.translation.KanaDictionary.translation.ja}
+            </div>
+            <div className="word-card-sentences">
+              {(this.props.word.sentences || []).map((sentence, sentenceId) => (
+                <div key={sentenceId}>
+                  <p>
+                    <span
+                      dangerouslySetInnerHTML={{ __html: sentence.sentence }}
+                    ></span>
+                  </p>
+                  <p>
+                    <span>{(sentence.translation || {}).zh}</span>
+                  </p>
+                </div>
+              ))}
+            </div>
+            <pre className="word-card-debug">
+              {JSON.stringify(this.props.word, null, 2)}
+            </pre>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
-    ) : (
-      <div className="word-card"></div>
     )
   }
 }
