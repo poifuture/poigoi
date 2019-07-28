@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { graphql } from "gatsby"
 import NavBar from "../components/NavBar"
 import Header from "../components/Header"
-import { poisky3 } from "../utils/poicolor"
+import { poisky3 } from "../utils/PoiColors"
 
 const Card = styled.div``
 const CardHeader = styled.div`

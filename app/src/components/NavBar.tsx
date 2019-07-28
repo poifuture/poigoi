@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 import { Helmet } from "react-helmet"
-import { poisky, poisky5 } from "../utils/poicolor"
+import { poisky, poisky5 } from "../utils/PoiColors"
 
 const NavBar = styled.nav`
   top: 0;

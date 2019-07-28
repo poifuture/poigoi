@@ -1,13 +1,3 @@
-import { GoiJaDictionaryType } from "./GoiDictionary"
-
-export const KanaDictionary: GoiJaDictionaryType = {
-  name: { zh: "假名词典" },
-  description: {
-    zh: "假名词典",
-  },
-  scheme: 1,
-  words:
-    // Replace Start
 {
   "あ": {
     "common": "<ruby>あ<rt>a</rt></ruby>",
@@ -3965,8 +3955,4 @@ export const KanaDictionary: GoiJaDictionaryType = {
       "KANA-KATAKANA-00051"
     ]
   }
-},
-  // Replace End
 }
-
-export default KanaDictionary
