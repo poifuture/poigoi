@@ -20,6 +20,7 @@ class GoiPouchDB extends PouchDB {
 let singletonDb: GoiPouchDB | null = null
 export const GoiDb = () => {
   if (!singletonDb) {
+    console.debug("Initilizing PouchDB connection...")
     singletonDb = new GoiPouchDB("PoiGoi")
   }
   return singletonDb
