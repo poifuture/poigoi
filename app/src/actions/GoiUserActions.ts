@@ -1,7 +1,6 @@
 import { GlobalDbKey, LocalDbKey } from "../utils/PoiDb"
 import * as PoiUser from "../utils/PoiUser"
 import {
-  GoiUser,
   GoiUserModel,
   LocalGoiUsersDataType,
   GoiUserDbKey,

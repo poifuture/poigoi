@@ -1,4 +1,3 @@
-import PouchDB from "pouchdb-browser"
 import uuid5 from "uuid/v5"
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
