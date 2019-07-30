@@ -9,6 +9,7 @@ module.exports = {
   plugins: [
     `gatsby-plugin-typescript`,
     `gatsby-plugin-styled-components`,
+    `gatsby-plugin-layout`,
     `gatsby-transformer-remark`,
     {
       resolve: `gatsby-source-filesystem`,

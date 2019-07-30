@@ -8,6 +8,7 @@ class GoiPouchDB extends PouchDB {
       return await super.get<Model>(dbKey)
     } catch (error) {
       if (error.status && error.status === 404) {
+        console.debug("Miss DbKey: ", dbKey)
         return null
       }
       throw error
