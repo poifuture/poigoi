@@ -1,7 +1,6 @@
 import React from "react"
 import NavBar from "../components/NavBar"
 import GoiJaTester from "../containers/GoiJaTester"
-import "./goi.css"
 
 export default (props: any) => (
   <>

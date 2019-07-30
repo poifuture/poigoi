@@ -1,8 +1,10 @@
 import React from "react"
 import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
+import { composeWithDevTools } from "redux-devtools-extension"
 import thunk from "redux-thunk"
 import RootReducer from "../reducers/RootReducer"
+import "./layout.css"
 
 export class Layout extends React.Component {
   render() {
@@ -13,7 +15,12 @@ export class Layout extends React.Component {
           padding: 0,
         }}
       >
-        <Provider store={createStore(RootReducer, applyMiddleware(thunk))}>
+        <Provider
+          store={createStore(
+            RootReducer,
+            composeWithDevTools({})(applyMiddleware(thunk))
+          )}
+        >
           {this.props.children}
         </Provider>
       </div>

@@ -1,3 +1,4 @@
+import "isomorphic-fetch"
 import PouchDB from "pouchdb-browser"
 import { DbKey } from "./PoiDb"
 
@@ -14,10 +15,14 @@ class GoiPouchDB extends PouchDB {
       throw error
     }
   }
-  public static db = new GoiPouchDB("PoiGoi")
 }
+
+let singletonDb: GoiPouchDB | null = null
 export const GoiDb = () => {
-  return GoiPouchDB.db
+  if (!singletonDb) {
+    singletonDb = new GoiPouchDB("PoiGoi")
+  }
+  return singletonDb
 }
 
 export const GoiNS = "3bebe461-2f53-419c-b7b7-e626f9ce0a6b"
