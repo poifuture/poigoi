@@ -8,6 +8,8 @@ import {
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
 
+export type GoiSavingDbKey = GlobalDbKey & { readonly brand: "GoiSavingDbKey" }
+
 export type OrderKey = string & { readonly brand?: "OrderKey" }
 export type JudgeResult = "Correct" | "Accepted" | "Wrong" | "Skip"
 
@@ -26,7 +28,7 @@ export interface GoiWordRecordDataType extends PoiGlobalDataType {
   // Schema: Poi/Goi/PoiUser/Saving/WordRecord/v1
   DbSchema: "Poi/Goi/PoiUser/Saving/WordRecord/v1"
   WordKey: string
-  SavingDbKey: GlobalDbKey
+  SavingDbKey: GoiSavingDbKey
   PoiUserId: PoiUser.PoiUserId
   Pending: OrderKey
   Prioritized: OrderKey
@@ -44,22 +46,27 @@ export interface GoiSavingDataType extends PoiGlobalDataType {
 }
 
 export class GoiSavingModel {
-  private dbKey: GlobalDbKey = ""
-  constructor(dbKey: GlobalDbKey) {
+  public static GetDbKey = (
+    poiUserId: PoiUser.PoiUserId,
+    savingId: string
+  ): GoiSavingDbKey => {
+    return `Poi/Goi/PoiUsers/${poiUserId}/Savings/${savingId}/Entry` as GoiSavingDbKey
+  }
+  private dbKey: GoiSavingDbKey
+  constructor(dbKey: GoiSavingDbKey) {
     this.dbKey = dbKey
   }
   static Create = async (
     poiUserId: PoiUser.PoiUserId
-  ): Promise<GlobalDbKey> => {
+  ): Promise<GoiSavingDbKey> => {
     //static builder
     const savingId = ((Math.random() * 0xffffffff) >>> 0).toString(16)
-    const dbKey: GlobalDbKey = `Poi/Goi/PoiUsers/${poiUserId}/Savings/${savingId}/Entry`
-    const dbUuid: DbUuid = uuid5(dbKey, GoiNS)
+    const dbKey: GoiSavingDbKey = GoiSavingModel.GetDbKey(poiUserId, savingId)
+    const dbUuid: DbUuid = uuid5(dbKey, GoiNS) as DbUuid
     const newData: GoiSavingDataType = {
       DbKey: dbKey,
       DbUuid: dbUuid,
       DbSchema: "Poi/Goi/PoiUser/Saving/Entry/v1",
-
       LocalRev: { Hash: "", Time: 0 },
       BaseRev: { Hash: "", Time: 0 },
       PoiUserId: poiUserId,
@@ -80,7 +87,7 @@ export class GoiSavingModel {
     console.error("TODO: Sync")
     this.onSync && this.onSync()
   }
-  private read = async () => {
+  read = async () => {
     const data = await GoiDb().get(this.dbKey)
     const typedData = data as (GoiSavingDataType &
       PouchDB.Core.IdMeta &
@@ -95,6 +102,6 @@ export class GoiSavingModel {
     })
   }
 }
-export const GoiSaving = (savingDbKey: GlobalDbKey) => {
+export const GoiSaving = (savingDbKey: GoiSavingDbKey) => {
   return new GoiSavingModel(savingDbKey)
 }

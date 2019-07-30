@@ -3,6 +3,8 @@ import { DbUuid, PoiGlobalDataType, GlobalDbKey } from "../utils/PoiDb"
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
 
+export type GoiSettingsDbKey = GlobalDbKey & { readonly brand: "GoiUserDbKey" }
+
 export interface GoiSettingsDataType extends PoiGlobalDataType {
   // PoiGlobalDbKey: Poi/Goi/PoiUsers/:PoiUserId/Settings
   // Schema: Poi/Goi/PoiUser/Settings/v1
@@ -13,16 +15,15 @@ export interface GoiSettingsDataType extends PoiGlobalDataType {
 }
 
 export class GoiSettingsModel {
-  private dbKey: GlobalDbKey = ""
-  constructor(dbKey: GlobalDbKey) {
-    this.dbKey = dbKey
+  public static GetDbKey = (poiUserId: PoiUser.PoiUserId): GoiSettingsDbKey => {
+    return `Poi/Goi/PoiUsers/${poiUserId}/Settings` as GoiSettingsDbKey
   }
-  static Create = async (
+  public static Create = async (
     poiUserId: PoiUser.PoiUserId
-  ): Promise<GlobalDbKey> => {
+  ): Promise<GoiSettingsDbKey> => {
     //static builder
-    const dbKey: GlobalDbKey = `Poi/Goi/PoiUsers/${poiUserId}/Settings`
-    const dbUuid: DbUuid = uuid5(dbKey, GoiNS)
+    const dbKey: GoiSettingsDbKey = GoiSettingsModel.GetDbKey(poiUserId) // `Poi/Goi/PoiUser/${poiUserId}/Settings`
+    const dbUuid: DbUuid = uuid5(dbKey, GoiNS) as DbUuid
     const newData: GoiSettingsDataType = {
       DbKey: dbKey,
       DbUuid: dbUuid,
@@ -41,6 +42,10 @@ export class GoiSettingsModel {
     const newSettings = new GoiSettingsModel(dbKey)
     newSettings.sync()
     return dbKey
+  }
+  private dbKey: GoiSettingsDbKey
+  constructor(dbKey: GoiSettingsDbKey) {
+    this.dbKey = dbKey
   }
   onSync?: (error?: any) => Promise<void>
   sync = async () => {
@@ -62,6 +67,6 @@ export class GoiSettingsModel {
     })
   }
 }
-export const GoiSettings = (settingsDbKey: GlobalDbKey) => {
+export const GoiSettings = (settingsDbKey: GoiSettingsDbKey) => {
   return new GoiSettingsModel(settingsDbKey)
 }

@@ -1,13 +1,13 @@
 import React from "react"
 import NavBar from "../components/NavBar"
-import GoiCore from "../components/GoiCore"
+import GoiJaTester from "../containers/GoiJaTester"
 import "./goi.css"
 
 export default (props: any) => (
   <>
     <NavBar />
     <main>
-      <GoiCore />
+      <GoiJaTester />
     </main>
     <footer>
       <ruby>
