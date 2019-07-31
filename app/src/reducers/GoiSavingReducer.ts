@@ -16,7 +16,7 @@ export const GoiSavingReducer = (
   state: Map<string, any> = fromJS(InitialGoiSavingState),
   action: GoiSavingActionsType
 ) => {
-  console.debug("Initial GoiTester state: ", state)
+  console.debug("Reducing GoiSaving...", action.type)
   switch (action.type) {
     case UPDATE_GOI_SAVING_STATE: {
       const typedAction = action as UpdateGoiSavingStateActionType

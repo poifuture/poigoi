@@ -1,9 +1,9 @@
-import { GlobalDbKey } from "../utils/PoiDb"
 import { GoiSavingStateType } from "../states/GoiSavingState"
 import { GoiUser, GoiUserDbKey } from "../models/GoiUser"
 import { GoiSaving, GoiSavingDbKey } from "../models/GoiSaving"
 
-export const UPDATE_GOI_SAVING_STATE = "UPDATE_GOI_SAVING_STATE"
+export const UPDATE_GOI_SAVING_STATE =
+  "GOI_SAVING_ACTIONS_UPDATE_GOI_SAVING_STATE"
 
 export interface UpdateGoiSavingStateActionType
   extends Partial<GoiSavingStateType> {
