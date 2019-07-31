@@ -11,14 +11,6 @@ import { LazyInitUserAction } from "../actions/GoiUserActions"
 import { LazyInitSavingAction } from "../actions/GoiSavingActions"
 import { GoiSavingDbKey } from "../models/GoiSaving"
 
-export interface GoiJaTesterPropsType {
-  currentWord: any // Immuatable(GoiJaWordType)
-  poiUserId: PoiUser.PoiUserId
-  userDbKey: GoiUserDbKey
-  savingDbKey: GoiSavingDbKey
-  saving: any
-}
-
 export class GoiJaTester extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 > {

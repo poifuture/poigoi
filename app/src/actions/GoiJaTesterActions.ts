@@ -1,6 +1,7 @@
 import { GoiJaWordType } from "../dictionary/GoiDictionary"
 
-export const CHANGE_GOI_TESTER_WORD = "CHANGE_GOI_TESTER_WORD"
+export const CHANGE_GOI_TESTER_WORD =
+  "GOI_JA_TESTER_ACTIONS_CHANGE_GOI_TESTER_WORD"
 
 interface ChangeGoiJaTesterWordAction {
   type: typeof CHANGE_GOI_TESTER_WORD

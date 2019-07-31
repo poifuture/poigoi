@@ -7,6 +7,7 @@ import {
 } from "../utils/PoiDb"
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
+import { GoiUserDbKey } from "./GoiUser"
 
 export type GoiSavingDbKey = GlobalDbKey & { readonly brand: "GoiSavingDbKey" }
 

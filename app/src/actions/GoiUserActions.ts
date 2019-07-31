@@ -1,4 +1,4 @@
-import { GlobalDbKey, LocalDbKey } from "../utils/PoiDb"
+import { LocalDbKey } from "../utils/PoiDb"
 import * as PoiUser from "../utils/PoiUser"
 import {
   GoiUserModel,
@@ -8,7 +8,7 @@ import {
 import { GoiUserStateType, GoiUserDomainType } from "../states/GoiUserState"
 import { GoiDb } from "../utils/GoiDb"
 
-export const UPDATE_GOI_USER_STATE = "UPDATE_GOI_USER_STATE"
+export const UPDATE_GOI_USER_STATE = "GOI_USER_ACTIONS_UPDATE_GOI_USER_STATE"
 
 export interface UpdateGoiUserStateActionType
   extends Partial<GoiUserStateType> {
