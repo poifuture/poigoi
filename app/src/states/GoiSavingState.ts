@@ -1,6 +1,6 @@
 import { GoiSavingDbKey } from "../models/GoiSaving"
 
 export interface GoiSavingStateType {
-  SavingDbKey: GoiSavingDbKey
+  SavingId: string
   Saving: any
 }

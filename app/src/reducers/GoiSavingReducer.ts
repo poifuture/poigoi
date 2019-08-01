@@ -5,10 +5,10 @@ import {
   UpdateGoiSavingStateActionType,
   UPDATE_GOI_SAVING_STATE,
 } from "../actions/GoiSavingActions"
-import { GoiSavingDbKey } from "../models/GoiSaving"
+import { GoiSavingId } from "../types/GoiTypes"
 
 const InitialGoiSavingState: GoiSavingStateType = {
-  SavingDbKey: "" as GoiSavingDbKey,
+  SavingId: "" as GoiSavingId,
   Saving: {},
 }
 
@@ -21,7 +21,7 @@ export const GoiSavingReducer = (
     case UPDATE_GOI_SAVING_STATE: {
       const typedAction = action as UpdateGoiSavingStateActionType
       return state.merge({
-        SavingDbKey: typedAction.SavingDbKey,
+        SavingId: typedAction.SavingId,
         ...(typedAction.Saving && { Saving: typedAction.Saving }),
       })
     }

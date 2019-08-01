@@ -4,6 +4,8 @@ import {
   DisplayWordAdderAction,
   AddPendingQueryAction,
   RemovePendingQueryAction,
+  AddWordsAction,
+  AddWordsFromWordAdderAction,
 } from "../actions/WordAdderActions"
 import {
   WordAdderSuggestionQueryType,
@@ -15,6 +17,10 @@ export class WordAdderContainer extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 > {
   CustomQueryInput: HTMLInputElement | null = null
+  onConfirm = () => {
+    this.props.addWords()
+    this.props.close()
+  }
   render() {
     if (!this.props.display) {
       return <div className="word-adder"></div>
@@ -88,8 +94,8 @@ export class WordAdderContainer extends React.Component<
             </button>
           </div>
         ))}
-        <button>Confirm</button>
-        <button onClick={() => this.props.cancel()}>Cancel</button>
+        <button onClick={this.onConfirm}>Confirm</button>
+        <button onClick={() => this.props.close()}>Cancel</button>
       </div>
     )
   }
@@ -110,9 +116,10 @@ const mapStateToProps = (state: any) => {
 }
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    cancel: () => dispatch(DisplayWordAdderAction(false)),
-    addPendingQuery: (hint: string, query: string) =>
-      dispatch(AddPendingQueryAction(hint, query)),
+    addWords: () => dispatch(AddWordsFromWordAdderAction()),
+    close: () => dispatch(DisplayWordAdderAction(false)),
+    addPendingQuery: (display: string, query: string) =>
+      dispatch(AddPendingQueryAction(display, query)),
     removePendingQuery: (query: string) =>
       dispatch(RemovePendingQueryAction(query)),
   }
