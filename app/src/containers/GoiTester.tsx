@@ -5,20 +5,23 @@ import KanaDictionary from "../dictionary/KanaDictionary"
 import * as PoiUser from "../utils/PoiUser"
 import { GoiDb } from "../utils/GoiDb"
 import { GoiUserModel, GoiUserDbKey } from "../models/GoiUser"
-import { GoiJaWordType } from "../types/GoiDictionaryTypes"
+import { GoiWordType } from "../types/GoiDictionaryTypes"
 import { GlobalDbKey } from "../utils/PoiDb"
 import { LazyInitUserAction } from "../actions/GoiUserActions"
 import { LazyInitSavingAction } from "../actions/GoiSavingActions"
 import { GoiSavingDbKey } from "../models/GoiSaving"
+import { ReindexCandidatesAction } from "../actions/GoiTesterActions"
+import { GoiSavingId } from "../types/GoiTypes"
 
-export class GoiJaTester extends React.Component<
+export class GoiTester extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 > {
   async componentDidMount() {
     console.debug("Lasy init user")
     const poiUserId = (await this.props.lazyInitUser()) as PoiUser.PoiUserId
     console.debug("Lasy init saving")
-    await this.props.lazyInitSaving(poiUserId)
+    const savingId = await this.props.lazyInitSaving(poiUserId)
+    await this.props.reindex(poiUserId, savingId)
   }
   render() {
     return (
@@ -29,8 +32,8 @@ export class GoiJaTester extends React.Component<
           display="detailed"
           status="success"
         />
-        <button>Roll</button>
         <pre className="goi-debug">
+          {JSON.stringify(this.props.tester, null, 2)}
           {JSON.stringify(this.props.saving, null, 2)}
         </pre>
       </div>
@@ -39,15 +42,16 @@ export class GoiJaTester extends React.Component<
 }
 
 const mapStateToProps = (state: any) => {
-  console.debug("GoiJaTester state: ", state)
+  console.debug("GoiTester state: ", state)
   const props = {
     currentWord: state.GoiTester.get("CurrentWord"),
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     userDbKey: state.GoiUser.get("UserDbKey") as GoiUserDbKey,
     savingDbKey: state.GoiSaving.get("SavingDbKey") as GoiSavingDbKey,
     saving: state.GoiSaving.get("Saving"),
+    tester: state.GoiTester,
   }
-  console.debug("GoiJaTester props: ", props)
+  console.debug("GoiTester props: ", props)
   return props
 }
 const mapDispatchToProps = (dispatch: any) => {
@@ -55,10 +59,12 @@ const mapDispatchToProps = (dispatch: any) => {
     lazyInitUser: () => dispatch(LazyInitUserAction()),
     lazyInitSaving: (poiUserId: PoiUser.PoiUserId) =>
       dispatch(LazyInitSavingAction(poiUserId)),
+    reindex: (poiUserId?: PoiUser.PoiUserId, savingId?: GoiSavingId) =>
+      dispatch(ReindexCandidatesAction(poiUserId, savingId)),
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(GoiJaTester)
+)(GoiTester)

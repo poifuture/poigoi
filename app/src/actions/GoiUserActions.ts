@@ -21,7 +21,6 @@ export type GoiUserActionsType = UpdateGoiUserStateActionType
 const UpdateGoiUserStateAction = (state: {
   PoiUserId: PoiUser.PoiUserId
   Domain?: GoiUserDomainType
-  UserDbKey?: GoiUserDbKey
 }): UpdateGoiUserStateActionType => {
   return {
     type: UPDATE_GOI_USER_STATE,
@@ -88,11 +87,10 @@ export const LazyInitUserAction = (options?: { forceDatabase?: boolean }) => {
       }
     }
     const poiUserId = await lazyInitPoiUser()
-    const userDbKey = await lazyInitGoiUser(poiUserId)
+    await lazyInitGoiUser(poiUserId)
     dispatch(
       UpdateGoiUserStateAction({
         PoiUserId: poiUserId,
-        UserDbKey: userDbKey,
       })
     )
     return poiUserId

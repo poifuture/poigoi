@@ -26,7 +26,7 @@ const UpdateGoiSavingStateAction = (state: {
 }
 
 export const LazyInitSavingAction = (poiUserId: PoiUser.PoiUserId) => {
-  return async (dispatch: any, getState: any): Promise<void> => {
+  return async (dispatch: any, getState: any): Promise<GoiSavingId> => {
     const state = getState()
     console.debug("LazyInitSaving state: ", state)
     const savingId = await GoiUser(
@@ -41,5 +41,6 @@ export const LazyInitSavingAction = (poiUserId: PoiUser.PoiUserId) => {
         Saving: saving,
       })
     )
+    return savingId
   }
 }

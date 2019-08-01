@@ -6,10 +6,12 @@ import {
 import {
   WordAdderActionsType,
   DisplayWordAdderActionType,
+  UpdateStatusActionType,
   PushPendingQueryActionType,
   PopPendingQueryActionType,
   PushCountQueryActionType,
   DISPLAY_WORD_ADDER,
+  UPDATE_STATUS,
   PUSH_PENDING_QUERY,
   POP_PENDING_QUERY,
   PUSH_COUNT_QUERY,
@@ -61,6 +63,18 @@ export const WordAdderReducer = (
       return state.merge({
         Display: typedAction.Display,
       })
+    }
+    case UPDATE_STATUS: {
+      console.debug("Hit UPDATE_STATUS ... ", action)
+      const typedAction = action as UpdateStatusActionType
+      return state.set(
+        "Status",
+        state.get("Status").merge({
+          LearnedCount: typedAction.LearnedCount,
+          PrioritizedCount: typedAction.PrioritizedCount,
+          PendingCount: typedAction.PendingCount,
+        })
+      )
     }
     case PUSH_PENDING_QUERY: {
       console.debug("Hit PUSH_PENDING_QUERY ... ", action)

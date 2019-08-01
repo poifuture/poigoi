@@ -4,21 +4,23 @@ import {
   DisplayWordAdderAction,
   AddPendingQueryAction,
   RemovePendingQueryAction,
-  AddWordsAction,
   AddWordsFromWordAdderAction,
+  ClearPendingWordsAction,
 } from "../actions/WordAdderActions"
 import {
   WordAdderSuggestionQueryType,
   WordAdderQueryCountersType,
   WordAdderPendingQueryType,
 } from "../states/WordAdderState"
+import { ReindexCandidatesAction } from "../actions/GoiTesterActions"
 
-export class WordAdderContainer extends React.Component<
+export class WordAdder extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 > {
   CustomQueryInput: HTMLInputElement | null = null
-  onConfirm = () => {
-    this.props.addWords()
+  onClickConfirm = async () => {
+    await this.props.addWords()
+    await this.props.reindex()
     this.props.close()
   }
   render() {
@@ -37,7 +39,7 @@ export class WordAdderContainer extends React.Component<
         <div>Prioritized:{status.PrioritizedCount}</div>
         <div>
           Pending:{status.PendingCount}
-          <button>[WIP]Clear</button>
+          <button onClick={() => this.props.clearPendingWords()}>Clear</button>
         </div>
         <p>Suggestions:</p>
         {suggestions.map(suggestion => (
@@ -94,7 +96,7 @@ export class WordAdderContainer extends React.Component<
             </button>
           </div>
         ))}
-        <button onClick={this.onConfirm}>Confirm</button>
+        <button onClick={this.onClickConfirm}>Confirm</button>
         <button onClick={() => this.props.close()}>Cancel</button>
       </div>
     )
@@ -116,16 +118,18 @@ const mapStateToProps = (state: any) => {
 }
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    addWords: () => dispatch(AddWordsFromWordAdderAction()),
-    close: () => dispatch(DisplayWordAdderAction(false)),
+    clearPendingWords: () => dispatch(ClearPendingWordsAction()),
     addPendingQuery: (display: string, query: string) =>
       dispatch(AddPendingQueryAction(display, query)),
     removePendingQuery: (query: string) =>
       dispatch(RemovePendingQueryAction(query)),
+    addWords: () => dispatch(AddWordsFromWordAdderAction()),
+    close: () => dispatch(DisplayWordAdderAction(false)),
+    reindex: () => dispatch(ReindexCandidatesAction()),
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(WordAdderContainer)
+)(WordAdder)

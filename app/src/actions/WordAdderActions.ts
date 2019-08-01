@@ -6,10 +6,17 @@ import { GoiDictionarys } from "../models/GoiDictionary"
 import Immutable from "immutable"
 import { GoiWordType } from "../types/GoiDictionaryTypes"
 import * as PoiUser from "../utils/PoiUser"
-import { GoiWordRecord, GoiWordRecordModel } from "../models/GoiSaving"
+import {
+  GoiWordRecord,
+  GoiWordRecordModel,
+  GoiWordRecordDataType,
+  GoiSaving,
+  GoiSavingModel,
+} from "../models/GoiSaving"
 import { GoiSavingId } from "../types/GoiTypes"
 
 export const DISPLAY_WORD_ADDER = "WORD_ADDER_ACTIONS_DISPLAY_WORD_ADDER"
+export const UPDATE_STATUS = "WORD_ADDER_ACTIONS_UPDATE_STATUS"
 export const PUSH_PENDING_QUERY = "WORD_ADDER_ACTIONS_PUSH_PENDING_QUERY"
 export const POP_PENDING_QUERY = "WORD_ADDER_ACTIONS_POP_PENDING_QUERY"
 export const PUSH_COUNT_QUERY = "WORD_ADDER_ACTIONS_PUSH_COUNT_QUERY"
@@ -17,6 +24,13 @@ export const PUSH_COUNT_QUERY = "WORD_ADDER_ACTIONS_PUSH_COUNT_QUERY"
 export interface DisplayWordAdderActionType {
   type: typeof DISPLAY_WORD_ADDER
   Display: boolean
+}
+
+export interface UpdateStatusActionType {
+  type: typeof UPDATE_STATUS
+  LearnedCount: number
+  PrioritizedCount: number
+  PendingCount: number
 }
 
 export interface PushPendingQueryActionType {
@@ -40,6 +54,7 @@ export interface PushCountQueryActionType {
 
 export type WordAdderActionsType =
   | DisplayWordAdderActionType
+  | UpdateStatusActionType
   | PushPendingQueryActionType
   | PopPendingQueryActionType
   | PushCountQueryActionType
@@ -52,7 +67,59 @@ export const DisplayWordAdderAction = (
     Display: display,
   }
 }
-export const PushCountQueryAction = (
+
+const UpdateStatusAction = (
+  learnedCount: number,
+  prioritizedCount: number,
+  pendingCount: number
+): UpdateStatusActionType => {
+  return {
+    type: UPDATE_STATUS,
+    LearnedCount: learnedCount,
+    PrioritizedCount: prioritizedCount,
+    PendingCount: pendingCount,
+  }
+}
+
+const CountStatusAction = () => {
+  return async (dispatch: any, getState: any): Promise<void> => {
+    console.debug("Counting status... ")
+    const state = getState()
+    const poiUserId = getPoiUserId(state)
+    const savingId = getSavingId(state)
+    const saving = await GoiSaving(
+      GoiSavingModel.GetDbKey(poiUserId, savingId)
+    ).Read()
+    const wordRecords = (await Promise.all(
+      Object.keys(saving.Records).map(
+        async wordKey =>
+          await GoiWordRecord(
+            GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
+          ).ReadOrNull()
+      )
+    )).filter(
+      (
+        wordRecord
+      ): wordRecord is GoiWordRecordDataType &
+        PouchDB.Core.IdMeta &
+        PouchDB.Core.GetMeta => wordRecord !== null
+    )
+    console.debug("Saving:", saving)
+    console.debug("Records:", wordRecords)
+    const learnedCount = wordRecords.filter(wordRecord => wordRecord.Level > 0)
+      .length
+    const prioritizedCount = wordRecords.filter(
+      wordRecord => !(wordRecord.Level > 0) && wordRecord.Prioritized
+    ).length
+    const pendingCount = wordRecords.filter(
+      wordRecord =>
+        !(wordRecord.Level > 0) && !wordRecord.Prioritized && wordRecord.Pending
+    ).length
+    dispatch(UpdateStatusAction(learnedCount, prioritizedCount, pendingCount))
+  }
+}
+
+const PushCountQueryAction = (
   query: string,
   totalCount: number,
   learnedCount: number,
@@ -108,12 +175,44 @@ const CountQueryAction = (
   dictionarys: string[],
   options?: { wordKeys?: Immutable.Set<string> }
 ) => {
-  return async (dispatch: any): Promise<void> => {
+  return async (dispatch: any, getState: any): Promise<void> => {
     console.debug("Counting Query... ", query)
+    const state = getState()
+    const poiUserId = getPoiUserId(state)
+    const savingId = getSavingId(state)
     const words = await queryWords(query, dictionarys, options)
-    dispatch(PushCountQueryAction(query, Object.keys(words).length, 0, 0, 0))
-    // TODO: countQuery
-    console.error("TODO: Count Query")
+    const wordRecords = (await Promise.all(
+      Object.keys(words).map(
+        async wordKey =>
+          await GoiWordRecord(
+            GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
+          ).ReadOrNull()
+      )
+    )).filter(
+      (
+        wordRecord
+      ): wordRecord is GoiWordRecordDataType &
+        PouchDB.Core.IdMeta &
+        PouchDB.Core.GetMeta => wordRecord !== null
+    )
+    const totalCount = Object.keys(words).length
+    const learnedCount = wordRecords.filter(wordRecord => wordRecord.Level > 0)
+      .length
+    const addedCount = wordRecords.filter(
+      wordRecord =>
+        !(wordRecord.Level > 0) &&
+        (wordRecord.Prioritized || wordRecord.Pending)
+    ).length
+    const newCount = totalCount - learnedCount - addedCount
+    dispatch(
+      PushCountQueryAction(
+        query,
+        totalCount,
+        learnedCount,
+        addedCount,
+        newCount
+      )
+    )
   }
 }
 
@@ -139,15 +238,27 @@ const getPendingQuerys = (state: any): string[] => {
   return pendingQuerys.map(pending => pending.Query)
 }
 
-export const ShowWordAdderAction = () => {
+export const RefreshWordAdderAction = () => {
   return async (dispatch: any, getState: any): Promise<void> => {
     const state = getState()
+    dispatch(CountStatusAction())
     const dictionarys = getDictionarys(state)
     const wordKeys = await GoiDictionarys(dictionarys).GetAllWordsKeys()
-    state.WordAdder.get("Suggestions").map((suggestion: any) => {
-      const query = suggestion.get("Query") as string
+    const suggestionsQuerys: string[] = state.WordAdder.get("Suggestions").map(
+      (suggestionQuery: any) => suggestionQuery.get("Query") as string
+    )
+    const pendingsQuerys: string[] = state.WordAdder.get("Suggestions").map(
+      (pendingQuery: any) => pendingQuery.get("Query") as string
+    )
+    Immutable.Set.of(...suggestionsQuerys, ...pendingsQuerys).map(query =>
       dispatch(CountQueryAction(query, dictionarys, { wordKeys }))
-    })
+    )
+  }
+}
+
+export const ShowWordAdderAction = () => {
+  return async (dispatch: any): Promise<void> => {
+    dispatch(RefreshWordAdderAction())
     dispatch(DisplayWordAdderAction())
   }
 }
@@ -184,7 +295,7 @@ export const RemovePendingQueryAction = (query: string) => {
   }
 }
 
-export const AddWordsAction = (querys: string[]) => {
+const AddWordsAction = (querys: string[]) => {
   return async (dispatch: any, getState: any): Promise<void> => {
     const state = getState()
     const dictionarys = getDictionarys(state)
@@ -200,38 +311,83 @@ export const AddWordsAction = (querys: string[]) => {
       const query = querys[i]
       const orderPrefix = i.toString().padStart(5, "0")
       const words = await queryWords(query, dictionarys, { wordKeys })
-      await Promise.all(
-        Object.entries(words).map(async ([wordKey, word]) => {
-          const peekWordRecord = await GoiWordRecord(
-            GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
-          ).ReadOrNull()
-          if (!peekWordRecord) {
-            GoiWordRecordModel.Create(poiUserId, savingId, wordKey)
-          }
-          const wordRecord = await GoiWordRecord(
-            GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
-          ).Read()
-          if (
-            wordRecord.Level > 0 ||
-            wordRecord.Prioritized ||
-            wordRecord.Pending
-          ) {
-            console.debug("Already added word: ", wordRecord.WordKey)
-            return
-          }
-          await GoiWordRecord(
-            GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
-          ).SetPending(`${timePrefix}-${orderPrefix}-${wordKey}`)
-        })
+      const addedWordKeys: string[] = await Promise.all(
+        Object.entries(words)
+          .map(async ([wordKey, word]) => {
+            const peekWordRecord = await GoiWordRecord(
+              GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
+            ).ReadOrNull()
+            if (!peekWordRecord) {
+              GoiWordRecordModel.Create(poiUserId, savingId, wordKey)
+            }
+            const wordRecord = await GoiWordRecord(
+              GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
+            ).Read()
+            if (
+              wordRecord.Level > 0 ||
+              wordRecord.Prioritized ||
+              wordRecord.Pending
+            ) {
+              console.debug("Already added word: ", wordRecord.WordKey)
+              return ""
+            }
+            await GoiWordRecord(
+              GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
+            ).SetPending(`${timePrefix}-${orderPrefix}-${wordKey}`)
+            return wordKey
+          })
+          .filter(wordKey => wordKey)
       )
+      await GoiSaving(
+        GoiSavingModel.GetDbKey(poiUserId, savingId)
+      ).AttachRecords(addedWordKeys)
     }
   }
 }
 
 export const AddWordsFromWordAdderAction = () => {
-  return async (dispatch: any, getState: any): Promise<void> => {
+  return async (dispatch: any, getState: any) => {
     const state = getState()
     const querys = getPendingQuerys(state)
-    dispatch(AddWordsAction(querys))
+    return dispatch(AddWordsAction(querys))
+  }
+}
+
+export const ClearPendingWordsAction = () => {
+  return async (dispatch: any, getState: any): Promise<void> => {
+    console.debug("Clearing pending words... ")
+    const state = getState()
+    const poiUserId = getPoiUserId(state)
+    const savingId = getSavingId(state)
+    const saving = await GoiSaving(
+      GoiSavingModel.GetDbKey(poiUserId, savingId)
+    ).Read()
+    const wordRecords = (await Promise.all(
+      Object.keys(saving.Records).map(
+        async wordKey =>
+          await GoiWordRecord(
+            GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
+          ).ReadOrNull()
+      )
+    )).filter(
+      (
+        wordRecord
+      ): wordRecord is GoiWordRecordDataType &
+        PouchDB.Core.IdMeta &
+        PouchDB.Core.GetMeta => wordRecord !== null
+    )
+    console.debug("Saving:", saving)
+    console.debug("Records:", wordRecords)
+    await Promise.all(wordRecords
+      .filter(
+        wordRecord =>
+          wordRecord.Level === 0 &&
+          !wordRecord.Prioritized &&
+          wordRecord.Pending
+      )
+      .map(async wordRecord => {
+        await GoiWordRecord(wordRecord.DbKey).ClearPending()
+      }))
+    dispatch(RefreshWordAdderAction())
   }
 }
