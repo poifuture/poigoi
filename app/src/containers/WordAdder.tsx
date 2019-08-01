@@ -14,6 +14,7 @@ import {
 export class WordAdderContainer extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 > {
+  CustomQueryInput: HTMLInputElement | null = null
   render() {
     if (!this.props.display) {
       return <div className="word-adder"></div>
@@ -26,11 +27,16 @@ export class WordAdderContainer extends React.Component<
       <div className="word-adder">
         <h1>Word Adder</h1>
         <p>Status:</p>
-        <pre>{JSON.stringify(status, null, 2)}</pre>
+        <div>Learned:{status.LearnedCount}</div>
+        <div>Prioritized:{status.PrioritizedCount}</div>
+        <div>
+          Pending:{status.PendingCount}
+          <button>[WIP]Clear</button>
+        </div>
         <p>Suggestions:</p>
         {suggestions.map(suggestion => (
-          <div key={suggestion.Hint}>
-            {suggestion.Hint}:{suggestion.Query}
+          <div key={suggestion.Display}>
+            {suggestion.Display}({suggestion.Query})
             {counters[suggestion.Query] && (
               <span>
                 Total:
@@ -43,17 +49,28 @@ export class WordAdderContainer extends React.Component<
             )}
             <button
               onClick={() =>
-                this.props.addPendingQuery(suggestion.Hint, suggestion.Query)
+                this.props.addPendingQuery(suggestion.Display, suggestion.Query)
               }
             >
               +
             </button>
           </div>
         ))}
-        <p>Pendings:</p>
+        <p>
+          Custom Query:<input ref={c => (this.CustomQueryInput = c)}></input>
+          <button
+            onClick={() =>
+              this.CustomQueryInput &&
+              this.props.addPendingQuery("Custom", this.CustomQueryInput.value)
+            }
+          >
+            +
+          </button>
+        </p>
+        <p>Pendings (order matters):</p>
         {pendings.map(pending => (
-          <div key={pending.Hint}>
-            {pending.Hint}:{pending.Query}
+          <div key={pending.Query}>
+            {pending.Display}({pending.Query})
             {counters[pending.Query] && (
               <span>
                 Total:
@@ -86,6 +103,7 @@ const mapStateToProps = (state: any) => {
     suggestions: state.WordAdder.get("Suggestions"),
     pendings: state.WordAdder.get("Pendings"),
     counters: state.WordAdder.get("Counters"),
+    saving: state.GoiSaving.get("Saving"),
   }
   console.debug("WordAdderContainer props: ", props)
   return props

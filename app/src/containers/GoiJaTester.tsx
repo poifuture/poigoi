@@ -5,7 +5,7 @@ import KanaDictionary from "../dictionary/KanaDictionary"
 import * as PoiUser from "../utils/PoiUser"
 import { GoiDb } from "../utils/GoiDb"
 import { GoiUserDbKey } from "../models/GoiUser"
-import { GoiJaWordType } from "../dictionary/GoiDictionary"
+import { GoiJaWordType } from "../types/GoiDictionaryTypes"
 import { GlobalDbKey } from "../utils/PoiDb"
 import { LazyInitUserAction } from "../actions/GoiUserActions"
 import { LazyInitSavingAction } from "../actions/GoiSavingActions"
@@ -29,6 +29,7 @@ export class GoiJaTester extends React.Component<
           display="detailed"
           status="success"
         />
+        <button>Roll</button>
         <pre className="goi-debug">
           {JSON.stringify(this.props.saving, null, 2)}
         </pre>

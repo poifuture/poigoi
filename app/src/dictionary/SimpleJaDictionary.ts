@@ -1,13 +1,15 @@
-import { GoiJaDictionaryType } from "./GoiDictionary"
+import { GoiJaDictionaryType } from "../types/GoiDictionaryTypes"
 // https://prowriters.jp/grammar/verb
 
-export const SimpleDictionary: GoiJaDictionaryType = {
-  name: { zh: "速记词典" },
+export const SimpleJaDictionary: GoiJaDictionaryType = {
+  name: "SimpleJaDictionary",
+  language: "ja",
+  display: { zh: "速记词典" },
   description: {
     zh:
       "中文释义采用日常使用该词汇时的直观释义，强化实际运用日语时的概念感受，提升日常会话交流的反应速度，弱化语言学的精准定义，推荐以听、说为主要目的同学使用。",
   },
-  scheme: 1,
+  schema: "Poi/Goi/Dictionary/Collection/v1",
   words: {
     会う: {
       common: "<ruby>会<rt>あ</rt></ruby>う",
@@ -19,7 +21,7 @@ export const SimpleDictionary: GoiJaDictionaryType = {
       audio: [{ cv: "Hikari", wav: "" }],
       pos: "VERB_GODAN_JIDOSHI",
       translation: {
-        SimpleDictionary: {
+        SimpleJaDictionary: {
           translation: { zh: "见" },
           hint: {
             zh:
@@ -70,7 +72,7 @@ export const SimpleDictionary: GoiJaDictionaryType = {
       audio: [{ cv: "Hikari", wav: "" }],
       pos: "NOUN",
       translation: {
-        SimpleDictionary: { translation: { zh: "家" } },
+        SimpleJaDictionary: { translation: { zh: "家" } },
         Xinbian: { translation: { zh: "家" } },
       },
       sentences: [
@@ -99,7 +101,7 @@ export const SimpleDictionary: GoiJaDictionaryType = {
       audio: [{ cv: "Hikari", wav: "" }],
       pos: "NOUN",
       translation: {
-        SimpleDictionary: { translation: { zh: "上" } },
+        SimpleJaDictionary: { translation: { zh: "上" } },
         Xinbian: { translation: { zh: "上、上面" } },
       },
       sentences: [
@@ -119,4 +121,4 @@ export const SimpleDictionary: GoiJaDictionaryType = {
   },
 }
 
-export default SimpleDictionary
+export default SimpleJaDictionary

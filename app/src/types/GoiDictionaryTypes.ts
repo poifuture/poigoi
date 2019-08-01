@@ -48,9 +48,11 @@ export interface GoiJaWordType extends GoiWordType {
   }
 }
 export interface GoiDictionaryMetadataType {
-  name: { zh: string }
+  name: string
+  language: "ja"
+  display: { zh: string }
   description: { zh: string }
-  scheme: number
+  schema: string
 }
 export interface GoiJaDictionaryType extends GoiDictionaryMetadataType {
   words: { [s: string]: GoiJaWordType }

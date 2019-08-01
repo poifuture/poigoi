@@ -8,9 +8,11 @@ import {
   DisplayWordAdderActionType,
   PushPendingQueryActionType,
   PopPendingQueryActionType,
+  PushCountQueryActionType,
   DISPLAY_WORD_ADDER,
   PUSH_PENDING_QUERY,
   POP_PENDING_QUERY,
+  PUSH_COUNT_QUERY,
 } from "../actions/WordAdderActions"
 
 const InitialWordAdderState: WordAdderStateType = {
@@ -22,23 +24,23 @@ const InitialWordAdderState: WordAdderStateType = {
   },
   Suggestions: [
     {
-      Hint: "Kana",
-      Query: "KANA-*",
+      Display: "Kana",
+      Query: "^KANA-.*$",
     },
     {
-      Hint: "JLPT-N5",
-      Query: "JLPT-N5-*",
+      Display: "JLPT-N5",
+      Query: "^JLPT-N5-.*$",
     },
   ],
   Pendings: [],
   Counters: {
-    "KANA-*": {
+    "^KANA-.*$": {
       TotalCount: 0,
       LearnedCount: 0,
       AddedCount: 0,
       NewCount: 0,
     },
-    "JLPT-N5-*": {
+    "^JLPT-N5-.*$": {
       TotalCount: 0,
       LearnedCount: 0,
       AddedCount: 0,
@@ -73,7 +75,7 @@ export const WordAdderReducer = (
         return state
       }
       const pendingQuery: WordAdderPendingQueryType = {
-        Hint: typedAction.Hint,
+        Display: typedAction.Display,
         Query: typedAction.Query,
       }
       return state.set(
@@ -92,6 +94,19 @@ export const WordAdderReducer = (
             (pendingQuery: Map<string, any>) =>
               pendingQuery.get("Query") !== typedAction.Query
           )
+      )
+    }
+    case PUSH_COUNT_QUERY: {
+      console.debug("Hit PUSH_COUNT_QUERY ... ", action)
+      const typedAction = action as PushCountQueryActionType
+      return state.set(
+        "Counters",
+        state.get("Counters").set(typedAction.Query, {
+          TotalCount: typedAction.TotalCount,
+          LearnedCount: typedAction.LearnedCount,
+          AddedCount: typedAction.AddedCount,
+          NewCount: typedAction.NewCount,
+        })
       )
     }
   }

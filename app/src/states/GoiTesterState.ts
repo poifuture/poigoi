@@ -1,5 +1,5 @@
-import { GoiJaWordType } from "../dictionary/GoiDictionary"
+import { GoiWordType } from "../types/GoiDictionaryTypes"
 
 export interface GoiTesterStateType {
-  CurrentWord: GoiJaWordType
+  CurrentWord: GoiWordType
 }

@@ -14,15 +14,15 @@ export type GoiUserDbKey = GlobalDbKey & { readonly brand: "GoiUserDbKey" }
 export interface LocalGoiUsersDataType extends PoiLocalDataType {
   // PoiGlobalDbKey: Local/GoiUsers
   // Schema: Poi/Goi/Local/GoiUsers/v1
-  DbSchema: "Poi/Goi/Local/GoiUsers/v1"
+  readonly DbSchema: "Poi/Goi/Local/GoiUsers/v1"
   Users: PoiUser.PoiUserId[]
 }
 
 interface GoiUserDataType extends PoiGlobalDataType {
   // PoiGlobalDbKey: Poi/Goi/PoiUsers/:PoiUserId/Entry
   // Schema: Poi/Goi/PoiUser/Entry/v1
-  DbSchema: "Poi/Goi/PoiUser/Entry/v1"
-  PoiUserId: PoiUser.PoiUserId
+  readonly DbSchema: "Poi/Goi/PoiUser/Entry/v1"
+  readonly PoiUserId: PoiUser.PoiUserId
   GoiUserProfileDbKey: GlobalDbKey
   GoiUserSettingsDbKey: GlobalDbKey
   GoiUserSavingDbKey: GoiSavingDbKey[]
