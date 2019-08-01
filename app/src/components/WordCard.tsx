@@ -1,5 +1,5 @@
 import React from "react"
-import { GoiJaWordType } from "../dictionary/GoiDictionary"
+import { GoiJaWordType } from "../types/GoiDictionaryTypes"
 
 export type WordCardPropsType = {
   word: GoiJaWordType

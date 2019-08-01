@@ -1,9 +1,9 @@
 export interface WordAdderSuggestionQueryType {
-  Hint: string
+  Display: string
   Query: string
 }
 export interface WordAdderPendingQueryType {
-  Hint: string
+  Display: string
   Query: string
 }
 export interface WordAdderQueryCounterType {

@@ -1,4 +1,4 @@
-import { GoiJaWordType } from "../dictionary/GoiDictionary"
+import { GoiJaWordType } from "../types/GoiDictionaryTypes"
 
 export const CHANGE_GOI_TESTER_WORD =
   "GOI_JA_TESTER_ACTIONS_CHANGE_GOI_TESTER_WORD"
