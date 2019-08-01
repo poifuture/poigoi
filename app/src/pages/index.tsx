@@ -1,6 +1,6 @@
 import React from "react"
 import NavBar from "../components/NavBar"
-import GoiJaTester from "../containers/GoiJaTester"
+import GoiTester from "../containers/GoiTester"
 import WordAdder from "../containers/WordAdder"
 import CommandsBar from "../containers/CommandsBar"
 
@@ -10,7 +10,7 @@ export default (props: any) => (
     <main>
       <CommandsBar />
       <WordAdder />
-      <GoiJaTester />
+      <GoiTester />
     </main>
     <section className="tools">
       <button>Add New Words</button>

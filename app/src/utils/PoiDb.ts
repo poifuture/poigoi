@@ -11,15 +11,15 @@ export interface RevType {
   Time: TimeStamp
 }
 export interface PoiUniversialDataType {
-  DbKey: DbKey
-  DbSchema: DbSchema
+  readonly DbKey: DbKey
+  readonly DbSchema: DbSchema
 }
 export interface PoiGlobalDataType extends PoiUniversialDataType {
-  DbKey: GlobalDbKey
-  DbUuid: DbUuid
+  readonly DbKey: GlobalDbKey
+  readonly DbUuid: DbUuid
   LocalRev: RevType
   BaseRev: RevType
 }
 export interface PoiLocalDataType extends PoiUniversialDataType {
-  DbKey: LocalDbKey
+  readonly DbKey: LocalDbKey
 }

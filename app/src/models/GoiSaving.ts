@@ -8,6 +8,7 @@ import {
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
 import { GoiSavingId } from "../types/GoiTypes"
+import { async } from "q"
 
 export type GoiSavingDbKey = GlobalDbKey & { readonly brand: "GoiSavingDbKey" }
 export type GoiWordRecordDbKey = GlobalDbKey & {
@@ -44,11 +45,13 @@ const DefaultGoiWordHistory: Partial<GoiWordHistoryDataType> = {
 export interface GoiWordRecordDataType extends PoiGlobalDataType {
   // PoiGlobalDbKey: Poi/Goi/PoiUsers/:PoiUserId/Savings/:SavingId/WordRecords/:WordKey
   // Schema: Poi/Goi/PoiUser/Saving/WordRecord/v1
+  readonly DbKey: GoiWordRecordDbKey
   readonly DbSchema: "Poi/Goi/PoiUser/Saving/WordRecord/v1"
   readonly WordKey: string
   readonly SavingId: GoiSavingId
   readonly PoiUserId: PoiUser.PoiUserId
   Level: number
+  NextTime: TimeStamp
   Pending: OrderKey
   Prioritized: OrderKey
   History: { [time: number]: GoiWordHistoryDbKey }
@@ -57,6 +60,7 @@ const DefaultGoiWordRecord: Partial<GoiWordRecordDataType> = {
   // Defaulter is mainly used for reading legacy schema
   DbSchema: "Poi/Goi/PoiUser/Saving/WordRecord/v1",
   Level: 0,
+  NextTime: 0,
   Pending: "",
   Prioritized: "",
   History: {},
@@ -97,6 +101,7 @@ export class GoiWordRecordModel {
       SavingId: savingId,
       PoiUserId: poiUserId,
       Level: 0,
+      NextTime: 0,
       Pending: "",
       Prioritized: "",
       History: {},
@@ -141,6 +146,9 @@ export class GoiWordRecordModel {
       return
     }
     await this.update({ Pending: orderKey })
+  }
+  ClearPending = async () => {
+    await this.update({ Pending: "" })
   }
 }
 export const GoiWordRecord = (wordRecordDbKey: GoiWordRecordDbKey) => {
@@ -236,6 +244,48 @@ export class GoiSavingModel {
       ...data,
       ...partial,
     })
+  }
+  AttachRecords = async (wordKeys: string[]): Promise<void> => {
+    if (!(wordKeys.length > 0)) {
+      return
+    }
+    const data = await GoiDb().get<GoiSavingDataType>(this.dbKey)
+    const poiUserId = data.PoiUserId
+    const savingId = data.SavingId
+    const records: { [key: string]: GoiWordRecordDbKey } = Object.assign(
+      {},
+      data.Records
+    )
+    wordKeys.map(wordKey => {
+      records[wordKey] = GoiWordRecordModel.GetDbKey(
+        poiUserId,
+        savingId,
+        wordKey
+      )
+    })
+    await this.update({ Records: records })
+  }
+  GetDictionarys = async () => {
+    const data = await this.Read()
+    return data.Dictionarys
+  }
+  GetRecords = async () => {
+    const data = await this.Read()
+    const wordRecords = (await Promise.all(
+      Object.keys(data.Records).map(
+        async wordKey =>
+          await GoiWordRecord(
+            GoiWordRecordModel.GetDbKey(data.PoiUserId, data.SavingId, wordKey)
+          ).ReadOrNull()
+      )
+    )).filter(
+      (
+        wordRecord
+      ): wordRecord is GoiWordRecordDataType &
+        PouchDB.Core.IdMeta &
+        PouchDB.Core.GetMeta => wordRecord !== null
+    )
+    return wordRecords
   }
 }
 export const GoiSaving = (savingDbKey: GoiSavingDbKey) => {
