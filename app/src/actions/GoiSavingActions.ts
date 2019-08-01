@@ -1,6 +1,8 @@
 import { GoiSavingStateType } from "../states/GoiSavingState"
-import { GoiUser, GoiUserDbKey } from "../models/GoiUser"
-import { GoiSaving, GoiSavingDbKey } from "../models/GoiSaving"
+import { GoiUser, GoiUserModel } from "../models/GoiUser"
+import { GoiSaving, GoiSavingModel } from "../models/GoiSaving"
+import { GoiSavingId } from "../types/GoiTypes"
+import * as PoiUser from "../utils/PoiUser"
 
 export const UPDATE_GOI_SAVING_STATE =
   "GOI_SAVING_ACTIONS_UPDATE_GOI_SAVING_STATE"
@@ -8,13 +10,13 @@ export const UPDATE_GOI_SAVING_STATE =
 export interface UpdateGoiSavingStateActionType
   extends Partial<GoiSavingStateType> {
   type: typeof UPDATE_GOI_SAVING_STATE
-  SavingDbKey: GoiSavingDbKey
+  SavingId: GoiSavingId
 }
 
 export type GoiSavingActionsType = UpdateGoiSavingStateActionType
 
 const UpdateGoiSavingStateAction = (state: {
-  SavingDbKey: GoiSavingDbKey
+  SavingId: GoiSavingId
   Saving?: any
 }): UpdateGoiSavingStateActionType => {
   return {
@@ -23,15 +25,19 @@ const UpdateGoiSavingStateAction = (state: {
   }
 }
 
-export const LazyInitSavingAction = (userDbKey: GoiUserDbKey) => {
+export const LazyInitSavingAction = (poiUserId: PoiUser.PoiUserId) => {
   return async (dispatch: any, getState: any): Promise<void> => {
     const state = getState()
     console.debug("LazyInitSaving state: ", state)
-    const savingDbKey = await GoiUser(userDbKey).getDefaultSaving()
-    const saving = await GoiSaving(savingDbKey).read()
+    const savingId = await GoiUser(
+      GoiUserModel.GetDbKey(poiUserId)
+    ).getDefaultSaving()
+    const saving = await GoiSaving(
+      GoiSavingModel.GetDbKey(poiUserId, savingId)
+    ).Read()
     dispatch(
       UpdateGoiSavingStateAction({
-        SavingDbKey: savingDbKey,
+        SavingId: savingId,
         Saving: saving,
       })
     )

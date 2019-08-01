@@ -205,6 +205,6 @@ export class GoiDictionaryCollection {
   }
 }
 
-export const GoiDictionarys = (dbNames: string[]) => {
-  return new GoiDictionaryCollection(dbNames)
+export const GoiDictionarys = (dictionaryNames: string[]) => {
+  return new GoiDictionaryCollection(dictionaryNames)
 }

@@ -77,13 +77,14 @@ export const LazyInitUserAction = (options?: { forceDatabase?: boolean }) => {
     forceDatabase: true,
     ...options,
   }
-  return async (dispatch: any, getState: any): Promise<void> => {
+  return async (dispatch: any, getState: any): Promise<PoiUser.PoiUserId> => {
     const state = getState()
     console.debug("LazyInitUser state: ", state)
     if (!funcOptions.forceDatabase) {
-      if (state.GoiUser.get("poiUserId")) {
-        console.debug("LazyInitUser state: ", state)
-        return
+      const poiUserId = state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId
+      if (poiUserId) {
+        console.debug("Already loaded PoiUser: ", poiUserId)
+        return poiUserId
       }
     }
     const poiUserId = await lazyInitPoiUser()
@@ -94,5 +95,6 @@ export const LazyInitUserAction = (options?: { forceDatabase?: boolean }) => {
         UserDbKey: userDbKey,
       })
     )
+    return poiUserId
   }
 }

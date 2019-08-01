@@ -4,7 +4,7 @@ import WordCard from "../components/WordCard"
 import KanaDictionary from "../dictionary/KanaDictionary"
 import * as PoiUser from "../utils/PoiUser"
 import { GoiDb } from "../utils/GoiDb"
-import { GoiUserDbKey } from "../models/GoiUser"
+import { GoiUserModel, GoiUserDbKey } from "../models/GoiUser"
 import { GoiJaWordType } from "../types/GoiDictionaryTypes"
 import { GlobalDbKey } from "../utils/PoiDb"
 import { LazyInitUserAction } from "../actions/GoiUserActions"
@@ -16,9 +16,9 @@ export class GoiJaTester extends React.Component<
 > {
   async componentDidMount() {
     console.debug("Lasy init user")
-    await this.props.lazyInitUser()
+    const poiUserId = (await this.props.lazyInitUser()) as PoiUser.PoiUserId
     console.debug("Lasy init saving")
-    await this.props.lazyInitSaving(this.props.userDbKey)
+    await this.props.lazyInitSaving(poiUserId)
   }
   render() {
     return (
@@ -53,8 +53,8 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     lazyInitUser: () => dispatch(LazyInitUserAction()),
-    lazyInitSaving: (userDbKey: GoiUserDbKey) =>
-      dispatch(LazyInitSavingAction(userDbKey)),
+    lazyInitSaving: (poiUserId: PoiUser.PoiUserId) =>
+      dispatch(LazyInitSavingAction(poiUserId)),
   }
 }
 

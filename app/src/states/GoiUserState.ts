@@ -6,5 +6,4 @@ export type GoiUserDomainType = "Local" | "Global"
 export interface GoiUserStateType {
   PoiUserId: PoiUser.PoiUserId
   Domain: GoiUserDomainType
-  UserDbKey: GoiUserDbKey
 }
