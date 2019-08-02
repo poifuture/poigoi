@@ -45,9 +45,6 @@ const mapStateToProps = (state: any) => {
   console.debug("GoiTester state: ", state)
   const props = {
     currentWord: state.GoiTester.get("CurrentWord"),
-    poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
-    userDbKey: state.GoiUser.get("UserDbKey") as GoiUserDbKey,
-    savingDbKey: state.GoiSaving.get("SavingDbKey") as GoiSavingDbKey,
     saving: state.GoiSaving.get("Saving"),
     tester: state.GoiTester,
   }

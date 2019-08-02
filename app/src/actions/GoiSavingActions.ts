@@ -29,12 +29,8 @@ export const LazyInitSavingAction = (poiUserId: PoiUser.PoiUserId) => {
   return async (dispatch: any, getState: any): Promise<GoiSavingId> => {
     const state = getState()
     console.debug("LazyInitSaving state: ", state)
-    const savingId = await GoiUser(
-      GoiUserModel.GetDbKey(poiUserId)
-    ).getDefaultSaving()
-    const saving = await GoiSaving(
-      GoiSavingModel.GetDbKey(poiUserId, savingId)
-    ).Read()
+    const savingId = await GoiUser(poiUserId).getDefaultSaving()
+    const saving = await GoiSaving(poiUserId, savingId).Read()
     dispatch(
       UpdateGoiSavingStateAction({
         SavingId: savingId,

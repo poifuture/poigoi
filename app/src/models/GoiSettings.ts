@@ -53,7 +53,7 @@ export class GoiSettingsModel {
     this.onSync && this.onSync()
   }
   private read = async () => {
-    const data = await GoiDb().get(this.dbKey)
+    const data = await GoiDb().Get(this.dbKey)
     const typedData = data as (GoiSettingsDataType &
       PouchDB.Core.IdMeta &
       PouchDB.Core.GetMeta)
