@@ -1,9 +1,8 @@
 import uuid5 from "uuid/v5"
-import Immutable from "immutable"
+import Immutable, { fromJS } from "immutable"
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import { DbUuid, GlobalDbKey, PoiGlobalDataType } from "../utils/PoiDb"
 import { GoiJaWordType, GoiWordType } from "../types/GoiDictionaryTypes"
-import { fromJS } from "immutable"
 import KanaDictionary from "../dictionary/KanaDictionary"
 import SimpleJaDictionary from "../dictionary/SimpleJaDictionary"
 
