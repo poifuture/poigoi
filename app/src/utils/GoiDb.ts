@@ -1,12 +1,25 @@
 import "isomorphic-fetch"
 import PouchDB from "pouchdb-browser"
+import PouchDBDebug from "pouchdb-debug"
 import { DbKey } from "./PoiDb"
 
 class GoiPouchDB extends PouchDB {
-  getOrNull = async <Model>(dbKey: DbKey) => {
-    console.debug("Getting or null: ", dbKey)
+  private cache: { [key: string]: any } = {}
+  Exists = async (dbKey: DbKey): Promise<boolean> => {
     try {
-      return await super.get<Model>(dbKey)
+      await this.Get(dbKey)
+      return true
+    } catch (error) {
+      if (error.status && error.status === 404) {
+        console.debug("Miss DbKey: ", dbKey)
+        return false
+      }
+      throw error
+    }
+  }
+  GetOrNull = async <Model>(dbKey: DbKey) => {
+    try {
+      return await this.Get<Model>(dbKey)
     } catch (error) {
       if (error.status && error.status === 404) {
         console.debug("Miss DbKey: ", dbKey)
@@ -15,12 +28,19 @@ class GoiPouchDB extends PouchDB {
       throw error
     }
   }
+  Get = async <Model>(dbKey: DbKey) => {
+    const data = await super.get<Model>(dbKey)
+    this.cache[dbKey] = data
+    return data
+  }
 }
 
 let singletonDb: GoiPouchDB | null = null
 export const GoiDb = () => {
   if (!singletonDb) {
     console.debug("Initilizing PouchDB connection...")
+    PouchDB.plugin(PouchDBDebug)
+    PouchDB.debug.enable("pouchdb:api")
     singletonDb = new GoiPouchDB("PoiGoi")
   }
   return singletonDb

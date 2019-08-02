@@ -1,4 +1,5 @@
 import React from "react"
+import { Helmet } from "react-helmet"
 import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
 import { composeWithDevTools } from "redux-devtools-extension"
@@ -15,6 +16,17 @@ export class Layout extends React.Component {
           padding: 0,
         }}
       >
+        <Helmet>
+          <title>PoiGoi</title>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          />
+        </Helmet>
         <Provider
           store={createStore(
             RootReducer,

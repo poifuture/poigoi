@@ -30,7 +30,7 @@ const UpdateGoiUserStateAction = (state: {
 
 const lazyInitLocalUsersEntry = async () => {
   // TODO: move to models
-  const localGoiUsers = await GoiDb().getOrNull<LocalGoiUsersDataType>(
+  const localGoiUsers = await GoiDb().GetOrNull<LocalGoiUsersDataType>(
     "Local/GoiUsers" as LocalDbKey
   )
   if (!localGoiUsers) {
@@ -45,8 +45,8 @@ const lazyInitLocalUsersEntry = async () => {
 
 const lazyInitPoiUser = async (): Promise<PoiUser.PoiUserId> => {
   await lazyInitLocalUsersEntry()
-  const localGoiUsers = await GoiDb().get<LocalGoiUsersDataType>(
-    "Local/GoiUsers"
+  const localGoiUsers = await GoiDb().Get<LocalGoiUsersDataType>(
+    "Local/GoiUsers" as LocalDbKey
   )
   if (localGoiUsers.Users && localGoiUsers.Users.length > 0) {
     return localGoiUsers.Users[0]
@@ -63,7 +63,7 @@ const lazyInitGoiUser = async (
   poiUserId: PoiUser.PoiUserId
 ): Promise<GoiUserDbKey> => {
   const userDbKey = GoiUserModel.GetDbKey(poiUserId)
-  if (await GoiDb().getOrNull(userDbKey)) {
+  if (await GoiDb().GetOrNull(userDbKey)) {
     console.debug("Found UserDbKey: ", userDbKey)
     return userDbKey
   }

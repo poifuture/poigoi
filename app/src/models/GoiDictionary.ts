@@ -50,7 +50,7 @@ class GoiDictionaryWordModel {
     this.dbKey = dbKey
   }
   readOrNull = async () => {
-    return await GoiDb().getOrNull<GoiDictionaryWordDataType>(this.dbKey)
+    return await GoiDb().GetOrNull<GoiDictionaryWordDataType>(this.dbKey)
   }
 }
 
@@ -103,12 +103,12 @@ export class GoiDictionaryModel {
       }
     }
   }
-  private read = async () => {
-    return await GoiDb().get<GoiDictionaryDataType>(this.dbKey)
+  private Read = async () => {
+    return await GoiDb().Get<GoiDictionaryDataType>(this.dbKey)
   }
   private update = async (partial: Partial<GoiDictionaryDataType>) => {
     console.debug("Updating GoiDictionary: ", partial)
-    const data = await this.read()
+    const data = await this.Read()
 
     await GoiDb().put({
       ...data,
@@ -119,7 +119,7 @@ export class GoiDictionaryModel {
     if (this.dictionaryName) {
       return this.dictionaryName
     }
-    const dictionaryEntry = await this.read()
+    const dictionaryEntry = await this.Read()
     this.dictionaryName = dictionaryEntry.DictionaryName
     return this.dictionaryName
   }
@@ -127,8 +127,6 @@ export class GoiDictionaryModel {
     wordKey: string
   ): Promise<T | null> => {
     const dictionaryName = await this.getDictionaryName()
-    console.debug("TODO:read from database")
-    // TODO:read from database
     switch (dictionaryName) {
       case "KanaDictionary": {
         if (!(wordKey in KanaDictionary.words)) {
@@ -137,6 +135,8 @@ export class GoiDictionaryModel {
         return (KanaDictionary.words[wordKey] as GoiWordType) as T
       }
       case "SimpleJaDictionary": {
+        console.debug("TODO:read from database")
+        // TODO:read from database
         if (!(wordKey in SimpleJaDictionary.words)) {
           return null
         }
@@ -160,7 +160,7 @@ export class GoiDictionaryModel {
       }
     }
     // TODO:read from database
-    const dictionaryEntry = await this.read()
+    const dictionaryEntry = await this.Read()
     return Immutable.Set.fromKeys(dictionaryEntry.Words)
   }
 }

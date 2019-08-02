@@ -111,9 +111,7 @@ export function ReindexCandidatesAction(
     const state = getState()
     poiUserId = poiUserId || getPoiUserId(state)
     savingId = savingId || getSavingId(state)
-    const wordRecords = await GoiSaving(
-      GoiSavingModel.GetDbKey(poiUserId, savingId)
-    ).GetRecords()
+    const wordRecords = await GoiSaving(poiUserId, savingId).GetRecords()
     console.debug("Records:", wordRecords)
     const learnedCandidates = wordRecords
       .filter(wordRecord => wordRecord.Level > 0)
@@ -131,9 +129,7 @@ export function ReindexCandidatesAction(
       .sort((a, b) => {
         return a.Pending > b.Pending ? 1 : -1
       })
-    const dictionarys = await GoiSaving(
-      GoiSavingModel.GetDbKey(poiUserId, savingId)
-    ).GetDictionarys()
+    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
     dispatch(
       RenewCurrentWordAction({
         ...(learnedCandidates.length > 0 && {

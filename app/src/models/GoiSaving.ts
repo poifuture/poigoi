@@ -4,11 +4,11 @@ import {
   PoiGlobalDataType,
   GlobalDbKey,
   TimeStamp,
+  DbSchema,
 } from "../utils/PoiDb"
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
 import { GoiSavingId } from "../types/GoiTypes"
-import { async } from "q"
 
 export type GoiSavingDbKey = GlobalDbKey & { readonly brand: "GoiSavingDbKey" }
 export type GoiWordRecordDbKey = GlobalDbKey & {
@@ -33,14 +33,6 @@ export interface GoiWordHistoryDataType extends PoiGlobalDataType {
   LevelBefore: number
   LevelAfter: number
 }
-const DefaultGoiWordHistory: Partial<GoiWordHistoryDataType> = {
-  // Defaulter is mainly used for reading legacy schema
-  DbSchema: "Poi/Goi/PoiUser/Saving/WordHistory/v1",
-  WordKey: "",
-  JudgeResult: "Skip",
-  LevelBefore: 0,
-  LevelAfter: 0,
-}
 
 export interface GoiWordRecordDataType extends PoiGlobalDataType {
   // PoiGlobalDbKey: Poi/Goi/PoiUsers/:PoiUserId/Savings/:SavingId/WordRecords/:WordKey
@@ -56,15 +48,9 @@ export interface GoiWordRecordDataType extends PoiGlobalDataType {
   Prioritized: OrderKey
   History: { [time: number]: GoiWordHistoryDbKey }
 }
-const DefaultGoiWordRecord: Partial<GoiWordRecordDataType> = {
-  // Defaulter is mainly used for reading legacy schema
-  DbSchema: "Poi/Goi/PoiUser/Saving/WordRecord/v1",
-  Level: 0,
-  NextTime: 0,
-  Pending: "",
-  Prioritized: "",
-  History: {},
-}
+type GoiWordRecordPouchType = GoiWordRecordDataType &
+  PouchDB.Core.IdMeta &
+  PouchDB.Core.GetMeta
 
 export class GoiWordRecordModel {
   public static GetDbKey = (
@@ -74,63 +60,70 @@ export class GoiWordRecordModel {
   ): GoiWordRecordDbKey => {
     return `Poi/Goi/PoiUsers/${poiUserId}/Savings/${savingId}/WordRecords/${wordKey}` as GoiWordRecordDbKey
   }
-  private dbKey: GoiWordRecordDbKey
-  constructor(dbKey: GoiWordRecordDbKey) {
-    this.dbKey = dbKey
-  }
-  static Create = async (
+  private readonly dbKey: GoiWordRecordDbKey
+  private readonly poiUserId: PoiUser.PoiUserId
+  private readonly savingId: GoiSavingId
+  private readonly wordKey: string
+  constructor(
     poiUserId: PoiUser.PoiUserId,
     savingId: GoiSavingId,
     wordKey: string
-  ): Promise<GoiWordRecordDbKey> => {
-    //static builder
-    const dbKey: GoiWordRecordDbKey = GoiWordRecordModel.GetDbKey(
-      poiUserId,
-      savingId,
-      wordKey
-    )
-    const dbUuid: DbUuid = uuid5(dbKey, GoiNS) as DbUuid
-    const newData: GoiWordRecordDataType = {
-      ...DefaultGoiWordRecord,
-      DbKey: dbKey,
-      DbUuid: dbUuid,
+  ) {
+    this.dbKey = GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
+    this.poiUserId = poiUserId
+    this.savingId = savingId
+    this.wordKey = wordKey
+  }
+  private DefaultData = (): GoiWordRecordDataType => {
+    return {
+      DbKey: this.dbKey,
+      DbUuid: uuid5(this.dbKey, GoiNS) as DbUuid,
       DbSchema: "Poi/Goi/PoiUser/Saving/WordRecord/v1",
       LocalRev: { Hash: "", Time: 0 },
       BaseRev: { Hash: "", Time: 0 },
-      WordKey: wordKey,
-      SavingId: savingId,
-      PoiUserId: poiUserId,
+      WordKey: this.wordKey,
+      SavingId: this.savingId,
+      PoiUserId: this.poiUserId,
       Level: 0,
       NextTime: 0,
       Pending: "",
       Prioritized: "",
       History: {},
     }
+  }
+  Exists = async (): Promise<boolean> => {
+    return await GoiDb().Exists(this.dbKey)
+  }
+  Create = async (): Promise<GoiWordRecordDbKey> => {
+    //static builder
+    const newData: GoiWordRecordDataType = this.DefaultData()
     await GoiDb().put<GoiWordRecordDataType>({
-      _id: dbKey,
+      _id: this.dbKey,
       ...newData,
     })
-    return dbKey
+    return this.dbKey
   }
   onSync?: (error?: any) => Promise<void>
   sync = async () => {
     console.error("TODO: Sync")
     this.onSync && this.onSync()
   }
-  ReadOrNull = async (): Promise<
-    (GoiWordRecordDataType & PouchDB.Core.IdMeta & PouchDB.Core.GetMeta) | null
-  > => {
-    const data = await GoiDb().getOrNull<GoiWordRecordDataType>(this.dbKey)
-    if (!data) {
-      return null
+  private UpgradeSchema = async (
+    oldSchema: DbSchema
+  ): Promise<GoiWordRecordPouchType | null> => {
+    switch (oldSchema) {
+      case "Poi/Goi/PoiUser/Saving/WordRecord/v1": {
+        return null
+      }
     }
-    return { ...DefaultGoiWordRecord, ...data }
+    return null
   }
-  Read = async (): Promise<
-    GoiWordRecordDataType & PouchDB.Core.IdMeta & PouchDB.Core.GetMeta
-  > => {
-    const data = await GoiDb().get<GoiWordRecordDataType>(this.dbKey)
-    return { ...DefaultGoiWordRecord, ...data }
+
+  Read = async (): Promise<GoiWordRecordPouchType> => {
+    const possibleOldData = await GoiDb().Get<GoiWordRecordDataType>(this.dbKey)
+    const oldSchema = (possibleOldData as any).DbSchema as DbSchema
+    const data = (await this.UpgradeSchema(oldSchema)) || possibleOldData
+    return { ...this.DefaultData(), ...data }
   }
   private update = async (partial: Partial<GoiWordRecordDataType>) => {
     const data = await this.Read()
@@ -138,6 +131,18 @@ export class GoiWordRecordModel {
       ...data,
       ...partial,
     })
+  }
+  ReadOrCreate = async (): Promise<GoiWordRecordPouchType> => {
+    if (!(await this.Exists())) {
+      await this.Create()
+    }
+    return await this.Read()
+  }
+  ReadOrNull = async (): Promise<GoiWordRecordPouchType | null> => {
+    if (!(await this.Exists())) {
+      return null
+    }
+    return await this.Read()
   }
   SetPending = async (orderKey: string) => {
     const wordRecord = await this.Read()
@@ -151,8 +156,12 @@ export class GoiWordRecordModel {
     await this.update({ Pending: "" })
   }
 }
-export const GoiWordRecord = (wordRecordDbKey: GoiWordRecordDbKey) => {
-  return new GoiWordRecordModel(wordRecordDbKey)
+export const GoiWordRecord = (
+  poiUserId: PoiUser.PoiUserId,
+  savingId: GoiSavingId,
+  wordKey: string
+) => {
+  return new GoiWordRecordModel(poiUserId, savingId, wordKey)
 }
 
 export interface GoiSavingDataType extends PoiGlobalDataType {
@@ -226,7 +235,7 @@ export class GoiSavingModel {
   ReadOrNull = async (): Promise<
     (GoiSavingDataType & PouchDB.Core.IdMeta & PouchDB.Core.GetMeta) | null
   > => {
-    const data = await GoiDb().getOrNull<GoiSavingDataType>(this.dbKey)
+    const data = await GoiDb().GetOrNull<GoiSavingDataType>(this.dbKey)
     if (!data) {
       return null
     }
@@ -235,7 +244,7 @@ export class GoiSavingModel {
   Read = async (): Promise<
     GoiSavingDataType & PouchDB.Core.IdMeta & PouchDB.Core.GetMeta
   > => {
-    const data = await GoiDb().get<GoiSavingDataType>(this.dbKey)
+    const data = await GoiDb().Get<GoiSavingDataType>(this.dbKey)
     return { ...DefaultGoiSaving, ...data }
   }
   private update = async (partial: Partial<GoiSavingDataType>) => {
@@ -249,9 +258,10 @@ export class GoiSavingModel {
     if (!(wordKeys.length > 0)) {
       return
     }
-    const data = await GoiDb().get<GoiSavingDataType>(this.dbKey)
+    const data = await this.Read()
     const poiUserId = data.PoiUserId
     const savingId = data.SavingId
+    // shadow copy
     const records: { [key: string]: GoiWordRecordDbKey } = Object.assign(
       {},
       data.Records
@@ -271,23 +281,32 @@ export class GoiSavingModel {
   }
   GetRecords = async () => {
     const data = await this.Read()
-    const wordRecords = (await Promise.all(
+    const wordRecords = await Promise.all(
       Object.keys(data.Records).map(
         async wordKey =>
           await GoiWordRecord(
-            GoiWordRecordModel.GetDbKey(data.PoiUserId, data.SavingId, wordKey)
-          ).ReadOrNull()
+            data.PoiUserId,
+            data.SavingId,
+            wordKey
+          ).ReadOrCreate()
       )
-    )).filter(
-      (
-        wordRecord
-      ): wordRecord is GoiWordRecordDataType &
-        PouchDB.Core.IdMeta &
-        PouchDB.Core.GetMeta => wordRecord !== null
     )
     return wordRecords
   }
+  ClearPendings = async (wordKeys: string[]) => {
+    const data = await this.Read()
+    const poiUserId = data.PoiUserId
+    const savingId = data.SavingId
+    await Promise.all(
+      wordKeys.map(async wordKey => {
+        await GoiWordRecord(poiUserId, savingId, wordKey).ClearPending()
+      })
+    )
+  }
 }
-export const GoiSaving = (savingDbKey: GoiSavingDbKey) => {
-  return new GoiSavingModel(savingDbKey)
+export const GoiSaving = (
+  poiUserId: PoiUser.PoiUserId,
+  savingId: GoiSavingId
+) => {
+  return new GoiSavingModel(GoiSavingModel.GetDbKey(poiUserId, savingId))
 }

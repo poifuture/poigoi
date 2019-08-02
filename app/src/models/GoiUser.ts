@@ -79,7 +79,7 @@ export class GoiUserModel {
   read = async (): Promise<
     GoiUserDataType & PouchDB.Core.IdMeta & PouchDB.Core.GetMeta
   > => {
-    const data = await GoiDb().get<GoiUserDataType>(this.dbKey)
+    const data = await GoiDb().Get<GoiUserDataType>(this.dbKey)
     return { ...DefaultGoiUser, ...data }
   }
   private update = async (partial: Partial<GoiUserDataType>) => {
@@ -102,6 +102,6 @@ export class GoiUserModel {
   }
 }
 
-export const GoiUser = (userDbKey: GoiUserDbKey) => {
-  return new GoiUserModel(userDbKey)
+export const GoiUser = (poiUserId: PoiUser.PoiUserId) => {
+  return new GoiUserModel(GoiUserModel.GetDbKey(poiUserId))
 }
