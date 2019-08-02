@@ -175,14 +175,9 @@ export interface GoiSavingDataType extends PoiGlobalDataType {
   Dictionarys: string[]
   Records: { [key: string]: GoiWordRecordDbKey }
 }
-const DefaultGoiSaving: Partial<GoiSavingDataType> = {
-  // Defaulter is mainly used for reading legacy schema
-  DbSchema: "Poi/Goi/PoiUser/Saving/Entry/v1",
-  Judgement: "Typing",
-  Term: "Permanant",
-  Dictionarys: ["KanaDictionary", "SimpleJaDictionary"],
-  Records: {},
-}
+type GoiSavingPouchType = GoiSavingDataType &
+  PouchDB.Core.IdMeta &
+  PouchDB.Core.GetMeta
 
 export class GoiSavingModel {
   public static GetDbKey = (
@@ -194,58 +189,49 @@ export class GoiSavingModel {
   public static GenerateId = (): GoiSavingId => {
     return ((Math.random() * 0xffffffff) >>> 0).toString(16) as GoiSavingId
   }
-  private dbKey: GoiSavingDbKey
-  constructor(dbKey: GoiSavingDbKey) {
-    this.dbKey = dbKey
+  private readonly dbKey: GoiSavingDbKey
+  private readonly poiUserId: PoiUser.PoiUserId
+  private readonly savingId: GoiSavingId
+  constructor(poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) {
+    this.poiUserId = poiUserId
+    this.savingId = savingId
+    this.dbKey = GoiSavingModel.GetDbKey(poiUserId, savingId)
   }
-  static Create = async (
-    poiUserId: PoiUser.PoiUserId,
-    savingId: GoiSavingId
-  ): Promise<GoiSavingDbKey> => {
-    //static builder
-    const dbKey: GoiSavingDbKey = GoiSavingModel.GetDbKey(poiUserId, savingId)
-    const dbUuid: DbUuid = uuid5(dbKey, GoiNS) as DbUuid
-    const newData: GoiSavingDataType = {
-      ...DefaultGoiSaving,
-      DbKey: dbKey,
-      DbUuid: dbUuid,
+  private DefaultData = (): GoiSavingDataType => {
+    return {
+      DbKey: this.dbKey,
+      DbUuid: uuid5(this.dbKey, GoiNS) as DbUuid,
       DbSchema: "Poi/Goi/PoiUser/Saving/Entry/v1",
       LocalRev: { Hash: "", Time: 0 },
       BaseRev: { Hash: "", Time: 0 },
-      PoiUserId: poiUserId,
-      SavingId: savingId,
+      PoiUserId: this.poiUserId,
+      SavingId: this.savingId,
       Judgement: "Typing",
       Term: "Permanant",
       Dictionarys: ["KanaDictionary", "SimpleJaDictionary"],
       Records: {},
     }
+  }
+  Exists = async (): Promise<boolean> => {
+    return await GoiDb().Exists(this.dbKey)
+  }
+  Create = async (): Promise<GoiSavingDbKey> => {
+    //static builder
+    const newData: GoiSavingDataType = this.DefaultData()
     await GoiDb().put({
-      _id: dbKey,
+      _id: this.dbKey,
       ...newData,
     })
-    const newSaving = new GoiSavingModel(dbKey)
-    newSaving.sync()
-    return dbKey
+    return this.dbKey
   }
   onSync?: (error?: any) => Promise<void>
   sync = async () => {
     console.error("TODO: Sync")
     this.onSync && this.onSync()
   }
-  ReadOrNull = async (): Promise<
-    (GoiSavingDataType & PouchDB.Core.IdMeta & PouchDB.Core.GetMeta) | null
-  > => {
-    const data = await GoiDb().GetOrNull<GoiSavingDataType>(this.dbKey)
-    if (!data) {
-      return null
-    }
-    return { ...DefaultGoiSaving, ...data }
-  }
-  Read = async (): Promise<
-    GoiSavingDataType & PouchDB.Core.IdMeta & PouchDB.Core.GetMeta
-  > => {
+  Read = async (): Promise<GoiSavingPouchType> => {
     const data = await GoiDb().Get<GoiSavingDataType>(this.dbKey)
-    return { ...DefaultGoiSaving, ...data }
+    return { ...this.DefaultData(), ...data }
   }
   private update = async (partial: Partial<GoiSavingDataType>) => {
     const data = await this.Read()
@@ -308,5 +294,5 @@ export const GoiSaving = (
   poiUserId: PoiUser.PoiUserId,
   savingId: GoiSavingId
 ) => {
-  return new GoiSavingModel(GoiSavingModel.GetDbKey(poiUserId, savingId))
+  return new GoiSavingModel(poiUserId, savingId)
 }

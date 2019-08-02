@@ -1,7 +1,7 @@
 import uuid5 from "uuid/v5"
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
-import { GoiSavingModel, GoiSavingDbKey } from "./GoiSaving"
+import { GoiSavingModel, GoiSaving } from "./GoiSaving"
 import {
   DbUuid,
   GlobalDbKey,
@@ -28,80 +28,81 @@ interface GoiUserDataType extends PoiGlobalDataType {
   GoiUserSettingsDbKey: GlobalDbKey
   GoiUserSavingsIds: GoiSavingId[]
 }
-const DefaultGoiUser: Partial<GoiUserDataType> = {
-  // Defaulter is mainly used for reading legacy schema
-  DbSchema: "Poi/Goi/PoiUser/Entry/v1",
-  GoiUserProfileDbKey: "" as GlobalDbKey,
-  GoiUserSettingsDbKey: "" as GlobalDbKey,
-  GoiUserSavingsIds: [],
-}
+type GoiUserPouchType = GoiUserDataType &
+  PouchDB.Core.IdMeta &
+  PouchDB.Core.GetMeta
 
 export class GoiUserModel {
   public static GetDbKey = (poiUserId: PoiUser.PoiUserId): GoiUserDbKey => {
     return `Poi/Goi/PoiUsers/${poiUserId}/Entry` as GoiUserDbKey
   }
-  public static Create = async (
-    poiUserId: PoiUser.PoiUserId
-  ): Promise<GoiUserDbKey> => {
-    console.debug("Creating GoiUser from PoiUserId: ", poiUserId)
-    const dbKey: GoiUserDbKey = GoiUserModel.GetDbKey(poiUserId) // `Poi/Goi/PoiUser/${poiUserId}/Entry`
-    const dbUuid: DbUuid = uuid5(dbKey, GoiNS) as DbUuid
-    const newData: GoiUserDataType = {
-      ...DefaultGoiUser,
-      DbKey: dbKey,
-      DbUuid: dbUuid,
+  private readonly dbKey: GoiUserDbKey
+  private readonly poiUserId: PoiUser.PoiUserId
+  constructor(poiUserId: PoiUser.PoiUserId) {
+    this.dbKey = GoiUserModel.GetDbKey(poiUserId)
+    this.poiUserId = poiUserId
+  }
+  private DefaultData = (): GoiUserDataType => {
+    return {
+      DbKey: this.dbKey,
+      DbUuid: uuid5(this.dbKey, GoiNS) as DbUuid,
       DbSchema: "Poi/Goi/PoiUser/Entry/v1",
       LocalRev: { Hash: "", Time: 0 },
       BaseRev: { Hash: "", Time: 0 },
-      PoiUserId: poiUserId,
+      PoiUserId: this.poiUserId,
       GoiUserProfileDbKey: "" as GlobalDbKey,
       GoiUserSettingsDbKey: "" as GlobalDbKey,
       GoiUserSavingsIds: [],
     }
+  }
+  Exists = async (): Promise<boolean> => {
+    return await GoiDb().Exists(this.dbKey)
+  }
+  Create = async (): Promise<GoiUserDbKey> => {
+    console.debug("Creating GoiUser...", this.poiUserId)
+    const newData: GoiUserDataType = this.DefaultData()
     await GoiDb().put({
-      _id: dbKey,
+      _id: this.dbKey,
       ...newData,
     })
-    const newUser = new GoiUserModel(dbKey)
-    newUser.sync()
-    return dbKey
+    return this.dbKey
   }
 
-  private dbKey: GoiUserDbKey
-  constructor(dbKey: GoiUserDbKey) {
-    this.dbKey = dbKey
-  }
   onSync?: (error?: any) => Promise<void>
   sync = async () => {
     console.error("TODO: Sync")
     this.onSync && this.onSync()
   }
-  read = async (): Promise<
-    GoiUserDataType & PouchDB.Core.IdMeta & PouchDB.Core.GetMeta
-  > => {
-    const data = await GoiDb().Get<GoiUserDataType>(this.dbKey)
-    return { ...DefaultGoiUser, ...data }
+  Read = async (): Promise<GoiUserPouchType> => {
+    const data = await GoiDb().Get<GoiUserPouchType>(this.dbKey)
+    return { ...this.DefaultData(), ...data }
   }
   private update = async (partial: Partial<GoiUserDataType>) => {
     console.debug("Updating GoiUser: ", partial)
-    const data = await this.read()
+    const data = await this.Read()
     await GoiDb().put({
       ...data,
       ...partial,
     })
   }
-  getDefaultSaving = async (): Promise<GoiSavingId> => {
-    const peekData = await this.read()
-    if (peekData.GoiUserSavingsIds.length === 0) {
-      const newSavingId = GoiSavingModel.GenerateId()
-      await GoiSavingModel.Create(peekData.PoiUserId, newSavingId)
-      await this.update({ GoiUserSavingsIds: [newSavingId] })
+  ReadOrCreate = async (): Promise<GoiUserPouchType> => {
+    if (!(await this.Exists())) {
+      await this.Create()
     }
-    const data = await this.read()
+    return await this.Read()
+  }
+  getDefaultSaving = async (): Promise<GoiSavingId> => {
+    const data = await this.Read()
+    if (data.GoiUserSavingsIds.length === 0) {
+      const newSavingId = GoiSavingModel.GenerateId()
+      await GoiSaving(this.poiUserId, newSavingId).Create()
+      await this.update({ GoiUserSavingsIds: [newSavingId] })
+      return newSavingId
+    }
     return data.GoiUserSavingsIds[0]
   }
 }
 
 export const GoiUser = (poiUserId: PoiUser.PoiUserId) => {
-  return new GoiUserModel(GoiUserModel.GetDbKey(poiUserId))
+  return new GoiUserModel(poiUserId)
 }

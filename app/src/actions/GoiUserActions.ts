@@ -1,10 +1,6 @@
 import { LocalDbKey } from "../utils/PoiDb"
 import * as PoiUser from "../utils/PoiUser"
-import {
-  GoiUserModel,
-  LocalGoiUsersDataType,
-  GoiUserDbKey,
-} from "../models/GoiUser"
+import { LocalGoiUsersDataType, GoiUser } from "../models/GoiUser"
 import { GoiUserStateType, GoiUserDomainType } from "../states/GoiUserState"
 import { GoiDb } from "../utils/GoiDb"
 
@@ -59,16 +55,8 @@ const lazyInitPoiUser = async (): Promise<PoiUser.PoiUserId> => {
   return poiUserId
 }
 
-const lazyInitGoiUser = async (
-  poiUserId: PoiUser.PoiUserId
-): Promise<GoiUserDbKey> => {
-  const userDbKey = GoiUserModel.GetDbKey(poiUserId)
-  if (await GoiDb().GetOrNull(userDbKey)) {
-    console.debug("Found UserDbKey: ", userDbKey)
-    return userDbKey
-  }
-  const createdUserDbKey = await GoiUserModel.Create(poiUserId)
-  return createdUserDbKey
+const lazyInitGoiUser = async (poiUserId: PoiUser.PoiUserId) => {
+  return await GoiUser(poiUserId).ReadOrCreate()
 }
 
 export const LazyInitUserAction = (options?: { forceDatabase?: boolean }) => {
