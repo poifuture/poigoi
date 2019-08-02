@@ -17,6 +17,11 @@ class GoiPouchDB extends PouchDB {
       throw error
     }
   }
+  Get = async <Model>(dbKey: DbKey) => {
+    const data = await super.get<Model>(dbKey)
+    this.cache[dbKey] = data
+    return data
+  }
   GetOrNull = async <Model>(dbKey: DbKey) => {
     try {
       return await this.Get<Model>(dbKey)
@@ -27,11 +32,6 @@ class GoiPouchDB extends PouchDB {
       }
       throw error
     }
-  }
-  Get = async <Model>(dbKey: DbKey) => {
-    const data = await super.get<Model>(dbKey)
-    this.cache[dbKey] = data
-    return data
   }
 }
 
