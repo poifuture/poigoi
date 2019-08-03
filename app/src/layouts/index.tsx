@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet"
 import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
 import { composeWithDevTools } from "redux-devtools-extension"
-import thunk from "redux-thunk"
+import ReduxThunk from "redux-thunk"
 import RootReducer from "../reducers/RootReducer"
 import "./layout.css"
 
@@ -13,7 +13,7 @@ export class Layout extends React.Component {
     if (!Layout.store) {
       Layout.store = createStore(
         RootReducer,
-        composeWithDevTools({})(applyMiddleware(thunk))
+        composeWithDevTools({})(applyMiddleware(ReduxThunk))
       )
     }
     return Layout.store

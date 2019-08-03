@@ -144,6 +144,21 @@ export class GoiWordRecordModel {
     }
     return await this.Read()
   }
+  SetLevel = async (level: number) => {
+    if (level <= 0 || level >= 100) {
+      console.error("Invalid word level: ", level)
+      return
+    }
+    await this.update({ Level: level, Prioritized: "", Pending: "" })
+  }
+  SetPrioritized = async (orderKey: string) => {
+    const wordRecord = await this.Read()
+    if (wordRecord.Level > 0) {
+      console.error("Already learned word: ", wordRecord.WordKey)
+      return
+    }
+    await this.update({ Prioritized: orderKey, Pending: "" })
+  }
   SetPending = async (orderKey: string) => {
     const wordRecord = await this.Read()
     if (wordRecord.Level > 0 || wordRecord.Prioritized || wordRecord.Pending) {
@@ -154,6 +169,9 @@ export class GoiWordRecordModel {
   }
   ClearPending = async () => {
     await this.update({ Pending: "" })
+  }
+  Trash = async () => {
+    await this.update({ Level: 0, Prioritized: "", Pending: "" })
   }
 }
 export const GoiWordRecord = (

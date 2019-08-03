@@ -5,7 +5,7 @@ import {
   DisplayWordAdderAction,
   AddPendingQueryAction,
   RemovePendingQueryAction,
-  AddWordsFromWordAdderStateAction,
+  AddWordsFromQuerysAction,
   ClearPendingWordsAction,
 } from "../actions/WordAdderActions"
 import {
@@ -20,10 +20,24 @@ export class WordAdder extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 > {
   CustomQueryInput: HTMLInputElement | null = null
+  getSuggestionQuerys = (): string[] => {
+    const suggestions: WordAdderSuggestionQueryType[] = this.props.suggestions.toJS()
+    return suggestions.map(suggestion => suggestion.Query)
+  }
+  getPendingQuerys = (): string[] => {
+    const pendings: WordAdderPendingQueryType[] = this.props.pendings.toJS()
+    return pendings.map(pending => pending.Query)
+  }
   onClickConfirm = async () => {
-    await this.props.addWords(this.props.poiUserId, this.props.savingId)
-    await this.props.reindex(this.props.poiUserId, this.props.savingId)
+    const poiUserId = this.props.poiUserId
+    const savingId = this.props.savingId
+    await this.props.addWordsFromQuerys(this.getPendingQuerys(), {
+      poiUserId,
+      savingId,
+    })
+    await this.props.reindex(poiUserId, savingId)
     this.props.close()
+    this.getPendingQuerys().map(query => this.props.removePendingQuery(query))
   }
   render() {
     if (!this.props.display) {
@@ -151,8 +165,16 @@ const mapDispatchToProps = (dispatch: any) => {
       ),
     removePendingQuery: (query: string) =>
       dispatch(RemovePendingQueryAction(query)),
-    addWords: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
-      dispatch(AddWordsFromWordAdderStateAction(poiUserId, savingId)),
+    addWordsFromQuerys: (
+      querys: string[],
+      options: { poiUserId: PoiUser.PoiUserId; savingId: GoiSavingId }
+    ) =>
+      dispatch(
+        AddWordsFromQuerysAction(querys, {
+          poiUserId: options.poiUserId,
+          savingId: options.savingId,
+        })
+      ),
     close: () => dispatch(DisplayWordAdderAction(false)),
     reindex: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
       dispatch(ReindexCandidatesAction(poiUserId, savingId)),
