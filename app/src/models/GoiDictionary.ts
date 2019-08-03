@@ -48,7 +48,7 @@ class GoiDictionaryWordModel {
   constructor(dbKey: GoiDictionaryWordDbKey) {
     this.dbKey = dbKey
   }
-  readOrNull = async () => {
+  ReadOrNull = async () => {
     return await GoiDb().GetOrNull<GoiDictionaryWordDataType>(this.dbKey)
   }
 }
@@ -134,7 +134,7 @@ export class GoiDictionaryModel {
         return (KanaDictionary.words[wordKey] as GoiWordType) as T
       }
       case "SimpleJaDictionary": {
-        console.debug("TODO:read from database")
+        // console.debug("TODO:read from database")
         // TODO:read from database
         if (!(wordKey in SimpleJaDictionary.words)) {
           return null
@@ -144,7 +144,7 @@ export class GoiDictionaryModel {
     }
     // TODO:read from database
     const wordDbKey = GoiDictionaryWordModel.GetDbKey(dictionaryName, wordKey)
-    const wordData = await new GoiDictionaryWordModel(wordDbKey).readOrNull()
+    const wordData = await new GoiDictionaryWordModel(wordDbKey).ReadOrNull()
     return wordData && (wordData.Content as T)
   }
   GetAllWordsKeys = async (): Promise<Immutable.Set<string>> => {

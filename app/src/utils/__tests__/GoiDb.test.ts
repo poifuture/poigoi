@@ -1,8 +1,6 @@
+import "../../testing/GoiTesting"
 import uuid5 from "uuid/v5"
-import PouchDB from "pouchdb"
 import { DbKey } from "../PoiDb"
-
-jest.mock("pouchdb-browser", () => PouchDB)
 
 import * as GoiDb from "../GoiDb"
 

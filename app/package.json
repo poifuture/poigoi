@@ -65,6 +65,7 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "jest",
+    "test:watch": "npm run test -- --watch",
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",

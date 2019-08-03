@@ -1,11 +1,5 @@
+import "../../testing/GoiTesting"
 import Base32Decode from "base32-decode"
-import crypto from "crypto"
-
-Object.defineProperty(window, "crypto", {
-  value: {
-    getRandomValues: (array: Uint32Array) => crypto.randomBytes(array.length),
-  },
-})
 
 import * as PoiUser from "../PoiUser"
 
