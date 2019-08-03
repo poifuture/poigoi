@@ -23,8 +23,8 @@ module.exports = {
         name: `PoiGoi`,
         short_name: `PoiGoi`,
         start_url: `/`,
-        background_color: `#9bc7ee`,
-        theme_color: `#9bc7ee`,
+        background_color: `#ffffff`,
+        theme_color: `#99ccff`,
         // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
         display: `standalone`,

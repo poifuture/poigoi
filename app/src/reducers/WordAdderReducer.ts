@@ -18,7 +18,7 @@ import {
 } from "../actions/WordAdderActions"
 
 const InitialWordAdderState: WordAdderStateType = {
-  Display: true,
+  Display: false,
   Status: {
     LearnedCount: 0,
     PrioritizedCount: 0,
