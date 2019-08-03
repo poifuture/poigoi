@@ -27,12 +27,12 @@ const UpdateGoiUserStateAction = (state: {
 const lazyInitLocalUsersEntry = async () => {
   // TODO: move to models
   const localGoiUsers = await GoiDb().GetOrNull<LocalGoiUsersDataType>(
-    "Local/GoiUsers" as LocalDbKey
+    "_local/GoiUsers" as LocalDbKey
   )
   if (!localGoiUsers) {
     await GoiDb().put<LocalGoiUsersDataType>({
-      _id: "Local/GoiUsers",
-      DbKey: "Local/GoiUsers" as LocalDbKey,
+      _id: "_local/GoiUsers",
+      DbKey: "_local/GoiUsers" as LocalDbKey,
       DbSchema: "Poi/Goi/Local/GoiUsers/v1",
       Users: [],
     })
@@ -42,7 +42,7 @@ const lazyInitLocalUsersEntry = async () => {
 const lazyInitPoiUser = async (): Promise<PoiUser.PoiUserId> => {
   await lazyInitLocalUsersEntry()
   const localGoiUsers = await GoiDb().Get<LocalGoiUsersDataType>(
-    "Local/GoiUsers" as LocalDbKey
+    "_local/GoiUsers" as LocalDbKey
   )
   if (localGoiUsers.Users && localGoiUsers.Users.length > 0) {
     return localGoiUsers.Users[0]

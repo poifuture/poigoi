@@ -1,6 +1,7 @@
 import {
   WordAdderStateType,
   WordAdderPendingQueryType,
+  WordAdderSuggestionQueryType,
 } from "../states/WordAdderState"
 import { GoiDictionarys } from "../models/GoiDictionary"
 import Immutable from "immutable"
@@ -81,12 +82,12 @@ const UpdateStatusAction = (
   }
 }
 
-const CountStatusAction = () => {
-  return async (dispatch: any, getState: any): Promise<void> => {
+const CountStatusAction = (
+  poiUserId: PoiUser.PoiUserId,
+  savingId: GoiSavingId
+) => {
+  return async (dispatch: any): Promise<void> => {
     console.debug("Counting status... ")
-    const state = getState()
-    const poiUserId = getPoiUserId(state)
-    const savingId = getSavingId(state)
     const wordRecords = await GoiSaving(poiUserId, savingId).GetRecords()
     console.debug("Records:", wordRecords)
     const learnedCount = wordRecords.filter(wordRecord => wordRecord.Level > 0)
@@ -155,15 +156,20 @@ const queryWords = async (
 
 const CountQueryAction = (
   query: string,
-  dictionarys: string[],
-  options?: { wordKeys?: Immutable.Set<string> }
+  options: {
+    poiUserId: PoiUser.PoiUserId
+    savingId: GoiSavingId
+    wordKeys?: Immutable.Set<string>
+  }
 ) => {
-  return async (dispatch: any, getState: any): Promise<void> => {
+  return async (dispatch: any): Promise<void> => {
+    const poiUserId = options.poiUserId
+    const savingId = options.savingId
+    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
     console.debug("Counting Query... ", query)
-    const state = getState()
-    const poiUserId = getPoiUserId(state)
-    const savingId = getSavingId(state)
-    const words = await queryWords(query, dictionarys, options)
+    const words = await queryWords(query, dictionarys, {
+      wordKeys: options.wordKeys,
+    })
     const wordRecords = (await Promise.all(
       Object.keys(words).map(
         async wordKey =>
@@ -206,41 +212,44 @@ const getDictionarys = (state: any): string[] => {
   return ["KanaDictionary", "SimpleJaDictionary"]
 }
 
-const getPoiUserId = (state: any): PoiUser.PoiUserId => {
-  return state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId
+const getSuggestionQuerysFromState = (state: any): string[] => {
+  const suggestionQuerys = state.WordAdder.get(
+    "Suggestions"
+  ).toJS() as WordAdderSuggestionQueryType[]
+  return suggestionQuerys.map(suggestion => suggestion.Query)
 }
-const getSavingId = (state: any): GoiSavingId => {
-  return state.GoiSaving.get("SavingId") as GoiSavingId
-}
-const getPendingQuerys = (state: any): string[] => {
+const getPendingQuerysFromState = (state: any): string[] => {
   const pendingQuerys = state.WordAdder.get(
     "Pendings"
   ).toJS() as WordAdderPendingQueryType[]
   return pendingQuerys.map(pending => pending.Query)
 }
 
-export const RefreshWordAdderAction = () => {
+export const RefreshWordAdderFromStateAction = (
+  poiUserId: PoiUser.PoiUserId,
+  savingId: GoiSavingId
+) => {
   return async (dispatch: any, getState: any): Promise<void> => {
-    const state = getState()
-    dispatch(CountStatusAction())
-    const dictionarys = getDictionarys(state)
+    dispatch(CountStatusAction(poiUserId, savingId))
+    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
     const wordKeys = await GoiDictionarys(dictionarys).GetAllWordsKeys()
-    const suggestionsQuerys: string[] = state.WordAdder.get("Suggestions").map(
-      (suggestionQuery: any) => suggestionQuery.get("Query") as string
-    )
-    const pendingsQuerys: string[] = state.WordAdder.get("Pendings").map(
-      (pendingQuery: any) => pendingQuery.get("Query") as string
-    )
-    Immutable.Set.of(...suggestionsQuerys, ...pendingsQuerys).map(query =>
-      dispatch(CountQueryAction(query, dictionarys, { wordKeys }))
+    const state = getState()
+    Immutable.Set.of(
+      ...getSuggestionQuerysFromState(state),
+      ...getPendingQuerysFromState(state)
+    ).map(query =>
+      dispatch(CountQueryAction(query, { poiUserId, savingId, wordKeys }))
     )
   }
 }
 
-export const ShowWordAdderAction = () => {
+export const ShowWordAdderAction = (
+  poiUserId: PoiUser.PoiUserId,
+  savingId: GoiSavingId
+) => {
   return async (dispatch: any): Promise<void> => {
     dispatch(DisplayWordAdderAction(true))
-    await dispatch(RefreshWordAdderAction())
+    await dispatch(RefreshWordAdderFromStateAction(poiUserId, savingId))
   }
 }
 
@@ -261,11 +270,18 @@ const PopPendingQueryAction = (query: string): PopPendingQueryActionType => {
   }
 }
 
-export const AddPendingQueryAction = (display: string, query: string) => {
-  return async (dispatch: any, getState: any): Promise<void> => {
-    const state = getState()
-    const dictionarys = getDictionarys(state)
-    dispatch(CountQueryAction(query, dictionarys))
+export const AddPendingQueryAction = (
+  display: string,
+  query: string,
+  options: {
+    poiUserId: PoiUser.PoiUserId
+    savingId: GoiSavingId
+  }
+) => {
+  return async (dispatch: any): Promise<void> => {
+    const poiUserId = options.poiUserId
+    const savingId = options.savingId
+    dispatch(CountQueryAction(query, { poiUserId, savingId }))
     dispatch(PushPendingQueryAction(display, query))
   }
 }
@@ -276,12 +292,17 @@ export const RemovePendingQueryAction = (query: string) => {
   }
 }
 
-const AddWordsAction = (querys: string[]) => {
-  return async (dispatch: any, getState: any): Promise<void> => {
-    const state = getState()
-    const dictionarys = getDictionarys(state)
-    const poiUserId = getPoiUserId(state)
-    const savingId = getSavingId(state)
+const AddWordsAction = (
+  querys: string[],
+  options: {
+    poiUserId: PoiUser.PoiUserId
+    savingId: GoiSavingId
+  }
+) => {
+  return async (dispatch: any): Promise<void> => {
+    const poiUserId = options.poiUserId
+    const savingId = options.savingId
+    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
     const wordKeys = await GoiDictionarys(dictionarys).GetAllWordsKeys()
     const timePrefix: string = new Date()
       .getTime()
@@ -323,20 +344,23 @@ const AddWordsAction = (querys: string[]) => {
   }
 }
 
-export const AddWordsFromWordAdderAction = () => {
+export const AddWordsFromWordAdderStateAction = (
+  poiUserId: PoiUser.PoiUserId,
+  savingId: GoiSavingId
+) => {
   return async (dispatch: any, getState: any) => {
     const state = getState()
-    const querys = getPendingQuerys(state)
-    return dispatch(AddWordsAction(querys))
+    const querys = getPendingQuerysFromState(state)
+    return dispatch(AddWordsAction(querys, { poiUserId, savingId }))
   }
 }
 
-export const ClearPendingWordsAction = () => {
-  return async (dispatch: any, getState: any): Promise<void> => {
+export const ClearPendingWordsAction = (
+  poiUserId: PoiUser.PoiUserId,
+  savingId: GoiSavingId
+) => {
+  return async (dispatch: any): Promise<void> => {
     console.debug("Clearing pending words... ")
-    const state = getState()
-    const poiUserId = getPoiUserId(state)
-    const savingId = getSavingId(state)
     const wordRecords = await GoiSaving(poiUserId, savingId).GetRecords()
     console.debug("records", wordRecords)
     const wordKeys = wordRecords
@@ -348,6 +372,6 @@ export const ClearPendingWordsAction = () => {
       )
       .map(wordRecord => wordRecord.WordKey)
     await GoiSaving(poiUserId, savingId).ClearPendings(wordKeys)
-    dispatch(RefreshWordAdderAction())
+    dispatch(RefreshWordAdderFromStateAction(poiUserId, savingId))
   }
 }

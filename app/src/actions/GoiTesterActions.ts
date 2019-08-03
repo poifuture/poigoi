@@ -40,44 +40,31 @@ export function UpdateGoiTesterWordAction(
     Word: newWord,
   }
 }
-export function UpdateCandidatesAction(
-  learnedCandidates?: GoiWordRecordDataType[],
-  prioritiedCandidates?: GoiWordRecordDataType[],
+export function UpdateCandidatesAction(options: {
+  learnedCandidates?: GoiWordRecordDataType[]
+  prioritiedCandidates?: GoiWordRecordDataType[]
   pendingCandidates?: GoiWordRecordDataType[]
-): GoiTesterActionTypes {
+}): GoiTesterActionTypes {
   return {
     type: UPDATE_CANDIDATES,
-    LearnedCandidates: learnedCandidates,
-    PrioritiedCandidates: prioritiedCandidates,
-    PendingCandidates: pendingCandidates,
+    LearnedCandidates: options.learnedCandidates,
+    PrioritiedCandidates: options.prioritiedCandidates,
+    PendingCandidates: options.pendingCandidates,
   }
 }
-const getPoiUserId = (state: any): PoiUser.PoiUserId => {
-  return state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId
-}
-const getSavingId = (state: any): GoiSavingId => {
-  return state.GoiSaving.get("SavingId") as GoiSavingId
-}
-const getDictionarys = (state: any): string[] => {
-  return state.GoiSaving.get("Saving")
-    .get("Dictionarys")
-    .toJS() as string[]
-}
 
-export function RenewCurrentWordAction(options?: {
+export function RenewCurrentWordAction(options: {
   learnedCandidate?: GoiWordRecordDataType
   prioritiedCandidate?: GoiWordRecordDataType
   pendingCandidate?: GoiWordRecordDataType
-  dictionarys?: string[]
+  dictionarys: string[]
 }) {
   return async (dispatch: any, getState: any): Promise<void> => {
-    options = options || {}
     console.debug("Reindexing... ")
-    const state = getState()
     const learnedCandidate = options.learnedCandidate
     const prioritiedCandidate = options.prioritiedCandidate
     const pendingCandidate = options.pendingCandidate
-    const dictionarys = options.dictionarys || getDictionarys(state)
+    const dictionarys = options.dictionarys
     let candidate: GoiWordRecordDataType | null = null
     if (learnedCandidate) {
       if (learnedCandidate.NextTime < new Date().getTime()) {
@@ -103,14 +90,11 @@ export function RenewCurrentWordAction(options?: {
 }
 
 export function ReindexCandidatesAction(
-  poiUserId?: PoiUser.PoiUserId,
-  savingId?: GoiSavingId
+  poiUserId: PoiUser.PoiUserId,
+  savingId: GoiSavingId
 ) {
-  return async (dispatch: any, getState: any): Promise<void> => {
+  return async (dispatch: any): Promise<void> => {
     console.debug("Reindexing... ")
-    const state = getState()
-    poiUserId = poiUserId || getPoiUserId(state)
-    savingId = savingId || getSavingId(state)
     const wordRecords = await GoiSaving(poiUserId, savingId).GetRecords()
     console.debug("Records:", wordRecords)
     const learnedCandidates = wordRecords
@@ -145,11 +129,11 @@ export function ReindexCandidatesAction(
       })
     )
     dispatch(
-      UpdateCandidatesAction(
+      UpdateCandidatesAction({
         learnedCandidates,
         prioritiedCandidates,
-        pendingCandidates
-      )
+        pendingCandidates,
+      })
     )
   }
 }

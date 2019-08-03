@@ -1,8 +1,9 @@
 import Base32Decode from "base32-decode"
+import crypto from "crypto"
 
 Object.defineProperty(window, "crypto", {
   value: {
-    getRandomValues: jest.fn(),
+    getRandomValues: (array: Uint32Array) => crypto.randomBytes(array.length),
   },
 })
 

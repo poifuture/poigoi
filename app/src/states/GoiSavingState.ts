@@ -1,4 +1,6 @@
+import { GoiSavingId } from "../types/GoiTypes"
+
 export interface GoiSavingStateType {
-  SavingId: string
+  SavingId: GoiSavingId
   Saving: any
 }

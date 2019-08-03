@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch: any) => {
     lazyInitUser: () => dispatch(LazyInitUserAction()),
     lazyInitSaving: (poiUserId: PoiUser.PoiUserId) =>
       dispatch(LazyInitSavingAction(poiUserId)),
-    reindex: (poiUserId?: PoiUser.PoiUserId, savingId?: GoiSavingId) =>
+    reindex: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
       dispatch(ReindexCandidatesAction(poiUserId, savingId)),
   }
 }
