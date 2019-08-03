@@ -8,6 +8,16 @@ import RootReducer from "../reducers/RootReducer"
 import "./layout.css"
 
 export class Layout extends React.Component {
+  private static store: any
+  private singletonStore = () => {
+    if (!Layout.store) {
+      Layout.store = createStore(
+        RootReducer,
+        composeWithDevTools({})(applyMiddleware(thunk))
+      )
+    }
+    return Layout.store
+  }
   render() {
     return (
       <div
@@ -27,14 +37,7 @@ export class Layout extends React.Component {
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
           />
         </Helmet>
-        <Provider
-          store={createStore(
-            RootReducer,
-            composeWithDevTools({})(applyMiddleware(thunk))
-          )}
-        >
-          {this.props.children}
-        </Provider>
+        <Provider store={this.singletonStore()}>{this.props.children}</Provider>
       </div>
     )
   }
