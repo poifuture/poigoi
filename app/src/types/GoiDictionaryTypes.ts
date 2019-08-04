@@ -2,6 +2,8 @@ type JA_POS = "KANA" | "NOUN" | "VERB_GODAN_JIDOSHI"
 type POS = "POS" | any
 type EN_POS = "NOUN" | "VERB"
 export interface GoiWordType {
+  key: string
+  language: string
   common: string
   audio: {
     cv: string
@@ -27,12 +29,14 @@ export interface GoiWordType {
   textbook: string[]
 }
 export interface GoiEnWordType extends GoiWordType {
+  language: "en"
   // common:
   // audio:
   pos: EN_POS
   // translation:
 }
 export interface GoiJaWordType extends GoiWordType {
+  language: "ja"
   // common:
   alternatives: string[]
   uncommon: string[]
@@ -49,10 +53,10 @@ export interface GoiJaWordType extends GoiWordType {
 }
 export interface GoiDictionaryMetadataType {
   name: string
-  language: "ja"
+  language: "ja" | "ja-jp" | "en" | "en-us" | "zh" | "zh-cn" | "zh-c2"
   display: { zh: string }
   description: { zh: string }
-  schema: string
+  schema: "Poi/Goi/RawDictionary/v1"
 }
 export interface GoiJaDictionaryType extends GoiDictionaryMetadataType {
   words: { [s: string]: GoiJaWordType }

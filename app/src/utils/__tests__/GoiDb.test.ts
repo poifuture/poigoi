@@ -5,8 +5,8 @@ import { DbKey } from "../PoiDb"
 import * as GoiDb from "../GoiDb"
 
 describe("GoiDb", () => {
-  afterAll(async () => {
-    await GoiDb.GoiDb().destroy()
+  beforeAll(async () => {
+    GoiDb.GoiDb({ test: true })
   })
 
   test("GoiDb is singleton", async () => {

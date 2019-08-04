@@ -5,8 +5,8 @@ import { GoiWordRecord, GoiSaving } from "../../models/GoiSaving"
 import * as WordAdderActions from "../WordAdderActions"
 
 describe("WordAdderActions", () => {
-  afterAll(async () => {
-    await GoiDb().destroy()
+  beforeAll(async () => {
+    GoiDb({ test: true })
   })
 
   describe("AddPendingQueryAction", () => {

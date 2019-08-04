@@ -1,5 +1,7 @@
 // Polyfill nodejs environment
 import PouchDB from "pouchdb"
+import PouchDBAdapterMemory from "pouchdb-adapter-memory"
+PouchDB.plugin(PouchDBAdapterMemory)
 jest.mock("pouchdb-browser", () => PouchDB)
 import crypto from "crypto"
 Object.defineProperty(window, "crypto", {

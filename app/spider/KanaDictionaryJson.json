@@ -1,5 +1,7 @@
 {
   "あ": {
+    "key": "あ",
+    "language": "ja",
     "common": "<ruby>あ<rt>a</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -43,6 +45,8 @@
     ]
   },
   "い": {
+    "key": "い",
+    "language": "ja",
     "common": "<ruby>い<rt>i</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -86,6 +90,8 @@
     ]
   },
   "う": {
+    "key": "う",
+    "language": "ja",
     "common": "<ruby>う<rt>u</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -129,6 +135,8 @@
     ]
   },
   "え": {
+    "key": "え",
+    "language": "ja",
     "common": "<ruby>え<rt>e</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -172,6 +180,8 @@
     ]
   },
   "お": {
+    "key": "お",
+    "language": "ja",
     "common": "<ruby>お<rt>o</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -215,6 +225,8 @@
     ]
   },
   "か": {
+    "key": "か",
+    "language": "ja",
     "common": "<ruby>か<rt>ka</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -258,6 +270,8 @@
     ]
   },
   "き": {
+    "key": "き",
+    "language": "ja",
     "common": "<ruby>き<rt>ki</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -301,6 +315,8 @@
     ]
   },
   "く": {
+    "key": "く",
+    "language": "ja",
     "common": "<ruby>く<rt>ku</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -344,6 +360,8 @@
     ]
   },
   "け": {
+    "key": "け",
+    "language": "ja",
     "common": "<ruby>け<rt>ke</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -387,6 +405,8 @@
     ]
   },
   "こ": {
+    "key": "こ",
+    "language": "ja",
     "common": "<ruby>こ<rt>ko</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -430,6 +450,8 @@
     ]
   },
   "さ": {
+    "key": "さ",
+    "language": "ja",
     "common": "<ruby>さ<rt>sa</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -473,6 +495,8 @@
     ]
   },
   "し": {
+    "key": "し",
+    "language": "ja",
     "common": "<ruby>し<rt>shi</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -516,6 +540,8 @@
     ]
   },
   "す": {
+    "key": "す",
+    "language": "ja",
     "common": "<ruby>す<rt>su</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -559,6 +585,8 @@
     ]
   },
   "せ": {
+    "key": "せ",
+    "language": "ja",
     "common": "<ruby>せ<rt>se</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -602,6 +630,8 @@
     ]
   },
   "そ": {
+    "key": "そ",
+    "language": "ja",
     "common": "<ruby>そ<rt>so</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -645,6 +675,8 @@
     ]
   },
   "た": {
+    "key": "た",
+    "language": "ja",
     "common": "<ruby>た<rt>ta</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -688,6 +720,8 @@
     ]
   },
   "ち": {
+    "key": "ち",
+    "language": "ja",
     "common": "<ruby>ち<rt>chi</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -731,6 +765,8 @@
     ]
   },
   "つ": {
+    "key": "つ",
+    "language": "ja",
     "common": "<ruby>つ<rt>tsu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -774,6 +810,8 @@
     ]
   },
   "て": {
+    "key": "て",
+    "language": "ja",
     "common": "<ruby>て<rt>te</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -817,6 +855,8 @@
     ]
   },
   "と": {
+    "key": "と",
+    "language": "ja",
     "common": "<ruby>と<rt>to</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -860,6 +900,8 @@
     ]
   },
   "な": {
+    "key": "な",
+    "language": "ja",
     "common": "<ruby>な<rt>na</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -903,6 +945,8 @@
     ]
   },
   "に": {
+    "key": "に",
+    "language": "ja",
     "common": "<ruby>に<rt>ni</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -946,6 +990,8 @@
     ]
   },
   "ぬ": {
+    "key": "ぬ",
+    "language": "ja",
     "common": "<ruby>ぬ<rt>nu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -989,6 +1035,8 @@
     ]
   },
   "ね": {
+    "key": "ね",
+    "language": "ja",
     "common": "<ruby>ね<rt>ne</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1032,6 +1080,8 @@
     ]
   },
   "の": {
+    "key": "の",
+    "language": "ja",
     "common": "<ruby>の<rt>no</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1075,6 +1125,8 @@
     ]
   },
   "は": {
+    "key": "は",
+    "language": "ja",
     "common": "<ruby>は<rt>ha</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1118,6 +1170,8 @@
     ]
   },
   "ひ": {
+    "key": "ひ",
+    "language": "ja",
     "common": "<ruby>ひ<rt>hi</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1161,6 +1215,8 @@
     ]
   },
   "ふ": {
+    "key": "ふ",
+    "language": "ja",
     "common": "<ruby>ふ<rt>fu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1204,6 +1260,8 @@
     ]
   },
   "へ": {
+    "key": "へ",
+    "language": "ja",
     "common": "<ruby>へ<rt>he</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1247,6 +1305,8 @@
     ]
   },
   "ほ": {
+    "key": "ほ",
+    "language": "ja",
     "common": "<ruby>ほ<rt>ho</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1290,6 +1350,8 @@
     ]
   },
   "ま": {
+    "key": "ま",
+    "language": "ja",
     "common": "<ruby>ま<rt>ma</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1333,6 +1395,8 @@
     ]
   },
   "み": {
+    "key": "み",
+    "language": "ja",
     "common": "<ruby>み<rt>mi</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1376,6 +1440,8 @@
     ]
   },
   "む": {
+    "key": "む",
+    "language": "ja",
     "common": "<ruby>む<rt>mu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1419,6 +1485,8 @@
     ]
   },
   "め": {
+    "key": "め",
+    "language": "ja",
     "common": "<ruby>め<rt>me</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1462,6 +1530,8 @@
     ]
   },
   "も": {
+    "key": "も",
+    "language": "ja",
     "common": "<ruby>も<rt>mo</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1505,6 +1575,8 @@
     ]
   },
   "や": {
+    "key": "や",
+    "language": "ja",
     "common": "<ruby>や<rt>ya</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1548,6 +1620,8 @@
     ]
   },
   "ゆ": {
+    "key": "ゆ",
+    "language": "ja",
     "common": "<ruby>ゆ<rt>yu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1591,6 +1665,8 @@
     ]
   },
   "よ": {
+    "key": "よ",
+    "language": "ja",
     "common": "<ruby>よ<rt>yo</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1634,6 +1710,8 @@
     ]
   },
   "ら": {
+    "key": "ら",
+    "language": "ja",
     "common": "<ruby>ら<rt>ra</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1677,6 +1755,8 @@
     ]
   },
   "り": {
+    "key": "り",
+    "language": "ja",
     "common": "<ruby>り<rt>ri</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1720,6 +1800,8 @@
     ]
   },
   "る": {
+    "key": "る",
+    "language": "ja",
     "common": "<ruby>る<rt>ru</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1763,6 +1845,8 @@
     ]
   },
   "れ": {
+    "key": "れ",
+    "language": "ja",
     "common": "<ruby>れ<rt>re</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1806,6 +1890,8 @@
     ]
   },
   "ろ": {
+    "key": "ろ",
+    "language": "ja",
     "common": "<ruby>ろ<rt>ro</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1849,6 +1935,8 @@
     ]
   },
   "わ": {
+    "key": "わ",
+    "language": "ja",
     "common": "<ruby>わ<rt>wa</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1892,6 +1980,8 @@
     ]
   },
   "を": {
+    "key": "を",
+    "language": "ja",
     "common": "<ruby>を<rt>o</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1935,6 +2025,8 @@
     ]
   },
   "ん": {
+    "key": "ん",
+    "language": "ja",
     "common": "<ruby>ん<rt>n</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -1978,6 +2070,8 @@
     ]
   },
   "ア": {
+    "key": "ア",
+    "language": "ja",
     "common": "<ruby>ア<rt>a</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2021,6 +2115,8 @@
     ]
   },
   "イ": {
+    "key": "イ",
+    "language": "ja",
     "common": "<ruby>イ<rt>i</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2064,6 +2160,8 @@
     ]
   },
   "ウ": {
+    "key": "ウ",
+    "language": "ja",
     "common": "<ruby>ウ<rt>u</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2107,6 +2205,8 @@
     ]
   },
   "エ": {
+    "key": "エ",
+    "language": "ja",
     "common": "<ruby>エ<rt>e</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2150,6 +2250,8 @@
     ]
   },
   "オ": {
+    "key": "オ",
+    "language": "ja",
     "common": "<ruby>オ<rt>o</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2193,6 +2295,8 @@
     ]
   },
   "カ": {
+    "key": "カ",
+    "language": "ja",
     "common": "<ruby>カ<rt>ka</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2236,6 +2340,8 @@
     ]
   },
   "キ": {
+    "key": "キ",
+    "language": "ja",
     "common": "<ruby>キ<rt>ki</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2279,6 +2385,8 @@
     ]
   },
   "ク": {
+    "key": "ク",
+    "language": "ja",
     "common": "<ruby>ク<rt>ku</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2322,6 +2430,8 @@
     ]
   },
   "ケ": {
+    "key": "ケ",
+    "language": "ja",
     "common": "<ruby>ケ<rt>ke</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2365,6 +2475,8 @@
     ]
   },
   "コ": {
+    "key": "コ",
+    "language": "ja",
     "common": "<ruby>コ<rt>ko</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2408,6 +2520,8 @@
     ]
   },
   "サ": {
+    "key": "サ",
+    "language": "ja",
     "common": "<ruby>サ<rt>sa</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2451,6 +2565,8 @@
     ]
   },
   "シ": {
+    "key": "シ",
+    "language": "ja",
     "common": "<ruby>シ<rt>shi</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2494,6 +2610,8 @@
     ]
   },
   "ス": {
+    "key": "ス",
+    "language": "ja",
     "common": "<ruby>ス<rt>su</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2537,6 +2655,8 @@
     ]
   },
   "セ": {
+    "key": "セ",
+    "language": "ja",
     "common": "<ruby>セ<rt>se</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2580,6 +2700,8 @@
     ]
   },
   "ソ": {
+    "key": "ソ",
+    "language": "ja",
     "common": "<ruby>ソ<rt>so</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2623,6 +2745,8 @@
     ]
   },
   "タ": {
+    "key": "タ",
+    "language": "ja",
     "common": "<ruby>タ<rt>ta</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2666,6 +2790,8 @@
     ]
   },
   "チ": {
+    "key": "チ",
+    "language": "ja",
     "common": "<ruby>チ<rt>chi</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2709,6 +2835,8 @@
     ]
   },
   "ツ": {
+    "key": "ツ",
+    "language": "ja",
     "common": "<ruby>ツ<rt>tsu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2752,6 +2880,8 @@
     ]
   },
   "テ": {
+    "key": "テ",
+    "language": "ja",
     "common": "<ruby>テ<rt>te</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2795,6 +2925,8 @@
     ]
   },
   "ト": {
+    "key": "ト",
+    "language": "ja",
     "common": "<ruby>ト<rt>to</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2838,6 +2970,8 @@
     ]
   },
   "ナ": {
+    "key": "ナ",
+    "language": "ja",
     "common": "<ruby>ナ<rt>na</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2881,6 +3015,8 @@
     ]
   },
   "ニ": {
+    "key": "ニ",
+    "language": "ja",
     "common": "<ruby>ニ<rt>ni</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2924,6 +3060,8 @@
     ]
   },
   "ヌ": {
+    "key": "ヌ",
+    "language": "ja",
     "common": "<ruby>ヌ<rt>nu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -2967,6 +3105,8 @@
     ]
   },
   "ネ": {
+    "key": "ネ",
+    "language": "ja",
     "common": "<ruby>ネ<rt>ne</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3010,6 +3150,8 @@
     ]
   },
   "ノ": {
+    "key": "ノ",
+    "language": "ja",
     "common": "<ruby>ノ<rt>no</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3053,6 +3195,8 @@
     ]
   },
   "ハ": {
+    "key": "ハ",
+    "language": "ja",
     "common": "<ruby>ハ<rt>ha</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3096,6 +3240,8 @@
     ]
   },
   "ヒ": {
+    "key": "ヒ",
+    "language": "ja",
     "common": "<ruby>ヒ<rt>hi</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3139,6 +3285,8 @@
     ]
   },
   "フ": {
+    "key": "フ",
+    "language": "ja",
     "common": "<ruby>フ<rt>fu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3182,6 +3330,8 @@
     ]
   },
   "ヘ": {
+    "key": "ヘ",
+    "language": "ja",
     "common": "<ruby>ヘ<rt>he</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3225,6 +3375,8 @@
     ]
   },
   "ホ": {
+    "key": "ホ",
+    "language": "ja",
     "common": "<ruby>ホ<rt>ho</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3268,6 +3420,8 @@
     ]
   },
   "マ": {
+    "key": "マ",
+    "language": "ja",
     "common": "<ruby>マ<rt>ma</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3311,6 +3465,8 @@
     ]
   },
   "ミ": {
+    "key": "ミ",
+    "language": "ja",
     "common": "<ruby>ミ<rt>mi</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3354,6 +3510,8 @@
     ]
   },
   "ム": {
+    "key": "ム",
+    "language": "ja",
     "common": "<ruby>ム<rt>mu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3397,6 +3555,8 @@
     ]
   },
   "メ": {
+    "key": "メ",
+    "language": "ja",
     "common": "<ruby>メ<rt>me</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3440,6 +3600,8 @@
     ]
   },
   "モ": {
+    "key": "モ",
+    "language": "ja",
     "common": "<ruby>モ<rt>mo</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3483,6 +3645,8 @@
     ]
   },
   "ヤ": {
+    "key": "ヤ",
+    "language": "ja",
     "common": "<ruby>ヤ<rt>ya</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3526,6 +3690,8 @@
     ]
   },
   "ユ": {
+    "key": "ユ",
+    "language": "ja",
     "common": "<ruby>ユ<rt>yu</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3569,6 +3735,8 @@
     ]
   },
   "ヨ": {
+    "key": "ヨ",
+    "language": "ja",
     "common": "<ruby>ヨ<rt>yo</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3612,6 +3780,8 @@
     ]
   },
   "ラ": {
+    "key": "ラ",
+    "language": "ja",
     "common": "<ruby>ラ<rt>ra</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3655,6 +3825,8 @@
     ]
   },
   "リ": {
+    "key": "リ",
+    "language": "ja",
     "common": "<ruby>リ<rt>ri</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3698,6 +3870,8 @@
     ]
   },
   "ル": {
+    "key": "ル",
+    "language": "ja",
     "common": "<ruby>ル<rt>ru</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3741,6 +3915,8 @@
     ]
   },
   "レ": {
+    "key": "レ",
+    "language": "ja",
     "common": "<ruby>レ<rt>re</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3784,6 +3960,8 @@
     ]
   },
   "ロ": {
+    "key": "ロ",
+    "language": "ja",
     "common": "<ruby>ロ<rt>ro</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3827,6 +4005,8 @@
     ]
   },
   "ワ": {
+    "key": "ワ",
+    "language": "ja",
     "common": "<ruby>ワ<rt>wa</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3870,6 +4050,8 @@
     ]
   },
   "ヲ": {
+    "key": "ヲ",
+    "language": "ja",
     "common": "<ruby>ヲ<rt>o</rt></ruby>",
     "alternatives": [],
     "uncommon": [],
@@ -3913,6 +4095,8 @@
     ]
   },
   "ン": {
+    "key": "ン",
+    "language": "ja",
     "common": "<ruby>ン<rt>n</rt></ruby>",
     "alternatives": [],
     "uncommon": [],

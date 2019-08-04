@@ -1,10 +1,18 @@
 import React from "react"
-import { GoiJaWordType } from "../types/GoiDictionaryTypes"
+import { GoiJaWordType } from "../../types/GoiDictionaryTypes"
 
 export type WordCardPropsType = {
   word: GoiJaWordType
   display: "simple" | "detailed" | "test-common" | "test-translation"
-  status: "input" | "first" | "success" | "failed" | "peek" | "review"
+  status:
+    | "input"
+    | "first"
+    | "perfect"
+    | "good"
+    | "warning"
+    | "failed"
+    | "peek"
+    | "review"
 }
 
 export class WordCard extends React.Component<WordCardPropsType> {
@@ -22,8 +30,12 @@ export class WordCard extends React.Component<WordCardPropsType> {
         ? "gray"
         : this.props.status === "first"
         ? "blue"
-        : this.props.status === "success"
-        ? "green"
+        : this.props.status === "perfect"
+        ? "darkgreen"
+        : this.props.status === "good"
+        ? "lightgreen"
+        : this.props.status === "warning"
+        ? "yellow"
         : this.props.status === "failed"
         ? "red"
         : this.props.status === "peek"

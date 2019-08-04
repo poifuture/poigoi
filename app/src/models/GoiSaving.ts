@@ -8,7 +8,7 @@ import {
 } from "../utils/PoiDb"
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
-import { GoiSavingId } from "../types/GoiTypes"
+import { GoiSavingId, GoiJudgeResult } from "../types/GoiTypes"
 
 export type GoiSavingDbKey = GlobalDbKey & { readonly brand: "GoiSavingDbKey" }
 export type GoiWordRecordDbKey = GlobalDbKey & {
@@ -19,7 +19,6 @@ export type GoiWordHistoryDbKey = GlobalDbKey & {
 }
 
 export type OrderKey = string & { readonly brand?: "OrderKey" }
-export type JudgeResult = "Correct" | "Accepted" | "Wrong" | "Skip"
 
 export interface GoiWordHistoryDataType extends PoiGlobalDataType {
   // PoiGlobalDbKey: Poi/Goi/PoiUsers/:PoiUserId/Savings/:SavingId/WordHistorys/:JudgeTime
@@ -29,11 +28,115 @@ export interface GoiWordHistoryDataType extends PoiGlobalDataType {
   readonly SavingId: GoiSavingId
   readonly PoiUserId: PoiUser.PoiUserId
   WordKey: string
-  JudgeResult: JudgeResult
+  JudgeResult: GoiJudgeResult
   LevelBefore: number
   LevelAfter: number
 }
+type GoiWordHistoryPouchType = GoiWordHistoryDataType &
+  PouchDB.Core.IdMeta &
+  PouchDB.Core.GetMeta
 
+export class GoiWordHistoryModel {
+  public static GetDbKey = (
+    poiUserId: PoiUser.PoiUserId,
+    savingId: GoiSavingId,
+    judgeTime: TimeStamp
+  ): GoiWordHistoryDbKey => {
+    return `Poi/Goi/PoiUsers/${poiUserId}/Savings/${savingId}/WordHistorys/${judgeTime
+      .toString()
+      .padStart(20, "0")}` as GoiWordHistoryDbKey
+  }
+  private readonly dbKey: GoiWordHistoryDbKey
+  private readonly poiUserId: PoiUser.PoiUserId
+  private readonly savingId: GoiSavingId
+  private readonly judgeTime: TimeStamp
+  constructor(
+    poiUserId: PoiUser.PoiUserId,
+    savingId: GoiSavingId,
+    judgeTime: TimeStamp
+  ) {
+    this.dbKey = GoiWordHistoryModel.GetDbKey(poiUserId, savingId, judgeTime)
+    this.poiUserId = poiUserId
+    this.savingId = savingId
+    this.judgeTime = judgeTime
+  }
+  private DefaultData = (): GoiWordHistoryDataType => {
+    return {
+      DbKey: this.dbKey,
+      DbUuid: uuid5(this.dbKey, GoiNS) as DbUuid,
+      DbSchema: "Poi/Goi/PoiUser/Saving/WordHistory/v1",
+      LocalRev: { Hash: "", Time: 0 },
+      BaseRev: { Hash: "", Time: 0 },
+      JudgeTime: this.judgeTime,
+      SavingId: this.savingId,
+      PoiUserId: this.poiUserId,
+      WordKey: "",
+      JudgeResult: "Skipped",
+      LevelBefore: 0,
+      LevelAfter: 0,
+    }
+  }
+  Exists = async (): Promise<boolean> => {
+    return await GoiDb().Exists(this.dbKey)
+  }
+  Create = async (
+    wordKey: string,
+    judgeResult: GoiJudgeResult,
+    levelBefore: number,
+    levelAfter: number
+  ): Promise<GoiWordHistoryDbKey> => {
+    //static builder
+    const newData: GoiWordHistoryDataType = this.DefaultData()
+    await GoiDb().put<GoiWordHistoryDataType>({
+      _id: this.dbKey,
+      ...newData,
+      WordKey: wordKey,
+      JudgeResult: judgeResult,
+      LevelBefore: levelBefore,
+      LevelAfter: levelAfter,
+    })
+    return this.dbKey
+  }
+  private UpgradeSchema = async (
+    oldSchema: DbSchema
+  ): Promise<GoiWordHistoryPouchType | null> => {
+    switch (oldSchema) {
+      case "Poi/Goi/PoiUser/Saving/WordHistory/v1": {
+        return null
+      }
+    }
+    return null
+  }
+
+  Read = async (): Promise<GoiWordHistoryPouchType> => {
+    const possibleOldData = await GoiDb().Get<GoiWordHistoryDataType>(
+      this.dbKey
+    )
+    const oldSchema = (possibleOldData as any).DbSchema as DbSchema
+    const data = (await this.UpgradeSchema(oldSchema)) || possibleOldData
+    return { ...this.DefaultData(), ...data }
+  }
+  private update = async (partial: Partial<GoiWordHistoryDataType>) => {
+    const data = await this.Read()
+    await GoiDb().put<GoiWordHistoryDataType>({
+      ...data,
+      ...partial,
+    })
+  }
+  ReadOrNull = async (): Promise<GoiWordHistoryPouchType | null> => {
+    if (!(await this.Exists())) {
+      return null
+    }
+    return await this.Read()
+  }
+}
+export const GoiWordHistory = (
+  poiUserId: PoiUser.PoiUserId,
+  savingId: GoiSavingId,
+  judgeTime: TimeStamp
+) => {
+  return new GoiWordHistoryModel(poiUserId, savingId, judgeTime)
+}
 export interface GoiWordRecordDataType extends PoiGlobalDataType {
   // PoiGlobalDbKey: Poi/Goi/PoiUsers/:PoiUserId/Savings/:SavingId/WordRecords/:WordKey
   // Schema: Poi/Goi/PoiUser/Saving/WordRecord/v1
@@ -46,7 +149,7 @@ export interface GoiWordRecordDataType extends PoiGlobalDataType {
   NextTime: TimeStamp
   Pending: OrderKey
   Prioritized: OrderKey
-  History: { [time: number]: GoiWordHistoryDbKey }
+  Historys: { [time: number]: GoiWordHistoryDbKey }
 }
 type GoiWordRecordPouchType = GoiWordRecordDataType &
   PouchDB.Core.IdMeta &
@@ -88,7 +191,7 @@ export class GoiWordRecordModel {
       NextTime: 0,
       Pending: "",
       Prioritized: "",
-      History: {},
+      Historys: {},
     }
   }
   Exists = async (): Promise<boolean> => {
@@ -144,6 +247,10 @@ export class GoiWordRecordModel {
     }
     return await this.Read()
   }
+  GetLevel = async () => {
+    const data = await this.Read()
+    return data.Level
+  }
   SetLevel = async (level: number) => {
     if (level <= 0 || level >= 100) {
       console.error("Invalid word level: ", level)
@@ -173,6 +280,28 @@ export class GoiWordRecordModel {
   Trash = async () => {
     await this.update({ Level: 0, Prioritized: "", Pending: "" })
   }
+  SetNextTime = async (nextTime: TimeStamp) => {
+    await this.update({ NextTime: nextTime })
+  }
+  CreateHistory = async (
+    judgeResult: GoiJudgeResult,
+    levelBefore: number,
+    levelAfter: number
+  ) => {
+    const judgeTime: TimeStamp = new Date().getTime() as TimeStamp
+    const data = await this.Read()
+    const historyDbKey = await GoiWordHistory(
+      this.poiUserId,
+      this.savingId,
+      judgeTime
+    ).Create(this.wordKey, judgeResult, levelBefore, levelAfter)
+    const newHistorys: { [time: number]: GoiWordHistoryDbKey } = Object.assign(
+      {},
+      data.Historys,
+      { judgeTime: historyDbKey }
+    )
+    await this.update({ Historys: newHistorys })
+  }
 }
 export const GoiWordRecord = (
   poiUserId: PoiUser.PoiUserId,
@@ -188,8 +317,9 @@ export interface GoiSavingDataType extends PoiGlobalDataType {
   readonly DbSchema: "Poi/Goi/PoiUser/Saving/Entry/v1"
   readonly PoiUserId: PoiUser.PoiUserId
   readonly SavingId: GoiSavingId
-  Judgement: "Typing" | "Selection"
+  Judgement: "Typing" | "Selection" | "Swipe"
   Term: "Permanant" | "Temporary"
+  Language: "ja" | "ja-jp" | "en" | "en-us" | "zh" | "zh-cn" | "zh-c2"
   Dictionarys: string[]
   Records: { [key: string]: GoiWordRecordDbKey }
 }
@@ -226,6 +356,7 @@ export class GoiSavingModel {
       SavingId: this.savingId,
       Judgement: "Typing",
       Term: "Permanant",
+      Language: "ja",
       Dictionarys: ["KanaDictionary", "SimpleJaDictionary"],
       Records: {},
     }

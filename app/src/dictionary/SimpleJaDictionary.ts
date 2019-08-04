@@ -9,9 +9,11 @@ export const SimpleJaDictionary: GoiJaDictionaryType = {
     zh:
       "中文释义采用日常使用该词汇时的直观释义，强化实际运用日语时的概念感受，提升日常会话交流的反应速度，弱化语言学的精准定义，推荐以听、说为主要目的同学使用。",
   },
-  schema: "Poi/Goi/Dictionary/Collection/v1",
+  schema: "Poi/Goi/RawDictionary/v1",
   words: {
     会う: {
+      key: "会う",
+      language: "ja",
       common: "<ruby>会<rt>あ</rt></ruby>う",
       alternatives: ["あう"],
       uncommon: [],
@@ -63,6 +65,8 @@ export const SimpleJaDictionary: GoiJaDictionaryType = {
       textbook: ["JLPT-N5-00001", "XINBIAN-01-01-0001"],
     },
     家: {
+      key: "家",
+      language: "ja",
       common: "<ruby>家<rt>いえ</rt></ruby>",
       alternatives: ["いえ"],
       uncommon: [],
@@ -92,6 +96,8 @@ export const SimpleJaDictionary: GoiJaDictionaryType = {
       textbook: ["JLPT-N5-00046", "XINBIAN-01-01-0002"],
     },
     上: {
+      key: "上",
+      language: "ja",
       common: "<ruby>上<rt>うえ</rt></ruby>",
       alternatives: ["うえ"],
       uncommon: [],

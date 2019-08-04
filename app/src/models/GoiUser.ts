@@ -24,6 +24,7 @@ interface GoiUserDataType extends PoiGlobalDataType {
   // Schema: Poi/Goi/PoiUser/Entry/v1
   readonly DbSchema: "Poi/Goi/PoiUser/Entry/v1"
   readonly PoiUserId: PoiUser.PoiUserId
+  Domain: "Local" | "Poi"
   GoiUserProfileDbKey: GlobalDbKey
   GoiUserSettingsDbKey: GlobalDbKey
   GoiUserSavingsIds: GoiSavingId[]
@@ -50,6 +51,7 @@ export class GoiUserModel {
       LocalRev: { Hash: "", Time: 0 },
       BaseRev: { Hash: "", Time: 0 },
       PoiUserId: this.poiUserId,
+      Domain: "Local",
       GoiUserProfileDbKey: "" as GlobalDbKey,
       GoiUserSettingsDbKey: "" as GlobalDbKey,
       GoiUserSavingsIds: [],

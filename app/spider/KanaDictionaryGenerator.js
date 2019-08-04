@@ -20,6 +20,8 @@ const main = () => {
     const sentence = cells[6]
     const translation = cells[7]
     result[kana] = {
+      key: kana,
+      language: "ja",
       common: `<ruby>${kana}<rt>${romaji}</rt></ruby>`,
       alternatives: [],
       uncommon: [],
