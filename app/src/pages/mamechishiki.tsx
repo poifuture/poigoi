@@ -4,6 +4,7 @@ import { graphql } from "gatsby"
 import NavBar from "../components/NavBar"
 import Header from "../components/Header"
 import { poisky3 } from "../utils/PoiColors"
+import Helmet from "react-helmet"
 
 const Card = styled.div``
 const CardHeader = styled.div`
@@ -13,6 +14,9 @@ const CardBody = styled.div``
 
 export default (props: any) => (
   <div>
+    <Helmet>
+      <title>Mamechishiki</title>
+    </Helmet>
     <NavBar />
     <Header>
       <ruby>

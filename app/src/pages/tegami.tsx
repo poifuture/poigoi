@@ -1,9 +1,13 @@
 import React from "react"
 import Header from "../components/Header"
 import NavBar from "../components/NavBar"
+import Helmet from "react-helmet"
 
 export default () => (
   <div>
+    <Helmet>
+      <title>Tegami</title>
+    </Helmet>
     <NavBar />
     <Header>
       <ruby>

@@ -20,12 +20,7 @@ export class Layout extends React.Component {
   }
   render() {
     return (
-      <div
-        style={{
-          margin: 0,
-          padding: 0,
-        }}
-      >
+      <div className="goi-layout">
         <Helmet>
           <title>PoiGoi</title>
           <link

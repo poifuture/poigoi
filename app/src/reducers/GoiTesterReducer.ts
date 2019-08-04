@@ -6,11 +6,14 @@ import {
   UpdateCandidatesActionType,
   UPDATE_GOI_TESTER_WORD,
   UPDATE_CANDIDATES,
+  UPDATE_JUDGE_RESULT,
+  UpdateJudgeResultActionType,
 } from "../actions/GoiTesterActions"
 import { GoiTesterStateType } from "../states/GoiTesterState"
 
 const InitialGoiTesterState: GoiTesterStateType = {
   CurrentWord: KanaDictionary.words["あ"],
+  JudgeResult: "Pending",
   LearnedCandidates: [],
   PrioritiedCandidates: [],
   PendingCandidates: [],
@@ -26,6 +29,11 @@ export const GoiTesterReducer = (
       console.debug("Hit UPDATE_GOI_USER_STATE ... ", action)
       const typedAction = action as UpdateGoiTesterWordActionType
       return state.set("CurrentWord", fromJS(typedAction.Word))
+    }
+    case UPDATE_JUDGE_RESULT: {
+      console.debug("Hit UPDATE_JUDGE_RESULT ... ", action)
+      const typedAction = action as UpdateJudgeResultActionType
+      return state.set("JudgeResult", typedAction.JudgeResult)
     }
     case UPDATE_CANDIDATES: {
       console.debug("Hit UPDATE_CANDIDATES ... ", action)

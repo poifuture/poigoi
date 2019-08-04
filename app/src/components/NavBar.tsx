@@ -41,9 +41,6 @@ const NavBarItem = styled(UnstyledNavBarItem)`
 
 export default () => (
   <NavBar>
-    <Helmet>
-      <title>PoiGoi</title>
-    </Helmet>
     <NavBarList>
       <NavBarItem to="/">Home</NavBarItem>
       <NavBarItem to="/mamechishiki/">豆知識</NavBarItem>
