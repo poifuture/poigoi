@@ -14,23 +14,24 @@ import { GoiDictionarys } from "../models/GoiDictionary"
 import { TrimFurigana, AsciiRomaji } from "../utils/GoiJaUtils"
 import { TimeStamp } from "../utils/PoiDb"
 import Moment from "moment"
+import { Action } from "redux"
 
 export const UPDATE_GOI_TESTER_WORD =
   "GOI_TESTER_ACTIONS_CHANGE_GOI_TESTER_WORD"
 export const UPDATE_CANDIDATES = "GOI_TESTER_ACTIONS_UPDATE_CANDIDATES"
 export const UPDATE_JUDGE_RESULT = "GOI_TESTER_ACTIONS_UPDATE_JUDGE_RESULT"
 
-export interface UpdateGoiTesterWordActionType {
-  type: typeof UPDATE_GOI_TESTER_WORD
+export interface UpdateGoiTesterWordActionType
+  extends Action<typeof UPDATE_GOI_TESTER_WORD> {
   Word: GoiWordType
 }
-export interface UpdateJudgeResultActionType {
-  type: typeof UPDATE_JUDGE_RESULT
+export interface UpdateJudgeResultActionType
+  extends Action<typeof UPDATE_JUDGE_RESULT> {
   JudgeResult: GoiJudgeResult
 }
 
-export interface UpdateCandidatesActionType {
-  type: typeof UPDATE_CANDIDATES
+export interface UpdateCandidatesActionType
+  extends Action<typeof UPDATE_CANDIDATES> {
   LearnedCandidates?: GoiWordRecordDataType[]
   PrioritiedCandidates?: GoiWordRecordDataType[]
   PendingCandidates?: GoiWordRecordDataType[]
@@ -329,45 +330,5 @@ export const VerifyAnswerAction = (
     await recordModel.SetNextTime(nextTime)
 
     return judgeResult
-    const wordRecords = await GoiSaving(poiUserId, savingId).GetRecords()
-    console.debug("Records:", wordRecords)
-    const learnedCandidates = wordRecords
-      .filter(wordRecord => wordRecord.Level > 0)
-      .sort((a, b) => {
-        // ascending
-        return a.NextTime - b.NextTime
-      })
-    const prioritiedCandidates = wordRecords
-      .filter(wordRecord => wordRecord.Prioritized)
-      .sort((a, b) => {
-        return a.Prioritized > b.Prioritized ? 1 : -1
-      })
-    const pendingCandidates = wordRecords
-      .filter(wordRecord => wordRecord.Pending)
-      .sort((a, b) => {
-        return a.Pending > b.Pending ? 1 : -1
-      })
-    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
-    dispatch(
-      RenewCurrentWordAction({
-        ...(learnedCandidates.length > 0 && {
-          learnedCandidate: learnedCandidates[0],
-        }),
-        ...(prioritiedCandidates.length > 0 && {
-          prioritiedCandidate: prioritiedCandidates[0],
-        }),
-        ...(pendingCandidates.length > 0 && {
-          pendingCandidate: pendingCandidates[0],
-        }),
-        dictionarys,
-      })
-    )
-    dispatch(
-      UpdateCandidatesAction({
-        learnedCandidates,
-        prioritiedCandidates,
-        pendingCandidates,
-      })
-    )
   }
 }

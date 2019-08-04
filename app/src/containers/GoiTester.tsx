@@ -11,6 +11,9 @@ import {
 import { GoiSavingId, GoiJudgeResult } from "../types/GoiTypes"
 import Helmet from "react-helmet"
 import { GoiWordType, GoiJaWordType } from "../types/GoiDictionaryTypes"
+import { RootStateType } from "../states/RootState"
+import { ThunkDispatch } from "redux-thunk"
+import { Action } from "redux"
 
 export class GoiTester extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
@@ -20,7 +23,7 @@ export class GoiTester extends React.Component<
     console.debug("Lasy init user")
     const poiUserId = (await this.props.lazyInitUser()) as PoiUser.PoiUserId
     console.debug("Lasy init saving")
-    const savingId = await this.props.lazyInitSaving(poiUserId)
+    const savingId = await this.props.lazyInitSaving({ poiUserId })
     await this.props.reindex(poiUserId, savingId)
   }
   onRequestJudge = () => {
@@ -66,7 +69,7 @@ export class GoiTester extends React.Component<
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootStateType) => {
   console.debug("GoiTester state: ", state)
   const props = {
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
@@ -79,11 +82,13 @@ const mapStateToProps = (state: any) => {
   console.debug("GoiTester props: ", props)
   return props
 }
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<RootStateType, void, Action>
+) => {
   return {
     lazyInitUser: () => dispatch(LazyInitUserAction()),
-    lazyInitSaving: (poiUserId: PoiUser.PoiUserId) =>
-      dispatch(LazyInitSavingAction(poiUserId)),
+    lazyInitSaving: ({ poiUserId }: { poiUserId: PoiUser.PoiUserId }) =>
+      dispatch(LazyInitSavingAction({ poiUserId })),
     reindex: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
       dispatch(ReindexCandidatesAction(poiUserId, savingId)),
     judgeAnswer: (

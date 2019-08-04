@@ -1,3 +1,5 @@
+import Immutable from "immutable"
+
 export interface WordAdderSuggestionQueryType {
   Display: string
   Query: string
@@ -26,3 +28,5 @@ export interface WordAdderStateType {
   Pendings: WordAdderPendingQueryType[]
   Counters: WordAdderQueryCountersType
 }
+
+export interface WordAdderStateReducedType extends Immutable.Map<string, any> {}

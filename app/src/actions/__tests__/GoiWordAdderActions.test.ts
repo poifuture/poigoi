@@ -14,8 +14,10 @@ describe("WordAdderActions", () => {
       const { poiUserId, savingId } = await SeedUserAndSaving()
       const store = CreateStore()
       await store.dispatch(WordAdderActions.AddPendingQueryAction(
-        "WordAdderActions/AddPendingQueryAction/Succeed",
-        "KATAKANA-0000[123]",
+        {
+          display: "WordAdderActions/AddPendingQueryAction/Succeed",
+          query: "KATAKANA-0000[123]",
+        },
         { poiUserId, savingId }
       ) as any)
       expect(
@@ -35,7 +37,7 @@ describe("WordAdderActions", () => {
       const { poiUserId, savingId } = await SeedUserAndSaving()
       const store = CreateStore()
       await store.dispatch(WordAdderActions.AddWordsFromQuerysAction(
-        ["KATAKANA.*0000[12]", "KATAKANA.*0000[34]"],
+        { querys: ["KATAKANA.*0000[12]", "KATAKANA.*0000[34]"] },
         { poiUserId, savingId }
       ) as any)
       expect(
@@ -68,7 +70,7 @@ describe("WordAdderActions", () => {
       )
       await GoiSaving(poiUserId, savingId).AttachRecords(["ア", "イ", "ウ"])
       await store.dispatch(WordAdderActions.AddWordsFromQuerysAction(
-        ["KATAKANA.*0000[1234]"],
+        { querys: ["KATAKANA.*0000[1234]"] },
         { poiUserId, savingId }
       ) as any)
       const recordA = await GoiWordRecord(poiUserId, savingId, "ア").Read()
@@ -105,10 +107,10 @@ describe("WordAdderActions", () => {
       expect(
         (await GoiWordRecord(poiUserId, savingId, "ア").Read()).Pending
       ).toBe("ClearPendingWordsAction/Passive/Pending")
-      await store.dispatch(WordAdderActions.ClearPendingWordsAction(
+      await store.dispatch(WordAdderActions.ClearPendingWordsAction({
         poiUserId,
-        savingId
-      ) as any)
+        savingId,
+      }) as any)
       expect(
         (await GoiWordRecord(poiUserId, savingId, "ア").Read()).Pending
       ).toBe("")
@@ -127,10 +129,10 @@ describe("WordAdderActions", () => {
         "ClearPendingWordsAction/Passive/Pending"
       )
       await GoiSaving(poiUserId, savingId).AttachRecords(["ア", "イ", "ウ"])
-      await store.dispatch(WordAdderActions.ClearPendingWordsAction(
+      await store.dispatch(WordAdderActions.ClearPendingWordsAction({
         poiUserId,
-        savingId
-      ) as any)
+        savingId,
+      }) as any)
       const recordA = await GoiWordRecord(poiUserId, savingId, "ア").Read()
       expect(recordA.Level).toBe(5)
       const recordI = await GoiWordRecord(poiUserId, savingId, "イ").Read()

@@ -15,6 +15,9 @@ import {
 } from "../states/WordAdderState"
 import { ReindexCandidatesAction } from "../actions/GoiTesterActions"
 import { GoiSavingId } from "../types/GoiTypes"
+import { RootStateType } from "../states/RootState"
+import { ThunkDispatch } from "redux-thunk"
+import { Action } from "redux"
 
 export class WordAdder extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
@@ -31,13 +34,15 @@ export class WordAdder extends React.Component<
   onClickConfirm = async () => {
     const poiUserId = this.props.poiUserId
     const savingId = this.props.savingId
-    await this.props.addWordsFromQuerys(this.getPendingQuerys(), {
-      poiUserId,
-      savingId,
-    })
+    await this.props.addWordsFromQuerys(
+      { querys: this.getPendingQuerys() },
+      { poiUserId, savingId }
+    )
     await this.props.reindex(poiUserId, savingId)
     this.props.close()
-    this.getPendingQuerys().map(query => this.props.removePendingQuery(query))
+    this.getPendingQuerys().map(query =>
+      this.props.removePendingQuery({ query })
+    )
   }
   render() {
     if (!this.props.display) {
@@ -58,7 +63,9 @@ export class WordAdder extends React.Component<
         <div>
           Pending:{status.PendingCount}
           <button
-            onClick={() => this.props.clearPendingWords(poiUserId, savingId)}
+            onClick={() =>
+              this.props.clearPendingWords({ poiUserId, savingId })
+            }
           >
             Clear
           </button>
@@ -80,8 +87,7 @@ export class WordAdder extends React.Component<
             <button
               onClick={() =>
                 this.props.addPendingQuery(
-                  suggestion.Display,
-                  suggestion.Query,
+                  { display: suggestion.Display, query: suggestion.Query },
                   { poiUserId, savingId }
                 )
               }
@@ -96,8 +102,7 @@ export class WordAdder extends React.Component<
             onClick={() =>
               this.CustomQueryInput &&
               this.props.addPendingQuery(
-                "Custom",
-                this.CustomQueryInput.value,
+                { display: "Custom", query: this.CustomQueryInput.value },
                 { poiUserId, savingId }
               )
             }
@@ -120,7 +125,9 @@ export class WordAdder extends React.Component<
               </span>
             )}
             <button
-              onClick={() => this.props.removePendingQuery(pending.Query)}
+              onClick={() =>
+                this.props.removePendingQuery({ query: pending.Query })
+              }
             >
               -
             </button>
@@ -133,7 +140,7 @@ export class WordAdder extends React.Component<
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootStateType) => {
   console.debug("WordAdderContainer state: ", state)
   const props = {
     display: state.WordAdder.get("Display") as boolean,
@@ -148,34 +155,38 @@ const mapStateToProps = (state: any) => {
   console.debug("WordAdderContainer props: ", props)
   return props
 }
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<RootStateType, void, Action>
+) => {
   return {
-    clearPendingWords: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
-      dispatch(ClearPendingWordsAction(poiUserId, savingId)),
+    clearPendingWords: ({
+      poiUserId,
+      savingId,
+    }: {
+      poiUserId: PoiUser.PoiUserId
+      savingId: GoiSavingId
+    }) => dispatch(ClearPendingWordsAction({ poiUserId, savingId })),
     addPendingQuery: (
-      display: string,
-      query: string,
-      options: { poiUserId: PoiUser.PoiUserId; savingId: GoiSavingId }
+      { display, query }: { display: string; query: string },
+      {
+        poiUserId,
+        savingId,
+      }: { poiUserId: PoiUser.PoiUserId; savingId: GoiSavingId }
     ) =>
       dispatch(
-        AddPendingQueryAction(display, query, {
-          poiUserId: options.poiUserId,
-          savingId: options.savingId,
-        })
+        AddPendingQueryAction({ display, query }, { poiUserId, savingId })
       ),
-    removePendingQuery: (query: string) =>
-      dispatch(RemovePendingQueryAction(query)),
+    removePendingQuery: ({ query }: { query: string }) =>
+      dispatch(RemovePendingQueryAction({ query })),
     addWordsFromQuerys: (
-      querys: string[],
-      options: { poiUserId: PoiUser.PoiUserId; savingId: GoiSavingId }
+      { querys }: { querys: string[] },
+      {
+        poiUserId,
+        savingId,
+      }: { poiUserId: PoiUser.PoiUserId; savingId: GoiSavingId }
     ) =>
-      dispatch(
-        AddWordsFromQuerysAction(querys, {
-          poiUserId: options.poiUserId,
-          savingId: options.savingId,
-        })
-      ),
-    close: () => dispatch(DisplayWordAdderAction(false)),
+      dispatch(AddWordsFromQuerysAction({ querys }, { poiUserId, savingId })),
+    close: () => dispatch(DisplayWordAdderAction({ display: false })),
     reindex: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
       dispatch(ReindexCandidatesAction(poiUserId, savingId)),
   }

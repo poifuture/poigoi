@@ -6,7 +6,7 @@ jest.mock("pouchdb-browser", () => PouchDB)
 import crypto from "crypto"
 Object.defineProperty(window, "crypto", {
   value: {
-    getRandomValues: (array: Uint32Array) => crypto.randomBytes(array.length),
+    getRandomValues: (array: Uint32Array) => crypto.randomFillSync(array),
   },
 })
 
