@@ -12,9 +12,6 @@ export default (props: any) => (
       <WordAdder />
       <GoiTester />
     </main>
-    <section className="tools">
-      <button>Add New Words</button>
-    </section>
     <footer>
       <ruby>
         私<rt>わたし</rt>

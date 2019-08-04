@@ -3,6 +3,9 @@ import { connect } from "react-redux"
 import { ShowWordAdderAction } from "../actions/WordAdderActions"
 import * as PoiUser from "../utils/PoiUser"
 import { GoiSavingId } from "../types/GoiTypes"
+import { ThunkDispatch } from "redux-thunk"
+import { RootStateType } from "../states/RootState"
+import { Action } from "redux"
 
 export class CommandsBar extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
@@ -12,7 +15,9 @@ export class CommandsBar extends React.Component<
     const savingId = this.props.savingId
     return (
       <div className="commands-bar">
-        <button onClick={() => this.props.showWordAdder(poiUserId, savingId)}>
+        <button
+          onClick={() => this.props.showWordAdder({ poiUserId, savingId })}
+        >
           Add Words
         </button>
         <button>[WIP]Menu</button>
@@ -21,7 +26,7 @@ export class CommandsBar extends React.Component<
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootStateType) => {
   console.debug("CommandsBar state: ", state)
   const props = {
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
@@ -30,10 +35,17 @@ const mapStateToProps = (state: any) => {
   console.debug("CommandsBar props: ", props)
   return props
 }
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<RootStateType, void, Action>
+) => {
   return {
-    showWordAdder: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
-      dispatch(ShowWordAdderAction(poiUserId, savingId)),
+    showWordAdder: ({
+      poiUserId,
+      savingId,
+    }: {
+      poiUserId: PoiUser.PoiUserId
+      savingId: GoiSavingId
+    }) => dispatch(ShowWordAdderAction({ poiUserId, savingId })),
   }
 }
 

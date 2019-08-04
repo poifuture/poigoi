@@ -3,6 +3,9 @@ import * as PoiUser from "../utils/PoiUser"
 import { LocalGoiUsersDataType, GoiUser } from "../models/GoiUser"
 import { GoiUserStateType, GoiUserDomainType } from "../states/GoiUserState"
 import { GoiDb } from "../utils/GoiDb"
+import { ThunkDispatch, ThunkAction } from "redux-thunk"
+import { Action } from "redux"
+import { RootStateType } from "../states/RootState"
 
 export const UPDATE_GOI_USER_STATE = "GOI_USER_ACTIONS_UPDATE_GOI_USER_STATE"
 
@@ -14,13 +17,16 @@ export interface UpdateGoiUserStateActionType
 
 export type GoiUserActionsType = UpdateGoiUserStateActionType
 
-const UpdateGoiUserStateAction = (state: {
-  PoiUserId: PoiUser.PoiUserId
-  Domain?: GoiUserDomainType
+const UpdateGoiUserStateAction = ({
+  poiUserId,
+  domain,
+}: {
+  poiUserId: PoiUser.PoiUserId
+  domain?: GoiUserDomainType
 }): UpdateGoiUserStateActionType => {
   return {
     type: UPDATE_GOI_USER_STATE,
-    ...state,
+    PoiUserId: poiUserId,
   }
 }
 
@@ -55,19 +61,27 @@ const lazyInitPoiUser = async (): Promise<PoiUser.PoiUserId> => {
   return poiUserId
 }
 
-const lazyInitGoiUser = async (poiUserId: PoiUser.PoiUserId) => {
+const lazyInitGoiUser = async ({
+  poiUserId,
+}: {
+  poiUserId: PoiUser.PoiUserId
+}) => {
   return await GoiUser(poiUserId).ReadOrCreate()
 }
 
-export const LazyInitUserAction = (options?: { forceDatabase?: boolean }) => {
-  const funcOptions = {
-    forceDatabase: true,
-    ...options,
-  }
-  return async (dispatch: any, getState: any): Promise<PoiUser.PoiUserId> => {
-    const state = getState()
-    console.debug("LazyInitUser state: ", state)
-    if (!funcOptions.forceDatabase) {
+export const LazyInitUserAction = ({
+  readState,
+}: { readState?: boolean } = {}): ThunkAction<
+  Promise<PoiUser.PoiUserId>,
+  RootStateType,
+  void,
+  Action
+> => {
+  readState = typeof readState !== "undefined" ? readState : true
+  return async (dispatch, getState) => {
+    if (readState) {
+      const state = getState()
+      console.debug("LazyInitUser state: ", state)
       const poiUserId = state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId
       if (poiUserId) {
         console.debug("Already loaded PoiUser: ", poiUserId)
@@ -75,12 +89,8 @@ export const LazyInitUserAction = (options?: { forceDatabase?: boolean }) => {
       }
     }
     const poiUserId = await lazyInitPoiUser()
-    await lazyInitGoiUser(poiUserId)
-    dispatch(
-      UpdateGoiUserStateAction({
-        PoiUserId: poiUserId,
-      })
-    )
+    await lazyInitGoiUser({ poiUserId })
+    dispatch(UpdateGoiUserStateAction({ poiUserId }))
     return poiUserId
   }
 }
