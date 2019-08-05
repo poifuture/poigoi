@@ -32,7 +32,7 @@ export interface GoiWordHistoryDataType extends PoiGlobalDataType {
   LevelBefore: number
   LevelAfter: number
 }
-type GoiWordHistoryPouchType = GoiWordHistoryDataType &
+export type GoiWordHistoryPouchType = GoiWordHistoryDataType &
   PouchDB.Core.IdMeta &
   PouchDB.Core.GetMeta
 
@@ -148,10 +148,10 @@ export interface GoiWordRecordDataType extends PoiGlobalDataType {
   Level: number
   NextTime: TimeStamp
   Pending: OrderKey
-  Prioritized: OrderKey
+  Prioritied: OrderKey
   Historys: { [time: number]: GoiWordHistoryDbKey }
 }
-type GoiWordRecordPouchType = GoiWordRecordDataType &
+export type GoiWordRecordPouchType = GoiWordRecordDataType &
   PouchDB.Core.IdMeta &
   PouchDB.Core.GetMeta
 
@@ -190,7 +190,7 @@ export class GoiWordRecordModel {
       Level: 0,
       NextTime: 0,
       Pending: "",
-      Prioritized: "",
+      Prioritied: "",
       Historys: {},
     }
   }
@@ -247,28 +247,24 @@ export class GoiWordRecordModel {
     }
     return await this.Read()
   }
-  GetLevel = async () => {
-    const data = await this.Read()
-    return data.Level
-  }
   SetLevel = async (level: number) => {
     if (level <= 0 || level >= 100) {
       console.error("Invalid word level: ", level)
       return
     }
-    await this.update({ Level: level, Prioritized: "", Pending: "" })
+    await this.update({ Level: level, Prioritied: "", Pending: "" })
   }
-  SetPrioritized = async (orderKey: string) => {
+  SetPrioritied = async (orderKey: string) => {
     const wordRecord = await this.Read()
     if (wordRecord.Level > 0) {
       console.error("Already learned word: ", wordRecord.WordKey)
       return
     }
-    await this.update({ Prioritized: orderKey, Pending: "" })
+    await this.update({ Prioritied: orderKey, Pending: "" })
   }
   SetPending = async (orderKey: string) => {
     const wordRecord = await this.Read()
-    if (wordRecord.Level > 0 || wordRecord.Prioritized || wordRecord.Pending) {
+    if (wordRecord.Level > 0 || wordRecord.Prioritied || wordRecord.Pending) {
       console.debug("Already added word: ", wordRecord.WordKey)
       return
     }
@@ -278,7 +274,7 @@ export class GoiWordRecordModel {
     await this.update({ Pending: "" })
   }
   Trash = async () => {
-    await this.update({ Level: 0, Prioritized: "", Pending: "" })
+    await this.update({ Level: 0, Prioritied: "", Pending: "" })
   }
   SetNextTime = async (nextTime: TimeStamp) => {
     await this.update({ NextTime: nextTime })
@@ -297,9 +293,9 @@ export class GoiWordRecordModel {
     ).Create(this.wordKey, judgeResult, levelBefore, levelAfter)
     const newHistorys: { [time: number]: GoiWordHistoryDbKey } = Object.assign(
       {},
-      data.Historys,
-      { judgeTime: historyDbKey }
+      data.Historys
     )
+    newHistorys[judgeTime] = historyDbKey
     await this.update({ Historys: newHistorys })
   }
 }
@@ -323,7 +319,7 @@ export interface GoiSavingDataType extends PoiGlobalDataType {
   Dictionarys: string[]
   Records: { [key: string]: GoiWordRecordDbKey }
 }
-type GoiSavingPouchType = GoiSavingDataType &
+export type GoiSavingPouchType = GoiSavingDataType &
   PouchDB.Core.IdMeta &
   PouchDB.Core.GetMeta
 

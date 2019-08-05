@@ -5,8 +5,8 @@ import * as PoiUser from "../utils/PoiUser"
 import { LazyInitUserAction } from "../actions/GoiUserActions"
 import { LazyInitSavingAction } from "../actions/GoiSavingActions"
 import {
-  ReindexCandidatesAction,
   VerifyAnswerAction,
+  ShowNextWordAction,
 } from "../actions/GoiTesterActions"
 import { GoiSavingId, GoiJudgeResult } from "../types/GoiTypes"
 import Helmet from "react-helmet"
@@ -14,6 +14,8 @@ import { GoiWordType, GoiJaWordType } from "../types/GoiDictionaryTypes"
 import { RootStateType } from "../states/RootState"
 import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
+import Heap from "../algorithm/Heap"
+import { GoiWordRecordDataType } from "../models/GoiSaving"
 
 export class GoiTester extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
@@ -24,7 +26,7 @@ export class GoiTester extends React.Component<
     const poiUserId = (await this.props.lazyInitUser()) as PoiUser.PoiUserId
     console.debug("Lasy init saving")
     const savingId = await this.props.lazyInitSaving({ poiUserId })
-    await this.props.reindex(poiUserId, savingId)
+    await this.props.showNextWord({ poiUserId, savingId })
   }
   onRequestJudge = () => {
     if (!this.JudgeInputElement || !this.JudgeInputElement.value) {
@@ -37,6 +39,28 @@ export class GoiTester extends React.Component<
       poiUserId,
       savingId,
     })
+  }
+  onRequestNext = () => {
+    if (this.props.judgeResult === "Pending") {
+      //store skip result
+    }
+    const {
+      poiUserId,
+      savingId,
+      currentWordKey,
+      learnedCandidates,
+      prioritiedCandidates,
+      pendingCandidates,
+    } = this.props
+    this.props.showNextWord(
+      { poiUserId, savingId },
+      {
+        currentWordKey,
+        learnedCandidates,
+        prioritiedCandidates,
+        pendingCandidates,
+      }
+    )
   }
   render() {
     const word: GoiJaWordType = this.props.currentWord.toJS()
@@ -59,6 +83,7 @@ export class GoiTester extends React.Component<
         </Helmet>
         <input ref={c => (this.JudgeInputElement = c)}></input>
         <button onClick={this.onRequestJudge}>Judge</button>
+        <button onClick={this.onRequestNext}>Next</button>
         <WordCard word={word} display="detailed" status={wordCardStatus} />
         <pre className="goi-debug">
           {JSON.stringify(this.props.tester, null, 2)}
@@ -75,9 +100,13 @@ const mapStateToProps = (state: RootStateType) => {
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
     currentWord: state.GoiTester.get("CurrentWord"),
+    currentWordKey: state.GoiTester.get("CurrentWord").get("key") as string,
     judgeResult: state.GoiTester.get("JudgeResult") as GoiJudgeResult,
     saving: state.GoiSaving.get("Saving"),
     tester: state.GoiTester,
+    learnedCandidates: state.GoiTester.get("LearnedCandidates"),
+    prioritiedCandidates: state.GoiTester.get("PrioritiedCandidates"),
+    pendingCandidates: state.GoiTester.get("PendingCandidates"),
   }
   console.debug("GoiTester props: ", props)
   return props
@@ -89,8 +118,34 @@ const mapDispatchToProps = (
     lazyInitUser: () => dispatch(LazyInitUserAction()),
     lazyInitSaving: ({ poiUserId }: { poiUserId: PoiUser.PoiUserId }) =>
       dispatch(LazyInitSavingAction({ poiUserId })),
-    reindex: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
-      dispatch(ReindexCandidatesAction(poiUserId, savingId)),
+    showNextWord: (
+      {
+        poiUserId,
+        savingId,
+      }: { poiUserId: PoiUser.PoiUserId; savingId: GoiSavingId },
+      {
+        currentWordKey,
+        learnedCandidates,
+        prioritiedCandidates,
+        pendingCandidates,
+      }: {
+        currentWordKey?: string
+        learnedCandidates?: Heap<GoiWordRecordDataType>
+        prioritiedCandidates?: Heap<GoiWordRecordDataType>
+        pendingCandidates?: Heap<GoiWordRecordDataType>
+      } = {}
+    ) =>
+      dispatch(
+        ShowNextWordAction(
+          { poiUserId, savingId },
+          {
+            currentWordKey,
+            learnedCandidates,
+            prioritiedCandidates,
+            pendingCandidates,
+          }
+        )
+      ),
     judgeAnswer: (
       answer: string,
       word: GoiWordType,

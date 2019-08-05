@@ -13,11 +13,11 @@ import {
   WordAdderQueryCountersType,
   WordAdderPendingQueryType,
 } from "../states/WordAdderState"
-import { ReindexCandidatesAction } from "../actions/GoiTesterActions"
 import { GoiSavingId } from "../types/GoiTypes"
 import { RootStateType } from "../states/RootState"
 import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
+import { ShowNextWordAction } from "../actions/GoiTesterActions"
 
 export class WordAdder extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
@@ -38,11 +38,11 @@ export class WordAdder extends React.Component<
       { querys: this.getPendingQuerys() },
       { poiUserId, savingId }
     )
-    await this.props.reindex(poiUserId, savingId)
     this.props.close()
     this.getPendingQuerys().map(query =>
       this.props.removePendingQuery({ query })
     )
+    await this.props.showNextWord(poiUserId, savingId)
   }
   render() {
     if (!this.props.display) {
@@ -59,7 +59,7 @@ export class WordAdder extends React.Component<
         <h1>Word Adder</h1>
         <p>Status:</p>
         <div>Learned:{status.LearnedCount}</div>
-        <div>Prioritized:{status.PrioritizedCount}</div>
+        <div>Prioritied:{status.PrioritiedCount}</div>
         <div>
           Pending:{status.PendingCount}
           <button
@@ -187,8 +187,8 @@ const mapDispatchToProps = (
     ) =>
       dispatch(AddWordsFromQuerysAction({ querys }, { poiUserId, savingId })),
     close: () => dispatch(DisplayWordAdderAction({ display: false })),
-    reindex: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
-      dispatch(ReindexCandidatesAction(poiUserId, savingId)),
+    showNextWord: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
+      dispatch(ShowNextWordAction({ poiUserId, savingId })),
   }
 }
 

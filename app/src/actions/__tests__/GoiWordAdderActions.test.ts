@@ -55,14 +55,14 @@ describe("WordAdderActions", () => {
       expect(wordKeys).toContain("エ")
     })
 
-    test("Passive: Doesn't touch learned or prioritized words", async () => {
+    test("Passive: Doesn't touch learned or prioritied words", async () => {
       const { poiUserId, savingId } = await SeedUserAndSaving()
       const store = CreateStore()
       await GoiWordRecord(poiUserId, savingId, "ア").Create()
       await GoiWordRecord(poiUserId, savingId, "ア").SetLevel(5)
       await GoiWordRecord(poiUserId, savingId, "イ").Create()
-      await GoiWordRecord(poiUserId, savingId, "イ").SetPrioritized(
-        "AddWordsFromQuerysAction/Passive/Prioritized"
+      await GoiWordRecord(poiUserId, savingId, "イ").SetPrioritied(
+        "AddWordsFromQuerysAction/Passive/Prioritied"
       )
       await GoiWordRecord(poiUserId, savingId, "ウ").Create()
       await GoiWordRecord(poiUserId, savingId, "ウ").SetPending(
@@ -77,8 +77,8 @@ describe("WordAdderActions", () => {
       expect(recordA.Level).toBe(5)
       expect(recordA.Pending).toBe("")
       const recordI = await GoiWordRecord(poiUserId, savingId, "イ").Read()
-      expect(recordI.Prioritized).toBe(
-        "AddWordsFromQuerysAction/Passive/Prioritized"
+      expect(recordI.Prioritied).toBe(
+        "AddWordsFromQuerysAction/Passive/Prioritied"
       )
       expect(recordI.Pending).toBe("")
       const recordU = await GoiWordRecord(poiUserId, savingId, "ウ").Read()
@@ -115,14 +115,14 @@ describe("WordAdderActions", () => {
         (await GoiWordRecord(poiUserId, savingId, "ア").Read()).Pending
       ).toBe("")
     })
-    test("Passive: Doesn't touch learned or prioritized words", async () => {
+    test("Passive: Doesn't touch learned or prioritied words", async () => {
       const { poiUserId, savingId } = await SeedUserAndSaving()
       const store = CreateStore()
       await GoiWordRecord(poiUserId, savingId, "ア").Create()
       await GoiWordRecord(poiUserId, savingId, "ア").SetLevel(5)
       await GoiWordRecord(poiUserId, savingId, "イ").Create()
-      await GoiWordRecord(poiUserId, savingId, "イ").SetPrioritized(
-        "ClearPendingWordsAction/Passive/Prioritized"
+      await GoiWordRecord(poiUserId, savingId, "イ").SetPrioritied(
+        "ClearPendingWordsAction/Passive/Prioritied"
       )
       await GoiWordRecord(poiUserId, savingId, "ウ").Create()
       await GoiWordRecord(poiUserId, savingId, "ウ").SetPending(
@@ -136,8 +136,8 @@ describe("WordAdderActions", () => {
       const recordA = await GoiWordRecord(poiUserId, savingId, "ア").Read()
       expect(recordA.Level).toBe(5)
       const recordI = await GoiWordRecord(poiUserId, savingId, "イ").Read()
-      expect(recordI.Prioritized).toBe(
-        "ClearPendingWordsAction/Passive/Prioritized"
+      expect(recordI.Prioritied).toBe(
+        "ClearPendingWordsAction/Passive/Prioritied"
       )
       const recordU = await GoiWordRecord(poiUserId, savingId, "ウ").Read()
       expect(recordU.Pending).toBe("")

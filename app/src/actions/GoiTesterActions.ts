@@ -15,15 +15,21 @@ import { TrimFurigana, AsciiRomaji } from "../utils/GoiJaUtils"
 import { TimeStamp } from "../utils/PoiDb"
 import Moment from "moment"
 import { Action } from "redux"
+import Heap from "../algorithm/Heap"
+import { RootStateType } from "../states/RootState"
+import { ThunkAction } from "redux-thunk"
 
 export const UPDATE_GOI_TESTER_WORD =
   "GOI_TESTER_ACTIONS_CHANGE_GOI_TESTER_WORD"
-export const UPDATE_CANDIDATES = "GOI_TESTER_ACTIONS_UPDATE_CANDIDATES"
 export const UPDATE_JUDGE_RESULT = "GOI_TESTER_ACTIONS_UPDATE_JUDGE_RESULT"
+export const UPDATE_CANDIDATES = "GOI_TESTER_ACTIONS_UPDATE_CANDIDATES"
+export const PUSH_CANDIDATE = "GOI_TESTER_ACTIONS_PUSH_CANDIDATE"
+export const POP_CANDIDATE = "GOI_TESTER_ACTIONS_POP_CANDIDATE"
 
 export interface UpdateGoiTesterWordActionType
   extends Action<typeof UPDATE_GOI_TESTER_WORD> {
-  Word: GoiWordType
+  Word?: GoiWordType
+  Record?: GoiWordRecordDataType
 }
 export interface UpdateJudgeResultActionType
   extends Action<typeof UPDATE_JUDGE_RESULT> {
@@ -32,9 +38,9 @@ export interface UpdateJudgeResultActionType
 
 export interface UpdateCandidatesActionType
   extends Action<typeof UPDATE_CANDIDATES> {
-  LearnedCandidates?: GoiWordRecordDataType[]
-  PrioritiedCandidates?: GoiWordRecordDataType[]
-  PendingCandidates?: GoiWordRecordDataType[]
+  LearnedCandidates?: Heap<GoiWordRecordDataType>
+  PrioritiedCandidates?: Heap<GoiWordRecordDataType>
+  PendingCandidates?: Heap<GoiWordRecordDataType>
 }
 
 export type GoiTesterActionTypes =
@@ -42,109 +48,151 @@ export type GoiTesterActionTypes =
   | UpdateJudgeResultActionType
   | UpdateCandidatesActionType
 
-export const UpdateGoiTesterWordAction = (
-  newWord: GoiWordType
-): GoiTesterActionTypes => {
+export const UpdateGoiTesterWordAction = ({
+  word,
+  record,
+}: {
+  word?: GoiWordType
+  record?: GoiWordRecordDataType
+}): GoiTesterActionTypes => {
   return {
     type: UPDATE_GOI_TESTER_WORD,
-    Word: newWord,
+    Word: word,
+    Record: record,
   }
 }
-export const UpdateJudgeResultAction = (
+export const UpdateJudgeResultAction = ({
+  judgeResult,
+}: {
   judgeResult: GoiJudgeResult
-): UpdateJudgeResultActionType => {
+}): UpdateJudgeResultActionType => {
   return {
     type: UPDATE_JUDGE_RESULT,
     JudgeResult: judgeResult,
   }
 }
-export const UpdateCandidatesAction = (options: {
-  learnedCandidates?: GoiWordRecordDataType[]
-  prioritiedCandidates?: GoiWordRecordDataType[]
-  pendingCandidates?: GoiWordRecordDataType[]
+export const UpdateCandidatesAction = ({
+  learnedCandidates,
+  prioritiedCandidates,
+  pendingCandidates,
+}: {
+  learnedCandidates?: Heap<GoiWordRecordDataType>
+  prioritiedCandidates?: Heap<GoiWordRecordDataType>
+  pendingCandidates?: Heap<GoiWordRecordDataType>
 }): GoiTesterActionTypes => {
   return {
     type: UPDATE_CANDIDATES,
-    LearnedCandidates: options.learnedCandidates,
-    PrioritiedCandidates: options.prioritiedCandidates,
-    PendingCandidates: options.pendingCandidates,
+    LearnedCandidates: learnedCandidates,
+    PrioritiedCandidates: prioritiedCandidates,
+    PendingCandidates: pendingCandidates,
   }
 }
 
-export const RenewCurrentWordAction = (options: {
-  learnedCandidate?: GoiWordRecordDataType
-  prioritiedCandidate?: GoiWordRecordDataType
-  pendingCandidate?: GoiWordRecordDataType
-  dictionarys: string[]
+export const DecideNextWord = ({
+  learnedCandidate,
+  prioritiedCandidate,
+  pendingCandidate,
+}: {
+  learnedCandidate?: GoiWordRecordDataType | null
+  prioritiedCandidate?: GoiWordRecordDataType | null
+  pendingCandidate?: GoiWordRecordDataType | null
 }) => {
-  return async (dispatch: any, getState: any): Promise<void> => {
-    console.debug("Reindexing... ")
-    const learnedCandidate = options.learnedCandidate
-    const prioritiedCandidate = options.prioritiedCandidate
-    const pendingCandidate = options.pendingCandidate
-    const dictionarys = options.dictionarys
-    let candidate: GoiWordRecordDataType | null = null
-    if (learnedCandidate) {
-      if (learnedCandidate.NextTime < new Date().getTime()) {
-        candidate = learnedCandidate
-      }
+  console.debug("DecideNextWord... ")
+  if (learnedCandidate) {
+    if (learnedCandidate.NextTime < new Date().getTime()) {
+      return { candidate: learnedCandidate, decision: "leaned" }
     }
-    if (!candidate && prioritiedCandidate) {
-      candidate = prioritiedCandidate
-    }
-    if (!candidate && pendingCandidate) {
-      candidate = pendingCandidate
-    }
-    if (!candidate && learnedCandidate) {
-      candidate = learnedCandidate
-    }
-    const wordKey = candidate ? candidate.WordKey : "あ"
-    const lookupDictionaryWord = await GoiDictionarys(
-      dictionarys
-    ).GetWordOrNull(wordKey)
-    const dictionaryWord = lookupDictionaryWord || KanaDictionary.words["あ"]
-    dispatch(UpdateGoiTesterWordAction(dictionaryWord))
   }
+  if (prioritiedCandidate) {
+    return { candidate: prioritiedCandidate, decision: "prioritied" }
+  }
+  if (pendingCandidate) {
+    return { candidate: pendingCandidate, decision: "pending" }
+  }
+  if (learnedCandidate) {
+    return { candidate: learnedCandidate, decision: "steady" }
+  }
+  return { candidate: null, decision: "none" }
 }
 
-export const ReindexCandidatesAction = (
-  poiUserId: PoiUser.PoiUserId,
+export const ReindexCandidates = async ({
+  poiUserId,
+  savingId,
+}: {
+  poiUserId: PoiUser.PoiUserId
   savingId: GoiSavingId
-) => {
-  return async (dispatch: any): Promise<void> => {
+}) => {
+  console.debug("Reindexing... ")
+  const wordRecords = await GoiSaving(poiUserId, savingId).GetRecords()
+  console.debug("Records:", wordRecords)
+  const learnedCandidates = new Heap<GoiWordRecordDataType>(
+    wordRecords.filter(wordRecord => wordRecord.Level > 0),
+    (a, b) => {
+      return a.NextTime - b.NextTime
+    }
+  )
+  const prioritiedCandidates = new Heap<GoiWordRecordDataType>(
+    wordRecords.filter(wordRecord => wordRecord.Prioritied),
+    (a, b) => {
+      return a.Prioritied > b.Prioritied ? 1 : -1
+    }
+  )
+  const pendingCandidates = new Heap<GoiWordRecordDataType>(
+    wordRecords.filter(wordRecord => wordRecord.Pending),
+    (a, b) => {
+      return a.Pending > b.Pending ? 1 : -1
+    }
+  )
+  return { learnedCandidates, prioritiedCandidates, pendingCandidates }
+}
+const ReindexCandidatesAction = ({
+  poiUserId,
+  savingId,
+}: {
+  poiUserId: PoiUser.PoiUserId
+  savingId: GoiSavingId
+}) => {
+  return (async dispatch => {
     console.debug("Reindexing... ")
     const wordRecords = await GoiSaving(poiUserId, savingId).GetRecords()
     console.debug("Records:", wordRecords)
-    const learnedCandidates = wordRecords
-      .filter(wordRecord => wordRecord.Level > 0)
-      .sort((a, b) => {
-        // ascending
+    const learnedCandidates = new Heap<GoiWordRecordDataType>(
+      wordRecords.filter(wordRecord => wordRecord.Level > 0),
+      (a, b) => {
         return a.NextTime - b.NextTime
-      })
-    const prioritiedCandidates = wordRecords
-      .filter(wordRecord => wordRecord.Prioritized)
-      .sort((a, b) => {
-        return a.Prioritized > b.Prioritized ? 1 : -1
-      })
-    const pendingCandidates = wordRecords
-      .filter(wordRecord => wordRecord.Pending)
-      .sort((a, b) => {
+      }
+    )
+    const prioritiedCandidates = new Heap<GoiWordRecordDataType>(
+      wordRecords.filter(wordRecord => wordRecord.Prioritied),
+      (a, b) => {
+        return a.Prioritied > b.Prioritied ? 1 : -1
+      }
+    )
+    const pendingCandidates = new Heap<GoiWordRecordDataType>(
+      wordRecords.filter(wordRecord => wordRecord.Pending),
+      (a, b) => {
         return a.Pending > b.Pending ? 1 : -1
-      })
+      }
+    )
+    const { decision } = DecideNextWord({
+      learnedCandidate: learnedCandidates.peek(),
+      prioritiedCandidate: prioritiedCandidates.peek(),
+      pendingCandidate: pendingCandidates.peek(),
+    })
+    const candidate: GoiWordRecordDataType =
+      decision === "leaned" || decision === "steady"
+        ? learnedCandidates.poll()!
+        : decision === "prioritied"
+        ? prioritiedCandidates.poll()!
+        : decision === "pending"
+        ? pendingCandidates.poll()!
+        : await GoiWordRecord(poiUserId, savingId, "あ").ReadOrCreate()
     const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
+    const dictionaryWord =
+      (await GoiDictionarys(dictionarys).GetWordOrNull(candidate.WordKey)) ||
+      KanaDictionary.words["あ"]
     dispatch(
-      RenewCurrentWordAction({
-        ...(learnedCandidates.length > 0 && {
-          learnedCandidate: learnedCandidates[0],
-        }),
-        ...(prioritiedCandidates.length > 0 && {
-          prioritiedCandidate: prioritiedCandidates[0],
-        }),
-        ...(pendingCandidates.length > 0 && {
-          pendingCandidate: pendingCandidates[0],
-        }),
-        dictionarys,
-      })
+      UpdateGoiTesterWordAction({ word: dictionaryWord, record: candidate })
     )
     dispatch(
       UpdateCandidatesAction({
@@ -153,7 +201,7 @@ export const ReindexCandidatesAction = (
         pendingCandidates,
       })
     )
-  }
+  }) as ThunkAction<Promise<unknown>, RootStateType, void, Action>
 }
 
 export const VerifyJaAnswer = (
@@ -288,7 +336,7 @@ const GetTimeChange = (level: number) => {
       }
     }
   }
-  const basicTimeChange = GetBasicTimeChange().asSeconds()
+  const basicTimeChange = GetBasicTimeChange().asMilliseconds()
   const timeChange = Math.floor(basicTimeChange * (1 + Math.random() * 0.2))
   return timeChange
 }
@@ -319,16 +367,99 @@ export const VerifyAnswerAction = (
         )
       }
     }
-    dispatch(UpdateJudgeResultAction(judgeResult))
+    dispatch(UpdateJudgeResultAction({ judgeResult }))
+    const nowTime = new Date().getTime()
     const recordModel = GoiWordRecord(poiUserId, savingId, wordKey)
-    const levelBefore = await recordModel.GetLevel()
-    const levelChange = GetLevelChange(judgeResult)
-    const unvalidatedLevelAfter = levelBefore + levelChange
-    const levelAfter = unvalidatedLevelAfter > 1 ? unvalidatedLevelAfter : 1
+    const recordBefore = await recordModel.ReadOrCreate()
+    const levelBefore = recordBefore.Level
+    const unvalidatedLevelAfter = levelBefore + GetLevelChange(judgeResult)
+    const levelAfter =
+      unvalidatedLevelAfter <= 1
+        ? 1
+        : unvalidatedLevelAfter <= levelBefore
+        ? unvalidatedLevelAfter
+        : nowTime <= recordBefore.NextTime
+        ? levelBefore
+        : unvalidatedLevelAfter
     await recordModel.CreateHistory(judgeResult, levelBefore, levelAfter)
-    const nextTime = new Date().getTime() + GetTimeChange(levelAfter)
+    await recordModel.SetLevel(levelAfter)
+    const nextTime = nowTime + GetTimeChange(levelAfter)
     await recordModel.SetNextTime(nextTime)
-
+    const record = await recordModel.Read()
+    dispatch(UpdateGoiTesterWordAction({ record }))
     return judgeResult
   }
+}
+
+export const ShowNextWordAction = (
+  {
+    poiUserId,
+    savingId,
+  }: {
+    poiUserId: PoiUser.PoiUserId
+    savingId: GoiSavingId
+  },
+  {
+    currentWordKey,
+    learnedCandidates,
+    prioritiedCandidates,
+    pendingCandidates,
+  }: {
+    currentWordKey?: string
+    learnedCandidates?: Heap<GoiWordRecordDataType>
+    prioritiedCandidates?: Heap<GoiWordRecordDataType>
+    pendingCandidates?: Heap<GoiWordRecordDataType>
+  } = {}
+) => {
+  return (async (dispatch): Promise<void> => {
+    console.debug("Showing next word... ")
+    if (!learnedCandidates || !prioritiedCandidates || !pendingCandidates) {
+      console.debug("No heap found... ")
+      ;({
+        learnedCandidates,
+        prioritiedCandidates,
+        pendingCandidates,
+      } = await ReindexCandidates({ poiUserId, savingId }))
+    } else {
+      console.debug("Getting candidates from heap... ")
+      if (currentWordKey) {
+        const currentWordRecord = await GoiWordRecord(
+          poiUserId,
+          savingId,
+          currentWordKey
+        ).ReadOrNull()
+        if (currentWordRecord && currentWordRecord.Level > 0) {
+          learnedCandidates.add(currentWordRecord)
+        }
+      }
+    }
+    const { decision } = DecideNextWord({
+      learnedCandidate: learnedCandidates.peek(),
+      prioritiedCandidate: prioritiedCandidates.peek(),
+      pendingCandidate: pendingCandidates.peek(),
+    })
+    const candidate: GoiWordRecordDataType =
+      decision === "leaned" || decision === "steady"
+        ? learnedCandidates.poll()!
+        : decision === "prioritied"
+        ? prioritiedCandidates.poll()!
+        : decision === "pending"
+        ? pendingCandidates.poll()!
+        : await GoiWordRecord(poiUserId, savingId, "あ").ReadOrCreate()
+    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
+    const dictionaryWord =
+      (await GoiDictionarys(dictionarys).GetWordOrNull(candidate.WordKey)) ||
+      KanaDictionary.words["あ"]
+    dispatch(
+      UpdateGoiTesterWordAction({ word: dictionaryWord, record: candidate })
+    )
+    dispatch(
+      UpdateCandidatesAction({
+        learnedCandidates,
+        prioritiedCandidates,
+        pendingCandidates,
+      })
+    )
+    dispatch(UpdateJudgeResultAction({ judgeResult: "Pending" }))
+  }) as ThunkAction<Promise<void>, RootStateType, void, Action>
 }

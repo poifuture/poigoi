@@ -21,7 +21,7 @@ export interface WordAdderStateType {
   Display: boolean
   Status: {
     LearnedCount: number
-    PrioritizedCount: number
+    PrioritiedCount: number
     PendingCount: number
   }
   Suggestions: WordAdderSuggestionQueryType[]
