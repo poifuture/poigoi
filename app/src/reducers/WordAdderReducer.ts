@@ -21,7 +21,7 @@ const InitialWordAdderState: WordAdderStateType = {
   Display: false,
   Status: {
     LearnedCount: 0,
-    PrioritizedCount: 0,
+    PrioritiedCount: 0,
     PendingCount: 0,
   },
   Suggestions: [
@@ -71,7 +71,7 @@ export const WordAdderReducer = (
         "Status",
         state.get("Status").merge({
           LearnedCount: typedAction.LearnedCount,
-          PrioritizedCount: typedAction.PrioritizedCount,
+          PrioritiedCount: typedAction.PrioritiedCount,
           PendingCount: typedAction.PendingCount,
         })
       )

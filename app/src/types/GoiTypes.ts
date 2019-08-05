@@ -7,3 +7,7 @@ export type GoiJudgeResult =
   | "Rejected"
   | "Wrong"
   | "Skipped"
+
+export interface AllPromisesReceiver {
+  <T>(allPromise: Promise<unknown>[]): T | void
+}
