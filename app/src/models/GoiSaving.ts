@@ -79,12 +79,17 @@ export class GoiWordHistoryModel {
   Exists = async (): Promise<boolean> => {
     return await GoiDb().Exists(this.dbKey)
   }
-  Create = async (
-    wordKey: string,
-    judgeResult: GoiJudgeResult,
-    levelBefore: number,
+  Create = async ({
+    wordKey,
+    judgeResult,
+    levelBefore,
+    levelAfter,
+  }: {
+    wordKey: string
+    judgeResult: GoiJudgeResult
+    levelBefore: number
     levelAfter: number
-  ): Promise<GoiWordHistoryDbKey> => {
+  }): Promise<GoiWordHistoryDbKey> => {
     //static builder
     const newData: GoiWordHistoryDataType = this.DefaultData()
     await GoiDb().put<GoiWordHistoryDataType>({
@@ -279,18 +284,14 @@ export class GoiWordRecordModel {
   SetNextTime = async (nextTime: TimeStamp) => {
     await this.update({ NextTime: nextTime })
   }
-  CreateHistory = async (
-    judgeResult: GoiJudgeResult,
-    levelBefore: number,
-    levelAfter: number
-  ) => {
-    const judgeTime: TimeStamp = new Date().getTime() as TimeStamp
+  AttachHistory = async ({
+    judgeTime,
+    historyDbKey,
+  }: {
+    judgeTime: TimeStamp
+    historyDbKey: GoiWordHistoryDbKey
+  }) => {
     const data = await this.Read()
-    const historyDbKey = await GoiWordHistory(
-      this.poiUserId,
-      this.savingId,
-      judgeTime
-    ).Create(this.wordKey, judgeResult, levelBefore, levelAfter)
     const newHistorys: { [time: number]: GoiWordHistoryDbKey } = Object.assign(
       {},
       data.Historys

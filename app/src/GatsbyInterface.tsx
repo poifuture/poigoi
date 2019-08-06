@@ -15,3 +15,15 @@ export const WrapRootElementFunction = ({
   )
   return <Provider store={store}>{element}</Provider>
 }
+
+const PreventDefault = (e: Event) => e.preventDefault()
+export const OnRouteUpdate = ({ location }: { location: Location }) => {
+  console.log("new pathname", location.pathname)
+  if (location.pathname === "/") {
+    // document.body.addEventListener("touchmove", PreventDefault, {
+    //   passive: false,
+    // })
+  } else {
+    // document.body.removeEventListener("touchmove", PreventDefault)
+  }
+}

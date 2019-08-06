@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import WordCard from "../components/WordCards/JaWordCard"
+import JaWordCard from "../components/WordCards/JaWordCard"
 import * as PoiUser from "../utils/PoiUser"
 import { LazyInitUserAction } from "../actions/GoiUserActions"
 import { LazyInitSavingAction } from "../actions/GoiSavingActions"
@@ -77,18 +77,15 @@ export class GoiTester extends React.Component<
         ? "failed"
         : "review"
     return (
-      <div className="goi-core">
+      <div className="goi-tester">
         <Helmet>
           <title>{word.key || "PoiGoi"}</title>
         </Helmet>
         <input ref={c => (this.JudgeInputElement = c)}></input>
         <button onClick={this.onRequestJudge}>Judge</button>
         <button onClick={this.onRequestNext}>Next</button>
-        <WordCard word={word} display="detailed" status={wordCardStatus} />
-        <pre className="goi-debug">
-          {JSON.stringify(this.props.tester, null, 2)}
-          {JSON.stringify(this.props.saving, null, 2)}
-        </pre>
+        <JaWordCard word={word} display="detailed" status={wordCardStatus} />
+        <pre className="goi-debug"></pre>
       </div>
     )
   }

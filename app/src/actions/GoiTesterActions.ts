@@ -8,6 +8,7 @@ import {
   GoiWordRecord,
   GoiWordRecordModel,
   GoiWordRecordDataType,
+  GoiWordHistory,
 } from "../models/GoiSaving"
 import KanaDictionary from "../dictionary/KanaDictionary"
 import { GoiDictionarys } from "../models/GoiDictionary"
@@ -368,7 +369,7 @@ export const VerifyAnswerAction = (
       }
     }
     dispatch(UpdateJudgeResultAction({ judgeResult }))
-    const nowTime = new Date().getTime()
+    const judgeTime = new Date().getTime()
     const recordModel = GoiWordRecord(poiUserId, savingId, wordKey)
     const recordBefore = await recordModel.ReadOrCreate()
     const levelBefore = recordBefore.Level
@@ -378,12 +379,17 @@ export const VerifyAnswerAction = (
         ? 1
         : unvalidatedLevelAfter <= levelBefore
         ? unvalidatedLevelAfter
-        : nowTime <= recordBefore.NextTime
+        : judgeTime <= recordBefore.NextTime
         ? levelBefore
         : unvalidatedLevelAfter
-    await recordModel.CreateHistory(judgeResult, levelBefore, levelAfter)
+    const historyDbKey = await GoiWordHistory(
+      poiUserId,
+      savingId,
+      judgeTime
+    ).Create({ wordKey, judgeResult, levelBefore, levelAfter })
+    await recordModel.AttachHistory({ judgeTime, historyDbKey })
     await recordModel.SetLevel(levelAfter)
-    const nextTime = nowTime + GetTimeChange(levelAfter)
+    const nextTime = judgeTime + GetTimeChange(levelAfter)
     await recordModel.SetNextTime(nextTime)
     const record = await recordModel.Read()
     dispatch(UpdateGoiTesterWordAction({ record }))

@@ -1,5 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
+import * as MUI from "@material-ui/core"
+import * as Icons from "@material-ui/icons"
 import * as PoiUser from "../utils/PoiUser"
 import {
   DisplayWordAdderAction,
@@ -19,10 +21,19 @@ import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
 import { ShowNextWordAction } from "../actions/GoiTesterActions"
 
+type WordAdderPropsType = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>
+interface WordAdderStateType {
+  customQuery: string
+}
 export class WordAdder extends React.Component<
-  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+  WordAdderPropsType,
+  WordAdderStateType
 > {
-  CustomQueryInput: HTMLInputElement | null = null
+  constructor(props: WordAdderPropsType) {
+    super(props)
+    this.state = { customQuery: "" }
+  }
   getSuggestionQuerys = (): string[] => {
     const suggestions: WordAdderSuggestionQueryType[] = this.props.suggestions.toJS()
     return suggestions.map(suggestion => suggestion.Query)
@@ -55,87 +66,106 @@ export class WordAdder extends React.Component<
     const pendings: WordAdderPendingQueryType[] = this.props.pendings.toJS()
     const counters: WordAdderQueryCountersType = this.props.counters.toJS()
     return (
-      <div className="word-adder">
-        <h1>Word Adder</h1>
-        <p>Status:</p>
-        <div>Learned:{status.LearnedCount}</div>
-        <div>Prioritied:{status.PrioritiedCount}</div>
-        <div>
-          Pending:{status.PendingCount}
-          <button
-            onClick={() =>
-              this.props.clearPendingWords({ poiUserId, savingId })
-            }
-          >
-            Clear
-          </button>
-        </div>
-        <p>Suggestions:</p>
-        {suggestions.map(suggestion => (
-          <div key={suggestion.Display}>
-            {suggestion.Display}({suggestion.Query})
-            {counters[suggestion.Query] && (
-              <span>
-                Total:
-                {counters[suggestion.Query].TotalCount}
-                (Learned:
-                {counters[suggestion.Query].LearnedCount}, Added:
-                {counters[suggestion.Query].AddedCount}, New:
-                {counters[suggestion.Query].NewCount})
-              </span>
-            )}
+      <MUI.Dialog className="word-adder" open={this.props.display}>
+        <MUI.Container>
+          <h1>Word Adder</h1>
+          <p>Status:</p>
+          <div>Learned:{status.LearnedCount}</div>
+          <div>Prioritied:{status.PrioritiedCount}</div>
+          <div>
+            Pending:{status.PendingCount}
             <button
               onClick={() =>
-                this.props.addPendingQuery(
-                  { display: suggestion.Display, query: suggestion.Query },
-                  { poiUserId, savingId }
-                )
+                this.props.clearPendingWords({ poiUserId, savingId })
               }
             >
-              +
+              Clear
             </button>
           </div>
-        ))}
-        <p>
-          Custom Query:<input ref={c => (this.CustomQueryInput = c)}></input>
-          <button
-            onClick={() =>
-              this.CustomQueryInput &&
-              this.props.addPendingQuery(
-                { display: "Custom", query: this.CustomQueryInput.value },
-                { poiUserId, savingId }
-              )
-            }
-          >
-            +
-          </button>
-        </p>
-        <p>Pendings (order matters):</p>
-        {pendings.map(pending => (
-          <div key={pending.Query}>
-            {pending.Display}({pending.Query})
-            {counters[pending.Query] && (
-              <span>
-                Total:
-                {counters[pending.Query].TotalCount}
-                (Learned:
-                {counters[pending.Query].LearnedCount}, Added:
-                {counters[pending.Query].AddedCount}, New:
-                {counters[pending.Query].NewCount})
-              </span>
-            )}
-            <button
-              onClick={() =>
-                this.props.removePendingQuery({ query: pending.Query })
-              }
-            >
-              -
-            </button>
+          <p>Suggestions:</p>
+          {suggestions.map(suggestion => (
+            <div key={suggestion.Display}>
+              {suggestion.Display}({suggestion.Query})
+              {counters[suggestion.Query] && (
+                <span>
+                  Total:
+                  {counters[suggestion.Query].TotalCount}
+                  (Learned:
+                  {counters[suggestion.Query].LearnedCount}, Added:
+                  {counters[suggestion.Query].AddedCount}, New:
+                  {counters[suggestion.Query].NewCount})
+                </span>
+              )}
+              <button
+                onClick={() =>
+                  this.props.addPendingQuery(
+                    { display: suggestion.Display, query: suggestion.Query },
+                    { poiUserId, savingId }
+                  )
+                }
+              >
+                +
+              </button>
+            </div>
+          ))}
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
+            <MUI.TextField
+              label="Custom Query"
+              variant="outlined"
+              value={this.state.customQuery}
+              style={{ flexGrow: 1 }}
+              onChange={e => {
+                this.setState({ customQuery: e.target.value })
+              }}
+              inputProps={{
+                // placeholder: "(e.g. JLPT-N5) Accept RegExp",
+                endAdornment: (
+                  <MUI.InputAdornment position="end">Kg</MUI.InputAdornment>
+                ),
+                // <MUI.InputAdornment position="end">
+                //   <MUI.IconButton
+                //     aria-label="add query"
+                //     edge="end"
+                //     onClick={() =>
+                //       this.props.addPendingQuery(
+                //         { display: "Custom", query: this.state.customQuery },
+                //         { poiUserId, savingId }
+                //       )
+                //     }
+                //   >
+                //     <Icons.SearchOutlined />
+                //   </MUI.IconButton>
+                // </MUI.InputAdornment>
+              }}
+            ></MUI.TextField>
           </div>
-        ))}
-        <button onClick={this.onClickConfirm}>Confirm</button>
-        <button onClick={() => this.props.close()}>Cancel</button>
-      </div>
+          <p>Pendings (order matters):</p>
+          {pendings.map(pending => (
+            <div key={pending.Query}>
+              {pending.Display}({pending.Query})
+              {counters[pending.Query] && (
+                <span>
+                  Total:
+                  {counters[pending.Query].TotalCount}
+                  (Learned:
+                  {counters[pending.Query].LearnedCount}, Added:
+                  {counters[pending.Query].AddedCount}, New:
+                  {counters[pending.Query].NewCount})
+                </span>
+              )}
+              <button
+                onClick={() =>
+                  this.props.removePendingQuery({ query: pending.Query })
+                }
+              >
+                -
+              </button>
+            </div>
+          ))}
+          <button onClick={this.onClickConfirm}>Confirm</button>
+          <button onClick={() => this.props.close()}>Cancel</button>
+        </MUI.Container>
+      </MUI.Dialog>
     )
   }
 }

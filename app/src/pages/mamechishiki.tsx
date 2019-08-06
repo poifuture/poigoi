@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar"
 import Header from "../components/Header"
 import { poisky3 } from "../utils/PoiColors"
 import Helmet from "react-helmet"
+import { Container } from "@material-ui/core"
 
 const Card = styled.div``
 const CardHeader = styled.div`
@@ -13,29 +14,35 @@ const CardHeader = styled.div`
 const CardBody = styled.div``
 
 export default (props: any) => (
-  <div>
+  <>
     <Helmet>
       <title>Mamechishiki</title>
     </Helmet>
     <NavBar />
-    <Header>
-      <ruby>
-        豆<rt>まめ</rt>
-      </ruby>
-      <ruby>
-        知<rt>ち</rt>
-      </ruby>
-      <ruby>
-        識<rt>しき</rt>
-      </ruby>
-    </Header>
+    <Container>
+      <Header>
+        <ruby>
+          豆<rt>まめ</rt>
+        </ruby>
+        <ruby>
+          知<rt>ち</rt>
+        </ruby>
+        <ruby>
+          識<rt>しき</rt>
+        </ruby>
+      </Header>
+    </Container>
     {props.data.allMarkdownRemark.edges.map((edge: any) => (
       <Card key={edge.node.id}>
-        <CardHeader>{edge.node.frontmatter.title}</CardHeader>
-        <CardBody dangerouslySetInnerHTML={{ __html: edge.node.html }} />
+        <CardHeader>
+          <Container>{edge.node.frontmatter.title}</Container>
+        </CardHeader>
+        <Container>
+          <CardBody dangerouslySetInnerHTML={{ __html: edge.node.html }} />
+        </Container>
       </Card>
     ))}
-  </div>
+  </>
 )
 
 export const query = graphql`

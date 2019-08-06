@@ -1,5 +1,6 @@
-import { WrapRootElementFunction } from "./src/GatsbyInterface"
+import { WrapRootElementFunction, OnRouteUpdate } from "./src/GatsbyInterface"
 export const wrapRootElement = WrapRootElementFunction
+export const onRouteUpdate = OnRouteUpdate
 export const onServiceWorkerUpdateReady = () => {
   const answer = window.confirm(
     `This application has been updated. ` +

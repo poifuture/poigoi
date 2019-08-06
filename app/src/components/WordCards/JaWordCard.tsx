@@ -15,7 +15,7 @@ export type WordCardPropsType = {
     | "review"
 }
 
-export class WordCard extends React.Component<WordCardPropsType> {
+export class JaWordCard extends React.Component<WordCardPropsType> {
   static defaultProps = {
     word: {
       common: "Common Placeholder",
@@ -74,9 +74,6 @@ export class WordCard extends React.Component<WordCardPropsType> {
                 </div>
               ))}
             </div>
-            <pre className="word-card-debug">
-              {JSON.stringify(this.props.word, null, 2)}
-            </pre>
           </>
         ) : (
           <></>
@@ -86,4 +83,4 @@ export class WordCard extends React.Component<WordCardPropsType> {
   }
 }
 
-export default WordCard
+export default JaWordCard

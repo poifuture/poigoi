@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
-import { Helmet } from "react-helmet"
 import { poisky, poisky5 } from "../utils/PoiColors"
+import Container from "@material-ui/core/Container"
 
 const NavBar = styled.nav`
   top: 0;
@@ -42,9 +42,11 @@ const NavBarItem = styled(UnstyledNavBarItem)`
 export default () => (
   <NavBar>
     <NavBarList>
-      <NavBarItem to="/">Home</NavBarItem>
-      <NavBarItem to="/mamechishiki/">豆知識</NavBarItem>
-      <NavBarItem to="/tegami/">手紙</NavBarItem>
+      <Container>
+        <NavBarItem to="/">Home</NavBarItem>
+        <NavBarItem to="/mamechishiki/">豆知識</NavBarItem>
+        <NavBarItem to="/tegami/">手紙</NavBarItem>
+      </Container>
     </NavBarList>
   </NavBar>
 )
