@@ -16,18 +16,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>あ<rt>a</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "あ",
         romaji: "a",
         wapuro: "a",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "あ",
@@ -42,7 +42,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
             from: "KanaDictionary",
             sentence:
               "<ruby>愛<rt>あい</rt></ruby>；<ruby>会<rt>あ</rt></ruby>う",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -60,18 +60,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>い<rt>i</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "い",
         romaji: "i",
         wapuro: "i",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "い",
@@ -85,7 +85,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "<ruby>家<rt>いえ</rt></ruby>",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -103,18 +103,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>う<rt>u</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "う",
         romaji: "u",
         wapuro: "u",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "う",
@@ -128,7 +128,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -146,18 +146,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>え<rt>e</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "え",
         romaji: "e",
         wapuro: "e",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "え",
@@ -171,7 +171,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -189,18 +189,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>お<rt>o</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "お",
         romaji: "o",
         wapuro: "o",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "お",
@@ -214,7 +214,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -232,18 +232,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>か<rt>ka</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "か",
         romaji: "ka",
         wapuro: "ka",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "か",
@@ -257,7 +257,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -275,18 +275,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>き<rt>ki</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "き",
         romaji: "ki",
         wapuro: "ki",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "き",
@@ -300,7 +300,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -318,18 +318,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>く<rt>ku</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "く",
         romaji: "ku",
         wapuro: "ku",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "く",
@@ -343,7 +343,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -361,18 +361,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>け<rt>ke</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "け",
         romaji: "ke",
         wapuro: "ke",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "け",
@@ -386,7 +386,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -404,18 +404,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>こ<rt>ko</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "こ",
         romaji: "ko",
         wapuro: "ko",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "こ",
@@ -429,7 +429,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -447,18 +447,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>さ<rt>sa</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "さ",
         romaji: "sa",
         wapuro: "sa",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "さ",
@@ -472,7 +472,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -490,18 +490,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>し<rt>shi</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "し",
         romaji: "shi",
         wapuro: "shi",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "し",
@@ -515,7 +515,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -533,18 +533,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>す<rt>su</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "す",
         romaji: "su",
         wapuro: "su",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "す",
@@ -558,7 +558,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -576,18 +576,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>せ<rt>se</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "せ",
         romaji: "se",
         wapuro: "se",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "せ",
@@ -601,7 +601,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -619,18 +619,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>そ<rt>so</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "そ",
         romaji: "so",
         wapuro: "so",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "そ",
@@ -644,7 +644,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -662,18 +662,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>た<rt>ta</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "た",
         romaji: "ta",
         wapuro: "ta",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "た",
@@ -687,7 +687,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -705,18 +705,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ち<rt>chi</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ち",
         romaji: "chi",
         wapuro: "chi",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ち",
@@ -730,7 +730,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -748,18 +748,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>つ<rt>tsu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "つ",
         romaji: "tsu",
         wapuro: "tsu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "つ",
@@ -773,7 +773,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -791,18 +791,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>て<rt>te</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "て",
         romaji: "te",
         wapuro: "te",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "て",
@@ -816,7 +816,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -834,18 +834,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>と<rt>to</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "と",
         romaji: "to",
         wapuro: "to",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "と",
@@ -859,7 +859,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -877,18 +877,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>な<rt>na</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "な",
         romaji: "na",
         wapuro: "na",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "な",
@@ -902,7 +902,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -920,18 +920,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>に<rt>ni</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "に",
         romaji: "ni",
         wapuro: "ni",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "に",
@@ -945,7 +945,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -963,18 +963,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ぬ<rt>nu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ぬ",
         romaji: "nu",
         wapuro: "nu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ぬ",
@@ -988,7 +988,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1006,18 +1006,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ね<rt>ne</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ね",
         romaji: "ne",
         wapuro: "ne",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ね",
@@ -1031,7 +1031,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1049,18 +1049,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>の<rt>no</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "の",
         romaji: "no",
         wapuro: "no",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "の",
@@ -1074,7 +1074,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1092,18 +1092,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>は<rt>ha</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "は",
         romaji: "ha",
         wapuro: "ha",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "は",
@@ -1117,7 +1117,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1135,18 +1135,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ひ<rt>hi</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ひ",
         romaji: "hi",
         wapuro: "hi",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ひ",
@@ -1160,7 +1160,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1178,18 +1178,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ふ<rt>fu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ふ",
         romaji: "fu",
         wapuro: "fu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ふ",
@@ -1203,7 +1203,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1221,18 +1221,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>へ<rt>he</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "へ",
         romaji: "he",
         wapuro: "he",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "へ",
@@ -1246,7 +1246,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1264,18 +1264,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ほ<rt>ho</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ほ",
         romaji: "ho",
         wapuro: "ho",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ほ",
@@ -1289,7 +1289,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1307,18 +1307,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ま<rt>ma</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ま",
         romaji: "ma",
         wapuro: "ma",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ま",
@@ -1332,7 +1332,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1350,18 +1350,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>み<rt>mi</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "み",
         romaji: "mi",
         wapuro: "mi",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "み",
@@ -1375,7 +1375,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1393,18 +1393,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>む<rt>mu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "む",
         romaji: "mu",
         wapuro: "mu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "む",
@@ -1418,7 +1418,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1436,18 +1436,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>め<rt>me</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "め",
         romaji: "me",
         wapuro: "me",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "め",
@@ -1461,7 +1461,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1479,18 +1479,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>も<rt>mo</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "も",
         romaji: "mo",
         wapuro: "mo",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "も",
@@ -1504,7 +1504,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1522,18 +1522,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>や<rt>ya</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "や",
         romaji: "ya",
         wapuro: "ya",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "や",
@@ -1547,7 +1547,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1565,18 +1565,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ゆ<rt>yu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ゆ",
         romaji: "yu",
         wapuro: "yu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ゆ",
@@ -1590,7 +1590,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1608,18 +1608,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>よ<rt>yo</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "よ",
         romaji: "yo",
         wapuro: "yo",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "よ",
@@ -1633,7 +1633,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1651,18 +1651,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ら<rt>ra</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ら",
         romaji: "ra",
         wapuro: "ra",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ら",
@@ -1676,7 +1676,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1694,18 +1694,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>り<rt>ri</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "り",
         romaji: "ri",
         wapuro: "ri",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "り",
@@ -1719,7 +1719,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1737,18 +1737,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>る<rt>ru</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "る",
         romaji: "ru",
         wapuro: "ru",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "る",
@@ -1762,7 +1762,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1780,18 +1780,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>れ<rt>re</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "れ",
         romaji: "re",
         wapuro: "re",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "れ",
@@ -1805,7 +1805,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1823,18 +1823,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ろ<rt>ro</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ろ",
         romaji: "ro",
         wapuro: "ro",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ろ",
@@ -1848,7 +1848,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1866,18 +1866,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>わ<rt>wa</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "わ",
         romaji: "wa",
         wapuro: "wa",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "わ",
@@ -1891,7 +1891,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1909,18 +1909,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>を<rt>o</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "を",
         romaji: "o",
         wapuro: "wo",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "を",
@@ -1934,7 +1934,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1952,18 +1952,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ん<rt>n</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ん",
         romaji: "n",
         wapuro: "nn",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ん",
@@ -1977,7 +1977,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -1995,18 +1995,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ア<rt>a</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ア",
         romaji: "a",
         wapuro: "a",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ア",
@@ -2020,7 +2020,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2038,18 +2038,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>イ<rt>i</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "イ",
         romaji: "i",
         wapuro: "i",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "イ",
@@ -2063,7 +2063,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2081,18 +2081,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ウ<rt>u</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ウ",
         romaji: "u",
         wapuro: "u",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ウ",
@@ -2106,7 +2106,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2124,18 +2124,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>エ<rt>e</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "エ",
         romaji: "e",
         wapuro: "e",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "エ",
@@ -2149,7 +2149,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2167,18 +2167,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>オ<rt>o</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "オ",
         romaji: "o",
         wapuro: "o",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "オ",
@@ -2192,7 +2192,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2210,18 +2210,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>カ<rt>ka</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "カ",
         romaji: "ka",
         wapuro: "ka",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "カ",
@@ -2235,7 +2235,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2253,18 +2253,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>キ<rt>ki</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "キ",
         romaji: "ki",
         wapuro: "ki",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "キ",
@@ -2278,7 +2278,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2296,18 +2296,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ク<rt>ku</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ク",
         romaji: "ku",
         wapuro: "ku",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ク",
@@ -2321,7 +2321,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2339,18 +2339,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ケ<rt>ke</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ケ",
         romaji: "ke",
         wapuro: "ke",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ケ",
@@ -2364,7 +2364,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2382,18 +2382,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>コ<rt>ko</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "コ",
         romaji: "ko",
         wapuro: "ko",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "コ",
@@ -2407,7 +2407,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2425,18 +2425,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>サ<rt>sa</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "サ",
         romaji: "sa",
         wapuro: "sa",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "サ",
@@ -2450,7 +2450,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2468,18 +2468,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>シ<rt>shi</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "シ",
         romaji: "shi",
         wapuro: "shi",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "シ",
@@ -2493,7 +2493,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2511,18 +2511,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ス<rt>su</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ス",
         romaji: "su",
         wapuro: "su",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ス",
@@ -2536,7 +2536,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2554,18 +2554,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>セ<rt>se</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "セ",
         romaji: "se",
         wapuro: "se",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "セ",
@@ -2579,7 +2579,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2597,18 +2597,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ソ<rt>so</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ソ",
         romaji: "so",
         wapuro: "so",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ソ",
@@ -2622,7 +2622,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2640,18 +2640,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>タ<rt>ta</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "タ",
         romaji: "ta",
         wapuro: "ta",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "タ",
@@ -2665,7 +2665,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2683,18 +2683,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>チ<rt>chi</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "チ",
         romaji: "chi",
         wapuro: "chi",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "チ",
@@ -2708,7 +2708,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2726,18 +2726,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ツ<rt>tsu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ツ",
         romaji: "tsu",
         wapuro: "tsu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ツ",
@@ -2751,7 +2751,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2769,18 +2769,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>テ<rt>te</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "テ",
         romaji: "te",
         wapuro: "te",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "テ",
@@ -2794,7 +2794,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2812,18 +2812,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ト<rt>to</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ト",
         romaji: "to",
         wapuro: "to",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ト",
@@ -2837,7 +2837,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2855,18 +2855,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ナ<rt>na</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ナ",
         romaji: "na",
         wapuro: "na",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ナ",
@@ -2880,7 +2880,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2898,18 +2898,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ニ<rt>ni</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ニ",
         romaji: "ni",
         wapuro: "ni",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ニ",
@@ -2923,7 +2923,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2941,18 +2941,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ヌ<rt>nu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ヌ",
         romaji: "nu",
         wapuro: "nu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ヌ",
@@ -2966,7 +2966,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -2984,18 +2984,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ネ<rt>ne</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ネ",
         romaji: "ne",
         wapuro: "ne",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ネ",
@@ -3009,7 +3009,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3027,18 +3027,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ノ<rt>no</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ノ",
         romaji: "no",
         wapuro: "no",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ノ",
@@ -3052,7 +3052,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3070,18 +3070,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ハ<rt>ha</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ハ",
         romaji: "ha",
         wapuro: "ha",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ハ",
@@ -3095,7 +3095,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3113,18 +3113,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ヒ<rt>hi</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ヒ",
         romaji: "hi",
         wapuro: "hi",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ヒ",
@@ -3138,7 +3138,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3156,18 +3156,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>フ<rt>fu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "フ",
         romaji: "fu",
         wapuro: "fu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "フ",
@@ -3181,7 +3181,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3199,18 +3199,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ヘ<rt>he</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ヘ",
         romaji: "he",
         wapuro: "he",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ヘ",
@@ -3224,7 +3224,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3242,18 +3242,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ホ<rt>ho</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ホ",
         romaji: "ho",
         wapuro: "ho",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ホ",
@@ -3267,7 +3267,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3285,18 +3285,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>マ<rt>ma</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "マ",
         romaji: "ma",
         wapuro: "ma",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "マ",
@@ -3310,7 +3310,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3328,18 +3328,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ミ<rt>mi</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ミ",
         romaji: "mi",
         wapuro: "mi",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ミ",
@@ -3353,7 +3353,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3371,18 +3371,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ム<rt>mu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ム",
         romaji: "mu",
         wapuro: "mu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ム",
@@ -3396,7 +3396,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3414,18 +3414,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>メ<rt>me</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "メ",
         romaji: "me",
         wapuro: "me",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "メ",
@@ -3439,7 +3439,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3457,18 +3457,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>モ<rt>mo</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "モ",
         romaji: "mo",
         wapuro: "mo",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "モ",
@@ -3482,7 +3482,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3500,18 +3500,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ヤ<rt>ya</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ヤ",
         romaji: "ya",
         wapuro: "ya",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ヤ",
@@ -3525,7 +3525,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3543,18 +3543,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ユ<rt>yu</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ユ",
         romaji: "yu",
         wapuro: "yu",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ユ",
@@ -3568,7 +3568,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3586,18 +3586,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ヨ<rt>yo</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ヨ",
         romaji: "yo",
         wapuro: "yo",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ヨ",
@@ -3611,7 +3611,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3629,18 +3629,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ラ<rt>ra</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ラ",
         romaji: "ra",
         wapuro: "ra",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ラ",
@@ -3654,7 +3654,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3672,18 +3672,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>リ<rt>ri</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "リ",
         romaji: "ri",
         wapuro: "ri",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "リ",
@@ -3697,7 +3697,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3715,18 +3715,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ル<rt>ru</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ル",
         romaji: "ru",
         wapuro: "ru",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ル",
@@ -3740,7 +3740,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3758,18 +3758,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>レ<rt>re</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "レ",
         romaji: "re",
         wapuro: "re",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "レ",
@@ -3783,7 +3783,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3801,18 +3801,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ロ<rt>ro</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ロ",
         romaji: "ro",
         wapuro: "ro",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ロ",
@@ -3826,7 +3826,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3844,18 +3844,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ワ<rt>wa</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ワ",
         romaji: "wa",
         wapuro: "wa",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ワ",
@@ -3869,7 +3869,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3887,18 +3887,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ヲ<rt>o</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ヲ",
         romaji: "o",
         wapuro: "wo",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ヲ",
@@ -3912,7 +3912,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",
@@ -3930,18 +3930,18 @@ export const KanaDictionary: GoiJaDictionaryType = {
         language: "ja",
         common: "<ruby>ン<rt>n</rt></ruby>",
         alternatives: [],
-        uncommon: [],
+        uncommons: [],
         kana: "ン",
         romaji: "n",
         wapuro: "nn",
-        audio: [
+        audios: [
           {
             cv: "Hikari",
             wav: "",
           },
         ],
         pos: "KANA",
-        translation: {
+        translations: {
           KanaDictionary: {
             translation: {
               ja: "ン",
@@ -3955,7 +3955,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
           {
             from: "KanaDictionary",
             sentence: "",
-            audio: [
+            audios: [
               {
                 cv: "Hikari",
                 wav: "",

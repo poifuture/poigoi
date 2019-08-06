@@ -152,7 +152,7 @@ const queryWords = async (
       ? wordKeys
       : await GoiDictionarys(dictionarys).GetAllWordsKeys()
   console.debug("AllWordKeys", wordKeys)
-  const queryRegExp = new RegExp(query)
+  const queryRegExp = new RegExp(query, "i")
   const words: { [key: string]: GoiWordType } = Object.fromEntries(
     (await Promise.all(
       wordKeys.map(async wordKey => {
@@ -193,8 +193,9 @@ const CountQueryAction = (
   } = {}
 ) => {
   return (async dispatch => {
-    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
     console.debug("Counting Query... ", query)
+    query = query.trim()
+    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
     const words = await queryWords({ query, dictionarys }, { wordKeys })
     const wordRecords = (await Promise.all(
       Object.keys(words).map(

@@ -21,6 +21,17 @@ export default function HTML(props: any) {
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+          if (window.navigator.userAgent.toLowerCase().match(/micromessenger/)) {
+            if (!window.location.search.match(/v=1/)) {
+              window.location.replace="/?v=1"
+            }
+          }
+        `,
+          }}
+        />
         {props.preBodyComponents}
         <noscript key="noscript" id="gatsby-noscript">
           This app works best with JavaScript enabled.

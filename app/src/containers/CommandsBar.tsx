@@ -6,16 +6,25 @@ import { GoiSavingId } from "../types/GoiTypes"
 import { ThunkDispatch } from "redux-thunk"
 import { RootStateType } from "../states/RootState"
 import { Action } from "redux"
-import * as Icons from "@material-ui/icons"
-import * as MUI from "@material-ui/core"
-import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@material-ui/lab"
+import { Button } from "@material-ui/core"
+import { SpeedDial, SpeedDialAction } from "@material-ui/lab"
 import { navigate } from "gatsby"
+import AddIcon from "@material-ui/icons/AddOutlined"
+import SmsIcon from "@material-ui/icons/SmsOutlined"
+import ShareIcon from "@material-ui/icons/ShareOutlined"
+import MenuIcon from "@material-ui/icons/MenuOutlined"
+import HighlightIcon from "@material-ui/icons/HighlightOutlined"
+import PersonIcon from "@material-ui/icons/PersonOutlined"
+import SyncIcon from "@material-ui/icons/SyncOutlined"
+import FlagIcon from "@material-ui/icons/FlagOutlined"
+import SearchIcon from "@material-ui/icons/SearchOutlined"
 
 type CommandsBarPropsType = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 interface CommandsBarStateType {
   menuOpened: boolean
 }
+
 export class CommandsBar extends React.Component<
   CommandsBarPropsType,
   CommandsBarStateType
@@ -25,6 +34,9 @@ export class CommandsBar extends React.Component<
     this.state = {
       menuOpened: false,
     }
+  }
+  navigate(to: string) {
+    navigate(to, { replace: true })
   }
   openMenu = () => {
     this.setState({ menuOpened: true })
@@ -48,19 +60,33 @@ export class CommandsBar extends React.Component<
           alignItems: "flex-end",
         }}
       >
-        <MUI.Button
-          size="small"
-          onClick={() => this.props.showWordAdder({ poiUserId, savingId })}
-          style={{ height: "36px", margin: "10px" }}
+        <div
+          style={{
+            display: "inline-flex",
+            height: "40px",
+            margin: "8px",
+          }}
         >
-          Add Words
-          <Icons.Add fontSize="small" />
-        </MUI.Button>
-
+          <Button size="small">
+            [WIP] SwotUp
+            <FlagIcon fontSize="small" />
+          </Button>
+          <Button size="small">
+            [WIP] Sync
+            <SyncIcon fontSize="small" />
+          </Button>
+          <Button
+            size="small"
+            onClick={() => this.props.showWordAdder({ poiUserId, savingId })}
+          >
+            Words
+            <AddIcon fontSize="small" />
+          </Button>
+        </div>
         <SpeedDial
           ariaLabel="menu"
           open={this.state.menuOpened}
-          icon={<Icons.MenuOutlined />}
+          icon={<MenuIcon fontSize="small" />}
           onBlur={this.closeMenu}
           onClick={this.toggleMenu}
           onClose={this.closeMenu}
@@ -69,12 +95,13 @@ export class CommandsBar extends React.Component<
           onMouseLeave={this.closeMenu}
           ButtonProps={{
             color: "default",
-            style: { background: "white" },
+            size: "small",
+            style: { background: "white", margin: "8px" },
           }}
         >
           <SpeedDialAction
             key="share"
-            icon={<Icons.ShareOutlined />}
+            icon={<ShareIcon fontSize="small" />}
             tooltipTitle="[WIP] Share"
             tooltipOpen
             onClick={() => {
@@ -83,27 +110,36 @@ export class CommandsBar extends React.Component<
           ></SpeedDialAction>
           <SpeedDialAction
             key="tegami"
-            icon={<Icons.SmsOutlined />}
+            icon={<SmsIcon fontSize="small" />}
             tooltipTitle="手紙"
             tooltipOpen
             onClick={() => {
               this.closeMenu()
-              navigate("/tegami")
+              this.navigate("/tegami/")
             }}
           ></SpeedDialAction>
           <SpeedDialAction
             key="mamechishiki"
-            icon={<Icons.HighlightOutlined />}
+            icon={<HighlightIcon />}
             tooltipTitle="豆知識"
             tooltipOpen
             onClick={() => {
               this.closeMenu()
-              navigate("/mamechishiki")
+              this.navigate("/mamechishiki/")
+            }}
+          ></SpeedDialAction>
+          <SpeedDialAction
+            key="searchwords"
+            icon={<SearchIcon />}
+            tooltipTitle="[WIP] Search Words"
+            tooltipOpen
+            onClick={() => {
+              this.closeMenu()
             }}
           ></SpeedDialAction>
           <SpeedDialAction
             key="addwords"
-            icon={<Icons.AddOutlined />}
+            icon={<AddIcon />}
             tooltipTitle="Add Words"
             tooltipOpen
             onClick={() => {
@@ -113,12 +149,12 @@ export class CommandsBar extends React.Component<
           ></SpeedDialAction>
           <SpeedDialAction
             key="profile"
-            icon={<Icons.PersonOutlined />}
-            tooltipTitle="[WIP] Profile and settings"
+            icon={<PersonIcon />}
+            tooltipTitle="[WIP] Profile, statics and settings"
             tooltipOpen
             onClick={() => {
               this.closeMenu()
-              navigate("/")
+              this.navigate("/")
             }}
           ></SpeedDialAction>
         </SpeedDial>

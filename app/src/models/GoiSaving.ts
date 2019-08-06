@@ -354,7 +354,7 @@ export class GoiSavingModel {
       Judgement: "Typing",
       Term: "Permanant",
       Language: "ja",
-      Dictionarys: ["KanaDictionary", "SimpleJaDictionary"],
+      Dictionarys: ["KanaDictionary", "GoiSimpleJaDictionary"],
       Records: {},
     }
   }

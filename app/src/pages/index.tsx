@@ -4,6 +4,7 @@ import GoiTester from "../containers/GoiTester"
 import WordAdder from "../containers/WordAdder"
 import CommandsBar from "../containers/CommandsBar"
 import Container from "@material-ui/core/Container"
+import { Hidden } from "@material-ui/core"
 
 export default (props: any) => (
   // <div style={{ width: "100%", overflow: "hidden", position: "fixed" }}>
@@ -15,15 +16,17 @@ export default (props: any) => (
       position: "fixed",
     }}
   >
-    <NavBar />
+    <Hidden xsDown>
+      <NavBar />
+    </Hidden>
     <CommandsBar />
     <main>
+      <WordAdder />
       <Container>
-        <WordAdder />
         <GoiTester />
       </Container>
     </main>
-    <footer>
+    <footer style={{ position: "absolute", bottom: 0 }}>
       <Container>
         <ruby>
           私<rt>わたし</rt>
@@ -36,7 +39,7 @@ export default (props: any) => (
         <ruby>
           始<rt>はじ</rt>
         </ruby>
-        まります ٩(ˊᗜˋ*)و
+        まりましょう ٩(ˊᗜˋ*)و
       </Container>
     </footer>
   </div>

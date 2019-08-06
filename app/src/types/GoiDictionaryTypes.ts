@@ -1,26 +1,46 @@
-type JA_POS = "KANA" | "NOUN" | "VERB_GODAN_JIDOSHI"
-type POS = "POS" | any
-type EN_POS = "NOUN" | "VERB"
+export type POS = "POS" | string | string[]
+export type EN_POS = "NOUN" | "VERB"
+export type JA_BASIC_POS =
+  | "HIRAGANA"
+  | "KATAKANA"
+  | "KANA"
+  | "NOUN"
+  | "VERB"
+  | "GODAN"
+  | "JIDOSHI"
+  | "TADOSHI"
+export type JA_POS = JA_BASIC_POS | JA_BASIC_POS[]
+export type JA_TONE = number | number[]
+export type I18nString = { en?: string; zh?: string; ja?: string }
+export type LanguageCode =
+  | "ja-c2" // Chunibyo
+  | "zh-c2" // Chunibyo
+  | "en"
+  | "en-us"
+  | "ja"
+  | "ja-jp"
+  | "zh"
+  | "zh-cn"
 export interface GoiWordType {
   key: string
-  language: string
+  language: LanguageCode
   common: string
-  audio: {
+  audios: {
     cv: string
     wav: string
   }[]
   pos: POS
-  translation: {
+  translations: {
     [from: string]: {
-      translation: { en?: string; zh?: string; ja?: string }
-      hint?: { en?: string; zh?: string; ja?: string }
+      translation: I18nString
+      hint?: I18nString
     }
   }
   sentences?: {
     from: string
     sentence: string
-    audio?: { cv: string; wav: string }[]
-    translation?: { zh?: string }
+    audios?: { cv: string; wav: string }[]
+    translation?: I18nString
     source?: string
     link?: string
     contributor?: string
@@ -39,13 +59,14 @@ export interface GoiJaWordType extends GoiWordType {
   language: "ja"
   // common:
   alternatives: string[]
-  uncommon: string[]
+  uncommons: string[]
   kana: string
   romaji: string // 修正ヘボン式
   wapuro: string // ワープロローマ字
   // audio:
   pos: JA_POS
   // translation:
+  tone?: JA_TONE
   katsuyo?: {
     // 活用
     keigo: string // 敬語
@@ -53,10 +74,15 @@ export interface GoiJaWordType extends GoiWordType {
 }
 export interface GoiDictionaryMetadataType {
   name: string
-  language: "ja" | "ja-jp" | "en" | "en-us" | "zh" | "zh-cn" | "zh-c2"
-  display: { zh: string }
-  description: { zh: string }
+  language: LanguageCode
+  display: I18nString
+  description: I18nString
   schema: "Poi/Goi/RawDictionary/v1"
+  extends?: {
+    name: string
+    display: I18nString
+    description: I18nString
+  }[]
 }
 export interface GoiJaDictionaryType extends GoiDictionaryMetadataType {
   words: { [s: string]: GoiJaWordType }

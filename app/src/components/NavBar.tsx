@@ -31,7 +31,7 @@ const NavBarLink = styled(Link)`
 
 const UnstyledNavBarItem = (props: any) => (
   <li>
-    <NavBarLink {...props} />
+    <NavBarLink replace {...props} />
   </li>
 )
 
@@ -43,7 +43,7 @@ export default () => (
   <NavBar>
     <NavBarList>
       <Container>
-        <NavBarItem to="/">Home</NavBarItem>
+        <NavBarItem to="/">Study</NavBarItem>
         <NavBarItem to="/mamechishiki/">豆知識</NavBarItem>
         <NavBarItem to="/tegami/">手紙</NavBarItem>
       </Container>

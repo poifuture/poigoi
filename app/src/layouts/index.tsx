@@ -16,12 +16,13 @@ export class Layout extends React.Component<
       e.preventDefault()
   }
   render() {
-    const userAgent = window.navigator.userAgent
+    const userAgent =
+      typeof window !== "undefined" ? window.navigator.userAgent : ""
     const iOS = !!userAgent.match(/iPad/i) || !!userAgent.match(/iPhone/i)
     const webkit = !!userAgent.match(/WebKit/i)
     const iOSSafari = iOS && webkit && !userAgent.match(/CriOS/i)
     return (
-      <>
+      <div className="goi-layout">
         <Helmet title="PoiGoi" defer={false}>
           <title>PoiGoi</title>
           <meta name="author" content="nagi" />
@@ -48,7 +49,7 @@ export class Layout extends React.Component<
 
         <CssBaseline />
         {this.props.children}
-      </>
+      </div>
     )
   }
 }
