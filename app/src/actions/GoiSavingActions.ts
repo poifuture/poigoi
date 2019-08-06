@@ -36,8 +36,8 @@ export const LazyInitSavingAction = ({
   poiUserId,
 }: {
   poiUserId: PoiUser.PoiUserId
-}): ThunkAction< Promise <GoiSavingId>, RootStateType, void, Action> => {
-  return async (dispatch): Promise<GoiSavingId> => {
+}) => {
+  return (async (dispatch): Promise<GoiSavingId> => {
     const savingId = await GoiUser(poiUserId).getDefaultSaving()
     const saving = await GoiSaving(poiUserId, savingId).Read()
     dispatch(
@@ -47,5 +47,5 @@ export const LazyInitSavingAction = ({
       })
     )
     return savingId
-  }
+  }) as ThunkAction<Promise<GoiSavingId>, RootStateType, void, Action>
 }

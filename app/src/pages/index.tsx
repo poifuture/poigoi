@@ -3,28 +3,44 @@ import NavBar from "../components/NavBar"
 import GoiTester from "../containers/GoiTester"
 import WordAdder from "../containers/WordAdder"
 import CommandsBar from "../containers/CommandsBar"
+import Container from "@material-ui/core/Container"
+import { Hidden } from "@material-ui/core"
 
 export default (props: any) => (
-  <>
-    <NavBar />
+  // <div style={{ width: "100%", overflow: "hidden", position: "fixed" }}>
+  <div
+    style={{
+      width: "100%",
+      height: "100%",
+      overflow: "hidden",
+      position: "fixed",
+    }}
+  >
+    <Hidden xsDown>
+      <NavBar />
+    </Hidden>
+    <CommandsBar />
     <main>
-      <CommandsBar />
       <WordAdder />
-      <GoiTester />
+      <Container>
+        <GoiTester />
+      </Container>
     </main>
-    <footer>
-      <ruby>
-        私<rt>わたし</rt>
-      </ruby>
-      たちの
-      <ruby>
-        夢<rt>ゆめ</rt>
-      </ruby>
-      がここから
-      <ruby>
-        始<rt>はじ</rt>
-      </ruby>
-      まります ٩(ˊᗜˋ*)و
+    <footer style={{ position: "absolute", bottom: 0 }}>
+      <Container>
+        <ruby>
+          私<rt>わたし</rt>
+        </ruby>
+        たちの
+        <ruby>
+          夢<rt>ゆめ</rt>
+        </ruby>
+        がここから
+        <ruby>
+          始<rt>はじ</rt>
+        </ruby>
+        まりましょう ٩(ˊᗜˋ*)و
+      </Container>
     </footer>
-  </>
+  </div>
 )

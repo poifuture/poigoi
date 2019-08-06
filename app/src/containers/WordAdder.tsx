@@ -1,5 +1,20 @@
 import React from "react"
 import { connect } from "react-redux"
+import {
+  TextField,
+  Container,
+  Dialog,
+  InputAdornment,
+  IconButton,
+  Typography,
+  Divider,
+  List as MuiList,
+  ListItem as MuiListItem,
+  ListItemText as MuiListItemText,
+  ListItemSecondaryAction as MuiListItemSecondaryAction,
+  Button,
+} from "@material-ui/core"
+import SearchIcon from "@material-ui/icons/SearchOutlined"
 import * as PoiUser from "../utils/PoiUser"
 import {
   DisplayWordAdderAction,
@@ -18,11 +33,23 @@ import { RootStateType } from "../states/RootState"
 import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
 import { ShowNextWordAction } from "../actions/GoiTesterActions"
+import DeleteIcon from "@material-ui/icons/DeleteOutlined"
+import AddIcon from "@material-ui/icons/AddOutlined"
+import CloseIcon from "@material-ui/icons/CloseOutlined"
 
+type WordAdderPropsType = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>
+interface WordAdderStateType {
+  customQuery: string
+}
 export class WordAdder extends React.Component<
-  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+  WordAdderPropsType,
+  WordAdderStateType
 > {
-  CustomQueryInput: HTMLInputElement | null = null
+  constructor(props: WordAdderPropsType) {
+    super(props)
+    this.state = { customQuery: "" }
+  }
   getSuggestionQuerys = (): string[] => {
     const suggestions: WordAdderSuggestionQueryType[] = this.props.suggestions.toJS()
     return suggestions.map(suggestion => suggestion.Query)
@@ -55,87 +82,194 @@ export class WordAdder extends React.Component<
     const pendings: WordAdderPendingQueryType[] = this.props.pendings.toJS()
     const counters: WordAdderQueryCountersType = this.props.counters.toJS()
     return (
-      <div className="word-adder">
-        <h1>Word Adder</h1>
-        <p>Status:</p>
-        <div>Learned:{status.LearnedCount}</div>
-        <div>Prioritied:{status.PrioritiedCount}</div>
-        <div>
-          Pending:{status.PendingCount}
-          <button
-            onClick={() =>
-              this.props.clearPendingWords({ poiUserId, savingId })
-            }
-          >
-            Clear
-          </button>
+      <Dialog className="word-adder" open={this.props.display}>
+        <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+          <Container>
+            <Typography gutterBottom variant="h4">
+              Add words
+            </Typography>
+            <MuiList dense={true}>
+              <Divider component="li" />
+              <li>
+                <Typography display="block" variant="caption">
+                  Current Study Status
+                </Typography>
+              </li>
+              <MuiListItem>
+                <TextField
+                  label="Learned"
+                  value={status.LearnedCount}
+                  margin="none"
+                  style={{ marginRight: "10px", flex: 1 }}
+                  InputProps={{ readOnly: true }}
+                ></TextField>
+                <TextField
+                  label="Prioritied"
+                  value={status.PrioritiedCount}
+                  margin="none"
+                  style={{ marginRight: "10px", flex: 1 }}
+                  InputProps={{ readOnly: true }}
+                ></TextField>
+                <TextField
+                  label="Pending"
+                  value={status.PendingCount}
+                  margin="none"
+                  style={{ marginRight: "10px", flex: 1 }}
+                  InputProps={{
+                    readOnly: true,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="Clear pending words"
+                          onClick={() =>
+                            this.props.clearPendingWords({
+                              poiUserId,
+                              savingId,
+                            })
+                          }
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                ></TextField>
+              </MuiListItem>
+              <Divider component="li" />
+              <li>
+                <Typography display="block" variant="caption">
+                  Suggested Word Lists
+                </Typography>
+              </li>
+              {suggestions.map(suggestion => (
+                <MuiListItem key={`suggestion${suggestion.Query}`}>
+                  <MuiListItemText
+                    primary={`${suggestion.Display} (${suggestion.Query}) ${counters[suggestion.Query].TotalCount} words`}
+                    secondary={
+                      counters[suggestion.Query] ? (
+                        <>
+                          <span>{`Learned ${counters[suggestion.Query].LearnedCount}, `}</span>
+                          <span>{`Added ${counters[suggestion.Query].AddedCount}, `}</span>
+                          <span>{`New ${counters[suggestion.Query].NewCount}`}</span>
+                        </>
+                      ) : null
+                    }
+                  ></MuiListItemText>
+                  <MuiListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      aria-label="Add suggestion query"
+                      onClick={() =>
+                        this.props.addPendingQuery(
+                          {
+                            display: suggestion.Display,
+                            query: suggestion.Query,
+                          },
+                          { poiUserId, savingId }
+                        )
+                      }
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </MuiListItemSecondaryAction>
+                </MuiListItem>
+              ))}
+              <div style={{ display: "flex" }}>
+                <TextField
+                  label="Custom Query"
+                  variant="outlined"
+                  value={this.state.customQuery}
+                  style={{ flexGrow: 1 }}
+                  onChange={e => {
+                    this.setState({ customQuery: e.target.value })
+                  }}
+                  InputProps={{
+                    placeholder: "(e.g. JLPT-N5) Accept RegExp",
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="add query"
+                          edge="end"
+                          onClick={() =>
+                            this.props.addPendingQuery(
+                              {
+                                display: "Custom",
+                                query: this.state.customQuery.trim(),
+                              },
+                              { poiUserId, savingId }
+                            )
+                          }
+                        >
+                          <SearchIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                ></TextField>
+              </div>
+              <MuiListItem></MuiListItem>
+              <Divider component="li" />
+              <li>
+                <Typography display="block" variant="caption">
+                  Words to add (Order matters)
+                </Typography>
+              </li>
+              {pendings.length ? (
+                pendings.map(pending => (
+                  <MuiListItem key={`pending${pending.Query}`}>
+                    <MuiListItemText
+                      primary={
+                        <>
+                          {`${pending.Display} (${pending.Query})`}
+                          {counters[pending.Query] &&
+                            ` ${counters[pending.Query].TotalCount} words`}
+                        </>
+                      }
+                      secondary={
+                        counters[pending.Query] ? (
+                          <>
+                            {`Learned ${counters[pending.Query].LearnedCount}, `}
+                            {`Added ${counters[pending.Query].AddedCount}, `}
+                            {`New ${counters[pending.Query].NewCount}`}
+                          </>
+                        ) : null
+                      }
+                    ></MuiListItemText>
+
+                    <MuiListItemSecondaryAction>
+                      <IconButton
+                        edge="end"
+                        aria-label="remove pending query"
+                        onClick={() =>
+                          this.props.removePendingQuery({
+                            query: pending.Query,
+                          })
+                        }
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </MuiListItemSecondaryAction>
+                  </MuiListItem>
+                ))
+              ) : (
+                <MuiListItem>
+                  <MuiListItemText>No words to add</MuiListItemText>
+                </MuiListItem>
+              )}
+            </MuiList>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Button onClick={() => this.props.close()}>Cancel</Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={this.onClickConfirm}
+              >
+                Add these words
+              </Button>
+            </div>
+          </Container>
         </div>
-        <p>Suggestions:</p>
-        {suggestions.map(suggestion => (
-          <div key={suggestion.Display}>
-            {suggestion.Display}({suggestion.Query})
-            {counters[suggestion.Query] && (
-              <span>
-                Total:
-                {counters[suggestion.Query].TotalCount}
-                (Learned:
-                {counters[suggestion.Query].LearnedCount}, Added:
-                {counters[suggestion.Query].AddedCount}, New:
-                {counters[suggestion.Query].NewCount})
-              </span>
-            )}
-            <button
-              onClick={() =>
-                this.props.addPendingQuery(
-                  { display: suggestion.Display, query: suggestion.Query },
-                  { poiUserId, savingId }
-                )
-              }
-            >
-              +
-            </button>
-          </div>
-        ))}
-        <p>
-          Custom Query:<input ref={c => (this.CustomQueryInput = c)}></input>
-          <button
-            onClick={() =>
-              this.CustomQueryInput &&
-              this.props.addPendingQuery(
-                { display: "Custom", query: this.CustomQueryInput.value },
-                { poiUserId, savingId }
-              )
-            }
-          >
-            +
-          </button>
-        </p>
-        <p>Pendings (order matters):</p>
-        {pendings.map(pending => (
-          <div key={pending.Query}>
-            {pending.Display}({pending.Query})
-            {counters[pending.Query] && (
-              <span>
-                Total:
-                {counters[pending.Query].TotalCount}
-                (Learned:
-                {counters[pending.Query].LearnedCount}, Added:
-                {counters[pending.Query].AddedCount}, New:
-                {counters[pending.Query].NewCount})
-              </span>
-            )}
-            <button
-              onClick={() =>
-                this.props.removePendingQuery({ query: pending.Query })
-              }
-            >
-              -
-            </button>
-          </div>
-        ))}
-        <button onClick={this.onClickConfirm}>Confirm</button>
-        <button onClick={() => this.props.close()}>Cancel</button>
-      </div>
+      </Dialog>
     )
   }
 }

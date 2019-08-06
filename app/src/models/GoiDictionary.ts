@@ -4,7 +4,7 @@ import { GoiDb, GoiNS } from "../utils/GoiDb"
 import { DbUuid, GlobalDbKey, PoiGlobalDataType } from "../utils/PoiDb"
 import { GoiJaWordType, GoiWordType } from "../types/GoiDictionaryTypes"
 import KanaDictionary from "../dictionary/KanaDictionary"
-import SimpleJaDictionary from "../dictionary/SimpleJaDictionary"
+import GoiSimpleJaDictionary from "../dictionary/GoiSimpleJaDictionary"
 
 export type GoiDictionaryDbKey = GlobalDbKey & {
   readonly brand: "GoiDictionaryDbKey"
@@ -133,13 +133,13 @@ export class GoiDictionaryModel {
         }
         return (KanaDictionary.words[wordKey] as GoiWordType) as T
       }
-      case "SimpleJaDictionary": {
+      case "GoiSimpleJaDictionary": {
         // console.debug("TODO:read from database")
         // TODO:read from database
-        if (!(wordKey in SimpleJaDictionary.words)) {
+        if (!(wordKey in GoiSimpleJaDictionary.words)) {
           return null
         }
-        return (SimpleJaDictionary.words[wordKey] as GoiWordType) as T
+        return (GoiSimpleJaDictionary.words[wordKey] as GoiWordType) as T
       }
     }
     // TODO:read from database
@@ -154,8 +154,8 @@ export class GoiDictionaryModel {
       case "KanaDictionary": {
         return Immutable.Set.fromKeys(KanaDictionary.words)
       }
-      case "SimpleJaDictionary": {
-        return Immutable.Set.fromKeys(SimpleJaDictionary.words)
+      case "GoiSimpleJaDictionary": {
+        return Immutable.Set.fromKeys(GoiSimpleJaDictionary.words)
       }
     }
     // TODO:read from database

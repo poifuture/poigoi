@@ -14,16 +14,16 @@ export const TestingDictionary: GoiJaDictionaryType = {
       language: "ja",
       common: "<ruby>会<rt>あ</rt></ruby>う",
       alternatives: ["<ruby>逢<rt>あ</rt></ruby>う"],
-      uncommon: [
+      uncommons: [
         "<ruby>遭<rt>あ</rt></ruby>う",
         "<ruby>遇<rt>あ</rt></ruby>う",
       ],
       kana: "あう",
       romaji: "au",
       wapuro: "au",
-      audio: [{ cv: "Hikari", wav: "" }],
-      pos: "VERB_GODAN_JIDOSHI",
-      translation: {
+      audios: [{ cv: "Hikari", wav: "" }],
+      pos: ["VERB", "GODAN", "JIDOSHI"],
+      translations: {
         TestingDictionary: {
           translation: { zh: "见" },
           hint: {
@@ -40,7 +40,7 @@ export const TestingDictionary: GoiJaDictionaryType = {
           from: "AnimeSong",
           sentence:
             "ねぇ、<ruby>今<rt>いま</rt></ruby>すぐ<ruby>会<rt>あ</rt></ruby>いたいよ",
-          audio: [{ cv: "Hikari", wav: "" }],
+          audios: [{ cv: "Hikari", wav: "" }],
           translation: { zh: "现在好想快点见到你啊" },
           source: "GUMI『会いたい』",
           link: "https://www.nicovideo.jp/watch/sm11713594",
@@ -60,15 +60,15 @@ export const TestingDictionary: GoiJaDictionaryType = {
       alternatives: [
         "ご<ruby>馳<rt>ち</rt></ruby><ruby>走<rt>そう</rt></ruby><ruby>様<rt></rt>さま</ruby>",
       ],
-      uncommon: [
+      uncommons: [
         "<ruby>御<rt>ご</rt></ruby><ruby>馳<rt>ち</rt></ruby><ruby>走<rt>そう</rt></ruby><ruby>様<rt>さま</rt></ruby>",
       ],
       kana: "ごちそうさま",
       romaji: "gochisōsama",
       wapuro: "gochisousama",
-      audio: [{ cv: "Hikari", wav: "" }],
+      audios: [{ cv: "Hikari", wav: "" }],
       pos: "NOUN",
-      translation: {
+      translations: {
         TestingDictionary: { translation: { zh: "谢谢款待" } },
       },
       sentences: [],
@@ -80,13 +80,13 @@ export const TestingDictionary: GoiJaDictionaryType = {
       language: "ja",
       common: "<ruby>東<rt>とう</rt></ruby><ruby>京<rt>きょう</rt></ruby>",
       alternatives: [],
-      uncommon: [],
+      uncommons: [],
       kana: "とうきょう",
       romaji: "Tōkyō",
       wapuro: "toukyou",
-      audio: [{ cv: "Hikari", wav: "" }],
+      audios: [{ cv: "Hikari", wav: "" }],
       pos: "NOUN",
-      translation: {
+      translations: {
         TestingDictionary: { translation: { zh: "东京" } },
       },
       sentences: [],

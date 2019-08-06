@@ -8,6 +8,7 @@ import {
   GoiWordRecord,
   GoiWordRecordModel,
   GoiWordRecordDataType,
+  GoiWordHistory,
 } from "../models/GoiSaving"
 import KanaDictionary from "../dictionary/KanaDictionary"
 import { GoiDictionarys } from "../models/GoiDictionary"
@@ -225,6 +226,7 @@ export const VerifyJaAnswer = (
     keigo: "Rejected",
     ...options,
   }
+  answer = answer.toLowerCase().trim()
   console.debug("Verifying ja answer...", options)
   const correctAnswers: string[] = [TrimFurigana(jaWord.common)]
   const acceptAnswers: string[] = []
@@ -254,12 +256,12 @@ export const VerifyJaAnswer = (
     jaWord.alternatives.map(furigana => TrimFurigana(furigana))
   )
   decide(options.uncommon!, () =>
-    jaWord.uncommon.map(furigana => TrimFurigana(furigana))
+    jaWord.uncommons.map(furigana => TrimFurigana(furigana))
   )
   decide(options.kana!, () => [jaWord.kana])
-  decide(options.wapuro!, () => [jaWord.wapuro])
-  decide(options.romaji!, () => [AsciiRomaji(jaWord.romaji)])
-  if (jaWord.pos.startsWith("VERB")) {
+  decide(options.wapuro!, () => [jaWord.wapuro.toLowerCase()])
+  decide(options.romaji!, () => [AsciiRomaji(jaWord.romaji).toLowerCase()])
+  if (jaWord.pos.includes("VERB")) {
     decide(options.keigo!, () =>
       jaWord.katsuyo && jaWord.katsuyo.keigo
         ? [TrimFurigana(jaWord.katsuyo.keigo)]
@@ -341,34 +343,47 @@ const GetTimeChange = (level: number) => {
   return timeChange
 }
 export const VerifyAnswerAction = (
-  answer: string,
-  word: GoiWordType,
-  options: {
+  {
+    answer,
+    word,
+    skip,
+  }: {
+    answer: string
+    word: GoiWordType
+    skip?: boolean
+  },
+  {
+    poiUserId,
+    savingId,
+  }: {
     poiUserId: PoiUser.PoiUserId
     savingId: GoiSavingId
   }
 ) => {
   return async (dispatch: any): Promise<GoiJudgeResult> => {
+    skip = typeof skip !== "undefined" ? skip : false
     console.debug("Verifying answer... ", answer)
-    const poiUserId = options.poiUserId
-    const savingId = options.savingId
     const wordKey = word.key
     let judgeResult: GoiJudgeResult = "Wrong"
-    switch (word.language) {
-      case "ja":
-      case "ja-jp": {
-        // read options
-        judgeResult = VerifyJaAnswer(answer, word as GoiJaWordType)
-        break
-      }
-      default: {
-        throw new Error(
-          `Unkown language ${word.language} for ${word.key} (${word.common})`
-        )
+    if (skip) {
+      judgeResult = "Skipped"
+    } else {
+      switch (word.language) {
+        case "ja":
+        case "ja-jp": {
+          // read options
+          judgeResult = VerifyJaAnswer(answer, word as GoiJaWordType)
+          break
+        }
+        default: {
+          throw new Error(
+            `Unkown language ${word.language} for ${word.key} (${word.common})`
+          )
+        }
       }
     }
     dispatch(UpdateJudgeResultAction({ judgeResult }))
-    const nowTime = new Date().getTime()
+    const judgeTime = new Date().getTime()
     const recordModel = GoiWordRecord(poiUserId, savingId, wordKey)
     const recordBefore = await recordModel.ReadOrCreate()
     const levelBefore = recordBefore.Level
@@ -378,12 +393,17 @@ export const VerifyAnswerAction = (
         ? 1
         : unvalidatedLevelAfter <= levelBefore
         ? unvalidatedLevelAfter
-        : nowTime <= recordBefore.NextTime
+        : judgeTime <= recordBefore.NextTime
         ? levelBefore
         : unvalidatedLevelAfter
-    await recordModel.CreateHistory(judgeResult, levelBefore, levelAfter)
+    const historyDbKey = await GoiWordHistory(
+      poiUserId,
+      savingId,
+      judgeTime
+    ).Create({ wordKey, judgeResult, levelBefore, levelAfter })
+    await recordModel.AttachHistory({ judgeTime, historyDbKey })
     await recordModel.SetLevel(levelAfter)
-    const nextTime = nowTime + GetTimeChange(levelAfter)
+    const nextTime = judgeTime + GetTimeChange(levelAfter)
     await recordModel.SetNextTime(nextTime)
     const record = await recordModel.Read()
     dispatch(UpdateGoiTesterWordAction({ record }))
