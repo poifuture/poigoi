@@ -49,38 +49,29 @@ export class GoiTranslation extends React.Component<GoiTranslationPropsType> {
             }
           )}
         </div>
-        <div
-          className="word-card-single-translation-hint"
-          style={{
-            visibility: displayHint ? "inherit" : "hidden",
-          }}
-        >
-          {i18nTranslation.hint && (
-            <>
-              <TinyTag>Hint</TinyTag>
-              {Object.entries(i18nTranslation.hint).map(
-                ([hintLanguage, hintText]) => {
-                  return Object.keys(i18nTranslation.hint || {}).length > 1 ? (
-                    <>
-                      {hintLanguage}
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: hintText || "",
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: hintText || "",
-                      }}
-                    />
-                  )
-                }
-              )}
-            </>
-          )}
-        </div>
+        {i18nTranslation.hint && (
+          <div className="word-card-single-translation-hint">
+            <TinyTag>Hint</TinyTag>
+            {Object.entries(i18nTranslation.hint).map(
+              ([hintLanguage, hintText]) => (
+                <div
+                  style={{
+                    visibility: displayHint ? "inherit" : "hidden",
+                  }}
+                >
+                  {Object.keys(i18nTranslation.hint || {}).length > 1 && (
+                    <TinyTag>{hintLanguage}</TinyTag>
+                  )}
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: hintText || "",
+                    }}
+                  />
+                </div>
+              )
+            )}
+          </div>
+        )}
         {displayFrom && (
           <div
             style={{

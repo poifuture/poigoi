@@ -64,7 +64,7 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
         : this.props.status === "good"
         ? "lightgreen"
         : this.props.status === "warning"
-        ? "yellow"
+        ? "orange"
         : this.props.status === "failed"
         ? "red"
         : this.props.status === "peek"
@@ -143,7 +143,7 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
           {word.wapuro && (
             <>
               <TinyTag>ワープロ</TinyTag>
-              {word.romaji}
+              {word.wapuro}
             </>
           )}
         </div>

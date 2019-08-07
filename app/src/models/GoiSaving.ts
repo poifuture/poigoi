@@ -354,7 +354,11 @@ export class GoiSavingModel {
       Judgement: "Typing",
       Term: "Permanant",
       Language: "ja",
-      Dictionarys: ["KanaDictionary", "GoiSimpleJaDictionary"],
+      Dictionarys: [
+        "KanaDictionary",
+        "GoiSimpleJaDictionary",
+        "BiaozhunRibenyu",
+      ],
       Records: {},
     }
   }
@@ -377,7 +381,11 @@ export class GoiSavingModel {
   }
   Read = async (): Promise<GoiSavingPouchType> => {
     const data = await GoiDb().Get<GoiSavingDataType>(this.dbKey)
-    return { ...this.DefaultData(), ...data }
+    return {
+      ...this.DefaultData(),
+      ...data,
+      Dictionarys: this.DefaultData().Dictionarys,
+    }
   }
   private update = async (partial: Partial<GoiSavingDataType>) => {
     const data = await this.Read()
