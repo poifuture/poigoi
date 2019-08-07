@@ -228,7 +228,7 @@ export const VerifyJaAnswer = (
   }
   answer = answer.toLowerCase().trim()
   console.debug("Verifying ja answer...", options)
-  const correctAnswers: string[] = [TrimFurigana(jaWord.common)]
+  const correctAnswers: string[] = [TrimFurigana(jaWord.common).toLowerCase()]
   const acceptAnswers: string[] = []
   const rejectAnswers: string[] = []
   const decide = (
@@ -240,7 +240,7 @@ export const VerifyJaAnswer = (
       decider === "Accepted" ||
       decider === "Rejected"
     ) {
-      const answers = answersGenerator()
+      const answers = answersGenerator().filter(answer => !!answer) // filter empty answers
       if (decider === "Correct") {
         correctAnswers.push(...answers)
       }
@@ -253,10 +253,10 @@ export const VerifyJaAnswer = (
     }
   }
   decide(options.alternatives!, () =>
-    jaWord.alternatives.map(furigana => TrimFurigana(furigana))
+    jaWord.alternatives.map(furigana => TrimFurigana(furigana).toLowerCase())
   )
   decide(options.uncommon!, () =>
-    jaWord.uncommons.map(furigana => TrimFurigana(furigana))
+    jaWord.uncommons.map(furigana => TrimFurigana(furigana).toLowerCase())
   )
   decide(options.kana!, () => [jaWord.kana])
   decide(options.wapuro!, () => [jaWord.wapuro.toLowerCase()])
@@ -264,7 +264,7 @@ export const VerifyJaAnswer = (
   if (jaWord.pos.includes("VERB")) {
     decide(options.keigo!, () =>
       jaWord.katsuyo && jaWord.katsuyo.keigo
-        ? [TrimFurigana(jaWord.katsuyo.keigo)]
+        ? [TrimFurigana(jaWord.katsuyo.keigo).toLowerCase()]
         : []
     )
   }

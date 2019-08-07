@@ -171,6 +171,7 @@ export class GoiTester extends React.Component<
             </Button>
           ) : (
             <Button
+              size="small"
               aria-label="Show next word"
               onClick={() => this.requestNext()}
             >

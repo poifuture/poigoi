@@ -18,6 +18,7 @@ import PersonIcon from "@material-ui/icons/PersonOutlined"
 import SyncIcon from "@material-ui/icons/SyncOutlined"
 import FlagIcon from "@material-ui/icons/FlagOutlined"
 import SearchIcon from "@material-ui/icons/SearchOutlined"
+import { ToggleEvents } from "../utils/PoiResponsive"
 
 type CommandsBarPropsType = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
@@ -44,7 +45,10 @@ export class CommandsBar extends React.Component<
   closeMenu = () => {
     this.setState({ menuOpened: false })
   }
-  toggleMenu = () => {
+  toggleMenu = (display?: boolean) => {
+    if (typeof display === "undefined") {
+      display = !this.state.menuOpened
+    }
     this.setState({ menuOpened: !this.state.menuOpened })
   }
   render() {
@@ -87,12 +91,7 @@ export class CommandsBar extends React.Component<
           ariaLabel="menu"
           open={this.state.menuOpened}
           icon={<MenuIcon fontSize="small" />}
-          onBlur={this.closeMenu}
-          onClick={this.toggleMenu}
-          onClose={this.closeMenu}
-          onFocus={this.openMenu}
-          onMouseEnter={this.openMenu}
-          onMouseLeave={this.closeMenu}
+          {...ToggleEvents(this.toggleMenu)}
           ButtonProps={{
             color: "default",
             size: "small",
@@ -106,6 +105,7 @@ export class CommandsBar extends React.Component<
             tooltipOpen
             onClick={() => {
               this.closeMenu()
+              this.navigate("/")
             }}
           ></SpeedDialAction>
           <SpeedDialAction
@@ -135,6 +135,7 @@ export class CommandsBar extends React.Component<
             tooltipOpen
             onClick={() => {
               this.closeMenu()
+              this.navigate("/")
             }}
           ></SpeedDialAction>
           <SpeedDialAction

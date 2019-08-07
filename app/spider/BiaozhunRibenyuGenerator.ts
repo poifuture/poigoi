@@ -1,4 +1,5 @@
-#!/usr/bin/env ts-node
+#!/usr/local/bin/npx ts-node
+
 const fs = require("fs")
 // import fs from "fs"
 import { GoiJaDictionaryType } from "../src/types/GoiDictionaryTypes"
