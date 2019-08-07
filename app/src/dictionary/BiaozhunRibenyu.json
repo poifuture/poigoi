@@ -281,7 +281,10 @@
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
-            "zh": "职员（社员）"
+            "zh": "职员"
+          },
+          "hint": {
+            "zh": "社员"
           }
         }
       },
@@ -309,7 +312,10 @@
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
-            "zh": "公司职员（会社员）"
+            "zh": "公司职员"
+          },
+          "hint": {
+            "zh": "会社员"
           }
         }
       },
@@ -365,7 +371,10 @@
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
-            "zh": "进修生（研修生）"
+            "zh": "进修生"
+          },
+          "hint": {
+            "zh": "研修生"
           }
         }
       },
@@ -533,7 +542,10 @@
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
-            "zh": "迎接（出迎）"
+            "zh": "迎接"
+          },
+          "hint": {
+            "zh": "出迎"
           }
         }
       },
@@ -645,7 +657,10 @@
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
-            "zh": "非常，很（どうも）"
+            "zh": "非常，很"
+          },
+          "hint": {
+            "zh": "どうも"
           }
         }
       },
@@ -673,7 +688,10 @@
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
-            "zh": "哎，是（应答）；是的（はい）"
+            "zh": "哎，是（应答）；是的"
+          },
+          "hint": {
+            "zh": "はい"
           }
         }
       },
@@ -701,7 +719,10 @@
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
-            "zh": "不，不是（いいえ）"
+            "zh": "不，不是"
+          },
+          "hint": {
+            "zh": "いいえ"
           }
         }
       },
@@ -729,7 +750,10 @@
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
-            "zh": "哎，哎呀（あっ）"
+            "zh": "哎，哎呀"
+          },
+          "hint": {
+            "zh": "あっ"
           }
         }
       },
@@ -1598,6 +1622,9 @@
         "BiaozhunRibenyu": {
           "translation": {
             "zh": "（~桑）"
+          },
+          "hint": {
+            "zh": "~桑"
           }
         }
       },
@@ -1626,6 +1653,9 @@
         "BiaozhunRibenyu": {
           "translation": {
             "zh": "（~酱）"
+          },
+          "hint": {
+            "zh": "~酱"
           }
         }
       },
@@ -1654,6 +1684,9 @@
         "BiaozhunRibenyu": {
           "translation": {
             "zh": "（~君）"
+          },
+          "hint": {
+            "zh": "~君"
           }
         }
       },

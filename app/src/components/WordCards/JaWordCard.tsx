@@ -1,10 +1,8 @@
 import React from "react"
 import { GoiJaWordType } from "../../types/GoiDictionaryTypes"
 import { List as MuiList, Box } from "@material-ui/core"
-import { GoiDictionarys } from "../../models/GoiDictionary"
 import GoiTranslation from "./GoiTranslation"
 import TinyTag from "./TinyTag"
-import { string } from "prop-types"
 import GoiSentence from "./GoiSentence"
 
 export type WordCardPropsType = {
@@ -107,6 +105,8 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
             color: statusColor,
             visibility:
               this.props.display === "test-common" ? "hidden" : "inherit",
+            display: "flex",
+            alignItems: "flex-end",
           }}
         >
           <span dangerouslySetInnerHTML={{ __html: word.common }} />
@@ -171,6 +171,13 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
                 />
               ))}
             </MuiList>
+          </div>
+        )}
+        {this.props.display === "detailed" && (
+          <div className="word-card-textbooks">
+            {word.textbook.map(textbook => (
+              <TinyTag>{textbook}</TinyTag>
+            ))}
           </div>
         )}
       </div>
