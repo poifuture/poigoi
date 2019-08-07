@@ -1,9 +1,11 @@
 Attribute VB_Name = "Furigana"
+
 Function IsHiragana(ch As String) As Boolean
   Dim code As Integer
   code = AscW(ch)
   IsHiragana = code >= CLng("&H3041") And code <= CLng("&H3096")
 End Function
+
 Function IsKatakana(ch As String) As Boolean
   Dim code As Integer
   code = AscW(ch)
@@ -11,10 +13,10 @@ Function IsKatakana(ch As String) As Boolean
 End Function
 
 Sub Test()
-MsgBox (IsHiragana("¤¢") = True)
-MsgBox (IsHiragana("¥¢") = False)
-MsgBox (IsKatakana("¤¢") = False)
-MsgBox (IsKatakana("¥¢") = True)
+  MsgBox (IsHiragana("ã‚") = True)
+  MsgBox (IsHiragana("ã‚¢") = False)
+  MsgBox (IsKatakana("ã‚") = False)
+  MsgBox (IsKatakana("ã‚¢") = True)
 End Sub
 
 Sub Furigana()
