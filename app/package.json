@@ -34,6 +34,7 @@
     "gatsby-transformer-remark": "^2.5.0",
     "immutable": "^4.0.0-rc.12",
     "isomorphic-fetch": "^2.2.1",
+    "kuroshiro": "^1.1.2",
     "moment": "^2.24.0",
     "pouchdb-browser": "^7.1.1",
     "pouchdb-debug": "^7.1.1",
@@ -60,7 +61,8 @@
     "pouchdb-adapter-memory": "^7.1.1",
     "prettier": "^1.18.2",
     "react-test-renderer": "^16.8.6",
-    "ts-jest": "^24.0.2"
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0"
   },
   "scripts": {
     "build": "gatsby build",

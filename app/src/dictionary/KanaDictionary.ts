@@ -7,7 +7,7 @@ export const KanaDictionary: GoiJaDictionaryType = {
   description: {
     zh: "假名词典",
   },
-  schema: "Poi/Goi/RawDictionary/v1",
+  schema: "Poi/Goi/RawDictionary/ja/v1",
   words:
     // Replace Start
     {

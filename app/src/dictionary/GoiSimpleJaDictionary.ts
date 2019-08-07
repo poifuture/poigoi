@@ -9,7 +9,7 @@ export const GoiSimpleJaDictionary: GoiJaDictionaryType = {
     zh:
       "中文释义采用日常使用该词汇时的直观释义，强化实际运用日语时的概念感受，提升日常会话交流的反应速度，弱化语言学的精准定义，推荐以听、说为主要目的同学使用。",
   },
-  schema: "Poi/Goi/RawDictionary/v1",
+  schema: "Poi/Goi/RawDictionary/ja/v1",
   extends: [
     {
       name: "Xinbian",

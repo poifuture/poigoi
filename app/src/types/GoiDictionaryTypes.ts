@@ -77,7 +77,7 @@ export interface GoiDictionaryMetadataType {
   language: LanguageCode
   display: I18nString
   description: I18nString
-  schema: "Poi/Goi/RawDictionary/v1"
+  schema: "Poi/Goi/RawDictionary/v1" | "Poi/Goi/RawDictionary/ja/v1"
   extends?: {
     name: string
     display: I18nString
@@ -85,5 +85,7 @@ export interface GoiDictionaryMetadataType {
   }[]
 }
 export interface GoiJaDictionaryType extends GoiDictionaryMetadataType {
+  language: "ja" | "ja-jp" | "ja-c2"
+  schema: "Poi/Goi/RawDictionary/ja/v1"
   words: { [s: string]: GoiJaWordType }
 }
