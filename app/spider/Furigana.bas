@@ -13,28 +13,34 @@ Function IsKatakana(ch As String) As Boolean
 End Function
 
 Sub Test()
-  MsgBox (IsHiragana("あ") = True)
-  MsgBox (IsHiragana("ア") = False)
-  MsgBox (IsKatakana("あ") = False)
-  MsgBox (IsKatakana("ア") = True)
 End Sub
 
 Sub Furigana()
   Dim line As Integer
   
   Dim wordcol, keycol As Integer
-  Dim poscol, transcol As Integer
+  Dim tonecol,poscol, transcol As Integer
+  Dim kanacol,romajicol, wapurocol As Integer
+  Dim bookcol,chapcol, inchapcol As Integer
   Dim manualfuricol, autofuricol As Integer
   Dim alertfuricol, fullfuricol, pendingfuricol, charfuricol As Integer
   wordcol = 1
   Cells(1, wordcol).Value = "word"
   keycol = wordcol + 1
   Cells(1, keycol).Value = "key"
-  poscol = keycol + 1
+  tonecol = keycol + 1
+  Cells(1, tonecol).Value = "tone"
+  poscol = tonecol + 1
   Cells(1, poscol).Value = "pos"
   transcol = poscol + 1
   Cells(1, transcol).Value = "trans"
-  bookcol = transcol + 1
+  kanacol = transcol + 1
+  Cells(1, kanacol).Value = "kana"
+  romajicol = kanacol + 1
+  Cells(1, romajicol).Value = "romaji"
+  wapurocol = romajicol + 1
+  Cells(1, wapurocol).Value = "wapuro"
+  bookcol = wapurocol + 1
   Cells(1, bookcol).Value = "book"
   chapcol = bookcol + 1
   Cells(1, chapcol).Value = "chap"
