@@ -18,6 +18,13 @@ import PersonIcon from "@material-ui/icons/PersonOutlined"
 import SyncIcon from "@material-ui/icons/SyncOutlined"
 import FlagIcon from "@material-ui/icons/FlagOutlined"
 import SearchIcon from "@material-ui/icons/SearchOutlined"
+import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlayOutlined"
+import ShuffleIcon from "@material-ui/icons/ShuffleOutlined"
+import FingerprintIcon from "@material-ui/icons/FingerprintOutlined"
+import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDownOutlined"
+import CreateIcon from "@material-ui/icons/CreateOutlined"
+import CloudOffIcon from "@material-ui/icons/CloudOffOutlined"
+import FormatListNumberedIcon from "@material-ui/icons/FormatListNumberedOutlined"
 import { ToggleEvents } from "../utils/PoiResponsive"
 
 type CommandsBarPropsType = ReturnType<typeof mapStateToProps> &
@@ -72,15 +79,39 @@ export class CommandsBar extends React.Component<
           }}
         >
           <Button size="small">
+            [WIP]Search
+            <SearchIcon fontSize="small" />
+          </Button>
+          <Button size="small">
+            [WIP]Order
+            <PlaylistPlayIcon fontSize="small" />
+            {false && <ShuffleIcon fontSize="small" />}
+          </Button>
+          <Button size="small">
+            {/* type select swipe */}
+            [WIP]Mode
+            <CreateIcon fontSize="small" />
+            {false && <FormatListNumberedIcon fontSize="small" />}
+            {false && <ThumbsUpDownIcon fontSize="small" />}
+          </Button>
+          <Button size="small">
+            {/* swich savings in different mode */}
+            [WIP]Savings
+            <FingerprintIcon fontSize="small" />
+          </Button>
+          <Button size="small">
             [WIP]SwotUp
             <FlagIcon fontSize="small" />
           </Button>
           <Button size="small">
             [WIP]Sync
-            <SyncIcon fontSize="small" />
+            <CloudOffIcon fontSize="small" />
+            {false && <SyncIcon fontSize="small" />}
           </Button>
+          {/* TODO: outline the button when all words are learned */}
           <Button
             size="small"
+            variant="outlined"
             onClick={() => this.props.showWordAdder({ poiUserId, savingId })}
           >
             Words

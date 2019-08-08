@@ -17,6 +17,8 @@ import {
   DialogContent,
   DialogActions,
   useMediaQuery,
+  FormControlLabel,
+  Checkbox,
 } from "@material-ui/core"
 import SearchIcon from "@material-ui/icons/SearchOutlined"
 import * as PoiUser from "../utils/PoiUser"
@@ -104,9 +106,7 @@ export class WordAdder extends React.Component<
         <DialogTitle>Add words</DialogTitle>
         <DialogContent dividers>
           <MuiList dense={true}>
-            <MuiListItem
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <TextField
                 label="Learned"
                 value={status.LearnedCount}
@@ -131,6 +131,7 @@ export class WordAdder extends React.Component<
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
+                        size="small"
                         aria-label="Clear pending words"
                         onClick={() =>
                           this.props.clearPendingWords({
@@ -145,7 +146,8 @@ export class WordAdder extends React.Component<
                   ),
                 }}
               ></TextField>
-            </MuiListItem>
+            </div>
+            <MuiListItem></MuiListItem>
             <Divider component="li" />
             <li>
               <Typography display="block" variant="caption">
@@ -264,6 +266,37 @@ export class WordAdder extends React.Component<
                 <MuiListItemText>No words to add</MuiListItemText>
               </MuiListItem>
             )}
+            <Divider component="li" />
+            <li>
+              <Typography display="block" variant="caption">
+                [WIP] Filters
+              </Typography>
+            </li>
+            <div style={{ display: "flux" }}>
+              <FormControlLabel
+                control={<Checkbox checked={true} disabled value="Basic" />}
+                label="Basic"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={true}
+                    disabled
+                    onChange={() => {}}
+                    value="Proper"
+                  />
+                }
+                label="Proper"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={true} disabled value="Idiom" />}
+                label="Idiom"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={true} disabled value="Extra" />}
+                label="Extra"
+              />
+            </div>
           </MuiList>
         </DialogContent>
         <DialogActions>
@@ -275,7 +308,7 @@ export class WordAdder extends React.Component<
             <>
               <Button onClick={() => this.props.close()}>Cancel</Button>
               {pendings.length <= 0 ? (
-                <Button disabled>No queried words</Button>
+                <Button disabled>No words</Button>
               ) : (
                 <Button
                   variant="outlined"
