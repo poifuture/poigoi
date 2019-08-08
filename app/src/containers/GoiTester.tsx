@@ -28,6 +28,7 @@ import RedoIcon from "@material-ui/icons/RedoOutlined"
 import ForwardIcon from "@material-ui/icons/ForwardOutlined"
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined"
 import MoreHorizIcon from "@material-ui/icons/MoreHorizOutlined"
+import LinkOffIcon from "@material-ui/icons/LinkOffOutlined"
 import { display } from "@material-ui/system"
 
 type GoiTesterPropsType = ReturnType<typeof mapStateToProps> &
@@ -186,14 +187,26 @@ export class GoiTester extends React.Component<
           status={wordCardStatus}
         />
         {!wordCardDisplay.startsWith("test") && (
-          <IconButton
-            aria-label="detail"
-            onClick={() => {
-              this.setState({ displayDetail: true })
-            }}
-          >
-            <MoreHorizIcon />
-          </IconButton>
+          <div className="word-card-actions">
+            <Button
+              aria-label="detail"
+              onClick={() => {
+                this.setState({ displayDetail: true })
+              }}
+            >
+              <MoreHorizIcon />
+              Detail
+            </Button>
+            <Button
+              aria-label="forget"
+              onClick={() => {
+                this.setState({ displayDetail: true })
+              }}
+            >
+              <LinkOffIcon />
+              [WIP]Forget
+            </Button>
+          </div>
         )}
       </div>
     )

@@ -175,8 +175,8 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
         )}
         {this.props.display === "detailed" && (
           <div className="word-card-textbooks">
-            {word.textbook.map(textbook => (
-              <TinyTag>{textbook}</TinyTag>
+            {word.textbook.map((textbook, textbookId) => (
+              <TinyTag key={textbookId}>{textbook}</TinyTag>
             ))}
           </div>
         )}
