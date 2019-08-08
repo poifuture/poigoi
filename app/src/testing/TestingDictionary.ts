@@ -7,7 +7,7 @@ export const TestingDictionary: GoiJaDictionaryType = {
   description: {
     zh: "一个用来喂测试的词典",
   },
-  schema: "Poi/Goi/RawDictionary/v1",
+  schema: "Poi/Goi/RawDictionary/ja/v1",
   words: {
     会う: {
       key: "会う",
