@@ -126,14 +126,33 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
                   typeof singleTone === "number" && circledNumber(singleTone)
               )
               .join()}
+          {this.props.level >= 0 && <TinyTag>練度{this.props.level}</TinyTag>}
           {word.pos.includes("KANA") && <TinyTag>仮名</TinyTag>}
           {word.pos.includes("HIRAGANA") && <TinyTag>平仮名</TinyTag>}
           {word.pos.includes("KATAKANA") && <TinyTag>片仮名</TinyTag>}
+          {word.pos.includes("DAKUON") && <TinyTag>濁音</TinyTag>}
+          {word.pos.includes("YOON") && <TinyTag>拗音</TinyTag>}
+          {word.pos.includes("CHOON") && <TinyTag>長音</TinyTag>}
           {word.pos.includes("VERB") && <TinyTag>動詞</TinyTag>}
           {word.pos.includes("GODAN") && <TinyTag>五段活用</TinyTag>}
+          {word.pos.includes("KAMIICHIDAN") && <TinyTag>上一段活用</TinyTag>}
+          {word.pos.includes("SHIMOICHIDAN") && <TinyTag>下一段活用</TinyTag>}
+          {word.pos.includes("SAHEN") && <TinyTag>サ変</TinyTag>}
+          {word.pos.includes("KAHEN") && <TinyTag>カ変</TinyTag>}
           {word.pos.includes("JIDOSHI") && <TinyTag>自動詞</TinyTag>}
           {word.pos.includes("TADOSHI") && <TinyTag>他動詞</TinyTag>}
+          {word.pos.includes("ADJ") && <TinyTag>形容詞</TinyTag>}
+          {word.pos.includes("KEIYODOSHI") && <TinyTag>形容動詞</TinyTag>}
           {word.pos.includes("NOUN") && <TinyTag>名詞</TinyTag>}
+          {word.pos.includes("PROPER") && <TinyTag>固有名詞</TinyTag>}
+          {word.pos.includes("PRON") && <TinyTag>代名詞</TinyTag>}
+          {word.pos.includes("RENTAISHI") && <TinyTag>連体詞</TinyTag>}
+          {word.pos.includes("ADV") && <TinyTag>副詞</TinyTag>}
+          {word.pos.includes("CONJ") && <TinyTag>接続詞</TinyTag>}
+          {word.pos.includes("INTERJ") && <TinyTag>感動詞</TinyTag>}
+          {word.pos.includes("JODOSHI") && <TinyTag>助動詞</TinyTag>}
+          {word.pos.includes("JOSHI") && <TinyTag>助詞</TinyTag>}
+          {word.pos.includes("IDIOM") && <TinyTag>熟語</TinyTag>}
           {word.romaji && (
             <>
               <TinyTag>ローマ字</TinyTag>

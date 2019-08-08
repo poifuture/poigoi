@@ -42,6 +42,7 @@ import { ShowNextWordAction } from "../actions/GoiTesterActions"
 import DeleteIcon from "@material-ui/icons/DeleteOutlined"
 import AddIcon from "@material-ui/icons/AddOutlined"
 import CloseIcon from "@material-ui/icons/CloseOutlined"
+import ExploreOffIcon from "@material-ui/icons/ExploreOffOutlined"
 import { useTheme } from "@material-ui/styles"
 import ResponsiveDialog from "../components/ResponsiveDialog"
 
@@ -67,6 +68,13 @@ export class WordAdder extends React.Component<
     const pendings: WordAdderPendingQueryType[] = this.props.pendings.toJS()
     return pendings.map(pending => pending.Query)
   }
+  clearAllPendingQuerys = async () => {
+    await Promise.all(
+      this.getPendingQuerys().map(query =>
+        this.props.removePendingQuery({ query })
+      )
+    )
+  }
   onClickConfirm = async () => {
     const { poiUserId, savingId } = this.props
     this.setState({ addingWordsProgress: true })
@@ -76,9 +84,7 @@ export class WordAdder extends React.Component<
     )
     this.setState({ addingWordsProgress: false })
     this.props.close()
-    this.getPendingQuerys().map(query =>
-      this.props.removePendingQuery({ query })
-    )
+    await this.clearAllPendingQuerys()
     await this.props.showNextWord(poiUserId, savingId)
   }
   addCustomQuery = () => {
@@ -225,42 +231,59 @@ export class WordAdder extends React.Component<
               </Typography>
             </li>
             {pendings.length ? (
-              pendings.map(pending => (
-                <MuiListItem key={`pending${pending.Query}`}>
+              <>
+                <MuiListItem key="ClearAllPendingQuerys">
                   <MuiListItemText
-                    primary={
-                      <>
-                        {`${pending.Display} (${pending.Query})`}
-                        {counters[pending.Query] &&
-                          ` ${counters[pending.Query].TotalCount} words`}
-                      </>
-                    }
-                    secondary={
-                      counters[pending.Query] ? (
-                        <>
-                          {`Learned ${counters[pending.Query].LearnedCount}, `}
-                          {`Added ${counters[pending.Query].AddedCount}, `}
-                          {`New ${counters[pending.Query].NewCount}`}
-                        </>
-                      ) : null
-                    }
+                    primary="Clear all"
+                    secondary="Total new: [WIP]"
                   ></MuiListItemText>
-
                   <MuiListItemSecondaryAction>
                     <IconButton
                       edge="end"
                       aria-label="remove pending query"
-                      onClick={() =>
-                        this.props.removePendingQuery({
-                          query: pending.Query,
-                        })
-                      }
+                      onClick={() => this.clearAllPendingQuerys()}
                     >
-                      <CloseIcon />
+                      <ExploreOffIcon />
                     </IconButton>
                   </MuiListItemSecondaryAction>
                 </MuiListItem>
-              ))
+                {pendings.map(pending => (
+                  <MuiListItem key={`pending${pending.Query}`}>
+                    <MuiListItemText
+                      primary={
+                        <>
+                          {`${pending.Display} (${pending.Query})`}
+                          {counters[pending.Query] &&
+                            ` ${counters[pending.Query].TotalCount} words`}
+                        </>
+                      }
+                      secondary={
+                        counters[pending.Query] ? (
+                          <>
+                            {`Learned ${counters[pending.Query].LearnedCount}, `}
+                            {`Added ${counters[pending.Query].AddedCount}, `}
+                            {`New ${counters[pending.Query].NewCount}`}
+                          </>
+                        ) : null
+                      }
+                    ></MuiListItemText>
+
+                    <MuiListItemSecondaryAction>
+                      <IconButton
+                        edge="end"
+                        aria-label="remove pending query"
+                        onClick={() =>
+                          this.props.removePendingQuery({
+                            query: pending.Query,
+                          })
+                        }
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </MuiListItemSecondaryAction>
+                  </MuiListItem>
+                ))}
+              </>
             ) : (
               <MuiListItem>
                 <MuiListItemText>No words to add</MuiListItemText>

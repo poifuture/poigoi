@@ -24,6 +24,9 @@ import FingerprintIcon from "@material-ui/icons/FingerprintOutlined"
 import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDownOutlined"
 import CreateIcon from "@material-ui/icons/CreateOutlined"
 import CloudOffIcon from "@material-ui/icons/CloudOffOutlined"
+import FormatQuoteIcon from "@material-ui/icons/FormatQuoteOutlined"
+import VolumeOffIcon from "@material-ui/icons/VolumeOffOutlined"
+import VolumeUpIcon from "@material-ui/icons/VolumeUpOutlined"
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumberedOutlined"
 import { ToggleEvents } from "../utils/PoiResponsive"
 
@@ -79,6 +82,11 @@ export class CommandsBar extends React.Component<
           }}
         >
           <Button size="small">
+            {/* parse text or audio to add new words */}
+            [WIP]Parse
+            <FormatQuoteIcon fontSize="small" />
+          </Button>
+          <Button size="small">
             [WIP]Search
             <SearchIcon fontSize="small" />
           </Button>
@@ -98,6 +106,11 @@ export class CommandsBar extends React.Component<
             {/* swich savings in different mode */}
             [WIP]Savings
             <FingerprintIcon fontSize="small" />
+          </Button>
+          <Button size="small">
+            [WIP]Audio
+            <VolumeOffIcon fontSize="small" />
+            {false && <VolumeUpIcon fontSize="small" />}
           </Button>
           <Button size="small">
             [WIP]SwotUp
