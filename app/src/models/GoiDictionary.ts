@@ -103,6 +103,9 @@ export class GoiDictionaryModel {
       }
     }
   }
+  Exists = async (): Promise<boolean> => {
+    return await GoiDb().Exists(this.dbKey)
+  }
   private Read = async () => {
     return await GoiDb().Get<GoiDictionaryDataType>(this.dbKey)
   }
@@ -171,6 +174,9 @@ export class GoiDictionaryModel {
       }
     }
     // TODO:read from database
+    if (!(await this.Exists())) {
+      return Immutable.Set()
+    }
     const dictionaryEntry = await this.Read()
     return Immutable.Set.fromKeys(dictionaryEntry.Words)
   }

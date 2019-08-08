@@ -49,7 +49,7 @@ export class CommandsBar extends React.Component<
     if (typeof display === "undefined") {
       display = !this.state.menuOpened
     }
-    this.setState({ menuOpened: !this.state.menuOpened })
+    this.setState({ menuOpened: display })
   }
   render() {
     const { poiUserId, savingId } = this.props
@@ -155,7 +155,7 @@ export class CommandsBar extends React.Component<
             tooltipOpen
             onClick={() => {
               this.closeMenu()
-              this.navigate("/")
+              this.navigate("/profile/")
             }}
           ></SpeedDialAction>
         </SpeedDial>

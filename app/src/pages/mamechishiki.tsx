@@ -14,7 +14,7 @@ const CardHeader = styled.div`
 const CardBody = styled.div``
 
 export default (props: any) => (
-  <>
+  <div>
     <Helmet>
       <title>Mamechishiki</title>
     </Helmet>
@@ -42,7 +42,7 @@ export default (props: any) => (
         </Container>
       </Card>
     ))}
-  </>
+  </div>
 )
 
 export const query = graphql`
