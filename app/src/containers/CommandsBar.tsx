@@ -72,11 +72,11 @@ export class CommandsBar extends React.Component<
           }}
         >
           <Button size="small">
-            [WIP] SwotUp
+            [WIP]SwotUp
             <FlagIcon fontSize="small" />
           </Button>
           <Button size="small">
-            [WIP] Sync
+            [WIP]Sync
             <SyncIcon fontSize="small" />
           </Button>
           <Button

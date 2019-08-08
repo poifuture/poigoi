@@ -13,10 +13,12 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  List as MuiList,
+  ListItem,
 } from "@material-ui/core"
 import { saveAs } from "file-saver"
 import { SpeedDial, SpeedDialAction } from "@material-ui/lab"
-import { navigate } from "gatsby"
+import { navigate, Link } from "gatsby"
 import AddIcon from "@material-ui/icons/AddOutlined"
 import SmsIcon from "@material-ui/icons/SmsOutlined"
 import ShareIcon from "@material-ui/icons/ShareOutlined"
@@ -29,6 +31,8 @@ import SearchIcon from "@material-ui/icons/SearchOutlined"
 import DeleteIcon from "@material-ui/icons/DeleteOutlined"
 import DeleteForeverIcon from "@material-ui/icons/DeleteForeverOutlined"
 import DescriptionIcon from "@material-ui/icons/DescriptionOutlined"
+import BugReportIcon from "@material-ui/icons/BugReportOutlined"
+import LiveHelpIcon from "@material-ui/icons/LiveHelpOutlined"
 import { GoiDb } from "../utils/GoiDb"
 
 type ProfileContainerPropsType = ReturnType<typeof mapStateToProps> &
@@ -36,6 +40,7 @@ type ProfileContainerPropsType = ReturnType<typeof mapStateToProps> &
 interface ProfileContainerStateType {
   destroyDialogOpened: boolean
   destroyUserConfirm: string
+  allDataUrl: string
 }
 
 export class ProfileContainer extends React.Component<
@@ -47,16 +52,23 @@ export class ProfileContainer extends React.Component<
     this.state = {
       destroyDialogOpened: false,
       destroyUserConfirm: "",
+      allDataUrl: "",
     }
+  }
+  componentDidMount = async () => {
+    const allDocs = await GoiDb().allDocs({
+      include_docs: true,
+      attachments: true,
+    })
+    const blob = new Blob([JSON.stringify(allDocs)], {
+      type: "text/plain;charset=utf-8",
+    })
+    this.setState({ allDataUrl: URL.createObjectURL(blob) })
   }
   navigate(to: string) {
     navigate(to, { replace: true })
   }
-  repairData = async () => {
-    this.setState({ destroyDialogOpened: false, destroyUserConfirm: "" })
-    await GoiDb().destroy()
-    window.location.reload()
-  }
+  repairData = async () => {}
   confirmDestroyData = async () => {
     this.setState({ destroyDialogOpened: false, destroyUserConfirm: "" })
     await GoiDb().destroy()
@@ -68,73 +80,144 @@ export class ProfileContainer extends React.Component<
       attachments: true,
     })
     const blob = new Blob([JSON.stringify(allDocs)], {
-      type: "test/json;charset=utf-8",
+      type: "application/json",
     })
     saveAs(blob, "GoiSaving.json")
+  }
+  onClickBugReport = async () => {
+    window.location.href =
+      "https://forms.office.com/Pages/ResponsePage.aspx?id=HO2aql64JEqeASBBMrBBF5y2nH0iJiFBmV42lNreWUVUN0dWTElDTTNPSUFTQzVSRUtJUldQM0ZDSiQlQCN0PWcu"
+  }
+  onClickUnregisterServiceWorker = async () => {
+    const registrations = await navigator.serviceWorker.getRegistrations()
+    for (let registration of registrations) {
+      registration.unregister()
+    }
+    window.location.reload()
   }
   render() {
     const { poiUserId, savingId } = this.props
     return (
       <div className="profile-container">
-        <h1>Trouble shooting</h1>
-        <Button variant="contained" onClick={this.repairData}>
-          Repair data
-          <DescriptionIcon />
-        </Button>
-        <div>
-          Export all local data in a single json file. It won't take your
-          network usage.
-        </div>
-        <Button variant="contained" onClick={this.exportAllData}>
-          Export all local data
-          <DescriptionIcon />
-        </Button>
-        <div>
-          If there is a fatal error that cannot be resolved, you can destroy
-          entire local database with the following button. Please contact us
-          first before doing so.
-        </div>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() =>
-            this.setState({ destroyDialogOpened: true, destroyUserConfirm: "" })
-          }
-        >
-          Destroy all local data
-          <DeleteForeverIcon />
-        </Button>
-        <Dialog open={this.state.destroyDialogOpened} maxWidth="xl">
-          <DialogTitle>Destroy all data</DialogTitle>
-          <DialogContent>
-            <TextField
-              fullWidth
-              placeholder="Type DESTROY to continue"
-              value={this.state.destroyUserConfirm}
-              onChange={e =>
-                this.setState({ destroyUserConfirm: e.target.value })
-              }
-            ></TextField>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => this.setState({ destroyDialogOpened: false })}
-            >
-              Cancel
+        <MuiList>
+          <h1>Troubleshooting Zone</h1>
+          <ListItem>
+            Try to upgrade the local database from outdated data structure.
+          </ListItem>
+          <ListItem>
+            <Button variant="contained" onClick={this.repairData}>
+              Repair data
+              <DescriptionIcon />
             </Button>
+          </ListItem>
+          <ListItem>
+            Export all local data in a single json file. It won't take your
+            network usage.
+          </ListItem>
+          <ListItem>
+            <Button
+              variant="contained"
+              onClick={async () => await this.exportAllData()}
+            >
+              Export all data (Download)
+              <DescriptionIcon />
+            </Button>
+          </ListItem>
+          <ListItem>
+            <Button
+              variant="contained"
+              onClick={async () => await this.navigate("/dumpdata/")}
+            >
+              Export all data (Navigate)
+              <DescriptionIcon />
+            </Button>
+          </ListItem>
+          <ListItem>
+            <Button variant="contained" onClick={this.onClickBugReport}>
+              Bug Report
+              <BugReportIcon />
+            </Button>
+          </ListItem>
+          <ListItem>
+            <Button variant="contained">
+              [WIP] Help desk
+              <LiveHelpIcon />
+            </Button>
+          </ListItem>
+          <ListItem>
+            <Button variant="contained">
+              [WIP] Help desk wechat
+              <LiveHelpIcon />
+            </Button>
+          </ListItem>
+          <ListItem>
+            If there is a fatal error that cannot be resolved, you can destroy
+            entire local database with the following button. Please contact us
+            first before doing so.
+          </ListItem>
+          <ListItem>
+            <Button
+              variant="contained"
+              onClick={() =>
+                this.setState({
+                  destroyDialogOpened: true,
+                  destroyUserConfirm: "",
+                })
+              }
+            >
+              Unregister Service Worker
+              <DeleteForeverIcon />
+            </Button>
+          </ListItem>
+          <ListItem>
             <Button
               variant="contained"
               color="secondary"
-              disabled={
-                this.state.destroyUserConfirm.toLowerCase() !== "destroy"
+              onClick={() =>
+                this.setState({
+                  destroyDialogOpened: true,
+                  destroyUserConfirm: "",
+                })
               }
-              onClick={this.confirmDestroyData}
             >
-              Destroy all data
+              Destroy all local data
               <DeleteForeverIcon />
             </Button>
-          </DialogActions>
-        </Dialog>
+          </ListItem>
+          <Dialog open={this.state.destroyDialogOpened} maxWidth="xl">
+            <DialogTitle>Destroy all data</DialogTitle>
+            <DialogContent>
+              <TextField
+                fullWidth
+                placeholder="Type DESTROY to continue"
+                value={this.state.destroyUserConfirm}
+                onChange={e =>
+                  this.setState({ destroyUserConfirm: e.target.value })
+                }
+              ></TextField>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                size="small"
+                onClick={() => this.setState({ destroyDialogOpened: false })}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="small"
+                variant="contained"
+                color="secondary"
+                disabled={
+                  this.state.destroyUserConfirm.toLowerCase() !== "destroy"
+                }
+                onClick={this.confirmDestroyData}
+              >
+                Destroy all data
+                <DeleteForeverIcon fontSize="small" />
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </MuiList>
       </div>
     )
   }
