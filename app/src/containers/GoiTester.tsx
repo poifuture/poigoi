@@ -193,6 +193,7 @@ export class GoiTester extends React.Component<
               onClick={() => {
                 this.setState({ displayDetail: true })
               }}
+              style={{ color: "gray" }}
             >
               <MoreHorizIcon />
               Detail
@@ -202,6 +203,7 @@ export class GoiTester extends React.Component<
               onClick={() => {
                 this.setState({ displayDetail: true })
               }}
+              style={{ color: "gray" }}
             >
               <LinkOffIcon />
               [WIP]Forget

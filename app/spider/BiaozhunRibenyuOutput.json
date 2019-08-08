@@ -26,6 +26,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -54,6 +55,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -82,6 +84,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -110,6 +113,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -138,6 +142,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -166,6 +171,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -194,6 +200,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 3,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -222,6 +229,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 3,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -250,6 +258,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -278,6 +287,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -309,6 +319,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 3,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -340,6 +351,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -368,6 +380,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 3,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -399,6 +412,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -427,6 +441,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -455,6 +470,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 2,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -483,6 +499,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -511,6 +528,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -539,6 +557,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -570,6 +589,7 @@
         }
       ],
       "pos": "NOUN",
+      "tone": 2,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -598,6 +618,7 @@
         }
       ],
       "pos": "PRON",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -626,6 +647,7 @@
         }
       ],
       "pos": "PRON",
+      "tone": 2,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -654,6 +676,7 @@
         }
       ],
       "pos": "ADV",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -685,6 +708,7 @@
         }
       ],
       "pos": "INTERJ",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -716,6 +740,7 @@
         }
       ],
       "pos": "INTERJ",
+      "tone": 3,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -806,6 +831,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -834,6 +860,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -862,6 +889,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -890,6 +918,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -918,6 +947,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -946,6 +976,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -974,6 +1005,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1002,6 +1034,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 0,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1030,6 +1063,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1058,6 +1092,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1086,6 +1121,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1114,6 +1150,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1142,6 +1179,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1170,6 +1208,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1198,6 +1237,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 5,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1226,6 +1266,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1254,6 +1295,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 5,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1282,6 +1324,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 5,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1310,6 +1353,7 @@
         }
       ],
       "pos": "PROPER",
+      "tone": 5,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1338,6 +1382,7 @@
         }
       ],
       "pos": "IDIOM",
+      "tone": 5,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1366,6 +1411,7 @@
         }
       ],
       "pos": "IDIOM",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1394,6 +1440,7 @@
         }
       ],
       "pos": "IDIOM",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1450,6 +1497,7 @@
         }
       ],
       "pos": "IDIOM",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1478,6 +1526,7 @@
         }
       ],
       "pos": "IDIOM",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1506,6 +1555,7 @@
         }
       ],
       "pos": "IDIOM",
+      "tone": 1,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1534,6 +1584,7 @@
         }
       ],
       "pos": "IDIOM",
+      "tone": 4,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1562,6 +1613,7 @@
         }
       ],
       "pos": "IDIOM",
+      "tone": 5,
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {
@@ -1590,6 +1642,10 @@
         }
       ],
       "pos": "IDIOM",
+      "tone": [
+        1,
+        7
+      ],
       "translations": {
         "BiaozhunRibenyu": {
           "translation": {

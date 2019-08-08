@@ -2,7 +2,10 @@
 
 const fs = require("fs")
 // import fs from "fs"
-import { GoiJaDictionaryType } from "../src/types/GoiDictionaryTypes"
+import {
+  GoiJaDictionaryType,
+  JA_BASIC_POS,
+} from "../src/types/GoiDictionaryTypes"
 
 const isHiragana = (str: string) => {
   const code = str.charCodeAt(0)
@@ -38,7 +41,7 @@ const main = () => {
     extends: [],
     words: {},
   }
-  const content = fs
+  const content: string = fs
     .readFileSync(__dirname + "/BiaozhunRibenyuInput.csv", { encoding: "utf8" })
     .trim() // trim BOM and newline
   const allLines = content.split("\n").map((line: string) => line.trim()) // trim \r
@@ -138,7 +141,28 @@ const main = () => {
     const kana = kanaInput || prepareKana
     const romaji = romajiInput || ""
     const wapuro = wapuroInput || ""
-    const pos = posInput as any
+    const posArray = posInput
+      .split(";")
+      .filter((singlePos): singlePos is JA_BASIC_POS => !!singlePos)
+    const pos =
+      posArray.length === 0
+        ? "IDIOM"
+        : posArray.length === 1
+        ? posArray[0]
+        : posArray
+    const toneArray = toneInput
+      .split(";")
+      .map(singleToneString =>
+        singleToneString ? parseInt(singleToneString) : null
+      )
+      .filter((toneNumber): toneNumber is number => toneNumber !== null)
+    const tone =
+      toneArray.length === 0
+        ? null
+        : toneArray.length === 1
+        ? toneArray[0]
+        : toneArray
+
     const bookName = (bookNameInput ? bookNameInput : "BIAORI") + "-"
     const bookSeries = bookSeriesInput.padStart(2, "0") + "-"
     const bookChapter = bookChapterInput.padStart(2, "0") + "-"
@@ -164,6 +188,7 @@ const main = () => {
       wapuro: wapuro,
       audios: [{ cv: "Hikari", wav: "" }],
       pos: pos,
+      ...(tone !== null && { tone }),
       translations: {
         [dictionaryName]: {
           translation: { zh: zhTranslationInput },
