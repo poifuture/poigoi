@@ -122,7 +122,7 @@ const main = () => {
     for (let kanjiId = 0; kanjiId < charFuriganas.length; kanjiId += 2) {
       if (charFuriganas[kanjiId] && charFuriganas[kanjiId + 1]) {
         if (
-          isHiragana(charFuriganas[kanjiId]) &&
+          isHiragana(charFuriganas[kanjiId]) ||
           isKatakana(charFuriganas[kanjiId])
         ) {
           prepareKana += charFuriganas[kanjiId]

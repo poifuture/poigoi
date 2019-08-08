@@ -1,12 +1,12 @@
 export const ToggleEvents = (
-  toggleEventHandler: (value?: boolean) => void | Promise<void>
+  toggleEventHandler: (value?: boolean, event?: string) => void | Promise<void>
 ) => {
   return {
     // onClick: () => toggleEventHandler(),
-    onFocus: () => toggleEventHandler(true),
-    onBlur: () => toggleEventHandler(false),
-    onMouseEnter: () => toggleEventHandler(true),
-    onMouseLeave: () => toggleEventHandler(false),
-    onClose: () => toggleEventHandler(false),
+    onFocus: () => toggleEventHandler(true, "onFocus"),
+    onBlur: () => toggleEventHandler(false, "onBlur"),
+    onMouseEnter: () => toggleEventHandler(true, "onMouseEnter"),
+    onMouseLeave: () => toggleEventHandler(false, "onMouseLeave"),
+    onClose: () => toggleEventHandler(false, "onClose"),
   }
 }

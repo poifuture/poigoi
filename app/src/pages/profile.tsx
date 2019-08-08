@@ -5,26 +5,15 @@ import WordAdder from "../containers/WordAdder"
 import CommandsBar from "../containers/CommandsBar"
 import Container from "@material-ui/core/Container"
 import { Hidden } from "@material-ui/core"
+import ProfileContainer from "../containers/ProfileContainer"
 
 export default (props: any) => (
   // <div style={{ width: "100%", overflow: "hidden", position: "fixed" }}>
-  <div
-    className="goi-index-page"
-    style={{
-      width: "100%",
-      height: "100%",
-      overflow: "hidden",
-      position: "fixed",
-    }}
-  >
-    <Hidden xsDown>
-      <NavBar />
-    </Hidden>
-    <CommandsBar />
+  <div className="goi-profile-page">
+    <NavBar />
     <main>
-      <WordAdder />
       <Container>
-        <GoiTester />
+        <ProfileContainer />
       </Container>
     </main>
     <footer style={{ position: "absolute", bottom: 0 }}>

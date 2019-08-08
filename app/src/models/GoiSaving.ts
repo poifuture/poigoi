@@ -358,6 +358,7 @@ export class GoiSavingModel {
         "KanaDictionary",
         "GoiSimpleJaDictionary",
         "BiaozhunRibenyu",
+        "XinbianRiyu",
       ],
       Records: {},
     }
