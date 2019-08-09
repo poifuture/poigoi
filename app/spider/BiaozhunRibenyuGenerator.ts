@@ -171,9 +171,6 @@ const main = () => {
     const bookWordId = bookWordIdInput.padStart(4, "0")
     const textbookTag =
       bookName + bookSeries + bookChapter + bookExtra + bookWordId
-    // textbookCache[wordKey] = Object.keys(textbookCache).includes(wordKey)
-    //   ? [...textbookCache[wordKey], textbookTag]
-    //   : [textbookTag]
     textbookCache[wordKey] = [
       textbookTag,
       ...(textbookCache[wordKey] ? textbookCache[wordKey] : []),

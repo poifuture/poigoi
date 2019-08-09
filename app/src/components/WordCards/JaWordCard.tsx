@@ -100,7 +100,7 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
         <div
           className="word-card-common"
           style={{
-            height: "20vmin",
+            minHeight: "20vmin",
             fontSize: "10vmin",
             color: statusColor,
             visibility:
