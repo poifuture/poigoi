@@ -41,6 +41,7 @@ const main = () => {
     extends: [],
     words: {},
   }
+  const textbookCache: { [key: string]: string[] } = {}
   const content: string = fs
     .readFileSync(__dirname + "/BiaozhunRibenyuInput.csv", { encoding: "utf8" })
     .trim() // trim BOM and newline
@@ -170,12 +171,21 @@ const main = () => {
     const bookWordId = bookWordIdInput.padStart(4, "0")
     const textbookTag =
       bookName + bookSeries + bookChapter + bookExtra + bookWordId
-    if (Object.keys(final.words).includes(wordKey)) {
-      if (zhTranslationInput !== "duplicate") {
-        throw new Error(`Duplicate word key: ${wordKey}`)
+    // textbookCache[wordKey] = Object.keys(textbookCache).includes(wordKey)
+    //   ? [...textbookCache[wordKey], textbookTag]
+    //   : [textbookTag]
+    textbookCache[wordKey] = [
+      textbookTag,
+      ...(textbookCache[wordKey] ? textbookCache[wordKey] : []),
+    ]
+    if (zhHintInput === "duplicate") {
+      if (final.words[wordKey]) {
+        final.words[wordKey].textbook.push(textbookTag)
       }
-      final.words[wordKey].textbook.push(textbookTag)
       continue
+    }
+    if (Object.keys(final.words).includes(wordKey)) {
+      throw new Error(`Duplicate word key: ${wordKey}`)
     }
     final.words[wordKey] = {
       key: wordKey,
@@ -200,7 +210,7 @@ const main = () => {
         },
       },
       sentences: [],
-      textbook: [textbookTag],
+      textbook: textbookCache[wordKey],
     }
   }
   fs.writeFileSync(
