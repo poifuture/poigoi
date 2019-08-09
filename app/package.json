@@ -83,7 +83,6 @@
     "extends": "react-app"
   },
   "browserslist": [
-    ">0.2%",
-    "not dead"
+    ">0.2%"
   ]
 }

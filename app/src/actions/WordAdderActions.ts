@@ -2,10 +2,11 @@ import {
   WordAdderStateType,
   WordAdderPendingQueryType,
   WordAdderSuggestionQueryType,
+  WordAdderQueryType,
 } from "../states/WordAdderState"
 import { GoiDictionarys } from "../models/GoiDictionary"
 import Immutable from "immutable"
-import { GoiWordType } from "../types/GoiDictionaryTypes"
+import { GoiWordType, I18nString } from "../types/GoiDictionaryTypes"
 import * as PoiUser from "../utils/PoiUser"
 import {
   GoiWordRecord,
@@ -38,7 +39,7 @@ export interface UpdateStatusActionType extends Action<typeof UPDATE_STATUS> {
 
 export interface PushPendingQueryActionType
   extends Action<typeof PUSH_PENDING_QUERY> {
-  Display: string
+  Display: I18nString
   Query: string
 }
 export interface PopPendingQueryActionType
@@ -153,23 +154,20 @@ const queryWords = async (
       : await GoiDictionarys(dictionarys).GetAllWordsKeys()
   console.debug("AllWordKeys", wordKeys)
   const queryRegExp = new RegExp(query, "i")
-  const words: { [key: string]: GoiWordType } = Object.fromEntries(
-    (await Promise.all(
-      wordKeys.map(async wordKey => {
-        const word = await GoiDictionarys(dictionarys).GetWordOrNull(wordKey)
-        if (!word) {
-          return null
-        }
-        const matches = word.textbook.filter(tag => tag.match(queryRegExp))
-        if (matches.length === 0) {
-          return null
-        }
-        return [wordKey, word]
-      })
-    )).filter(
-      (wordEntry): wordEntry is [string, GoiWordType] => wordEntry !== null
-    )
-  )
+
+  const words: { [key: string]: GoiWordType } = {}
+  const wordsPromises = wordKeys.map(async wordKey => {
+    const word = await GoiDictionarys(dictionarys).GetWordOrNull(wordKey)
+    if (!word) {
+      return null
+    }
+    const matches = word.textbook.filter(tag => tag.match(queryRegExp))
+    if (matches.length === 0) {
+      return null
+    }
+    words[wordKey] = word
+  })
+  await Promise.all(wordsPromises.toArray())
   return words
 }
 
@@ -311,7 +309,7 @@ const PushPendingQueryAction = ({
   display,
   query,
 }: {
-  display: string
+  display: I18nString
   query: string
 }): PushPendingQueryActionType => {
   return {
@@ -337,7 +335,7 @@ export const AddPendingQueryAction = (
     display,
   }: {
     query: string
-    display: string
+    display: I18nString
   },
   {
     poiUserId,
@@ -350,6 +348,47 @@ export const AddPendingQueryAction = (
   return (async (dispatch): Promise<void> => {
     dispatch(PushPendingQueryAction({ display, query }))
     await dispatch(CountQueryAction({ query }, { poiUserId, savingId }))
+  }) as ThunkAction<Promise<void>, RootStateType, unknown, Action>
+}
+export const AddPendingQuerysAction = (
+  {
+    querys,
+  }: {
+    querys: WordAdderQueryType[]
+  },
+  {
+    poiUserId,
+    savingId,
+  }: {
+    poiUserId: PoiUser.PoiUserId
+    savingId: GoiSavingId
+  }
+) => {
+  return (async (dispatch): Promise<void> => {
+    for (let i = 0; i < querys.length; i++) {
+      dispatch(
+        PushPendingQueryAction({
+          display: querys[i].Display,
+          query: querys[i].Query,
+        })
+      )
+      dispatch(
+        PushCountQueryAction({
+          query: querys[i].Query,
+          totalCount: 0,
+          learnedCount: 0,
+          addedCount: 0,
+          newCount: 0,
+        })
+      )
+    }
+    await Promise.all(
+      querys.map(query =>
+        dispatch(
+          CountQueryAction({ query: query.Query }, { poiUserId, savingId })
+        )
+      )
+    )
   }) as ThunkAction<Promise<void>, RootStateType, unknown, Action>
 }
 

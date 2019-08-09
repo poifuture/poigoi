@@ -25,6 +25,7 @@ import * as PoiUser from "../utils/PoiUser"
 import {
   DisplayWordAdderAction,
   AddPendingQueryAction,
+  AddPendingQuerysAction,
   RemovePendingQueryAction,
   AddWordsFromQuerysAction,
   ClearPendingWordsAction,
@@ -33,6 +34,7 @@ import {
   WordAdderSuggestionQueryType,
   WordAdderQueryCountersType,
   WordAdderPendingQueryType,
+  WordAdderQueryType,
 } from "../states/WordAdderState"
 import { GoiSavingId } from "../types/GoiTypes"
 import { RootStateType } from "../states/RootState"
@@ -45,6 +47,7 @@ import CloseIcon from "@material-ui/icons/CloseOutlined"
 import ExploreOffIcon from "@material-ui/icons/ExploreOffOutlined"
 import { useTheme } from "@material-ui/styles"
 import ResponsiveDialog from "../components/ResponsiveDialog"
+import { I18nString } from "../types/GoiDictionaryTypes"
 
 type WordAdderPropsType = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
@@ -67,6 +70,26 @@ export class WordAdder extends React.Component<
   getPendingQuerys = (): string[] => {
     const pendings: WordAdderPendingQueryType[] = this.props.pendings.toJS()
     return pendings.map(pending => pending.Query)
+  }
+  addSuggestion = async (
+    suggestion: WordAdderSuggestionQueryType
+  ): Promise<void> => {
+    const { poiUserId, savingId } = this.props
+    if (Array.isArray(suggestion.SubQuerys)) {
+      await this.props.addPendingQuerys(
+        {
+          querys: suggestion.SubQuerys,
+        },
+        { poiUserId, savingId }
+      )
+    }
+    await this.props.addPendingQuery(
+      {
+        display: suggestion.Display,
+        query: suggestion.Query,
+      },
+      { poiUserId, savingId }
+    )
   }
   clearAllPendingQuerys = async () => {
     await Promise.all(
@@ -91,7 +114,7 @@ export class WordAdder extends React.Component<
     const { poiUserId, savingId } = this.props
     this.props.addPendingQuery(
       {
-        display: "Custom",
+        display: { en: "Custom", zh: "自定义搜索条件" },
         query: this.state.customQuery.trim(),
       },
       { poiUserId, savingId }
@@ -163,7 +186,7 @@ export class WordAdder extends React.Component<
             {suggestions.map(suggestion => (
               <MuiListItem key={`suggestion${suggestion.Query}`}>
                 <MuiListItemText
-                  primary={`${suggestion.Display} (${suggestion.Query}) ${counters[suggestion.Query].TotalCount} words`}
+                  primary={`${suggestion.Display.en} (${suggestion.Query}) ${counters[suggestion.Query].TotalCount} words`}
                   secondary={
                     counters[suggestion.Query] ? (
                       <>
@@ -178,15 +201,7 @@ export class WordAdder extends React.Component<
                   <IconButton
                     edge="end"
                     aria-label="Add suggestion query"
-                    onClick={() =>
-                      this.props.addPendingQuery(
-                        {
-                          display: suggestion.Display,
-                          query: suggestion.Query,
-                        },
-                        { poiUserId, savingId }
-                      )
-                    }
+                    onClick={() => this.addSuggestion(suggestion)}
                   >
                     <AddIcon />
                   </IconButton>
@@ -252,7 +267,7 @@ export class WordAdder extends React.Component<
                     <MuiListItemText
                       primary={
                         <>
-                          {`${pending.Display} (${pending.Query})`}
+                          {`${pending.Display.en} (${pending.Query})`}
                           {counters[pending.Query] &&
                             ` ${counters[pending.Query].TotalCount} words`}
                         </>
@@ -376,7 +391,7 @@ const mapDispatchToProps = (
       savingId: GoiSavingId
     }) => dispatch(ClearPendingWordsAction({ poiUserId, savingId })),
     addPendingQuery: (
-      { display, query }: { display: string; query: string },
+      { display, query }: { display: I18nString; query: string },
       {
         poiUserId,
         savingId,
@@ -385,6 +400,20 @@ const mapDispatchToProps = (
       dispatch(
         AddPendingQueryAction({ display, query }, { poiUserId, savingId })
       ),
+    addPendingQuerys: (
+      {
+        querys,
+      }: {
+        querys: WordAdderQueryType[]
+      },
+      {
+        poiUserId,
+        savingId,
+      }: {
+        poiUserId: PoiUser.PoiUserId
+        savingId: GoiSavingId
+      }
+    ) => dispatch(AddPendingQuerysAction({ querys }, { poiUserId, savingId })),
     removePendingQuery: ({ query }: { query: string }) =>
       dispatch(RemovePendingQueryAction({ query })),
     addWordsFromQuerys: (
