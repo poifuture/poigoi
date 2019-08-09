@@ -58,7 +58,7 @@ Sub Furigana()
   Cells(1, RubyAutoTagCol).Value = "AutoTags"
   Cells(1, RubyByExcelCol).Value = "RubyByExcel"
   Cells(1, RubyByConcatCol).Value = "RubyByConcat"
-  Cells(1, RubyForCharsCol).Value = "=IF(Q1=T1,IF(AND(O1="""",P1=""""),""manual"",""c""),IF(O1=""special"",""s"",""ALERT""))"
+  Cells(1, RubyForCharsCol).Value = "=IF(O1=""special"",""special"",IF(Q1=T1,IF(AND(O1="""",P1=""""),""manual"",""""),""ALERT""))"
   Cells(1, RubyForCharsCol+1).Value = "=CONCAT(V1,X1,Z1,AB1,AD1,AF1,AH1,AJ1,AL1,AN1,AP1)"
   
   Dim line As Integer
