@@ -20,6 +20,7 @@ import Heap from "../algorithm/Heap"
 import { RootStateType } from "../states/RootState"
 import { ThunkAction } from "redux-thunk"
 
+export const UPDATE_IS_TYPING = "GOI_TESTER_ACTIONS_UPDATE_IS_TYPING"
 export const UPDATE_GOI_TESTER_WORD =
   "GOI_TESTER_ACTIONS_CHANGE_GOI_TESTER_WORD"
 export const UPDATE_JUDGE_RESULT = "GOI_TESTER_ACTIONS_UPDATE_JUDGE_RESULT"
@@ -27,6 +28,10 @@ export const UPDATE_CANDIDATES = "GOI_TESTER_ACTIONS_UPDATE_CANDIDATES"
 export const PUSH_CANDIDATE = "GOI_TESTER_ACTIONS_PUSH_CANDIDATE"
 export const POP_CANDIDATE = "GOI_TESTER_ACTIONS_POP_CANDIDATE"
 
+export interface UpdateIsTypingActionType
+  extends Action<typeof UPDATE_IS_TYPING> {
+  IsTyping: boolean
+}
 export interface UpdateGoiTesterWordActionType
   extends Action<typeof UPDATE_GOI_TESTER_WORD> {
   Word?: GoiWordType
@@ -45,9 +50,21 @@ export interface UpdateCandidatesActionType
 }
 
 export type GoiTesterActionTypes =
+  | UpdateIsTypingActionType
   | UpdateGoiTesterWordActionType
   | UpdateJudgeResultActionType
   | UpdateCandidatesActionType
+
+export const UpdateIsTypingAction = ({
+  isTyping,
+}: {
+  isTyping: boolean
+}): UpdateIsTypingActionType => {
+  return {
+    type: UPDATE_IS_TYPING,
+    IsTyping: isTyping,
+  }
+}
 
 export const UpdateGoiTesterWordAction = ({
   word,
@@ -55,7 +72,7 @@ export const UpdateGoiTesterWordAction = ({
 }: {
   word?: GoiWordType
   record?: GoiWordRecordDataType
-}): GoiTesterActionTypes => {
+}): UpdateGoiTesterWordActionType => {
   return {
     type: UPDATE_GOI_TESTER_WORD,
     Word: word,

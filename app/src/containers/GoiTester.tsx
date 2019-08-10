@@ -7,6 +7,7 @@ import { LazyInitSavingAction } from "../actions/GoiSavingActions"
 import {
   VerifyAnswerAction,
   ShowNextWordAction,
+  UpdateIsTypingAction,
 } from "../actions/GoiTesterActions"
 import { GoiSavingId, GoiJudgeResult } from "../types/GoiTypes"
 import Helmet from "react-helmet"
@@ -134,6 +135,12 @@ export class GoiTester extends React.Component<
             variant="outlined"
             value={this.state.testerInput}
             style={{ flexGrow: 1 }}
+            onFocus={() => {
+              this.props.updateIsTyping({ isTyping: true })
+            }}
+            onBlur={() => {
+              this.props.updateIsTyping({ isTyping: false })
+            }}
             onChange={e => {
               this.setState({ testerInput: e.target.value })
             }}
@@ -239,6 +246,8 @@ const mapDispatchToProps = (
     lazyInitUser: () => dispatch(LazyInitUserAction()),
     lazyInitSaving: ({ poiUserId }: { poiUserId: PoiUser.PoiUserId }) =>
       dispatch(LazyInitSavingAction({ poiUserId })),
+    updateIsTyping: ({ isTyping }: { isTyping: boolean }) =>
+      dispatch(UpdateIsTypingAction({ isTyping })),
     showNextWord: (
       {
         poiUserId,

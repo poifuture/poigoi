@@ -8,12 +8,15 @@ import {
   UPDATE_CANDIDATES,
   UPDATE_JUDGE_RESULT,
   UpdateJudgeResultActionType,
+  UPDATE_IS_TYPING,
+  UpdateIsTypingActionType,
 } from "../actions/GoiTesterActions"
 import { GoiTesterStateType } from "../states/GoiTesterState"
 import { GoiWordRecordDataType } from "../models/GoiSaving"
 import Heap from "../algorithm/Heap"
 
 const InitialGoiTesterState: GoiTesterStateType = {
+  IsTyping: false,
   CurrentWord: KanaDictionary.words["あ"],
   JudgeResult: "Pending",
   Record: null,
@@ -28,6 +31,11 @@ export const GoiTesterReducer = (
 ) => {
   console.debug("Reducing GoiJaTester...", action.type)
   switch (action.type) {
+    case UPDATE_IS_TYPING: {
+      console.debug("Hit UPDATE_GOI_USER_STATE ... ", action)
+      const typedAction = action as UpdateIsTypingActionType
+      return state.set("IsTyping", typedAction.IsTyping)
+    }
     case UPDATE_GOI_TESTER_WORD: {
       console.debug("Hit UPDATE_GOI_USER_STATE ... ", action)
       const typedAction = action as UpdateGoiTesterWordActionType
