@@ -15,7 +15,7 @@ describe("WordAdderActions", () => {
       const store = CreateStore()
       await store.dispatch(WordAdderActions.AddPendingQueryAction(
         {
-          display: "WordAdderActions/AddPendingQueryAction/Succeed",
+          display: { en: "WordAdderActions/AddPendingQueryAction/Succeed" },
           query: "KATAKANA-0000[123]",
         },
         { poiUserId, savingId }
@@ -26,7 +26,7 @@ describe("WordAdderActions", () => {
           .WordAdder.get("Pendings")
           .toJS()
       ).toContainEqual({
-        Display: "WordAdderActions/AddPendingQueryAction/Succeed",
+        Display: { en: "WordAdderActions/AddPendingQueryAction/Succeed" },
         Query: "KATAKANA-0000[123]",
       })
     })
