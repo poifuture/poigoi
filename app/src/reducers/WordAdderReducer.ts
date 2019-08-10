@@ -52,27 +52,27 @@ const InitialWordAdderState: WordAdderStateType = {
       ],
     },
     {
-      Display: { en: "JLPT", zh: "JLPT" },
+      Display: { en: "JLPT" },
       Query: "^JLPT-.*$",
       SubQuerys: [
         {
-          Display: { en: "JLPT-N5", zh: "JLPT-N5" },
+          Display: { en: "JLPT-N5" },
           Query: "^JLPT-N5-.*$",
         },
         {
-          Display: { en: "JLPT-N4", zh: "JLPT-N4" },
+          Display: { en: "JLPT-N4" },
           Query: "^JLPT-N4-.*$",
         },
         {
-          Display: { en: "JLPT-N3", zh: "JLPT-N3" },
+          Display: { en: "JLPT-N3" },
           Query: "^JLPT-N3-.*$",
         },
         {
-          Display: { en: "JLPT-N2", zh: "JLPT-N2" },
+          Display: { en: "JLPT-N2" },
           Query: "^JLPT-N5-.*$",
         },
         {
-          Display: { en: "JLPT-N1", zh: "JLPT-N1" },
+          Display: { en: "JLPT-N1" },
           Query: "^JLPT-N1-.*$",
         },
       ],

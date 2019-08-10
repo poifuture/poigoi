@@ -7,6 +7,7 @@ import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
 import NavBar from "../components/NavBar"
 import { Snackbar } from "@material-ui/core"
+import "../utils/GoiI18n"
 // import "./layout.css"
 
 export class Layout extends React.Component<

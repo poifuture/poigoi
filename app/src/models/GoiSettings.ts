@@ -2,7 +2,7 @@ import uuid5 from "uuid/v5"
 import { DbUuid, PoiGlobalDataType, GlobalDbKey } from "../utils/PoiDb"
 import { GoiDb, GoiNS } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
-import { LanguageCode } from "../types/GoiDictionaryTypes"
+import { LanguageCode } from "../types/PoiI18nTypes";
 
 export type GoiSettingsDbKey = GlobalDbKey & { readonly brand: "GoiUserDbKey" }
 

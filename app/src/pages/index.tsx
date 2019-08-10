@@ -5,6 +5,8 @@ import WordAdder from "../containers/WordAdder"
 import CommandsBar from "../containers/CommandsBar"
 import Container from "@material-ui/core/Container"
 import { Hidden } from "@material-ui/core"
+import { poisky } from "../utils/PoiColors"
+import { height } from "@material-ui/system"
 
 export default (props: any) => (
   // <div style={{ width: "100%", overflow: "hidden", position: "fixed" }}>
@@ -19,6 +21,9 @@ export default (props: any) => (
   >
     <Hidden xsDown>
       <NavBar />
+    </Hidden>
+    <Hidden smUp>
+      <div style={{ background: poisky, height: "1px" }} />
     </Hidden>
     <CommandsBar />
     <main>

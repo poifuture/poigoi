@@ -78,18 +78,14 @@ export class WordAdder extends React.Component<
     if (Array.isArray(suggestion.SubQuerys)) {
       await this.props.addPendingQuerys(
         {
-          querys: suggestion.SubQuerys,
+          querys: [
+            ...suggestion.SubQuerys,
+            { Display: suggestion.Display, Query: suggestion.Query },
+          ],
         },
         { poiUserId, savingId }
       )
     }
-    await this.props.addPendingQuery(
-      {
-        display: suggestion.Display,
-        query: suggestion.Query,
-      },
-      { poiUserId, savingId }
-    )
   }
   clearAllPendingQuerys = async () => {
     await Promise.all(

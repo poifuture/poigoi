@@ -29,9 +29,13 @@ import VolumeOffIcon from "@material-ui/icons/VolumeOffOutlined"
 import VolumeUpIcon from "@material-ui/icons/VolumeUpOutlined"
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumberedOutlined"
 import { ToggleEvents } from "../utils/PoiResponsive"
+import { GoiWordRecordDataType } from "../models/GoiSaving"
+import Heap from "../algorithm/Heap"
+import { withTranslation, WithTranslation } from "react-i18next"
 
 type CommandsBarPropsType = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>
+  ReturnType<typeof mapDispatchToProps> &
+  WithTranslation
 interface CommandsBarStateType {
   menuOpened: boolean
 }
@@ -62,6 +66,7 @@ export class CommandsBar extends React.Component<
     this.setState({ menuOpened: display })
   }
   render() {
+    const { t } = this.props
     const { poiUserId, savingId } = this.props
     return (
       <div
@@ -81,53 +86,57 @@ export class CommandsBar extends React.Component<
             margin: "8px",
           }}
         >
-          <Button size="small">
+          <Button size="small" style={{ whiteSpace: "nowrap" }}>
             {/* parse text or audio to add new words */}
-            [WIP]Parse
+            [WIP]{t("ParseButtonText", "Parse")}
             <FormatQuoteIcon fontSize="small" />
           </Button>
-          <Button size="small">
-            [WIP]Search
+          <Button size="small" style={{ whiteSpace: "nowrap" }}>
+            [WIP]{t("SearchButtonText", "Search")}
             <SearchIcon fontSize="small" />
           </Button>
-          <Button size="small">
-            [WIP]Order
+          <Button size="small" style={{ whiteSpace: "nowrap" }}>
+            [WIP]{t("OrderButtonText", "Order")}
             <PlaylistPlayIcon fontSize="small" />
             {false && <ShuffleIcon fontSize="small" />}
           </Button>
-          <Button size="small">
+          <Button size="small" style={{ whiteSpace: "nowrap" }}>
             {/* type select swipe */}
-            [WIP]Mode
+            [WIP]{t("ModeButtonText", "Mode")}
             <CreateIcon fontSize="small" />
             {false && <FormatListNumberedIcon fontSize="small" />}
             {false && <ThumbsUpDownIcon fontSize="small" />}
           </Button>
-          <Button size="small">
+          <Button size="small" style={{ whiteSpace: "nowrap" }}>
             {/* swich savings in different mode */}
-            [WIP]Savings
+            [WIP]{t("SavingsButtonText", "Savings")}
             <FingerprintIcon fontSize="small" />
           </Button>
-          <Button size="small">
-            [WIP]Audio
+          <Button size="small" style={{ whiteSpace: "nowrap" }}>
+            [WIP]{t("AudioButtonText", "Audio")}
             <VolumeOffIcon fontSize="small" />
             {false && <VolumeUpIcon fontSize="small" />}
           </Button>
-          <Button size="small">
-            [WIP]SwotUp
+          <Button size="small" style={{ whiteSpace: "nowrap" }}>
+            [WIP]{t("SwotUpButtonText", "SwotUp")}
             <FlagIcon fontSize="small" />
           </Button>
-          <Button size="small">
-            [WIP]Sync
+          <Button size="small" style={{ whiteSpace: "nowrap" }}>
+            [WIP]{t("SyncButtonText", "Sync")}
             <CloudOffIcon fontSize="small" />
             {false && <SyncIcon fontSize="small" />}
           </Button>
           {/* TODO: outline the button when all words are learned */}
           <Button
             size="small"
-            variant="outlined"
+            {...(this.props.pendingCandidates.isEmpty() && {
+              color: "secondary",
+              variant: "outlined",
+            })}
+            style={{ whiteSpace: "nowrap" }}
             onClick={() => this.props.showWordAdder({ poiUserId, savingId })}
           >
-            Words
+            {t("AddWordsButtonText", "Words")}
             <AddIcon fontSize="small" />
           </Button>
         </div>
@@ -213,6 +222,9 @@ const mapStateToProps = (state: RootStateType) => {
   const props = {
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
+    pendingCandidates: state.GoiTester.get("PendingCandidates") as Heap<
+      GoiWordRecordDataType
+    >,
   }
   console.debug("CommandsBar props: ", props)
   return props
@@ -234,4 +246,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CommandsBar)
+)(withTranslation("CommandsBar")(CommandsBar))
