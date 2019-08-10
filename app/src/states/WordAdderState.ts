@@ -1,13 +1,15 @@
 import Immutable from "immutable"
+import { I18nString } from "../types/GoiDictionaryTypes"
 
-export interface WordAdderSuggestionQueryType {
-  Display: string
+export interface WordAdderQueryType {
+  Display: I18nString
   Query: string
 }
-export interface WordAdderPendingQueryType {
-  Display: string
-  Query: string
+export interface WordAdderSuggestionQueryType extends WordAdderQueryType {
+  SubQuerys?: WordAdderQueryType[]
 }
+export interface WordAdderPendingQueryType extends WordAdderQueryType {}
+
 export interface WordAdderQueryCounterType {
   TotalCount: number
   LearnedCount: number

@@ -1,3 +1,5 @@
+import { LanguageCode } from "./PoiI18nTypes";
+
 export type POS = "POS" | string | string[]
 export type EN_POS = "LETTER" | "NOUN" | "VERB"
 // https://ja.wikipedia.org/wiki/%E5%93%81%E8%A9%9E
@@ -31,15 +33,6 @@ export type JA_BASIC_POS =  // 品詞
 export type JA_POS = JA_BASIC_POS | JA_BASIC_POS[]
 export type JA_TONE = number | number[]
 export type I18nString = { en?: string; zh?: string; ja?: string }
-export type LanguageCode =
-  | "ja-c2" // Chunibyo
-  | "zh-c2" // Chunibyo
-  | "en"
-  | "en-us"
-  | "ja"
-  | "ja-jp"
-  | "zh"
-  | "zh-cn"
 export interface GoiWordType {
   key: string
   language: LanguageCode

@@ -26,12 +26,56 @@ const InitialWordAdderState: WordAdderStateType = {
   },
   Suggestions: [
     {
-      Display: "Kana",
+      Display: { en: "Kana", zh: "假名", ja: "仮名" },
       Query: "^KANA-.*$",
+      SubQuerys: [
+        {
+          Display: { en: "Hiragana", zh: "平假名", ja: "平仮名" },
+          Query: "^KANA-HIRAGANA.*$",
+        },
+        {
+          Display: { en: "Katakana", zh: "片假名", ja: "片仮名" },
+          Query: "^KANA-KATAKANA.*$",
+        },
+        {
+          Display: { en: "Dakuon", zh: "浊音", ja: "濁音" },
+          Query: "^KANA-DAKUON.*$",
+        },
+        {
+          Display: { en: "Yoon", zh: "拗音", ja: "拗音" },
+          Query: "^KANA-YOON.*$",
+        },
+        {
+          Display: { en: "Choon", zh: "长音", ja: "長音" },
+          Query: "^KANA-CHOON.*$",
+        },
+      ],
     },
     {
-      Display: "JLPT-N5",
-      Query: "^JLPT-N5-.*$",
+      Display: { en: "JLPT" },
+      Query: "^JLPT-.*$",
+      SubQuerys: [
+        {
+          Display: { en: "JLPT-N5" },
+          Query: "^JLPT-N5-.*$",
+        },
+        {
+          Display: { en: "JLPT-N4" },
+          Query: "^JLPT-N4-.*$",
+        },
+        {
+          Display: { en: "JLPT-N3" },
+          Query: "^JLPT-N3-.*$",
+        },
+        {
+          Display: { en: "JLPT-N2" },
+          Query: "^JLPT-N5-.*$",
+        },
+        {
+          Display: { en: "JLPT-N1" },
+          Query: "^JLPT-N1-.*$",
+        },
+      ],
     },
   ],
   Pendings: [],
@@ -42,7 +86,7 @@ const InitialWordAdderState: WordAdderStateType = {
       AddedCount: 0,
       NewCount: 0,
     },
-    "^JLPT-N5-.*$": {
+    "^JLPT-.*$": {
       TotalCount: 0,
       LearnedCount: 0,
       AddedCount: 0,

@@ -34,6 +34,10 @@
     "gatsby-plugin-typescript": "^2.1.0",
     "gatsby-source-filesystem": "^2.1.0",
     "gatsby-transformer-remark": "^2.5.0",
+    "i18next": "^17.0.10",
+    "i18next-browser-languagedetector": "^3.0.3",
+    "i18next-sync-fs-backend": "^1.1.1",
+    "i18next-xhr-backend": "^3.1.1",
     "immutable": "^4.0.0-rc.12",
     "isomorphic-fetch": "^2.2.1",
     "kuroshiro": "^1.1.2",
@@ -43,6 +47,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
+    "react-i18next": "^10.11.5",
     "react-redux": "^7.1.0",
     "react-scripts": "^3.0.1",
     "redux": "^4.0.4",
@@ -83,7 +88,6 @@
     "extends": "react-app"
   },
   "browserslist": [
-    ">0.2%",
-    "not dead"
+    ">0.2%"
   ]
 }

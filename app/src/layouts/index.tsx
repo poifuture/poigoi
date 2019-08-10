@@ -7,22 +7,20 @@ import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
 import NavBar from "../components/NavBar"
 import { Snackbar } from "@material-ui/core"
+import "../utils/GoiI18n"
 // import "./layout.css"
 
 export class Layout extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 > {
-  componentDidMount = () => {
-    document.getElementsByTagName("body").item(0)!.ontouchmove = e =>
-      e.preventDefault()
-  }
   render() {
     const userAgent =
       typeof window !== "undefined" ? window.navigator.userAgent : ""
     const iOS = !!userAgent.match(/iPad/i) || !!userAgent.match(/iPhone/i)
     const webkit = !!userAgent.match(/WebKit/i)
     const iOSSafari = iOS && webkit && !userAgent.match(/CriOS/i)
-    const supportIndexedDB = !!window.indexedDB
+    const supportIndexedDB =
+      typeof window !== "undefined" ? !!window.indexedDB : true
 
     return (
       <div className="goi-layout">
