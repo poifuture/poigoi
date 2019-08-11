@@ -16,6 +16,7 @@ module.exports = {
       options: { name: `articles`, path: `${__dirname}/src/articles/` },
     },
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-material-ui`,
     // Offline support
     {
       resolve: `gatsby-plugin-manifest`,

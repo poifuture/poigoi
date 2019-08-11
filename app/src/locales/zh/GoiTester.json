@@ -1,0 +1,14 @@
+{
+  "PageTitleWhenEmpty": "PoiGoi背单词",
+  "PageTitleWhenWordIsDisplayed": "PoiGoi背单词 - {{wordkey}}",
+  "PageTitleWhenEmptyForJaLearner": "PoiGoi日语背单词",
+  "PageTitleWhenWordIsDisplayedForJaLearner": "PoiGoi日语背单词 - {{wordkey}}",
+  "SkipWordButtonText": "跳过",
+  "NextWordButtonText": "跳过",
+  "MainInputLabel": "在这里验证你的答案",
+  "MainInputPendingPlaceholder": "",
+  "MainInputPendingPlaceholderForJaLearner": "建议使用日语输入法",
+  "MainInputWrongPlaceholder": "输入正确答案以继续",
+  "WordDetailButtonText": "更多",
+  "ForgetWordButtonText": "忽略"
+}

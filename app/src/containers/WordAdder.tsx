@@ -48,12 +48,19 @@ import ExploreOffIcon from "@material-ui/icons/ExploreOffOutlined"
 import { useTheme } from "@material-ui/styles"
 import ResponsiveDialog from "../components/ResponsiveDialog"
 import { I18nString } from "../types/GoiDictionaryTypes"
+import { withTranslation, WithTranslation } from "react-i18next"
+import { LookUp } from "../utils/PoiI18n"
+import { LocaleCode } from "../types/PoiI18nTypes"
 
 type WordAdderPropsType = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>
+  ReturnType<typeof mapDispatchToProps> &
+  WithTranslation
 interface WordAdderStateType {
   customQuery: string
   addingWordsProgress: boolean
+}
+const QueryRegexPopup = ({ regex }: { regex: string }) => {
+  return <span style={{ color: "gray", fontSize: "0.5rem" }}>/{regex}/</span>
 }
 export class WordAdder extends React.Component<
   WordAdderPropsType,
@@ -117,37 +124,37 @@ export class WordAdder extends React.Component<
     )
   }
   render() {
+    const { t, i18n } = this.props
     if (!this.props.display) {
       return <div className="word-adder"></div>
     }
-    const poiUserId = this.props.poiUserId
-    const savingId = this.props.savingId
+    const { poiUserId, savingId } = this.props
     const status = this.props.status.toJS()
     const suggestions: WordAdderSuggestionQueryType[] = this.props.suggestions.toJS()
     const pendings: WordAdderPendingQueryType[] = this.props.pendings.toJS()
     const counters: WordAdderQueryCountersType = this.props.counters.toJS()
     return (
       <ResponsiveDialog className="word-adder" open={this.props.display}>
-        <DialogTitle>Add words</DialogTitle>
+        <DialogTitle>{t("WordAdderTitle", "Add words")}</DialogTitle>
         <DialogContent dividers>
           <MuiList dense={true}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <TextField
-                label="Learned"
+                label={t("SavingStatusLearnedCountLabel", "Learned")}
                 value={status.LearnedCount}
                 margin="none"
                 style={{ marginRight: "10px", flex: 1 }}
                 InputProps={{ readOnly: true }}
               ></TextField>
               <TextField
-                label="Prioritied"
+                label={t("SavingStatusPrioritiedCountLabel", "Prioritied")}
                 value={status.PrioritiedCount}
                 margin="none"
                 style={{ marginRight: "10px", flex: 1 }}
                 InputProps={{ readOnly: true }}
               ></TextField>
               <TextField
-                label="Pending"
+                label={t("SavingStatusPendingCountLabel", "Pending")}
                 value={status.PendingCount}
                 margin="none"
                 style={{ flex: 1 }}
@@ -176,19 +183,33 @@ export class WordAdder extends React.Component<
             <Divider component="li" />
             <li>
               <Typography display="block" variant="caption">
-                Suggested Word Querys
+                {t("SuggestionSectionTitle", "Suggested Word Querys")}
               </Typography>
             </li>
             {suggestions.map(suggestion => (
               <MuiListItem key={`suggestion${suggestion.Query}`}>
                 <MuiListItemText
-                  primary={`${suggestion.Display.en} (${suggestion.Query}) ${counters[suggestion.Query].TotalCount} words`}
+                  primary={
+                    <>
+                      {LookUp(suggestion.Display, i18n.language as LocaleCode)}
+                      <QueryRegexPopup regex={suggestion.Query} />
+                      {counters[suggestion.Query] &&
+                        t("CountQueryTotalResult", {
+                          defaultValue: " {{total}} words",
+                          total: counters[suggestion.Query].TotalCount,
+                        })}
+                    </>
+                  }
                   secondary={
                     counters[suggestion.Query] ? (
                       <>
-                        <span>{`Learned ${counters[suggestion.Query].LearnedCount}, `}</span>
-                        <span>{`Added ${counters[suggestion.Query].AddedCount}, `}</span>
-                        <span>{`New ${counters[suggestion.Query].NewCount}`}</span>
+                        {t("CountSuggestionQueryResult", {
+                          defaultValue:
+                            "Learned {{learned}} | Added {{added}} | New {{new}}",
+                          learned: counters[suggestion.Query].LearnedCount,
+                          added: counters[suggestion.Query].AddedCount,
+                          new: counters[suggestion.Query].NewCount,
+                        })}
                       </>
                     ) : null
                   }
@@ -206,7 +227,7 @@ export class WordAdder extends React.Component<
             ))}
             <div style={{ display: "flex" }}>
               <TextField
-                label="Custom Query"
+                label={t("CustomQueryInputLabel", "Custom Query")}
                 variant="outlined"
                 value={this.state.customQuery}
                 style={{ flexGrow: 1 }}
@@ -214,7 +235,10 @@ export class WordAdder extends React.Component<
                   this.setState({ customQuery: e.target.value })
                 }}
                 InputProps={{
-                  placeholder: "(e.g. JLPT-N5) Accept RegExp",
+                  placeholder: t(
+                    "CustomQueryInputPlaceholder",
+                    "(e.g. JLPT-N5) Accept RegExp"
+                  ),
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
@@ -238,20 +262,26 @@ export class WordAdder extends React.Component<
             <Divider component="li" />
             <li>
               <Typography display="block" variant="caption">
-                Words to add (Order matters)
+                {t("WordsToAddSectionTitle", "Words to add (Order matters)")}
               </Typography>
             </li>
             {pendings.length ? (
               <>
                 <MuiListItem key="ClearAllPendingQuerys">
                   <MuiListItemText
-                    primary="Clear all"
-                    secondary="Total new: [WIP]"
+                    primary={t("CountTotalPendingWords", {
+                      defaultValue: "Total new: {{new}}",
+                      new: "[WIP]",
+                    })}
+                    secondary={t(
+                      "ClearAllPendingsItemText",
+                      "Click right button to clear list"
+                    )}
                   ></MuiListItemText>
                   <MuiListItemSecondaryAction>
                     <IconButton
                       edge="end"
-                      aria-label="remove pending query"
+                      aria-label="clear all pending query"
                       onClick={() => this.clearAllPendingQuerys()}
                     >
                       <ExploreOffIcon />
@@ -263,17 +293,25 @@ export class WordAdder extends React.Component<
                     <MuiListItemText
                       primary={
                         <>
-                          {`${pending.Display.en} (${pending.Query})`}
+                          {LookUp(pending.Display, i18n.language as LocaleCode)}
+                          <QueryRegexPopup regex={pending.Query} />
                           {counters[pending.Query] &&
-                            ` ${counters[pending.Query].TotalCount} words`}
+                            t("CountQueryTotalResult", {
+                              defaultValue: " {{total}} words",
+                              total: counters[pending.Query].TotalCount,
+                            })}
                         </>
                       }
                       secondary={
                         counters[pending.Query] ? (
                           <>
-                            {`Learned ${counters[pending.Query].LearnedCount}, `}
-                            {`Added ${counters[pending.Query].AddedCount}, `}
-                            {`New ${counters[pending.Query].NewCount}`}
+                            {t("CountPendingQueryResult", {
+                              defaultValue:
+                                "Learned {{learned}} | Added {{added}} | New {{new}}",
+                              learned: counters[pending.Query].LearnedCount,
+                              added: counters[pending.Query].AddedCount,
+                              new: counters[pending.Query].NewCount,
+                            })}
                           </>
                         ) : null
                       }
@@ -297,19 +335,22 @@ export class WordAdder extends React.Component<
               </>
             ) : (
               <MuiListItem>
-                <MuiListItemText>No words to add</MuiListItemText>
+                <MuiListItemText>
+                  {t("NoWordsItemPlaceholder", "No words to add")}
+                </MuiListItemText>
               </MuiListItem>
             )}
             <Divider component="li" />
             <li>
               <Typography display="block" variant="caption">
-                [WIP] Filters
+                [WIP]
+                {t("FiltersSectionTitle", "Filters")}
               </Typography>
             </li>
             <div style={{ display: "flux" }}>
               <FormControlLabel
                 control={<Checkbox checked={true} disabled value="Basic" />}
-                label="Basic"
+                label={t("BasicFilterLabel", "Basic")}
               />
               <FormControlLabel
                 control={
@@ -320,36 +361,40 @@ export class WordAdder extends React.Component<
                     value="Proper"
                   />
                 }
-                label="Proper"
+                label={t("ProperFilterLabel", "Proper")}
               />
               <FormControlLabel
                 control={<Checkbox checked={true} disabled value="Idiom" />}
-                label="Idiom"
+                label={t("IdiomFilterLabel", "Idiom")}
               />
               <FormControlLabel
                 control={<Checkbox checked={true} disabled value="Extra" />}
-                label="Extra"
+                label={t("ExtraFilterLabel", "Extra")}
               />
             </div>
           </MuiList>
         </DialogContent>
         <DialogActions>
           {this.state.addingWordsProgress ? (
-            <>
-              <Button disabled>Adding words...</Button>
-            </>
+            <Button disabled>
+              {t("AddingWordsProgressText", "Adding words...")}
+            </Button>
           ) : (
             <>
-              <Button onClick={() => this.props.close()}>Cancel</Button>
+              <Button onClick={() => this.props.close()}>
+                {t("WordAdderCancelButtonText", "Cancel")}
+              </Button>
               {pendings.length <= 0 ? (
-                <Button disabled>No words</Button>
+                <Button disabled>
+                  {t("NoPendingWordsPromptText", "No words")}
+                </Button>
               ) : (
                 <Button
                   variant="outlined"
                   color="primary"
                   onClick={this.onClickConfirm}
                 >
-                  Add these words
+                  {t("WordAdderConfirmButtonText", "Add these words")}
                 </Button>
               )}
             </>
@@ -429,4 +474,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(WordAdder)
+)(withTranslation("WordAdder")(WordAdder))

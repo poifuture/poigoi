@@ -5,6 +5,7 @@ import { GoiJudgeResult } from "../types/GoiTypes"
 import Heap from "../algorithm/Heap"
 
 export interface GoiTesterStateType {
+  IsTyping: boolean
   CurrentWord: GoiWordType
   Record: GoiWordRecordDataType | null
   JudgeResult: GoiJudgeResult

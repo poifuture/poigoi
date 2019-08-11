@@ -151,6 +151,7 @@ export interface GoiWordRecordDataType extends PoiGlobalDataType {
   readonly SavingId: GoiSavingId
   readonly PoiUserId: PoiUser.PoiUserId
   Level: number
+  FrozenTime: TimeStamp
   NextTime: TimeStamp
   Pending: OrderKey
   Prioritied: OrderKey
@@ -193,6 +194,7 @@ export class GoiWordRecordModel {
       SavingId: this.savingId,
       PoiUserId: this.poiUserId,
       Level: 0,
+      FrozenTime: 0,
       NextTime: 0,
       Pending: "",
       Prioritied: "",
@@ -280,6 +282,9 @@ export class GoiWordRecordModel {
   }
   Trash = async () => {
     await this.update({ Level: 0, Prioritied: "", Pending: "" })
+  }
+  SetFrozenTime = async (nextTime: TimeStamp) => {
+    await this.update({ NextTime: nextTime })
   }
   SetNextTime = async (nextTime: TimeStamp) => {
     await this.update({ NextTime: nextTime })

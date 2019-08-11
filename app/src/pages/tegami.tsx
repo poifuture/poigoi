@@ -38,5 +38,21 @@ export default () => (
         です、よろしくね～
       </p>
     </Container>
+    <footer style={{ position: "fixed", bottom: 0 }}>
+      <Container>
+        <ruby>
+          私<rt>わたし</rt>
+        </ruby>
+        たちの
+        <ruby>
+          夢<rt>ゆめ</rt>
+        </ruby>
+        をここから
+        <ruby>
+          始<rt>はじ</rt>
+        </ruby>
+        めましょう ٩(ˊᗜˋ*)و
+      </Container>
+    </footer>
   </div>
 )
