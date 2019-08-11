@@ -16,7 +16,7 @@ import { RootStateType } from "../states/RootState"
 import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
 import Heap from "../algorithm/Heap"
-import { GoiWordRecordDataType } from "../models/GoiSaving"
+import { GoiWordRecordDataType, GoiSavingDataType } from "../models/GoiSaving"
 import {
   TextField,
   InputAdornment,
@@ -31,9 +31,11 @@ import MoreVertIcon from "@material-ui/icons/MoreVertOutlined"
 import MoreHorizIcon from "@material-ui/icons/MoreHorizOutlined"
 import LinkOffIcon from "@material-ui/icons/LinkOffOutlined"
 import { display } from "@material-ui/system"
+import { withTranslation, WithTranslation } from "react-i18next"
 
 type GoiTesterPropsType = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>
+  ReturnType<typeof mapDispatchToProps> &
+  WithTranslation
 interface GoiTesterStateType {
   testerInput: string
   displayDetail: boolean
@@ -101,7 +103,12 @@ export class GoiTester extends React.Component<
     this.setState({ testerInput: "", displayDetail: false })
   }
   render() {
+    const { t, i18n } = this.props
     const word: GoiJaWordType = this.props.currentWord.toJS()
+    const savingLanguage =
+      this.props.saving && this.props.saving.Language
+        ? this.props.saving.Language
+        : "en"
     const wordCardStatus =
       this.props.judgeResult === "Pending"
         ? "input"
@@ -123,15 +130,31 @@ export class GoiTester extends React.Component<
     return (
       <div className="goi-tester" style={{ marginTop: "20px" }}>
         <Helmet>
-          <title>
-            {this.props.judgeResult === "Pending"
-              ? "PoiGoi"
-              : `PoiGoi - ${word.key}`}
-          </title>
+          {savingLanguage.startsWith("ja") ? (
+            this.props.judgeResult === "Pending" ? (
+              <title>{t("PageTitleWhenEmptyForJaLearner", "PoiGoi")}</title>
+            ) : (
+              <title>
+                {t("PageTitleWhenWordIsDisplayedForJaLearner", {
+                  defaultValue: "PoiGoi - {{wordkey}}",
+                  wordkey: word.key,
+                })}
+              </title>
+            )
+          ) : this.props.judgeResult === "Pending" ? (
+            <title>{t("PageTitleWhenEmpty", "PoiGoi")}</title>
+          ) : (
+            <title>
+              {t("PageTitleWhenWordIsDisplayed", {
+                defaultValue: "PoiGoi - {{wordkey}}",
+                wordkey: word.key,
+              })}
+            </title>
+          )}
         </Helmet>
         <div style={{ display: "flex" }}>
           <TextField
-            label="Justify your answer"
+            label={t("MainInputLabel", "Justify your answer")}
             variant="outlined"
             value={this.state.testerInput}
             style={{ flexGrow: 1 }}
@@ -148,8 +171,16 @@ export class GoiTester extends React.Component<
               placeholder:
                 this.props.judgeResult === "Rejected" ||
                 this.props.judgeResult === "Wrong"
-                  ? "Type correct answer to continue"
-                  : "Type your answer here",
+                  ? t(
+                      "MainInputWrongPlaceholder",
+                      "Type correct answer to continue"
+                    )
+                  : savingLanguage.startsWith("ja")
+                  ? t(
+                      "MainInputPendingPlaceholderForJaLearner",
+                      "Use japanese IME"
+                    )
+                  : t("MainInputPendingPlaceholder", "Type your answer here"),
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
@@ -174,7 +205,7 @@ export class GoiTester extends React.Component<
               aria-label="Skip current word"
               onClick={() => this.requestJudge({ skip: true })}
             >
-              Skip
+              {t("SkipWordButtonText", "Skip")}
               <RedoIcon fontSize="small" />
             </Button>
           ) : (
@@ -183,7 +214,7 @@ export class GoiTester extends React.Component<
               aria-label="Show next word"
               onClick={() => this.requestNext()}
             >
-              Skip
+              {t("NextWordButtonText", "Skip")}
               <ForwardIcon fontSize="small" />
             </Button>
           )}
@@ -203,7 +234,7 @@ export class GoiTester extends React.Component<
               style={{ color: "gray" }}
             >
               <MoreHorizIcon />
-              Detail
+              {t("WordDetailButtonText", "Detail")}
             </Button>
             <Button
               aria-label="forget"
@@ -213,7 +244,8 @@ export class GoiTester extends React.Component<
               style={{ color: "gray" }}
             >
               <LinkOffIcon />
-              [WIP]Forget
+              [WIP]
+              {t("ForgetWordButtonText", "Forget")}
             </Button>
           </div>
         )}
@@ -230,7 +262,10 @@ const mapStateToProps = (state: RootStateType) => {
     currentWord: state.GoiTester.get("CurrentWord"),
     currentWordKey: state.GoiTester.get("CurrentWord").get("key") as string,
     judgeResult: state.GoiTester.get("JudgeResult") as GoiJudgeResult,
-    saving: state.GoiSaving.get("Saving"),
+    saving: state.GoiSaving.get("Saving") as
+      | GoiSavingDataType
+      | null
+      | undefined,
     tester: state.GoiTester,
     learnedCandidates: state.GoiTester.get("LearnedCandidates"),
     prioritiedCandidates: state.GoiTester.get("PrioritiedCandidates"),
@@ -303,4 +338,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(GoiTester)
+)(withTranslation("GoiTester")(GoiTester))

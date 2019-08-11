@@ -18,3 +18,5 @@ export type LanguageCode =
   | "ja-jpan-c2" // Chunibyo
   | "ja-jp" // alias for ja-jpan-jp
   | "ja-c2" // alias for ja-jpan-c2
+
+export type LocaleCode = LanguageCode

@@ -32,21 +32,11 @@ export default (props: any) => (
         <GoiTester />
       </Container>
     </main>
-    <footer style={{ position: "absolute", bottom: 0 }}>
-      <Container>
-        <ruby>
-          私<rt>わたし</rt>
-        </ruby>
-        たちの
-        <ruby>
-          夢<rt>ゆめ</rt>
-        </ruby>
-        をここから
-        <ruby>
-          始<rt>はじ</rt>
-        </ruby>
-        めましょう ٩(ˊᗜˋ*)و
-      </Container>
-    </footer>
+    <div
+      className="buildVersion"
+      style={{ position: "absolute", bottom: 0, right: 0, color: "lightgray" }}
+    >
+      catfood build v1.20190811.rc0
+    </div>
   </div>
 )

@@ -408,10 +408,10 @@ export const VerifyAnswerAction = (
     const levelAfter =
       unvalidatedLevelAfter <= 1
         ? 1
+        : judgeTime <= recordBefore.FrozenTime
+        ? levelBefore
         : unvalidatedLevelAfter <= levelBefore
         ? unvalidatedLevelAfter
-        : judgeTime <= recordBefore.NextTime
-        ? levelBefore
         : unvalidatedLevelAfter
     const historyDbKey = await GoiWordHistory(
       poiUserId,
@@ -419,8 +419,14 @@ export const VerifyAnswerAction = (
       judgeTime
     ).Create({ wordKey, judgeResult, levelBefore, levelAfter })
     await recordModel.AttachHistory({ judgeTime, historyDbKey })
-    await recordModel.SetLevel(levelAfter)
-    const nextTime = judgeTime + GetTimeChange(levelAfter)
+    const timeChange = GetTimeChange(levelAfter)
+    const potentialFrozenTime = judgeTime + timeChange
+    const nextTime =
+      potentialFrozenTime + Math.floor(timeChange * Math.random())
+    if (levelBefore !== levelAfter) {
+      await recordModel.SetLevel(levelAfter)
+      await recordModel.SetFrozenTime(potentialFrozenTime)
+    }
     await recordModel.SetNextTime(nextTime)
     const record = await recordModel.Read()
     dispatch(UpdateGoiTesterWordAction({ record }))

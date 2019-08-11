@@ -1,4 +1,10 @@
 {
+  "ProfileMenuButtonText": "用户信息，学习记录，学习设置",
+  "AddWordsMenuButtonText": "添加生词",
+  "SearchMenuButtonText": "查找生词",
+  "MamechishikiMenuButtonText": "语言知识",
+  "TegamiMenuButtonText": "开发者自述",
+  "ShareMenuButtonText": "分享",
   "AddWordsButtonText": "添加生词",
   "SyncButtonText": "同步学习记录",
   "SwotUpButtonText": "应试模式",
@@ -6,6 +12,9 @@
   "SavingsButtonText": "切换存档",
   "ModeButtonText": "拼写模式",
   "OrderButtonText": "顺序学习",
+  "RevisitButtonText": "复习优先",
   "SearchButtonText": "查找生词",
-  "ParseButtonText": "识别生词"
+  "ParseButtonText": "识别生词",
+  "ExpandButtonText": "更多",
+  "FoldButtonText": "隐藏"
 }
