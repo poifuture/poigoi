@@ -16,7 +16,11 @@ import { RootStateType } from "../states/RootState"
 import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
 import Heap from "../algorithm/Heap"
-import { GoiWordRecordDataType, GoiSavingDataType } from "../models/GoiSaving"
+import {
+  GoiWordRecordDataType,
+  GoiSavingDataType,
+  GoiWordRecord,
+} from "../models/GoiSaving"
 import {
   TextField,
   InputAdornment,
@@ -79,10 +83,11 @@ export class GoiTester extends React.Component<
       judgeResult === "Accepted" ||
       judgeResult === "Skipped"
     ) {
-      this.requestNext()
+      await this.requestNext()
     }
   }
-  requestNext = () => {
+  requestNext = async ({ forget }: { forget?: boolean } = {}) => {
+    forget = typeof forget !== "undefined" ? forget : false
     const {
       poiUserId,
       savingId,
@@ -91,10 +96,13 @@ export class GoiTester extends React.Component<
       prioritiedCandidates,
       pendingCandidates,
     } = this.props
-    this.props.showNextWord(
+    if (forget) {
+      await GoiWordRecord(poiUserId, savingId, currentWordKey).Forget()
+    }
+    await this.props.showNextWord(
       { poiUserId, savingId },
       {
-        currentWordKey,
+        ...(!forget && { currentWordKey }),
         learnedCandidates,
         prioritiedCandidates,
         pendingCandidates,
@@ -223,6 +231,9 @@ export class GoiTester extends React.Component<
           word={word}
           display={wordCardDisplay}
           status={wordCardStatus}
+          {...(this.props.currentLevel !== null && {
+            level: this.props.currentLevel,
+          })}
         />
         {!wordCardDisplay.startsWith("test") && (
           <div className="word-card-actions">
@@ -236,17 +247,18 @@ export class GoiTester extends React.Component<
               <MoreHorizIcon />
               {t("WordDetailButtonText", "Detail")}
             </Button>
-            <Button
-              aria-label="forget"
-              onClick={() => {
-                this.setState({ displayDetail: true })
-              }}
-              style={{ color: "gray" }}
-            >
-              <LinkOffIcon />
-              [WIP]
-              {t("ForgetWordButtonText", "Forget")}
-            </Button>
+            {this.state.displayDetail && (
+              <Button
+                aria-label="forget"
+                onClick={() => {
+                  this.requestNext({ forget: true })
+                }}
+                style={{ color: "gray" }}
+              >
+                <LinkOffIcon />
+                {t("ForgetWordButtonText", "Forget")}
+              </Button>
+            )}
           </div>
         )}
       </div>
@@ -260,7 +272,10 @@ const mapStateToProps = (state: RootStateType) => {
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
     currentWord: state.GoiTester.get("CurrentWord"),
-    currentWordKey: state.GoiTester.get("CurrentWord").get("key") as string,
+    currentWordKey: state.GoiTester.getIn(["CurrentWord", "key"]) as string,
+    currentLevel: state.GoiTester.has("Record")
+      ? (state.GoiTester.getIn(["Record", "Level"]) as number)
+      : null,
     judgeResult: state.GoiTester.get("JudgeResult") as GoiJudgeResult,
     saving: state.GoiSaving.get("Saving") as
       | GoiSavingDataType

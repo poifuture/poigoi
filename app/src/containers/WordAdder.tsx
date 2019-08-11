@@ -129,7 +129,11 @@ export class WordAdder extends React.Component<
       return <div className="word-adder"></div>
     }
     const { poiUserId, savingId } = this.props
-    const status = this.props.status.toJS()
+    const { learnedCount, prioritiedCount, pendingCount } = {
+      learnedCount: this.props.status.get("LearnedCount") as number,
+      prioritiedCount: this.props.status.get("PrioritiedCount") as number,
+      pendingCount: this.props.status.get("PendingCount") as number,
+    }
     const suggestions: WordAdderSuggestionQueryType[] = this.props.suggestions.toJS()
     const pendings: WordAdderPendingQueryType[] = this.props.pendings.toJS()
     const counters: WordAdderQueryCountersType = this.props.counters.toJS()
@@ -141,21 +145,21 @@ export class WordAdder extends React.Component<
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <TextField
                 label={t("SavingStatusLearnedCountLabel", "Learned")}
-                value={status.LearnedCount}
+                value={learnedCount >= 0 ? learnedCount : "..."}
                 margin="none"
                 style={{ marginRight: "10px", flex: 1 }}
                 InputProps={{ readOnly: true }}
               ></TextField>
               <TextField
                 label={t("SavingStatusPrioritiedCountLabel", "Prioritied")}
-                value={status.PrioritiedCount}
+                value={prioritiedCount >= 0 ? prioritiedCount : "..."}
                 margin="none"
                 style={{ marginRight: "10px", flex: 1 }}
                 InputProps={{ readOnly: true }}
               ></TextField>
               <TextField
                 label={t("SavingStatusPendingCountLabel", "Pending")}
-                value={status.PendingCount}
+                value={pendingCount >= 0 ? pendingCount : "..."}
                 margin="none"
                 style={{ flex: 1 }}
                 InputProps={{
@@ -186,45 +190,63 @@ export class WordAdder extends React.Component<
                 {t("SuggestionSectionTitle", "Suggested Word Querys")}
               </Typography>
             </li>
-            {suggestions.map(suggestion => (
-              <MuiListItem key={`suggestion${suggestion.Query}`}>
-                <MuiListItemText
-                  primary={
-                    <>
-                      {LookUp(suggestion.Display, i18n.language as LocaleCode)}
-                      <QueryRegexPopup regex={suggestion.Query} />
-                      {counters[suggestion.Query] &&
-                        t("CountQueryTotalResult", {
-                          defaultValue: " {{total}} words",
-                          total: counters[suggestion.Query].TotalCount,
-                        })}
-                    </>
+            {suggestions.map(suggestion => {
+              const {
+                TotalCount,
+                LearnedCount,
+                AddedCount,
+                NewCount,
+              } = counters[suggestion.Query]
+                ? counters[suggestion.Query]
+                : {
+                    TotalCount: -1,
+                    LearnedCount: -1,
+                    AddedCount: -1,
+                    NewCount: -1,
                   }
-                  secondary={
-                    counters[suggestion.Query] ? (
+              return (
+                <MuiListItem key={`suggestion${suggestion.Query}`}>
+                  <MuiListItemText
+                    primary={
                       <>
-                        {t("CountSuggestionQueryResult", {
-                          defaultValue:
-                            "Learned {{learned}} | Added {{added}} | New {{new}}",
-                          learned: counters[suggestion.Query].LearnedCount,
-                          added: counters[suggestion.Query].AddedCount,
-                          new: counters[suggestion.Query].NewCount,
-                        })}
+                        {LookUp(
+                          suggestion.Display,
+                          i18n.language as LocaleCode
+                        )}
+                        <QueryRegexPopup regex={suggestion.Query} />
+                        {counters[suggestion.Query] &&
+                          t("CountQueryTotalResult", {
+                            defaultValue: " {{total}} words",
+                            total: TotalCount >= 0 ? TotalCount : "...",
+                          })}
                       </>
-                    ) : null
-                  }
-                ></MuiListItemText>
-                <MuiListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label="Add suggestion query"
-                    onClick={() => this.addSuggestion(suggestion)}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </MuiListItemSecondaryAction>
-              </MuiListItem>
-            ))}
+                    }
+                    secondary={
+                      counters[suggestion.Query] ? (
+                        <>
+                          {t("CountSuggestionQueryResult", {
+                            defaultValue:
+                              "Learned {{learned}} | Added {{added}} | New {{new}}",
+                            learned: LearnedCount >= 0 ? LearnedCount : "...",
+                            added: AddedCount >= 0 ? AddedCount : "...",
+                            new: NewCount >= 0 ? NewCount : "...",
+                          })}
+                        </>
+                      ) : null
+                    }
+                  ></MuiListItemText>
+                  <MuiListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      aria-label="Add suggestion query"
+                      onClick={() => this.addSuggestion(suggestion)}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </MuiListItemSecondaryAction>
+                </MuiListItem>
+              )
+            })}
             <div style={{ display: "flex" }}>
               <TextField
                 label={t("CustomQueryInputLabel", "Custom Query")}
@@ -349,7 +371,9 @@ export class WordAdder extends React.Component<
             </li>
             <div style={{ display: "flux" }}>
               <FormControlLabel
-                control={<Checkbox checked={true} disabled value="Basic" />}
+                control={
+                  <Checkbox checked={true} disabled value="BasicFilter" />
+                }
                 label={t("BasicFilterLabel", "Basic")}
               />
               <FormControlLabel
@@ -358,18 +382,28 @@ export class WordAdder extends React.Component<
                     checked={true}
                     disabled
                     onChange={() => {}}
-                    value="Proper"
+                    value="ProperFilter"
                   />
                 }
                 label={t("ProperFilterLabel", "Proper")}
               />
               <FormControlLabel
-                control={<Checkbox checked={true} disabled value="Idiom" />}
+                control={
+                  <Checkbox checked={true} disabled value="IdiomFilter" />
+                }
                 label={t("IdiomFilterLabel", "Idiom")}
               />
               <FormControlLabel
-                control={<Checkbox checked={true} disabled value="Extra" />}
+                control={
+                  <Checkbox checked={true} disabled value="ExtraFilter" />
+                }
                 label={t("ExtraFilterLabel", "Extra")}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox checked={true} disabled value="ForgotFilter" />
+                }
+                label={t("ForgotFilterLabel", "Forgot")}
               />
             </div>
           </MuiList>

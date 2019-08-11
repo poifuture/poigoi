@@ -163,64 +163,6 @@ export const ReindexCandidates = async ({
   )
   return { learnedCandidates, prioritiedCandidates, pendingCandidates }
 }
-const ReindexCandidatesAction = ({
-  poiUserId,
-  savingId,
-}: {
-  poiUserId: PoiUser.PoiUserId
-  savingId: GoiSavingId
-}) => {
-  return (async dispatch => {
-    console.debug("Reindexing... ")
-    const wordRecords = await GoiSaving(poiUserId, savingId).GetRecords()
-    console.debug("Records:", wordRecords)
-    const learnedCandidates = new Heap<GoiWordRecordDataType>(
-      wordRecords.filter(wordRecord => wordRecord.Level > 0),
-      (a, b) => {
-        return a.NextTime - b.NextTime
-      }
-    )
-    const prioritiedCandidates = new Heap<GoiWordRecordDataType>(
-      wordRecords.filter(wordRecord => wordRecord.Prioritied),
-      (a, b) => {
-        return a.Prioritied > b.Prioritied ? 1 : -1
-      }
-    )
-    const pendingCandidates = new Heap<GoiWordRecordDataType>(
-      wordRecords.filter(wordRecord => wordRecord.Pending),
-      (a, b) => {
-        return a.Pending > b.Pending ? 1 : -1
-      }
-    )
-    const { decision } = DecideNextWord({
-      learnedCandidate: learnedCandidates.peek(),
-      prioritiedCandidate: prioritiedCandidates.peek(),
-      pendingCandidate: pendingCandidates.peek(),
-    })
-    const candidate: GoiWordRecordDataType =
-      decision === "leaned" || decision === "steady"
-        ? learnedCandidates.poll()!
-        : decision === "prioritied"
-        ? prioritiedCandidates.poll()!
-        : decision === "pending"
-        ? pendingCandidates.poll()!
-        : await GoiWordRecord(poiUserId, savingId, "あ").ReadOrCreate()
-    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
-    const dictionaryWord =
-      (await GoiDictionarys(dictionarys).GetWordOrNull(candidate.WordKey)) ||
-      KanaDictionary.words["あ"]
-    dispatch(
-      UpdateGoiTesterWordAction({ word: dictionaryWord, record: candidate })
-    )
-    dispatch(
-      UpdateCandidatesAction({
-        learnedCandidates,
-        prioritiedCandidates,
-        pendingCandidates,
-      })
-    )
-  }) as ThunkAction<Promise<unknown>, RootStateType, void, Action>
-}
 
 export const VerifyJaAnswer = (
   answer: string,
@@ -471,8 +413,17 @@ export const ShowNextWordAction = (
           savingId,
           currentWordKey
         ).ReadOrNull()
-        if (currentWordRecord && currentWordRecord.Level > 0) {
-          learnedCandidates.add(currentWordRecord)
+        if (currentWordRecord) {
+          if (currentWordRecord.Level > 0) {
+            learnedCandidates.add(currentWordRecord)
+          }
+          if (currentWordRecord.Level === 0) {
+            if (currentWordRecord.Prioritied) {
+              prioritiedCandidates.add(currentWordRecord)
+            } else if (currentWordRecord.Pending) {
+              pendingCandidates.add(currentWordRecord)
+            }
+          }
         }
       }
     }

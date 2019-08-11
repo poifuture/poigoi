@@ -150,7 +150,7 @@ export interface GoiWordRecordDataType extends PoiGlobalDataType {
   readonly WordKey: string
   readonly SavingId: GoiSavingId
   readonly PoiUserId: PoiUser.PoiUserId
-  Level: number
+  Level: number //0: Never seen, 1~9+: normal level, -1:manual forget
   FrozenTime: TimeStamp
   NextTime: TimeStamp
   Pending: OrderKey
@@ -280,8 +280,8 @@ export class GoiWordRecordModel {
   ClearPending = async () => {
     await this.update({ Pending: "" })
   }
-  Trash = async () => {
-    await this.update({ Level: 0, Prioritied: "", Pending: "" })
+  Forget = async () => {
+    await this.update({ Level: -1, Prioritied: "", Pending: "" })
   }
   SetFrozenTime = async (nextTime: TimeStamp) => {
     await this.update({ NextTime: nextTime })
