@@ -12,7 +12,6 @@ export class TinyTag extends React.Component<TinyTagPropsType> {
         border={1}
         borderRadius={3}
         marginLeft="5px"
-        marginTop="5px"
         {...this.props}
       >
         {this.props.children}

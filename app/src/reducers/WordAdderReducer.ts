@@ -20,9 +20,9 @@ import {
 const InitialWordAdderState: WordAdderStateType = {
   Display: false,
   Status: {
-    LearnedCount: 0,
-    PrioritiedCount: 0,
-    PendingCount: 0,
+    LearnedCount: -1,
+    PrioritiedCount: -1,
+    PendingCount: -1,
   },
   Suggestions: [
     {
@@ -54,43 +54,44 @@ const InitialWordAdderState: WordAdderStateType = {
     {
       Display: { en: "JLPT" },
       Query: "^JLPT-.*$",
-      SubQuerys: [
-        {
-          Display: { en: "JLPT-N5" },
-          Query: "^JLPT-N5-.*$",
+      SubQuerys: [5, 4, 3, 2, 1].map(jlptLevel => ({
+        Display: {
+          en: `JLPT-N${jlptLevel}`,
         },
-        {
-          Display: { en: "JLPT-N4" },
-          Query: "^JLPT-N4-.*$",
+        Query: `^JLPT-N${jlptLevel}-.*$`,
+      })),
+    },
+    {
+      Display: { en: "Biaori 01", zh: "标日初上" },
+      Query: "^BIAORI-.*$",
+      SubQuerys: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(lessonId => ({
+        Display: {
+          en: `Biaori-01-${lessonId.toString().padStart(2, "0")}`,
+          zh: `标日初上第${lessonId}课`,
         },
-        {
-          Display: { en: "JLPT-N3" },
-          Query: "^JLPT-N3-.*$",
-        },
-        {
-          Display: { en: "JLPT-N2" },
-          Query: "^JLPT-N5-.*$",
-        },
-        {
-          Display: { en: "JLPT-N1" },
-          Query: "^JLPT-N1-.*$",
-        },
-      ],
+        Query: `^BIAORI-01-${lessonId.toString().padStart(2, "0")}-.*$`,
+      })),
     },
   ],
   Pendings: [],
   Counters: {
     "^KANA-.*$": {
-      TotalCount: 0,
-      LearnedCount: 0,
-      AddedCount: 0,
-      NewCount: 0,
+      TotalCount: -1,
+      LearnedCount: -1,
+      AddedCount: -1,
+      NewCount: -1,
     },
     "^JLPT-.*$": {
-      TotalCount: 0,
-      LearnedCount: 0,
-      AddedCount: 0,
-      NewCount: 0,
+      TotalCount: -1,
+      LearnedCount: -1,
+      AddedCount: -1,
+      NewCount: -1,
+    },
+    "^BIAORI-.*$": {
+      TotalCount: -1,
+      LearnedCount: -1,
+      AddedCount: -1,
+      NewCount: -1,
     },
   },
 }
