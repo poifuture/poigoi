@@ -7626,6 +7626,258 @@
       "textbook": [
         "BIAORI-01-04-0050"
       ]
+    },
+    "今": {
+      "key": "今",
+      "language": "ja",
+      "common": "<ruby>今<rt>いま</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "いま",
+      "romaji": "",
+      "wapuro": "",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": ""
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-00-00-0000"
+      ]
+    },
+    "先週": {
+      "key": "先週",
+      "language": "ja",
+      "common": "<ruby>先<rt>さき</rt></ruby><ruby>週<rt>しゅう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "さきしゅう",
+      "romaji": "",
+      "wapuro": "",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": ""
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-00-00-0000"
+      ]
+    },
+    "来週": {
+      "key": "来週",
+      "language": "ja",
+      "common": "<ruby>来<rt>らい</rt></ruby><ruby>週<rt>しゅう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "らいしゅう",
+      "romaji": "",
+      "wapuro": "",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": ""
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-00-00-0000"
+      ]
+    },
+    "さ来週": {
+      "key": "さ来週",
+      "language": "ja",
+      "common": "さ<ruby>来<rt>らい</rt></ruby><ruby>週<rt>しゅう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "さらいしゅう",
+      "romaji": "",
+      "wapuro": "",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": ""
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-00-00-0000"
+      ]
+    },
+    "今週": {
+      "key": "今週",
+      "language": "ja",
+      "common": "<ruby>今<rt>いま</rt></ruby><ruby>週<rt>しゅう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "いましゅう",
+      "romaji": "",
+      "wapuro": "",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": ""
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-00-00-0000"
+      ]
+    },
+    "昨日": {
+      "key": "昨日",
+      "language": "ja",
+      "common": "<ruby>昨<rt>さく</rt></ruby><ruby>日<rt>ひ</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "さくひ",
+      "romaji": "",
+      "wapuro": "",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": ""
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-00-00-0000"
+      ]
+    },
+    "明日": {
+      "key": "明日",
+      "language": "ja",
+      "common": "<ruby>明<rt>あきら</rt></ruby><ruby>日<rt>ひ</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "あきらひ",
+      "romaji": "",
+      "wapuro": "",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": ""
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-00-00-0000"
+      ]
+    },
+    "あさって": {
+      "key": "あさって",
+      "language": "ja",
+      "common": "あさって",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "あさって",
+      "romaji": "",
+      "wapuro": "",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": ""
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-00-00-0000"
+      ]
+    },
+    "おととい": {
+      "key": "おととい",
+      "language": "ja",
+      "common": "おととい",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "おととい",
+      "romaji": "",
+      "wapuro": "",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": ""
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-00-00-0000"
+      ]
     }
   }
 }

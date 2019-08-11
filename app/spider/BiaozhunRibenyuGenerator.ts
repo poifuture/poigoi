@@ -21,6 +21,50 @@ const isKatakana = (str: string) => {
   }
   return false
 }
+const processSplitFurigana = (wordCells: string[]) => {
+  const [
+    _commonWord,
+    _manualTag,
+    _autoTag,
+    _byExcel,
+    _byConcat,
+    _unusedOffsite1,
+    _unusedOffsite2,
+    ...charFuriganas
+  ] = wordCells
+
+  let htmlFurigana = ""
+  for (let kanjiId = 0; kanjiId < charFuriganas.length; kanjiId += 2) {
+    if (charFuriganas[kanjiId] && charFuriganas[kanjiId + 1]) {
+      if (
+        !isHiragana(charFuriganas[kanjiId]) &&
+        !isKatakana(charFuriganas[kanjiId])
+      ) {
+        htmlFurigana += `<ruby>${charFuriganas[kanjiId]}<rt>${
+          charFuriganas[kanjiId + 1]
+        }</rt></ruby>`
+        continue
+      }
+    }
+    htmlFurigana += `${charFuriganas[kanjiId]}`
+  }
+  let kana = ""
+  for (let kanjiId = 0; kanjiId < charFuriganas.length; kanjiId += 2) {
+    if (charFuriganas[kanjiId] && charFuriganas[kanjiId + 1]) {
+      if (
+        isHiragana(charFuriganas[kanjiId]) ||
+        isKatakana(charFuriganas[kanjiId])
+      ) {
+        kana += charFuriganas[kanjiId]
+      } else {
+        kana += charFuriganas[kanjiId + 1]
+      }
+    } else {
+      kana += `${charFuriganas[kanjiId]}${charFuriganas[kanjiId + 1]}`
+    }
+  }
+  return { htmlFurigana, kana }
+}
 const getRomaji = (kana: string) => {
   return ""
 }
@@ -51,6 +95,10 @@ const main = () => {
   for (let index = 0; index < lines.length; index++) {
     const line = lines[index]
     const cells = line.split(",")
+    const basicCells = cells.slice(0, 29)
+    const commonWordCells = cells.slice(30, 59)
+    const alterWordCells = cells.slice(60, 89)
+    const uncommonWordCells = cells.slice(90, 120)
     const [
       wordInput,
       wordKeyInput,
@@ -66,6 +114,9 @@ const main = () => {
       bookChapterInput,
       bookExtraInput,
       bookWordIdInput,
+    ] = basicCells
+    const [
+      _commonWord,
       _manualTag,
       _autoTag,
       _byExcel,
@@ -73,7 +124,7 @@ const main = () => {
       _unusedOffsite1,
       _unusedOffsite2,
       ...charFuriganas
-    ] = cells
+    ] = commonWordCells
     const inputs = {
       wordInput,
       wordKeyInput,
@@ -89,6 +140,7 @@ const main = () => {
       bookChapterInput,
       bookExtraInput,
       bookWordIdInput,
+      _commonWord,
       _manualTag,
       _autoTag,
       _byExcel,
@@ -102,44 +154,19 @@ const main = () => {
     })
     console.log(charFuriganas)
     if (!wordInput) {
-      continue
+      throw new Error("No word input")
     }
-    if (charFuriganas.length % 2 === 1) {
-      charFuriganas.push("")
-    }
-    let prepareCommon = ""
-    for (let kanjiId = 0; kanjiId < charFuriganas.length; kanjiId += 2) {
-      if (charFuriganas[kanjiId] && charFuriganas[kanjiId + 1]) {
-        if (
-          !isHiragana(charFuriganas[kanjiId]) &&
-          !isKatakana(charFuriganas[kanjiId])
-        ) {
-          prepareCommon += `<ruby>${charFuriganas[kanjiId]}<rt>${
-            charFuriganas[kanjiId + 1]
-          }</rt></ruby>`
-          continue
-        }
-      }
-      prepareCommon += `${charFuriganas[kanjiId]}`
-    }
-    let prepareKana = ""
-    for (let kanjiId = 0; kanjiId < charFuriganas.length; kanjiId += 2) {
-      if (charFuriganas[kanjiId] && charFuriganas[kanjiId + 1]) {
-        if (
-          isHiragana(charFuriganas[kanjiId]) ||
-          isKatakana(charFuriganas[kanjiId])
-        ) {
-          prepareKana += charFuriganas[kanjiId]
-        } else {
-          prepareKana += charFuriganas[kanjiId + 1]
-        }
-      } else {
-        prepareKana += `${charFuriganas[kanjiId]}${charFuriganas[kanjiId + 1]}`
-      }
-    }
+    const prepareCommon = processSplitFurigana(commonWordCells)
+    const prepareAlter = alterWordCells[0]
+      ? processSplitFurigana(alterWordCells)
+      : null
+    const prepareUncommon = uncommonWordCells[0]
+      ? processSplitFurigana(uncommonWordCells)
+      : null
+
     const wordKey = wordKeyInput || wordInput
-    const common = prepareCommon
-    const kana = kanaInput || prepareKana
+    const common = prepareCommon.htmlFurigana
+    const kana = kanaInput || prepareCommon.kana
     const romaji = romajiInput || ""
     const wapuro = wapuroInput || ""
     const posArray = posInput
@@ -188,8 +215,8 @@ const main = () => {
       key: wordKey,
       language: "ja",
       common: common,
-      alternatives: [],
-      uncommons: [],
+      alternatives: prepareAlter ? [prepareAlter.htmlFurigana] : [],
+      uncommons: prepareUncommon ? [prepareUncommon.htmlFurigana] : [],
       kana: kana,
       romaji: romaji,
       wapuro: wapuro,
