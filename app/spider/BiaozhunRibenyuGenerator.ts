@@ -185,7 +185,9 @@ const main = () => {
       )
       .filter((toneNumber): toneNumber is number => toneNumber !== null)
     const tone =
-      toneArray.length === 0
+      toneInput === "?"
+        ? "?"
+        : toneArray.length === 0
         ? null
         : toneArray.length === 1
         ? toneArray[0]
