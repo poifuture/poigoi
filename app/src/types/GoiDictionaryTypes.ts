@@ -1,4 +1,4 @@
-import { LanguageCode } from "./PoiI18nTypes";
+import { LanguageCode } from "./PoiI18nTypes"
 
 export type POS = "POS" | string | string[]
 export type EN_POS = "LETTER" | "NOUN" | "VERB"
@@ -78,7 +78,7 @@ export interface GoiJaWordType extends GoiWordType {
   // audio:
   pos: JA_POS
   // translation:
-  tone?: JA_TONE
+  tone?: JA_TONE | "?"
   katsuyo?: {
     // 活用
     keigo: string // 敬語

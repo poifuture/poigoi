@@ -12,6 +12,7 @@ export default () => (
     <NavBar />
     <Container>
       <Header>
+        [WIP]
         <ruby>
           作<rt>さく</rt>
         </ruby>
