@@ -7658,10 +7658,10 @@
     "先週": {
       "key": "先週",
       "language": "ja",
-      "common": "<ruby>先<rt>さき</rt></ruby><ruby>週<rt>しゅう</rt></ruby>",
+      "common": "<ruby>先<rt>せん</rt></ruby><ruby>週<rt>しゅう</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "さきしゅう",
+      "kana": "せんしゅう",
       "romaji": "",
       "wapuro": "",
       "audios": [
@@ -7715,7 +7715,9 @@
       "key": "さ来週",
       "language": "ja",
       "common": "さ<ruby>来<rt>らい</rt></ruby><ruby>週<rt>しゅう</rt></ruby>",
-      "alternatives": [],
+      "alternatives": [
+        "<ruby>再<rt>さ</rt></ruby><ruby>来<rt>らい</rt></ruby><ruby>週<rt>しゅう</rt></ruby>"
+      ],
       "uncommons": [],
       "kana": "さらいしゅう",
       "romaji": "",
@@ -7742,10 +7744,10 @@
     "今週": {
       "key": "今週",
       "language": "ja",
-      "common": "<ruby>今<rt>いま</rt></ruby><ruby>週<rt>しゅう</rt></ruby>",
+      "common": "<ruby>今<rt>こん</rt></ruby><ruby>週<rt>しゅう</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "いましゅう",
+      "kana": "こんしゅう",
       "romaji": "",
       "wapuro": "",
       "audios": [
@@ -7770,10 +7772,10 @@
     "昨日": {
       "key": "昨日",
       "language": "ja",
-      "common": "<ruby>昨<rt>さく</rt></ruby><ruby>日<rt>ひ</rt></ruby>",
+      "common": "<ruby>昨日<rt>きのう</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "さくひ",
+      "kana": "きのう",
       "romaji": "",
       "wapuro": "",
       "audios": [
@@ -7798,10 +7800,10 @@
     "明日": {
       "key": "明日",
       "language": "ja",
-      "common": "<ruby>明<rt>あきら</rt></ruby><ruby>日<rt>ひ</rt></ruby>",
+      "common": "<ruby>明日<rt>あした</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "あきらひ",
+      "kana": "あした",
       "romaji": "",
       "wapuro": "",
       "audios": [
@@ -7827,7 +7829,9 @@
       "key": "あさって",
       "language": "ja",
       "common": "あさって",
-      "alternatives": [],
+      "alternatives": [
+        "<ruby>明<rt>あ</rt></ruby><ruby>後日<rt>さって</rt></ruby>"
+      ],
       "uncommons": [],
       "kana": "あさって",
       "romaji": "",
@@ -7856,7 +7860,9 @@
       "language": "ja",
       "common": "おととい",
       "alternatives": [],
-      "uncommons": [],
+      "uncommons": [
+        "<ruby>一昨日<rt>おととい</rt></ruby>"
+      ],
       "kana": "おととい",
       "romaji": "",
       "wapuro": "",
