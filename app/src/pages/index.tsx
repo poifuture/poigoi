@@ -36,7 +36,7 @@ export default (props: any) => (
       className="buildVersion"
       style={{ position: "absolute", bottom: 0, right: 0, color: "lightgray" }}
     >
-      catfood build v1.20190811.rc0
+      catfood build v1.20190811.rc2
     </div>
   </div>
 )

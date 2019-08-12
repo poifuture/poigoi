@@ -32,6 +32,12 @@ module.exports = {
         icon: `src/images/poifuture-logo-clip.png`, // This path is relative to the root of the site.
       },
     },
-    `gatsby-plugin-offline`, // This plugin must be at the end of the plugin list
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        globPatterns: ["**/*.html", "*.js", "manifest.webmanifest"],
+        ignoreUrlParametersMatching: [/./],
+      },
+    }, // This plugin must be at the end of the plugin list
   ],
 }
