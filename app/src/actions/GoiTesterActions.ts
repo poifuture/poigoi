@@ -9,6 +9,7 @@ import {
   GoiWordRecordModel,
   GoiWordRecordDataType,
   GoiWordHistory,
+  BulkGetWordRecords,
 } from "../models/GoiSaving"
 import KanaDictionary from "../dictionary/KanaDictionary"
 import { GoiDictionarys } from "../models/GoiDictionary"
@@ -141,7 +142,9 @@ export const ReindexCandidates = async ({
   savingId: GoiSavingId
 }) => {
   console.debug("Reindexing... ")
-  const wordRecords = await GoiSaving(poiUserId, savingId).GetRecords()
+  const wordRecords = Object.values(
+    await BulkGetWordRecords({ poiUserId, savingId })
+  )
   console.debug("Records:", wordRecords)
   const learnedCandidates = new Heap<GoiWordRecordDataType>(
     wordRecords.filter(wordRecord => wordRecord.Level > 0),

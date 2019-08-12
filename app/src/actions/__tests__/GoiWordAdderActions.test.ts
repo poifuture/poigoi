@@ -1,6 +1,10 @@
 import { SeedUserAndSaving, CreateStore } from "../../testing/GoiTesting"
 import { GoiDb } from "../../utils/GoiDb"
-import { GoiWordRecord, GoiSaving } from "../../models/GoiSaving"
+import {
+  GoiWordRecord,
+  GoiSaving,
+  BulkGetWordRecords,
+} from "../../models/GoiSaving"
 
 import * as WordAdderActions from "../WordAdderActions"
 
@@ -46,8 +50,8 @@ describe("WordAdderActions", () => {
       expect(
         (await GoiWordRecord(poiUserId, savingId, "エ").Read()).Pending
       ).toContain("-00001-")
-      const wordKeys = (await GoiSaving(poiUserId, savingId).GetRecords()).map(
-        record => record.WordKey
+      const wordKeys = Object.keys(
+        await BulkGetWordRecords({ poiUserId, savingId })
       )
       expect(wordKeys).toContain("ア")
       expect(wordKeys).toContain("イ")
@@ -86,8 +90,8 @@ describe("WordAdderActions", () => {
       expect(
         (await GoiWordRecord(poiUserId, savingId, "エ").Read()).Pending
       ).toContain("-00000-")
-      const wordKeys = (await GoiSaving(poiUserId, savingId).GetRecords()).map(
-        record => record.WordKey
+      const wordKeys = Object.keys(
+        await BulkGetWordRecords({ poiUserId, savingId })
       )
       expect(wordKeys).toContain("ア")
       expect(wordKeys).toContain("イ")
@@ -141,8 +145,8 @@ describe("WordAdderActions", () => {
       )
       const recordU = await GoiWordRecord(poiUserId, savingId, "ウ").Read()
       expect(recordU.Pending).toBe("")
-      const wordKeys = (await GoiSaving(poiUserId, savingId).GetRecords()).map(
-        record => record.WordKey
+      const wordKeys = Object.keys(
+        await BulkGetWordRecords({ poiUserId, savingId })
       )
       expect(wordKeys).toContain("ア")
       expect(wordKeys).toContain("イ")

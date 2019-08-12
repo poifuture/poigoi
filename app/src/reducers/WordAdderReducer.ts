@@ -15,6 +15,10 @@ import {
   PUSH_PENDING_QUERY,
   POP_PENDING_QUERY,
   PUSH_COUNT_QUERY,
+  UPDATE_FILTER,
+  UpdateFilterActionType,
+  UPDATE_SUBTOTAL,
+  UpdateSubtotalActionType,
 } from "../actions/WordAdderActions"
 
 const InitialWordAdderState: WordAdderStateType = {
@@ -98,6 +102,39 @@ const InitialWordAdderState: WordAdderStateType = {
       NewCount: -1,
     },
   },
+  Filter: {
+    AcceptPos: [
+      "KANA", //仮名
+      "HIRAGANA", //平仮名
+      "KATAKANA", //片仮名
+      "DAKUON", //濁音
+      "YOON", //拗音
+      "CHOON", //長音
+      "VERB", //動詞
+      "GODAN", //五段
+      "KAMIICHIDAN", //上一段
+      "SHIMOICHIDAN", //下一段
+      "SAHEN", //サ変
+      "KAHEN", //カ変
+      "JIDOSHI", //自動詞
+      "TADOSHI", //他動詞
+      "ADJ", //形容詞
+      "KEIYODOSHI", //形容動詞
+      "NOUN", //名詞
+      // "PROPER", //固有名詞
+      "PRON", //代名詞
+      "RENTAISHI", //連体詞
+      "ADV", //副詞
+      "CONJ", //接続詞
+      "INTERJ", //感動詞
+      "JODOSHI", //助動詞
+      "JOSHI", //助詞
+      "IDIOM", //熟語
+    ],
+    AcceptExtra: false,
+    AcceptForgot: false,
+  },
+  Subtotal: -1,
 }
 
 export const WordAdderReducer = (
@@ -171,6 +208,16 @@ export const WordAdderReducer = (
           NewCount: typedAction.NewCount,
         })
       )
+    }
+    case UPDATE_FILTER: {
+      console.debug("Hit UPDATE_FILTER ... ", action)
+      const { Filter } = action as UpdateFilterActionType
+      return state.set("Filter", state.get("Filter").merge(Filter))
+    }
+    case UPDATE_SUBTOTAL: {
+      console.debug("Hit UPDATE_FILTER ... ", action)
+      const { Subtotal } = action as UpdateSubtotalActionType
+      return state.set("Subtotal", Subtotal)
     }
   }
   return state

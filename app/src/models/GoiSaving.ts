@@ -6,7 +6,7 @@ import {
   TimeStamp,
   DbSchema,
 } from "../utils/PoiDb"
-import { GoiDb, GoiNS } from "../utils/GoiDb"
+import { GoiDb, GoiNS, GoiDbRange } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
 import { GoiSavingId, GoiJudgeResult } from "../types/GoiTypes"
 
@@ -169,6 +169,15 @@ export class GoiWordRecordModel {
   ): GoiWordRecordDbKey => {
     return `Poi/Goi/PoiUsers/${poiUserId}/Savings/${savingId}/WordRecords/${wordKey}` as GoiWordRecordDbKey
   }
+  public static GetDbRange = (
+    poiUserId: PoiUser.PoiUserId,
+    savingId: GoiSavingId
+  ): GoiDbRange => {
+    return {
+      startkey: `Poi/Goi/PoiUsers/${poiUserId}/Savings/${savingId}/WordRecords/`,
+      endkey: `Poi/Goi/PoiUsers/${poiUserId}/Savings/${savingId}/WordRecords/\uffff`,
+    }
+  }
   private readonly dbKey: GoiWordRecordDbKey
   private readonly poiUserId: PoiUser.PoiUserId
   private readonly savingId: GoiSavingId
@@ -206,12 +215,16 @@ export class GoiWordRecordModel {
   }
   Create = async (): Promise<GoiWordRecordDbKey> => {
     //static builder
+    await GoiDb().put<GoiWordRecordDataType>(this.PrepareCreate())
+    return this.dbKey
+  }
+  PrepareCreate = () => {
+    //static builder
     const newData: GoiWordRecordDataType = this.DefaultData()
-    await GoiDb().put<GoiWordRecordDataType>({
+    return {
       _id: this.dbKey,
       ...newData,
-    })
-    return this.dbKey
+    }
   }
   onSync?: (error?: any) => Promise<void>
   sync = async () => {
@@ -235,12 +248,22 @@ export class GoiWordRecordModel {
     const data = (await this.UpgradeSchema(oldSchema)) || possibleOldData
     return { ...this.DefaultData(), ...data }
   }
+  private save = async ({ newDoc }: { newDoc: GoiWordRecordPouchType }) => {
+    return await GoiDb().put<GoiWordRecordPouchType>(newDoc)
+  }
   private update = async (partial: Partial<GoiWordRecordDataType>) => {
-    const data = await this.Read()
-    await GoiDb().put({
-      ...data,
+    const doc = await this.Read()
+    const newDoc = GoiWordRecordModel.updateInPlace(partial, { doc })
+    await this.save({ newDoc })
+  }
+  private static updateInPlace = (
+    partial: Partial<GoiWordRecordDataType>,
+    { doc }: { doc: GoiWordRecordPouchType }
+  ): GoiWordRecordPouchType => {
+    return {
+      ...doc,
       ...partial,
-    })
+    }
   }
   ReadOrCreate = async (): Promise<GoiWordRecordPouchType> => {
     if (!(await this.Exists())) {
@@ -255,19 +278,44 @@ export class GoiWordRecordModel {
     return await this.Read()
   }
   SetLevel = async (level: number) => {
+    const doc = await this.Read()
+    const newDoc = GoiWordRecordModel.SetLevelInPlace(level, { doc })
+    if (newDoc) {
+      await this.save({ newDoc })
+    }
+  }
+  static SetLevelInPlace = (
+    level: number,
+    { doc }: { doc: GoiWordRecordPouchType }
+  ) => {
     if (level <= 0 || level >= 100) {
       console.error("Invalid word level: ", level)
-      return
+      return null
     }
-    await this.update({ Level: level, Prioritied: "", Pending: "" })
+    return GoiWordRecordModel.updateInPlace(
+      { Level: level, Prioritied: "", Pending: "" },
+      { doc }
+    )
   }
   SetPrioritied = async (orderKey: string) => {
-    const wordRecord = await this.Read()
-    if (wordRecord.Level > 0) {
-      console.error("Already learned word: ", wordRecord.WordKey)
-      return
+    const doc = await this.Read()
+    const newDoc = GoiWordRecordModel.SetPrioritiedInPlace(orderKey, { doc })
+    if (newDoc) {
+      await this.save({ newDoc })
     }
-    await this.update({ Prioritied: orderKey, Pending: "" })
+  }
+  private static SetPrioritiedInPlace = (
+    orderKey: string,
+    { doc }: { doc: GoiWordRecordPouchType }
+  ) => {
+    if (doc.Level > 0) {
+      console.error("Already learned word: ", doc.WordKey)
+      return null
+    }
+    return GoiWordRecordModel.updateInPlace(
+      { Prioritied: orderKey, Pending: "" },
+      { doc }
+    )
   }
   SetPending = async (orderKey: string) => {
     const wordRecord = await this.Read()
@@ -425,7 +473,7 @@ export class GoiSavingModel {
     const data = await this.Read()
     return data.Dictionarys
   }
-  GetRecords = async () => {
+  eprecatedGetRecords = async () => {
     const data = await this.Read()
     const wordRecords = await Promise.all(
       Object.keys(data.Records).map(
@@ -455,4 +503,77 @@ export const GoiSaving = (
   savingId: GoiSavingId
 ) => {
   return new GoiSavingModel(poiUserId, savingId)
+}
+
+export const BulkCreateWordRecords = async (
+  {
+    poiUserId,
+    savingId,
+  }: {
+    poiUserId: PoiUser.PoiUserId
+    savingId: GoiSavingId
+  },
+  { wordKeys }: { wordKeys: string[] }
+) => {
+  const prepareDocs = wordKeys.map(wordKey =>
+    GoiWordRecord(poiUserId, savingId, wordKey).PrepareCreate()
+  )
+  const bulkCreateResults = await GoiDb().bulkDocs(prepareDocs)
+  const okResults = bulkCreateResults.filter((result: any) => result.ok)
+  const newRecordsDbKeys = okResults
+    .map(result => result.id)
+    .filter((dbKey): dbKey is string => !!dbKey)
+  const createdRecords = await GoiDb().allDocs<GoiWordRecordPouchType>({
+    include_docs: true,
+    keys: newRecordsDbKeys,
+  })
+  const createdWordKeys = createdRecords.rows
+    .map(row => (row.doc ? row.doc.WordKey : null))
+    .filter((wordKey): wordKey is string => !!wordKey)
+  await GoiSaving(poiUserId, savingId).AttachRecords(createdWordKeys)
+  return createdWordKeys
+}
+export const BulkGetWordRecords = async (
+  {
+    poiUserId,
+    savingId,
+  }: {
+    poiUserId: PoiUser.PoiUserId
+    savingId: GoiSavingId
+  },
+  { wordKeys }: { wordKeys?: string[] } = {}
+): Promise<{ [key: string]: GoiWordRecordPouchType }> => {
+  if (!wordKeys) {
+    const saving = await GoiSaving(poiUserId, savingId).Read()
+    wordKeys = Object.keys(saving.Records)
+  }
+  if (wordKeys.length <= 0) {
+    return {}
+  }
+  const wordDbKeys = wordKeys.map(wordKey =>
+    GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
+  )
+  const existRecordsResults = await GoiDb().allDocs<GoiWordRecordPouchType>({
+    include_docs: false,
+    keys: wordDbKeys,
+  })
+  const existDbKeys = existRecordsResults.rows.map(row => row.id)
+  const missingWordKeys = wordKeys.filter(
+    wordKey =>
+      !existDbKeys.includes(
+        GoiWordRecordModel.GetDbKey(poiUserId, savingId, wordKey)
+      )
+  )
+  await BulkCreateWordRecords(
+    { poiUserId, savingId },
+    { wordKeys: missingWordKeys }
+  )
+  const bulkRecordsResults = await GoiDb().allDocs<GoiWordRecordPouchType>({
+    include_docs: true,
+    keys: wordDbKeys,
+  })
+  const recordEntries = bulkRecordsResults.rows
+    .map(row => (row.doc ? [row.doc.WordKey, row.doc] : [null, null]))
+    .filter(([wordKey, doc]) => !!wordKey)
+  return Object.fromEntries(recordEntries)
 }
