@@ -29,12 +29,15 @@ import {
   RemovePendingQueryAction,
   AddWordsFromQuerysAction,
   ClearPendingWordsAction,
+  RefreshSubtotalAction,
+  UpdateFilterAction,
 } from "../actions/WordAdderActions"
 import {
   WordAdderSuggestionQueryType,
   WordAdderQueryCountersType,
   WordAdderPendingQueryType,
   WordAdderQueryType,
+  WordFilterType,
 } from "../states/WordAdderState"
 import { GoiSavingId } from "../types/GoiTypes"
 import { RootStateType } from "../states/RootState"
@@ -93,6 +96,16 @@ export class WordAdder extends React.Component<
         { poiUserId, savingId }
       )
     }
+    this.props.refreshSubtotal(
+      {
+        querys: [
+          ...this.getPendingQuerys(),
+          ...(suggestion.SubQuerys || []).map(query => query.Query),
+        ],
+        filter: this.props.filter.toJS(),
+      },
+      { poiUserId, savingId }
+    )
   }
   clearAllPendingQuerys = async () => {
     await Promise.all(
@@ -115,10 +128,32 @@ export class WordAdder extends React.Component<
   }
   addCustomQuery = () => {
     const { poiUserId, savingId } = this.props
+    const query = this.state.customQuery.trim()
     this.props.addPendingQuery(
       {
         display: { en: "Custom", zh: "自定义搜索条件" },
-        query: this.state.customQuery.trim(),
+        query,
+      },
+      { poiUserId, savingId }
+    )
+    this.props.refreshSubtotal(
+      {
+        querys: [...this.getPendingQuerys(), query],
+        filter: this.props.filter.toJS(),
+      },
+      { poiUserId, savingId }
+    )
+  }
+  onClickRemovePendingQuery = ({ query }: { query: string }) => {
+    const { poiUserId, savingId } = this.props
+    this.props.removePendingQuery({ query })
+    const newPendingQuerys = this.getPendingQuerys().filter(
+      pendingQuery => pendingQuery != query
+    )
+    this.props.refreshSubtotal(
+      {
+        querys: newPendingQuerys,
+        filter: this.props.filter.toJS(),
       },
       { poiUserId, savingId }
     )
@@ -293,7 +328,8 @@ export class WordAdder extends React.Component<
                   <MuiListItemText
                     primary={t("CountTotalPendingWords", {
                       defaultValue: "Total new: {{new}}",
-                      new: "[WIP]",
+                      new:
+                        this.props.subtotal >= 0 ? this.props.subtotal : "...",
                     })}
                     secondary={t(
                       "ClearAllPendingsItemText",
@@ -310,50 +346,69 @@ export class WordAdder extends React.Component<
                     </IconButton>
                   </MuiListItemSecondaryAction>
                 </MuiListItem>
-                {pendings.map(pending => (
-                  <MuiListItem key={`pending${pending.Query}`}>
-                    <MuiListItemText
-                      primary={
-                        <>
-                          {LookUp(pending.Display, i18n.language as LocaleCode)}
-                          <QueryRegexPopup regex={pending.Query} />
-                          {counters[pending.Query] &&
-                            t("CountQueryTotalResult", {
-                              defaultValue: " {{total}} words",
-                              total: counters[pending.Query].TotalCount,
-                            })}
-                        </>
+                {pendings.map(pending => {
+                  const {
+                    TotalCount,
+                    LearnedCount,
+                    AddedCount,
+                    NewCount,
+                  } = counters[pending.Query]
+                    ? counters[pending.Query]
+                    : {
+                        TotalCount: -1,
+                        LearnedCount: -1,
+                        AddedCount: -1,
+                        NewCount: -1,
                       }
-                      secondary={
-                        counters[pending.Query] ? (
+                  return (
+                    <MuiListItem key={`pending${pending.Query}`}>
+                      <MuiListItemText
+                        primary={
                           <>
-                            {t("CountPendingQueryResult", {
-                              defaultValue:
-                                "Learned {{learned}} | Added {{added}} | New {{new}}",
-                              learned: counters[pending.Query].LearnedCount,
-                              added: counters[pending.Query].AddedCount,
-                              new: counters[pending.Query].NewCount,
-                            })}
+                            {LookUp(
+                              pending.Display,
+                              i18n.language as LocaleCode
+                            )}
+                            <QueryRegexPopup regex={pending.Query} />
+                            {counters[pending.Query] &&
+                              t("CountQueryTotalResult", {
+                                defaultValue: " {{total}} words",
+                                total: TotalCount >= 0 ? TotalCount : "...",
+                              })}
                           </>
-                        ) : null
-                      }
-                    ></MuiListItemText>
-
-                    <MuiListItemSecondaryAction>
-                      <IconButton
-                        edge="end"
-                        aria-label="remove pending query"
-                        onClick={() =>
-                          this.props.removePendingQuery({
-                            query: pending.Query,
-                          })
                         }
-                      >
-                        <CloseIcon />
-                      </IconButton>
-                    </MuiListItemSecondaryAction>
-                  </MuiListItem>
-                ))}
+                        secondary={
+                          counters[pending.Query] ? (
+                            <>
+                              {t("CountPendingQueryResult", {
+                                defaultValue:
+                                  "Learned {{learned}} | Added {{added}} | New {{new}}",
+                                learned:
+                                  LearnedCount >= 0 ? LearnedCount : "...",
+                                added: AddedCount >= 0 ? AddedCount : "...",
+                                new: NewCount >= 0 ? NewCount : "...",
+                              })}
+                            </>
+                          ) : null
+                        }
+                      ></MuiListItemText>
+
+                      <MuiListItemSecondaryAction>
+                        <IconButton
+                          edge="end"
+                          aria-label="remove pending query"
+                          onClick={() =>
+                            this.onClickRemovePendingQuery({
+                              query: pending.Query,
+                            })
+                          }
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </MuiListItemSecondaryAction>
+                    </MuiListItem>
+                  )
+                })}
               </>
             ) : (
               <MuiListItem>
@@ -447,6 +502,8 @@ const mapStateToProps = (state: RootStateType) => {
     suggestions: state.WordAdder.get("Suggestions"),
     pendings: state.WordAdder.get("Pendings"),
     counters: state.WordAdder.get("Counters"),
+    filter: state.WordAdder.get("Filter"),
+    subtotal: state.WordAdder.get("Subtotal") as number,
     saving: state.GoiSaving.get("Saving"),
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
@@ -502,6 +559,27 @@ const mapDispatchToProps = (
     close: () => dispatch(DisplayWordAdderAction({ display: false })),
     showNextWord: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
       dispatch(ShowNextWordAction({ poiUserId, savingId })),
+    refreshSubtotal: (
+      {
+        querys,
+        filter,
+      }: {
+        querys: string[]
+        filter: WordFilterType
+      },
+      {
+        poiUserId,
+        savingId,
+      }: {
+        poiUserId: PoiUser.PoiUserId
+        savingId: GoiSavingId
+      }
+    ) =>
+      dispatch(
+        RefreshSubtotalAction({ querys, filter }, { poiUserId, savingId })
+      ),
+    updateFilter: ({ filter }: { filter: Partial<WordFilterType> }) =>
+      dispatch(UpdateFilterAction({ filter })),
   }
 }
 

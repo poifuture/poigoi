@@ -50,7 +50,8 @@ class GoiDictionaryWordModel {
     this.dbKey = dbKey
   }
   ReadOrNull = async () => {
-    return await GoiDb().GetOrNull<GoiDictionaryWordDataType>(this.dbKey)
+    // return await GoiDb().GetOrNull<GoiDictionaryWordDataType>(this.dbKey)
+    return (null as any) as GoiDictionaryWordDataType | null
   }
 }
 
@@ -171,6 +172,9 @@ export class GoiDictionaryModel {
       }
       case "BiaozhunRibenyu": {
         return Immutable.Set.fromKeys(BiaozhunRibenyu.words)
+      }
+      case "Xinbian": {
+        return Immutable.Set()
       }
     }
     // TODO:read from database

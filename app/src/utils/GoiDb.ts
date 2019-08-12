@@ -3,6 +3,11 @@ import PouchDB from "pouchdb-browser"
 import PouchDBDebug from "pouchdb-debug"
 import { DbKey } from "./PoiDb"
 
+export interface GoiDbRange {
+  startkey: string
+  endkey: string
+}
+
 class GoiPouchDB extends PouchDB {
   private cache: { [key: string]: any } = {}
   Exists = async (dbKey: DbKey): Promise<boolean> => {

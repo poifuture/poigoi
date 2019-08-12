@@ -1,5 +1,5 @@
 import Immutable from "immutable"
-import { I18nString } from "../types/GoiDictionaryTypes"
+import { I18nString, JA_BASIC_POS } from "../types/GoiDictionaryTypes"
 
 export interface WordAdderQueryType {
   Display: I18nString
@@ -19,6 +19,14 @@ export interface WordAdderQueryCounterType {
 export type WordAdderQueryCountersType = {
   [query: string]: WordAdderQueryCounterType
 }
+export interface WordFilterType {
+  AcceptPos: string[]
+  AcceptExtra: boolean
+  AcceptForgot: boolean
+}
+export interface JaWordFilterType extends WordFilterType {
+  AcceptPos: JA_BASIC_POS[]
+}
 export interface WordAdderStateType {
   Display: boolean
   Status: {
@@ -29,6 +37,8 @@ export interface WordAdderStateType {
   Suggestions: WordAdderSuggestionQueryType[]
   Pendings: WordAdderPendingQueryType[]
   Counters: WordAdderQueryCountersType
+  Filter: WordFilterType
+  Subtotal: number
 }
 
 export interface WordAdderStateReducedType extends Immutable.Map<string, any> {}
