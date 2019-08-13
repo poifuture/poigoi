@@ -65,6 +65,7 @@
     "babel-jest": "^24.8.0",
     "babel-preset-gatsby": "^0.2.8",
     "eslint": "^6.1.0",
+    "gatsby-plugin-webpack-bundle-analyzer": "^1.0.5",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
     "pouchdb": "^7.1.1",
@@ -92,6 +93,7 @@
     "extends": "react-app"
   },
   "browserslist": [
-    ">0.2%"
+    ">0.2%",
+    "not dead"
   ]
 }

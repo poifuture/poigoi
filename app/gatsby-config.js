@@ -33,6 +33,12 @@ module.exports = {
       },
     },
     {
+      resolve: "gatsby-plugin-webpack-bundle-analyzer",
+      options: {
+        production: true,
+      },
+    },
+    {
       resolve: `gatsby-plugin-offline`,
       options: {
         globPatterns: ["**/*.html", "*.js", "manifest.webmanifest"],
