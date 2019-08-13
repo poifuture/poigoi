@@ -103,7 +103,7 @@
     "アメリカ人": {
       "key": "アメリカ人",
       "language": "ja",
-      "common": "アメリカ<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>アメリカ<rt>America</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "アメリカじん",
@@ -133,7 +133,7 @@
     "フランス人": {
       "key": "フランス人",
       "language": "ja",
-      "common": "フランス<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>フランス<rt>France</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "フランスじん",
@@ -1293,7 +1293,7 @@
       "uncommons": [],
       "kana": "ジェーシーきかく",
       "romaji": "JCkikaku",
-      "wapuro": "je-shīkikaku",
+      "wapuro": "jckikaku",
       "audios": [
         {
           "cv": "Hikari",
@@ -2124,7 +2124,7 @@
     "イギリス人": {
       "key": "イギリス人",
       "language": "ja",
-      "common": "イギリス<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>イギリス<rt>Engish</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "イギリスじん",
@@ -2152,7 +2152,7 @@
     "イタリア人": {
       "key": "イタリア人",
       "language": "ja",
-      "common": "イタリア<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>イタリア<rt>Italia</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "イタリアじん",
@@ -2180,7 +2180,7 @@
     "インド人": {
       "key": "インド人",
       "language": "ja",
-      "common": "インド<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>インド<rt>India</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "インドじん",
@@ -2208,7 +2208,7 @@
     "オーストラリア人": {
       "key": "オーストラリア人",
       "language": "ja",
-      "common": "オーストラリア<ruby>人<rt>じん</rt></ruby><ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>オーストラリア<rt>Australia</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "オーストラリアじんじん",
@@ -2236,7 +2236,7 @@
     "スペイン人": {
       "key": "スペイン人",
       "language": "ja",
-      "common": "スペイン<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>スペイン<rt>Spain</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "スペインじん",
@@ -2264,7 +2264,7 @@
     "タイ人": {
       "key": "タイ人",
       "language": "ja",
-      "common": "タイ<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>タイ<rt>Thai</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "タイじん",
@@ -2292,7 +2292,7 @@
     "ドイツ人": {
       "key": "ドイツ人",
       "language": "ja",
-      "common": "ドイツ<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>ドイツ<rt>Deutsch</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "ドイツじん",
@@ -2320,7 +2320,7 @@
     "ブラジル人": {
       "key": "ブラジル人",
       "language": "ja",
-      "common": "ブラジル<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>ブラジル<rt>Brasil</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "ブラジルじん",
@@ -2348,7 +2348,7 @@
     "ベトナム人": {
       "key": "ベトナム人",
       "language": "ja",
-      "common": "ベトナム<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>ベトナム<rt>Vietnam</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "ベトナムじん",
@@ -2376,7 +2376,7 @@
     "メキシコ人": {
       "key": "メキシコ人",
       "language": "ja",
-      "common": "メキシコ<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>メキシコ<rt>Mexico</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "メキシコじん",
@@ -2404,7 +2404,7 @@
     "ロシア人": {
       "key": "ロシア人",
       "language": "ja",
-      "common": "ロシア<ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>ロシア<rt>Russia</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "ロシアじん",
@@ -2659,12 +2659,12 @@
     "ポルトガル語": {
       "key": "ポルトガル語",
       "language": "ja",
-      "common": "<ruby>ポルトガル<rt>Portugal</rt></ruby><ruby>語<rt>ご</rt></ruby>",
+      "common": "<ruby>ブラジル<rt>Brasil</rt></ruby><ruby>語<rt>ご</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "ポルトガルご",
+      "kana": "ブラジルご",
       "romaji": "porutogarugo",
-      "wapuro": "porutogarugo",
+      "wapuro": "burajirugo",
       "audios": [
         {
           "cv": "Hikari",
@@ -3782,7 +3782,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "かた",
-      "romaji": "hō",
+      "romaji": "kata",
       "wapuro": "kata",
       "audios": [
         {
@@ -4121,7 +4121,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "なん",
-      "romaji": "nani",
+      "romaji": "nan",
       "wapuro": "nann",
       "audios": [
         {
@@ -4624,7 +4624,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "なん",
-      "romaji": "nani",
+      "romaji": "nan",
       "wapuro": "nann",
       "audios": [
         {
@@ -7460,7 +7460,7 @@
       "uncommons": [],
       "kana": "ジェーアール",
       "romaji": "JR",
-      "wapuro": "je-āru",
+      "wapuro": "jr",
       "audios": [
         {
           "cv": "Hikari",
@@ -9100,7 +9100,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "じ",
-      "romaji": "toki",
+      "romaji": "ji",
       "wapuro": "ji",
       "audios": [
         {
@@ -9128,7 +9128,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "ふん",
-      "romaji": "bun",
+      "romaji": "fun",
       "wapuro": "funn",
       "audios": [
         {
@@ -9184,7 +9184,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "がつ",
-      "romaji": "tsuki",
+      "romaji": "gatsu",
       "wapuro": "gatsu",
       "audios": [
         {
@@ -9212,7 +9212,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "にち",
-      "romaji": "hi",
+      "romaji": "nichi",
       "wapuro": "nichi",
       "audios": [
         {
@@ -9240,7 +9240,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "ねん",
-      "romaji": "toshi",
+      "romaji": "nen",
       "wapuro": "nenn",
       "audios": [
         {
@@ -10598,7 +10598,7 @@
       "common": "<ruby>コーヒー<rt>coffee</rt></ruby>",
       "alternatives": [],
       "uncommons": [
-        "<ruby>珈<rt>け</rt></ruby><ruby>琲<rt>はい</rt></ruby>"
+        "<ruby>珈<rt>コー</rt></ruby><ruby>琲<rt>ヒー</rt></ruby>"
       ],
       "kana": "コーヒー",
       "romaji": "kōhī",
@@ -10860,7 +10860,7 @@
       "language": "ja",
       "common": "そば",
       "alternatives": [
-        "<ruby>蕎<rt>きょう</rt></ruby><ruby>麦<rt>むぎ</rt></ruby>"
+        "<ruby>蕎<rt>そ</rt></ruby><ruby>麦<rt>ば</rt></ruby>"
       ],
       "uncommons": [],
       "kana": "そば",
@@ -10981,7 +10981,7 @@
       "language": "ja",
       "common": "<ruby>卵<rt>たまご</rt></ruby>",
       "alternatives": [
-        "<ruby>玉<rt>たま</rt></ruby><ruby>子<rt>こ</rt></ruby>"
+        "<ruby>玉<rt>たま</rt></ruby><ruby>子<rt>ご</rt></ruby>"
       ],
       "uncommons": [],
       "kana": "たまご",
@@ -11041,7 +11041,7 @@
       "language": "ja",
       "common": "<ruby>リンゴ<rt>林檎</rt></ruby>",
       "alternatives": [
-        "<ruby>林<rt>はやし</rt></ruby><ruby>檎<rt>ご</rt></ruby>"
+        "<ruby>林<rt>りん</rt></ruby><ruby>檎<rt>ご</rt></ruby>"
       ],
       "uncommons": [],
       "kana": "リンゴ",
@@ -11103,7 +11103,7 @@
       "language": "ja",
       "common": "そば<ruby>屋<rt>や</rt></ruby>",
       "alternatives": [
-        "<ruby>蕎<rt>きょう</rt></ruby><ruby>麦<rt>むぎ</rt></ruby><ruby>屋<rt>や</rt></ruby>"
+        "<ruby>蕎<rt>そ</rt></ruby><ruby>麦<rt>ば</rt></ruby><ruby>屋<rt>や</rt></ruby>"
       ],
       "uncommons": [],
       "kana": "そばや",
@@ -14843,7 +14843,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "にん",
-      "romaji": "hito",
+      "romaji": "nin'",
       "wapuro": "ninn",
       "audios": [
         {
@@ -14927,7 +14927,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "とう",
-      "romaji": "atama",
+      "romaji": "to-",
       "wapuro": "tou",
       "audios": [
         {
@@ -15039,7 +15039,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "わ",
-      "romaji": "hane",
+      "romaji": "wa",
       "wapuro": "wa",
       "audios": [
         {
@@ -15095,7 +15095,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "そく",
-      "romaji": "ashi",
+      "romaji": "soku",
       "wapuro": "soku",
       "audios": [
         {

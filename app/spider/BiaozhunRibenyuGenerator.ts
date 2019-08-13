@@ -187,8 +187,9 @@ const toFurigana = ({
   for (let kanjiId = 0; kanjiId < charFuriganas.length; kanjiId += 2) {
     if (charFuriganas[kanjiId] && charFuriganas[kanjiId + 1]) {
       if (
-        !isHiragana(charFuriganas[kanjiId]) &&
-        !isKatakana(charFuriganas[kanjiId])
+        charFuriganas[kanjiId].length > 1 ||
+        (!isHiragana(charFuriganas[kanjiId]) &&
+          !isKatakana(charFuriganas[kanjiId]))
       ) {
         htmlFurigana += `<ruby>${charFuriganas[kanjiId]}<rt>${
           charFuriganas[kanjiId + 1]
@@ -310,6 +311,7 @@ const preprocess = async () => {
   let bookChapterCache = ""
   let bookWordIdCache = 0
   let results: SpiderWordType[] = []
+  // for (let index = 60; index < 100; index++) {
   for (let index = 1; index < lines.length; index++) {
     const word = parseLine(lines[index])
     if (!word.wordInput) {
@@ -436,20 +438,26 @@ const preprocess = async () => {
         JSON.stringify(processedWord.pos).replace(",", "|"),
         JSON.stringify(processedWord.tone).replace(",", "|"),
         processedWord.textbookTag,
-        processedWord.common.manualTag ||
-          (validateFurigana(processedWord.common) ? "" : "WARNING"),
+        processedWord.common.manualTag !== "special" &&
+        !validateFurigana(processedWord.common)
+          ? "WARNING"
+          : "",
         ...padding(
           splitFurigana({ furigana: processedWord.common.furigana || "" }),
           30
         ),
-        processedWord.alter.manualTag ||
-          (validateFurigana(processedWord.common) ? "" : "WARNING"),
+        processedWord.alter.manualTag !== "special" &&
+        !validateFurigana(processedWord.alter)
+          ? "WARNING"
+          : "",
         ...padding(
           splitFurigana({ furigana: processedWord.alter.furigana || "" }),
           30
         ),
-        processedWord.uncommon.manualTag ||
-          (validateFurigana(processedWord.uncommon) ? "" : "WARNING"),
+        processedWord.uncommon.manualTag !== "special" &&
+        !validateFurigana(processedWord.uncommon)
+          ? "WARNING"
+          : "",
         ...padding(
           splitFurigana({ furigana: processedWord.uncommon.furigana || "" }),
           30

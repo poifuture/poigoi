@@ -63,7 +63,7 @@ Function ProcessWord(maxline, readyWordCol) As Boolean
         Cells(line, RubyAutoTagCol).Value = "excelauto"
       End If
     Else
-      If Cells(line, RubyManualTagCol).Value <> "excel" And Cells(line, RubyManualTagCol).Value <> "special" Then
+      If Cells(line, RubyManualTagCol).Value = "manual" Then
         Cells(line, RubyAutoTagCol).Value = "ALERT"
       End If
     End If
