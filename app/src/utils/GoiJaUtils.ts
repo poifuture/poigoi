@@ -1,8 +1,21 @@
-export const TrimFurigana = (furiganaWord: string) => {
-  return furiganaWord
-    .replace(/[<]rt[>].*?[<][/]rt[>]/g, "")
-    .replace(/[<][/]?ruby[>]/g, "")
-    .replace(/[<][/]?ins[>]/g, "")
+export const TrimFurigana = (
+  furiganaWord: string,
+  { to }: { to?: "kanji" | "kana" } = {}
+) => {
+  to = to ? to : "kanji"
+  if (to === "kanji") {
+    return furiganaWord
+      .replace(/[<]rt[>].*?[<][/]rt[>]/g, "")
+      .replace(/[<][/]?ruby[>]/g, "")
+      .replace(/[<][/]?ins[>]/g, "")
+  }
+  if (to === "kana") {
+    return furiganaWord
+      .replace(/[<]ruby[>].*?[<]rt[>]/g, "")
+      .replace(/[<][/]rt[>][<][/]ruby[>]/g, "")
+      .replace(/[<][/]?ins[>]/g, "")
+  }
+  throw new Error("Trim to " + to + " is unsupported")
 }
 
 export const AsciiRomaji = (romaji: string) => {
@@ -17,4 +30,9 @@ export const AsciiRomaji = (romaji: string) => {
     .replace(/Ū/g, "U")
     .replace(/Ē/g, "E")
     .replace(/Ō/g, "O")
+}
+
+export default {
+  TrimFurigana,
+  AsciiRomaji,
 }

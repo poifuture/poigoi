@@ -70,6 +70,7 @@
     "gatsby-plugin-webpack-bundle-analyzer": "^1.0.5",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
+    "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "pouchdb": "^7.1.1",
     "pouchdb-adapter-memory": "^7.1.1",
     "prettier": "^1.18.2",
@@ -79,6 +80,7 @@
     "workbox-build": "^4.3.1"
   },
   "scripts": {
+    "spider": "ts-node -O '{\"module\":\"commonjs\",\"isolatedModules\":false}'",
     "build": "gatsby build",
     "develop": "cross-env GATSBY_SOME_VAR=123 NODE_TLS_REJECT_UNAUTHORIZED=0 gatsby develop -H 0.0.0.0 --https",
     "format": "prettier --write src/**/*.{js,jsx}",
