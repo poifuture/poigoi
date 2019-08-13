@@ -4,7 +4,14 @@ export type PoiUserId = string & { readonly brand: "PoiUserId" }
 
 export const GenerateId: () => Promise<PoiUserId> = async () => {
   const seed = new Uint32Array(10)
-  window.crypto.getRandomValues(seed)
+  if (!!window && !!window.crypto && !!window.crypto.getRandomValues) {
+    window.crypto.getRandomValues(seed)
+  } else {
+    //polyfill IE
+    for (let i = 0; i < 10; i++) {
+      seed[i] = Math.random() * 0xffff
+    }
+  }
   // Little Endian
   const timestamp = new Date().getTime()
   seed[0] = timestamp >>> 0

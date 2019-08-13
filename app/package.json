@@ -77,7 +77,7 @@
   },
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop -H 0.0.0.0",
+    "develop": "NODE_TLS_REJECT_UNAUTHORIZED=0 gatsby develop -H 0.0.0.0 --https",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",

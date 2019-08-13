@@ -572,8 +572,11 @@ export const BulkGetWordRecords = async (
     include_docs: true,
     keys: wordDbKeys,
   })
-  const recordEntries = bulkRecordsResults.rows
-    .map(row => (row.doc ? [row.doc.WordKey, row.doc] : [null, null]))
-    .filter(([wordKey, doc]) => !!wordKey)
-  return Object.fromEntries(recordEntries)
+  const results: { [key: string]: GoiWordRecordPouchType } = {}
+  bulkRecordsResults.rows.map(row => {
+    if (!!row.doc) {
+      results[row.doc.WordKey] = row.doc
+    }
+  })
+  return results
 }

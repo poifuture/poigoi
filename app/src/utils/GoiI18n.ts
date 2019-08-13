@@ -60,7 +60,7 @@ i18n
     },
     load: "currentOnly",
     lowerCaseLng: true,
-    debug: true,
+    // debug: true,
     interpolation: {
       escapeValue: false, // not needed for react!!
     },
