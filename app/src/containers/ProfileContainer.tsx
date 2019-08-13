@@ -34,6 +34,8 @@ import DescriptionIcon from "@material-ui/icons/DescriptionOutlined"
 import BugReportIcon from "@material-ui/icons/BugReportOutlined"
 import LiveHelpIcon from "@material-ui/icons/LiveHelpOutlined"
 import { GoiDb } from "../utils/GoiDb"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:ProfileContainer")
 
 type ProfileContainerPropsType = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
@@ -224,12 +226,12 @@ export class ProfileContainer extends React.Component<
 }
 
 const mapStateToProps = (state: RootStateType) => {
-  console.debug("ProfileContainer state: ", state)
+  debug("ProfileContainer state: ", state)
   const props = {
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
   }
-  console.debug("ProfileContainer props: ", props)
+  debug("ProfileContainer props: ", props)
   return props
 }
 const mapDispatchToProps = (

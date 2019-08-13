@@ -54,6 +54,8 @@ import { I18nString } from "../types/GoiDictionaryTypes"
 import { withTranslation, WithTranslation } from "react-i18next"
 import { LookUp } from "../utils/PoiI18n"
 import { LocaleCode } from "../types/PoiI18nTypes"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:WordAdder")
 
 type WordAdderPropsType = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -495,7 +497,7 @@ export class WordAdder extends React.Component<
 }
 
 const mapStateToProps = (state: RootStateType) => {
-  console.debug("WordAdderContainer state: ", state)
+  debug("WordAdderContainer state: ", state)
   const props = {
     display: state.WordAdder.get("Display") as boolean,
     status: state.WordAdder.get("Status"),
@@ -508,7 +510,7 @@ const mapStateToProps = (state: RootStateType) => {
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
   }
-  console.debug("WordAdderContainer props: ", props)
+  debug("WordAdderContainer props: ", props)
   return props
 }
 const mapDispatchToProps = (

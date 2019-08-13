@@ -38,6 +38,8 @@ import VolumeOffIcon from "@material-ui/icons/VolumeOffOutlined"
 import VolumeUpIcon from "@material-ui/icons/VolumeUpOutlined"
 import RefreshIcon from "@material-ui/icons/RefreshOutlined"
 import ExposureNeg1Icon from "@material-ui/icons/ExposureNeg1Outlined"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:CommandsBar")
 
 type CommandsBarPropsType = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -316,7 +318,7 @@ export class CommandsBar extends React.Component<
 }
 
 const mapStateToProps = (state: RootStateType) => {
-  console.debug("CommandsBar state: ", state)
+  debug("CommandsBar state: ", state)
   const props = {
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
@@ -329,7 +331,7 @@ const mapStateToProps = (state: RootStateType) => {
     >,
     isTyping: state.GoiTester.get("IsTyping") as boolean,
   }
-  console.debug("CommandsBar props: ", props)
+  debug("CommandsBar props: ", props)
   return props
 }
 const mapDispatchToProps = (

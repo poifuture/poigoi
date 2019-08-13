@@ -6,6 +6,8 @@ import { GoiDb } from "../utils/GoiDb"
 import { ThunkDispatch, ThunkAction } from "redux-thunk"
 import { Action } from "redux"
 import { RootStateType } from "../states/RootState"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:GoiUserActions")
 
 export const UPDATE_GOI_USER_STATE = "GOI_USER_ACTIONS_UPDATE_GOI_USER_STATE"
 
@@ -81,10 +83,10 @@ export const LazyInitUserAction = ({
   return async (dispatch, getState) => {
     if (readState) {
       const state = getState()
-      console.debug("LazyInitUser state: ", state)
+      debug("LazyInitUser state: ", state)
       const poiUserId = state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId
       if (poiUserId) {
-        console.debug("Already loaded PoiUser: ", poiUserId)
+        debug("Already loaded PoiUser: ", poiUserId)
         return poiUserId
       }
     }

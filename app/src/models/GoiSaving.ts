@@ -9,6 +9,8 @@ import {
 import { GoiDb, GoiNS, GoiDbRange } from "../utils/GoiDb"
 import * as PoiUser from "../utils/PoiUser"
 import { GoiSavingId, GoiJudgeResult } from "../types/GoiTypes"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:GoiSaving")
 
 export type GoiSavingDbKey = GlobalDbKey & { readonly brand: "GoiSavingDbKey" }
 export type GoiWordRecordDbKey = GlobalDbKey & {
@@ -320,7 +322,7 @@ export class GoiWordRecordModel {
   SetPending = async (orderKey: string) => {
     const wordRecord = await this.Read()
     if (wordRecord.Level > 0 || wordRecord.Prioritied || wordRecord.Pending) {
-      console.debug("Already added word: ", wordRecord.WordKey)
+      debug("Already added word: ", wordRecord.WordKey)
       return
     }
     await this.update({ Pending: orderKey })

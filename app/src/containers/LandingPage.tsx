@@ -42,6 +42,8 @@ import { GoiDb } from "../utils/GoiDb"
 import { LanguageCode } from "../types/PoiI18nTypes"
 import { withTranslation, WithTranslation } from "react-i18next"
 import Helmet from "react-helmet"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:LandingPage")
 
 type LandingPagePropsType = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -109,12 +111,12 @@ export class LandingPage extends React.Component<
 }
 
 const mapStateToProps = (state: RootStateType) => {
-  console.debug("LandingPage state: ", state)
+  debug("LandingPage state: ", state)
   const props = {
     // poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     // savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
   }
-  console.debug("LandingPage props: ", props)
+  debug("LandingPage props: ", props)
   return props
 }
 const mapDispatchToProps = (

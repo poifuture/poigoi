@@ -20,6 +20,8 @@ import {
   UPDATE_SUBTOTAL,
   UpdateSubtotalActionType,
 } from "../actions/WordAdderActions"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:WordAdderReducer")
 
 const InitialWordAdderState: WordAdderStateType = {
   Display: false,
@@ -141,17 +143,16 @@ export const WordAdderReducer = (
   state: Map<string, any> = fromJS(InitialWordAdderState),
   action: WordAdderActionsType
 ) => {
-  console.debug("Reducing WordAdder... ", action.type)
   switch (action.type) {
     case DISPLAY_WORD_ADDER: {
-      console.debug("Hit DISPLAY_WORD_ADDER ... ", action)
+      debug("Hit DISPLAY_WORD_ADDER ... ")
       const typedAction = action as DisplayWordAdderActionType
       return state.merge({
         Display: typedAction.Display,
       })
     }
     case UPDATE_STATUS: {
-      console.debug("Hit UPDATE_STATUS ... ", action)
+      debug("Hit UPDATE_STATUS ... ")
       const typedAction = action as UpdateStatusActionType
       return state.set(
         "Status",
@@ -163,7 +164,7 @@ export const WordAdderReducer = (
       )
     }
     case PUSH_PENDING_QUERY: {
-      console.debug("Hit PUSH_PENDING_QUERY ... ", action)
+      debug("Hit PUSH_PENDING_QUERY ... ")
       const typedAction = action as PushPendingQueryActionType
       const pendingQuerys = state.get("Pendings") as List<Map<string, any>>
       if (
@@ -171,7 +172,7 @@ export const WordAdderReducer = (
           pendingQuery => pendingQuery.get("Query") === typedAction.Query
         ).size > 0
       ) {
-        console.debug("Already added pending query: ", typedAction.Query)
+        debug("Already added pending query: ", typedAction.Query)
         return state
       }
       const pendingQuery: WordAdderPendingQueryType = {
@@ -184,7 +185,7 @@ export const WordAdderReducer = (
       )
     }
     case POP_PENDING_QUERY: {
-      console.debug("Hit POP_PENDING_QUERY ... ", action)
+      debug("Hit POP_PENDING_QUERY ... ")
       const typedAction = action as PopPendingQueryActionType
       return state.set(
         "Pendings",
@@ -197,7 +198,7 @@ export const WordAdderReducer = (
       )
     }
     case PUSH_COUNT_QUERY: {
-      console.debug("Hit PUSH_COUNT_QUERY ... ", action)
+      debug("Hit PUSH_COUNT_QUERY ... ")
       const typedAction = action as PushCountQueryActionType
       return state.set(
         "Counters",
@@ -210,12 +211,12 @@ export const WordAdderReducer = (
       )
     }
     case UPDATE_FILTER: {
-      console.debug("Hit UPDATE_FILTER ... ", action)
+      debug("Hit UPDATE_FILTER ... ")
       const { Filter } = action as UpdateFilterActionType
       return state.set("Filter", state.get("Filter").merge(Filter))
     }
     case UPDATE_SUBTOTAL: {
-      console.debug("Hit UPDATE_FILTER ... ", action)
+      debug("Hit UPDATE_SUBTOTAL ... ")
       const { Subtotal } = action as UpdateSubtotalActionType
       return state.set("Subtotal", Subtotal)
     }

@@ -9,6 +9,8 @@ import {
   PoiLocalDataType,
 } from "../utils/PoiDb"
 import { GoiSavingId } from "../types/GoiTypes"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:GoiUser")
 
 export type GoiUserDbKey = GlobalDbKey & { readonly brand: "GoiUserDbKey" }
 
@@ -61,7 +63,7 @@ export class GoiUserModel {
     return await GoiDb().Exists(this.dbKey)
   }
   Create = async (): Promise<GoiUserDbKey> => {
-    console.debug("Creating GoiUser...", this.poiUserId)
+    debug("Creating GoiUser...", this.poiUserId)
     const newData: GoiUserDataType = this.DefaultData()
     await GoiDb().put({
       _id: this.dbKey,
@@ -80,7 +82,7 @@ export class GoiUserModel {
     return { ...this.DefaultData(), ...data }
   }
   private update = async (partial: Partial<GoiUserDataType>) => {
-    console.debug("Updating GoiUser: ", partial)
+    debug("Updating GoiUser: ", partial)
     const data = await this.Read()
     await GoiDb().put({
       ...data,

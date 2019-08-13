@@ -10,7 +10,6 @@ export const LayoutReducer = (
   state: Map<string, any> = fromJS(InitialLayoutState),
   action: Action
 ) => {
-  console.debug("Reducing Layout...", action.type)
   switch (action.type) {
     default: {
       break

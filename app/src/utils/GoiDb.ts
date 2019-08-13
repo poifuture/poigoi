@@ -2,6 +2,8 @@ import "isomorphic-fetch"
 import PouchDB from "pouchdb-browser"
 import PouchDBDebug from "pouchdb-debug"
 import { DbKey } from "./PoiDb"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:GoiDb")
 
 export interface GoiDbRange {
   startkey: string
@@ -16,7 +18,7 @@ class GoiPouchDB extends PouchDB {
       return true
     } catch (error) {
       if (error.status && error.status === 404) {
-        console.debug("Miss DbKey: ", dbKey)
+        debug("Miss DbKey: ", dbKey)
         return false
       }
       throw error
@@ -32,7 +34,7 @@ class GoiPouchDB extends PouchDB {
       return await this.Get<Model>(dbKey)
     } catch (error) {
       if (error.status && error.status === 404) {
-        console.debug("Miss DbKey: ", dbKey)
+        debug("Miss DbKey: ", dbKey)
         return null
       }
       throw error
@@ -46,9 +48,11 @@ export const GoiDb = (options?: { test?: boolean }) => {
     singletonDb = new GoiPouchDB("PoiGoi", { adapter: "memory" })
   }
   if (!singletonDb) {
-    console.debug("Initilizing PouchDB connection...")
-    PouchDB.plugin(PouchDBDebug)
-    PouchDB.debug.enable("pouchdb:api")
+    debug("Initilizing PouchDB connection...")
+    if (process.env.GOI_DEBUG) {
+      PouchDB.plugin(PouchDBDebug)
+      PouchDB.debug.enable("pouchdb:api")
+    }
     singletonDb = new GoiPouchDB("PoiGoi")
   }
   return singletonDb

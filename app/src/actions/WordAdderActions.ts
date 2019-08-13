@@ -26,6 +26,8 @@ import { GoiSavingId, AllPromisesReceiver } from "../types/GoiTypes"
 import { ThunkAction, ThunkDispatch } from "redux-thunk"
 import { Action, ActionCreator } from "redux"
 import { RootStateType } from "../states/RootState"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:WordAdderActions")
 
 export const DISPLAY_WORD_ADDER = "WORD_ADDER_ACTIONS_DISPLAY_WORD_ADDER"
 export const UPDATE_STATUS = "WORD_ADDER_ACTIONS_UPDATE_STATUS"
@@ -117,11 +119,11 @@ const CountStatusAction = ({
   savingId: GoiSavingId
 }) => {
   return (async dispatch => {
-    console.debug("Counting status... ")
+    debug("Counting status... ")
     const wordRecords = Object.values(
       await BulkGetWordRecords({ poiUserId, savingId })
     )
-    console.debug("Records:", wordRecords)
+    debug("Records:", wordRecords)
     const learnedCount = wordRecords.filter(wordRecord => wordRecord.Level > 0)
       .length
     const prioritiedCount = wordRecords.filter(
@@ -169,12 +171,12 @@ const queryWords = async (
   },
   { wordKeys }: { wordKeys?: Immutable.Set<string> } = {}
 ): Promise<{ [key: string]: GoiWordType }> => {
-  console.debug("Query words... ", query)
+  debug("Query words... ", query)
   wordKeys =
     typeof wordKeys !== "undefined"
       ? wordKeys
       : await GoiDictionarys(dictionarys).GetAllWordsKeys()
-  console.debug("AllWordKeys", wordKeys)
+  debug("AllWordKeys", wordKeys)
   const queryRegExp = new RegExp(query, "i")
 
   const words: { [key: string]: GoiWordType } = {}
@@ -190,7 +192,7 @@ const queryWords = async (
     words[wordKey] = word
   })
   await Promise.all(wordsPromises.toArray())
-  console.debug("Query words done ", query)
+  debug("Query words done ", query)
   return words
 }
 
@@ -214,7 +216,7 @@ const CountQueryAction = (
   } = {}
 ) => {
   return (async dispatch => {
-    console.debug("Counting Query... ", query)
+    debug("Counting Query... ", query)
     query = query.trim()
     const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
     const words = await queryWords({ query, dictionarys }, { wordKeys })
@@ -446,10 +448,7 @@ export const AddWordsFromQuerysAction = (
             wordRecord.Prioritied ||
             wordRecord.Pending
           ) {
-            console.debug(
-              "Already added word to pendings: ",
-              wordRecord.WordKey
-            )
+            debug("Already added word to pendings: ", wordRecord.WordKey)
             return null
           }
           await GoiWordRecord(poiUserId, savingId, wordKey).SetPending(
@@ -474,11 +473,11 @@ export const ClearPendingWordsAction = ({
   savingId: GoiSavingId
 }) => {
   return (async (dispatch): Promise<void> => {
-    console.debug("Clearing pending words... ")
+    debug("Clearing pending words... ")
     const wordRecords = Object.values(
       await BulkGetWordRecords({ poiUserId, savingId })
     )
-    console.debug("records", wordRecords)
+    debug("records", wordRecords)
     const wordKeys = wordRecords
       .filter(
         wordRecord =>
