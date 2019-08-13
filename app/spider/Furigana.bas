@@ -28,7 +28,7 @@ Function ProcessWord(maxline, readyWordCol) As Boolean
 
   ' Calculate
   For line = 2 To maxline
-    If Cells(line, RubyManualTagCol).Value <> "manual" And Cells(line, RubyManualTagCol).Value <> "special" Then
+    If Cells(line, RubyManualTagCol).Value = "excel" Then
       wordstr = Cells(line, BaseWordCol).Value
     
       ' Split chars for furigana
@@ -59,11 +59,11 @@ Function ProcessWord(maxline, readyWordCol) As Boolean
     
     Cells(line, RubyAutoTagCol).Value = ""
     If Cells(line, RubyByExcelCol).Value = Cells(line, RubyByConcatCol).Value Then
-      If Cells(line, RubyManualTagCol).Value <> "manual" Then
-        Cells(line, RubyAutoTagCol).Value = "auto"
+      If Cells(line, RubyManualTagCol).Value = "excel" Then
+        Cells(line, RubyAutoTagCol).Value = "excelauto"
       End If
     Else
-      If Cells(line, RubyManualTagCol).Value <> "" And Cells(line, RubyManualTagCol).Value <> "special" Then
+      If Cells(line, RubyManualTagCol).Value <> "excel" And Cells(line, RubyManualTagCol).Value <> "special" Then
         Cells(line, RubyAutoTagCol).Value = "ALERT"
       End If
     End If
