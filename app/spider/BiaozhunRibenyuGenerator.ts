@@ -66,7 +66,10 @@ const fetchRomaji = async ({ kanji }: { kanji: string }): Promise<string> => {
 }
 const fetchWapuro = async ({ kana }: { kana: string }): Promise<string> => {
   const wapuro = await KuroshiroModule.Util.kanaToRomaji(
-    kana.replace("ん", "nn").replace("ー", "-"),
+    kana
+      .replace("ん", "nn")
+      .replace("ン", "nn")
+      .replace("ー", "-"),
     "hepburn"
   )
   console.log("Fetching wapuro... kana:", kana, " wapuro:", wapuro)
