@@ -3,7 +3,11 @@ import LandingPage from "../containers/LandingPage"
 import { withTranslation, WithTranslation } from "react-i18next"
 import i18n from "i18next"
 class ZhCnLandingPage extends React.Component<WithTranslation> {
-  componentWillMount = async () => {
+  constructor(props: WithTranslation) {
+    super(props)
+    i18n.language = "zh-hans"
+  }
+  componentDidMount = async () => {
     await i18n.changeLanguage("zh-hans")
   }
   render() {
