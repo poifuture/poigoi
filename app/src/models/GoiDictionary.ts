@@ -6,6 +6,8 @@ import { GoiJaWordType, GoiWordType } from "../types/GoiDictionaryTypes"
 import KanaDictionary from "../dictionary/KanaDictionary"
 import GoiSimpleJaDictionary from "../dictionary/GoiSimpleJaDictionary"
 import BiaozhunRibenyu from "../dictionary/BiaozhunRibenyu"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:GoiDictionary")
 
 export type GoiDictionaryDbKey = GlobalDbKey & {
   readonly brand: "GoiDictionaryDbKey"
@@ -62,7 +64,7 @@ export class GoiDictionaryModel {
   public static Create = async (
     dictionaryName: string
   ): Promise<GoiDictionaryDbKey> => {
-    console.debug("Creating GoiDictionary from name: ", dictionaryName)
+    debug("Creating GoiDictionary from name: ", dictionaryName)
     const dbKey: GoiDictionaryDbKey = GoiDictionaryModel.GetDbKey(
       dictionaryName
     ) // `Poi/Goi/PoiUser/${poiUserId}/Entry`
@@ -111,7 +113,7 @@ export class GoiDictionaryModel {
     return await GoiDb().Get<GoiDictionaryDataType>(this.dbKey)
   }
   private update = async (partial: Partial<GoiDictionaryDataType>) => {
-    console.debug("Updating GoiDictionary: ", partial)
+    debug("Updating GoiDictionary: ", partial)
     const data = await this.Read()
 
     await GoiDb().put({
@@ -139,7 +141,7 @@ export class GoiDictionaryModel {
         return (KanaDictionary.words[wordKey] as GoiWordType) as T
       }
       case "GoiSimpleJaDictionary": {
-        // console.debug("TODO:read from database")
+        // debug("TODO:read from database")
         // TODO:read from database
         if (!(wordKey in GoiSimpleJaDictionary.words)) {
           return null
@@ -147,7 +149,7 @@ export class GoiDictionaryModel {
         return (GoiSimpleJaDictionary.words[wordKey] as GoiWordType) as T
       }
       case "BiaozhunRibenyu": {
-        // console.debug("TODO:read from database")
+        // debug("TODO:read from database")
         // TODO:read from database
         if (!(wordKey in BiaozhunRibenyu.words)) {
           return null

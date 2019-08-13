@@ -13,6 +13,8 @@ import BatteryCharging80Icon from "@material-ui/icons/BatteryCharging80Outlined"
 import BatteryCharging90Icon from "@material-ui/icons/BatteryCharging90Outlined"
 import BatteryChargingFullIcon from "@material-ui/icons/BatteryChargingFullOutlined"
 import BatteryAlertIcon from "@material-ui/icons/BatteryAlertOutlined"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:JaWordCard")
 
 export type WordCardPropsType = {
   word: GoiJaWordType
@@ -104,7 +106,7 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
       this.props.display !== "detailed"
         ? sortedSentences.slice(0, 1)
         : sortedSentences
-    console.debug(filteredTranslationsDictionarys, filteredSentences)
+    debug(filteredTranslationsDictionarys, filteredSentences)
     return (
       <div className="word-card">
         <div

@@ -10,7 +10,13 @@ import { Action } from "redux"
 import NavBar from "../components/NavBar"
 import { Snackbar } from "@material-ui/core"
 import "../utils/GoiI18n"
-// import "./layout.css"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:Layouts")
+
+if (process.env.GOI_DEBUG && typeof localStorage !== "undefined") {
+  console.warn("DEBUG:", process.env.GOI_DEBUG)
+  DebugModule.enable("PoiGoi:*")
+}
 
 export class Layout extends React.Component<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>

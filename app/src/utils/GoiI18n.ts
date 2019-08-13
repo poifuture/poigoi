@@ -1,3 +1,4 @@
+import DebugModule from "debug"
 import i18n from "i18next"
 import Backend from "i18next-xhr-backend"
 import LanguageDetector from "i18next-browser-languagedetector"
@@ -9,6 +10,8 @@ import ZhWordAdderLocale from "../locales/zh/WordAdder.json"
 import ZhHansLandingPageLocale from "../locales/zh-hans/LandingPage.json"
 import ZhHansC2LandingPageLocale from "../locales/zh-hans-c2/LandingPage.json"
 import ZhHansC2CommandsBarLocale from "../locales/zh-hans-c2/CommandsBar.json"
+
+const debug = DebugModule("PoiGoi:GoiI18n")
 
 const resources = {
   zh: {
@@ -25,7 +28,7 @@ const resources = {
     LandingPage: ZhHansC2LandingPageLocale,
   },
 }
-console.log(resources)
+debug(resources)
 
 i18n
   // .use(Backend)

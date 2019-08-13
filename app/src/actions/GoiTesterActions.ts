@@ -20,6 +20,8 @@ import { Action } from "redux"
 import Heap from "../algorithm/Heap"
 import { RootStateType } from "../states/RootState"
 import { ThunkAction } from "redux-thunk"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:GoiTesterActions")
 
 export const UPDATE_IS_TYPING = "GOI_TESTER_ACTIONS_UPDATE_IS_TYPING"
 export const UPDATE_GOI_TESTER_WORD =
@@ -116,7 +118,7 @@ export const DecideNextWord = ({
   prioritiedCandidate?: GoiWordRecordDataType | null
   pendingCandidate?: GoiWordRecordDataType | null
 }) => {
-  console.debug("DecideNextWord... ")
+  debug("DecideNextWord... ")
   if (learnedCandidate) {
     if (learnedCandidate.NextTime < new Date().getTime()) {
       return { candidate: learnedCandidate, decision: "leaned" }
@@ -141,11 +143,11 @@ export const ReindexCandidates = async ({
   poiUserId: PoiUser.PoiUserId
   savingId: GoiSavingId
 }) => {
-  console.debug("Reindexing... ")
+  debug("Reindexing... ")
   const wordRecords = Object.values(
     await BulkGetWordRecords({ poiUserId, savingId })
   )
-  console.debug("Records:", wordRecords)
+  debug("Records:", wordRecords)
   const learnedCandidates = new Heap<GoiWordRecordDataType>(
     wordRecords.filter(wordRecord => wordRecord.Level > 0),
     (a, b) => {
@@ -189,7 +191,7 @@ export const VerifyJaAnswer = (
     ...options,
   }
   answer = answer.toLowerCase().trim()
-  console.debug("Verifying ja answer...", options)
+  debug("Verifying ja answer...", options)
   const correctAnswers: string[] = [TrimFurigana(jaWord.common).toLowerCase()]
   const acceptAnswers: string[] = []
   const rejectAnswers: string[] = []
@@ -231,18 +233,18 @@ export const VerifyJaAnswer = (
     )
   }
   if (correctAnswers.includes(answer)) {
-    console.debug("Answer ", answer, " is correct in ", correctAnswers)
+    debug("Answer ", answer, " is correct in ", correctAnswers)
     return "Correct"
   }
   if (acceptAnswers.includes(answer)) {
-    console.debug("Answer ", answer, " is accepted in ", acceptAnswers)
+    debug("Answer ", answer, " is accepted in ", acceptAnswers)
     return "Accepted"
   }
   if (rejectAnswers.includes(answer)) {
-    console.debug("Answer ", answer, " is rejected in ", rejectAnswers)
+    debug("Answer ", answer, " is rejected in ", rejectAnswers)
     return "Rejected"
   }
-  console.debug(
+  debug(
     "Answer ",
     answer,
     " is wrong. No match in ",
@@ -324,7 +326,7 @@ export const VerifyAnswerAction = (
 ) => {
   return async (dispatch: any): Promise<GoiJudgeResult> => {
     skip = typeof skip !== "undefined" ? skip : false
-    console.debug("Verifying answer... ", answer)
+    debug("Verifying answer... ", answer)
     const wordKey = word.key
     let judgeResult: GoiJudgeResult = "Wrong"
     if (skip) {
@@ -400,16 +402,16 @@ export const ShowNextWordAction = (
   } = {}
 ) => {
   return (async (dispatch): Promise<void> => {
-    console.debug("Showing next word... ")
+    debug("Showing next word... ")
     if (!learnedCandidates || !prioritiedCandidates || !pendingCandidates) {
-      console.debug("No heap found... ")
+      debug("No heap found... ")
       ;({
         learnedCandidates,
         prioritiedCandidates,
         pendingCandidates,
       } = await ReindexCandidates({ poiUserId, savingId }))
     } else {
-      console.debug("Getting candidates from heap... ")
+      debug("Getting candidates from heap... ")
       if (currentWordKey) {
         const currentWordRecord = await GoiWordRecord(
           poiUserId,

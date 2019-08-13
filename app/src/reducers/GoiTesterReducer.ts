@@ -14,6 +14,8 @@ import {
 import { GoiTesterStateType } from "../states/GoiTesterState"
 import { GoiWordRecordDataType } from "../models/GoiSaving"
 import Heap from "../algorithm/Heap"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:GoiTesterReducer")
 
 const InitialGoiTesterState: GoiTesterStateType = {
   IsTyping: false,
@@ -29,15 +31,14 @@ export const GoiTesterReducer = (
   state: Map<string, any> = fromJS(InitialGoiTesterState),
   action: GoiTesterActionTypes
 ) => {
-  console.debug("Reducing GoiJaTester...", action.type)
   switch (action.type) {
     case UPDATE_IS_TYPING: {
-      console.debug("Hit UPDATE_GOI_USER_STATE ... ", action)
+      debug("Hit UPDATE_IS_TYPING ... ")
       const typedAction = action as UpdateIsTypingActionType
       return state.set("IsTyping", typedAction.IsTyping)
     }
     case UPDATE_GOI_TESTER_WORD: {
-      console.debug("Hit UPDATE_GOI_USER_STATE ... ", action)
+      debug("Hit UPDATE_GOI_TESTER_WORD ... ")
       const typedAction = action as UpdateGoiTesterWordActionType
       return state.merge({
         ...(typedAction.Word && {
@@ -49,12 +50,12 @@ export const GoiTesterReducer = (
       })
     }
     case UPDATE_JUDGE_RESULT: {
-      console.debug("Hit UPDATE_JUDGE_RESULT ... ", action)
+      debug("Hit UPDATE_JUDGE_RESULT ... ")
       const typedAction = action as UpdateJudgeResultActionType
       return state.set("JudgeResult", typedAction.JudgeResult)
     }
     case UPDATE_CANDIDATES: {
-      console.debug("Hit UPDATE_CANDIDATES ... ", action)
+      debug("Hit UPDATE_CANDIDATES ... ")
       const typedAction = action as UpdateCandidatesActionType
       const newState = state.merge({
         ...(typedAction.LearnedCandidates && {
@@ -67,7 +68,6 @@ export const GoiTesterReducer = (
           PendingCandidates: typedAction.PendingCandidates,
         }),
       })
-      console.debug("Reduced candidates state: ", newState)
       return newState
     }
   }

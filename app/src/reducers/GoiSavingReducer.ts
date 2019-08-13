@@ -6,6 +6,8 @@ import {
   UPDATE_GOI_SAVING_STATE,
 } from "../actions/GoiSavingActions"
 import { GoiSavingId } from "../types/GoiTypes"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:GoiSavingReducer")
 
 const InitialGoiSavingState: GoiSavingStateType = {
   SavingId: "" as GoiSavingId,
@@ -16,9 +18,9 @@ export const GoiSavingReducer = (
   state: Map<string, any> = fromJS(InitialGoiSavingState),
   action: GoiSavingActionsType
 ) => {
-  console.debug("Reducing GoiSaving...", action.type)
   switch (action.type) {
     case UPDATE_GOI_SAVING_STATE: {
+      debug("Hit UPDATE_GOI_SAVING_STATE ... ")
       const typedAction = action as UpdateGoiSavingStateActionType
       return state.merge({
         SavingId: typedAction.SavingId,

@@ -1,4 +1,6 @@
 import Base32Encode from "base32-encode"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:PoiUser")
 
 export type PoiUserId = string & { readonly brand: "PoiUserId" }
 
@@ -17,7 +19,7 @@ export const GenerateId: () => Promise<PoiUserId> = async () => {
   seed[0] = timestamp >>> 0
   seed[1] = (timestamp / 2 ** 32) >>> 0
   const tmpPoiUserId = Base32Encode(seed.buffer, "RFC4648", { padding: false })
-  console.debug("Generated poiUserId: ", tmpPoiUserId, " seed: ", seed)
+  debug("Generated poiUserId: ", tmpPoiUserId, " seed: ", seed)
   return tmpPoiUserId as PoiUserId
 }
 

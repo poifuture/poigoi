@@ -36,6 +36,8 @@ import MoreHorizIcon from "@material-ui/icons/MoreHorizOutlined"
 import LinkOffIcon from "@material-ui/icons/LinkOffOutlined"
 import { display } from "@material-ui/system"
 import { withTranslation, WithTranslation } from "react-i18next"
+import DebugModule from "debug"
+const debug = DebugModule("PoiGoi:GoiTester")
 
 type GoiTesterPropsType = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -57,9 +59,9 @@ export class GoiTester extends React.Component<
   }
   JudgeInputElement: HTMLInputElement | null = null
   async componentDidMount() {
-    console.debug("Lasy init user")
+    debug("Lasy init user")
     const poiUserId = (await this.props.lazyInitUser()) as PoiUser.PoiUserId
-    console.debug("Lasy init saving")
+    debug("Lasy init saving")
     const savingId = await this.props.lazyInitSaving({ poiUserId })
     await this.props.showNextWord({ poiUserId, savingId })
   }
@@ -136,7 +138,7 @@ export class GoiTester extends React.Component<
         ? "detailed"
         : "simple"
     return (
-      <div className="goi-tester" style={{ marginTop: "20px" }}>
+      <div className="goi-tester">
         <Helmet>
           {savingLanguage.startsWith("ja") ? (
             this.props.judgeResult === "Pending" ? (
@@ -160,6 +162,11 @@ export class GoiTester extends React.Component<
             </title>
           )}
         </Helmet>
+        <div
+          style={{
+            height: "50px", // avoid wechat "No password" tip
+          }}
+        />
         <div style={{ display: "flex" }}>
           <TextField
             label={t("MainInputLabel", "Justify your answer")}
@@ -267,7 +274,7 @@ export class GoiTester extends React.Component<
 }
 
 const mapStateToProps = (state: RootStateType) => {
-  console.debug("GoiTester state: ", state)
+  debug("GoiTester state: ", state)
   const props = {
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
@@ -286,7 +293,7 @@ const mapStateToProps = (state: RootStateType) => {
     prioritiedCandidates: state.GoiTester.get("PrioritiedCandidates"),
     pendingCandidates: state.GoiTester.get("PendingCandidates"),
   }
-  console.debug("GoiTester props: ", props)
+  debug("GoiTester props: ", props)
   return props
 }
 const mapDispatchToProps = (
