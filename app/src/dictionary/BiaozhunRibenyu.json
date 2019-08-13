@@ -18,7 +18,7 @@
       "uncommons": [],
       "kana": "ちゅうごくじん",
       "romaji": "chūgokujin",
-      "wapuro": "chuugokujin",
+      "wapuro": "chuugokujinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -48,7 +48,7 @@
       "uncommons": [],
       "kana": "にほんじん",
       "romaji": "nipponjin",
-      "wapuro": "nihonjin",
+      "wapuro": "nihonnjin",
       "audios": [
         {
           "cv": "Hikari",
@@ -78,7 +78,7 @@
       "uncommons": [],
       "kana": "かんこくじん",
       "romaji": "kankokujin",
-      "wapuro": "kankokujin",
+      "wapuro": "kannkokujin",
       "audios": [
         {
           "cv": "Hikari",
@@ -108,7 +108,7 @@
       "uncommons": [],
       "kana": "アメリカじん",
       "romaji": "amerikajin",
-      "wapuro": "amerikajin",
+      "wapuro": "amerikajinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -138,7 +138,7 @@
       "uncommons": [],
       "kana": "フランスじん",
       "romaji": "furansujin",
-      "wapuro": "furansujin",
+      "wapuro": "furansujinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -197,7 +197,7 @@
       "uncommons": [],
       "kana": "せんせい",
       "romaji": "sensei",
-      "wapuro": "sensei",
+      "wapuro": "sennsei",
       "audios": [
         {
           "cv": "Hikari",
@@ -284,7 +284,7 @@
       "uncommons": [],
       "kana": "しゃいん",
       "romaji": "shain",
-      "wapuro": "shain",
+      "wapuro": "shainn",
       "audios": [
         {
           "cv": "Hikari",
@@ -316,7 +316,7 @@
       "uncommons": [],
       "kana": "かいしゃいん",
       "romaji": "kaishain",
-      "wapuro": "kaishain",
+      "wapuro": "kaishainn",
       "audios": [
         {
           "cv": "Hikari",
@@ -377,7 +377,7 @@
       "uncommons": [],
       "kana": "けんしゅうせい",
       "romaji": "kenshūsei",
-      "wapuro": "kenshuusei",
+      "wapuro": "kennshuusei",
       "audios": [
         {
           "cv": "Hikari",
@@ -1380,7 +1380,7 @@
       "uncommons": [],
       "kana": "こんにちは",
       "romaji": "konnichiwa",
-      "wapuro": "konnichiha",
+      "wapuro": "konnnichiha",
       "audios": [
         {
           "cv": "Hikari",
@@ -1409,7 +1409,7 @@
       "uncommons": [],
       "kana": "すみません",
       "romaji": "sumimasen",
-      "wapuro": "sumimasen",
+      "wapuro": "sumimasenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -1611,7 +1611,7 @@
       "uncommons": [],
       "kana": "わかりません",
       "romaji": "wakarimasen",
-      "wapuro": "wakarimasen",
+      "wapuro": "wakarimasenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -1640,7 +1640,7 @@
       "uncommons": [],
       "kana": "どうもすみません",
       "romaji": "dōmosumimasen",
-      "wapuro": "doumosumimasen",
+      "wapuro": "doumosumimasenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -1672,7 +1672,7 @@
       "uncommons": [],
       "kana": "さん",
       "romaji": "san",
-      "wapuro": "san",
+      "wapuro": "sann",
       "audios": [
         {
           "cv": "Hikari",
@@ -1703,7 +1703,7 @@
       "uncommons": [],
       "kana": "ちゃん",
       "romaji": "chan",
-      "wapuro": "chan",
+      "wapuro": "chann",
       "audios": [
         {
           "cv": "Hikari",
@@ -1734,7 +1734,7 @@
       "uncommons": [],
       "kana": "くん",
       "romaji": "kimi",
-      "wapuro": "kun",
+      "wapuro": "kunn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2100,8 +2100,8 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "じん",
-      "romaji": "hito",
-      "wapuro": "jin",
+      "romaji": "jin",
+      "wapuro": "jinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2129,7 +2129,7 @@
       "uncommons": [],
       "kana": "イギリスじん",
       "romaji": "igirisujin",
-      "wapuro": "igirisujin",
+      "wapuro": "igirisujinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2157,7 +2157,7 @@
       "uncommons": [],
       "kana": "イタリアじん",
       "romaji": "itariajin",
-      "wapuro": "itariajin",
+      "wapuro": "itariajinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2185,7 +2185,7 @@
       "uncommons": [],
       "kana": "インドじん",
       "romaji": "indojin",
-      "wapuro": "indojin",
+      "wapuro": "indojinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2213,7 +2213,7 @@
       "uncommons": [],
       "kana": "オーストラリアじんじん",
       "romaji": "ōsutorariajin",
-      "wapuro": "o-sutorariajinjin",
+      "wapuro": "o-sutorariajinnjin",
       "audios": [
         {
           "cv": "Hikari",
@@ -2241,7 +2241,7 @@
       "uncommons": [],
       "kana": "スペインじん",
       "romaji": "supeinjin",
-      "wapuro": "supeinjin",
+      "wapuro": "supeinjinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2269,7 +2269,7 @@
       "uncommons": [],
       "kana": "タイじん",
       "romaji": "taijin",
-      "wapuro": "taijin",
+      "wapuro": "taijinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2297,7 +2297,7 @@
       "uncommons": [],
       "kana": "ドイツじん",
       "romaji": "doitsujin",
-      "wapuro": "doitsujin",
+      "wapuro": "doitsujinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2325,7 +2325,7 @@
       "uncommons": [],
       "kana": "ブラジルじん",
       "romaji": "burajirujin",
-      "wapuro": "burajirujin",
+      "wapuro": "burajirujinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2353,7 +2353,7 @@
       "uncommons": [],
       "kana": "ベトナムじん",
       "romaji": "betonamujin",
-      "wapuro": "betonamujin",
+      "wapuro": "betonamujinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2381,7 +2381,7 @@
       "uncommons": [],
       "kana": "メキシコじん",
       "romaji": "mekishikojin",
-      "wapuro": "mekishikojin",
+      "wapuro": "mekishikojinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2409,7 +2409,7 @@
       "uncommons": [],
       "kana": "ロシアじん",
       "romaji": "roshiajin",
-      "wapuro": "roshiajin",
+      "wapuro": "roshiajinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2437,7 +2437,7 @@
       "uncommons": [],
       "kana": "がいこくじん",
       "romaji": "gaikokujin",
-      "wapuro": "gaikokujin",
+      "wapuro": "gaikokujinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -2464,7 +2464,7 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "ご",
-      "romaji": "katari",
+      "romaji": "go",
       "wapuro": "go",
       "audios": [
         {
@@ -3000,7 +3000,7 @@
       "uncommons": [],
       "kana": "ほん",
       "romaji": "hon",
-      "wapuro": "hon",
+      "wapuro": "honn",
       "audios": [
         {
           "cv": "Hikari",
@@ -3029,7 +3029,7 @@
       "uncommons": [],
       "kana": "かばん",
       "romaji": "kaban",
-      "wapuro": "kaban",
+      "wapuro": "kabann",
       "audios": [
         {
           "cv": "Hikari",
@@ -3087,7 +3087,7 @@
       "uncommons": [],
       "kana": "えんぴつ",
       "romaji": "empitsu",
-      "wapuro": "empitsu",
+      "wapuro": "enmpitsu",
       "audios": [
         {
           "cv": "Hikari",
@@ -3174,7 +3174,7 @@
       "uncommons": [],
       "kana": "しんぶん",
       "romaji": "shimbun",
-      "wapuro": "shimbun",
+      "wapuro": "shinmbun",
       "audios": [
         {
           "cv": "Hikari",
@@ -3377,7 +3377,7 @@
       "uncommons": [],
       "kana": "でんわ",
       "romaji": "denwa",
-      "wapuro": "denwa",
+      "wapuro": "dennwa",
       "audios": [
         {
           "cv": "Hikari",
@@ -3551,7 +3551,7 @@
       "uncommons": [],
       "kana": "しゃしん",
       "romaji": "shashin",
-      "wapuro": "shashin",
+      "wapuro": "shashinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -3609,7 +3609,7 @@
       "uncommons": [],
       "kana": "じてんしゃ",
       "romaji": "jitensha",
-      "wapuro": "jitensha",
+      "wapuro": "jitennsha",
       "audios": [
         {
           "cv": "Hikari",
@@ -3667,7 +3667,7 @@
       "uncommons": [],
       "kana": "めいさんひん",
       "romaji": "meisanhin",
-      "wapuro": "meisanhin",
+      "wapuro": "meisannhin",
       "audios": [
         {
           "cv": "Hikari",
@@ -3902,7 +3902,7 @@
       "uncommons": [],
       "kana": "おかあさん",
       "romaji": "okāsan",
-      "wapuro": "okaasan",
+      "wapuro": "okaasann",
       "audios": [
         {
           "cv": "Hikari",
@@ -3934,7 +3934,7 @@
       "uncommons": [],
       "kana": "にほんご",
       "romaji": "nihongo",
-      "wapuro": "nihongo",
+      "wapuro": "nihonngo",
       "audios": [
         {
           "cv": "Hikari",
@@ -4122,7 +4122,7 @@
       "uncommons": [],
       "kana": "なん",
       "romaji": "nani",
-      "wapuro": "nan",
+      "wapuro": "nann",
       "audios": [
         {
           "cv": "Hikari",
@@ -4470,7 +4470,7 @@
       "uncommons": [],
       "kana": "にほん",
       "romaji": "nippon",
-      "wapuro": "nihon",
+      "wapuro": "nihonn",
       "audios": [
         {
           "cv": "Hikari",
@@ -4625,7 +4625,7 @@
       "uncommons": [],
       "kana": "なん",
       "romaji": "nani",
-      "wapuro": "nan",
+      "wapuro": "nann",
       "audios": [
         {
           "cv": "Hikari",
@@ -4745,7 +4745,7 @@
       "uncommons": [],
       "kana": "ゆうびんきょく",
       "romaji": "yūbinkyoku",
-      "wapuro": "yuubinkyoku",
+      "wapuro": "yuubinnkyoku",
       "audios": [
         {
           "cv": "Hikari",
@@ -4774,7 +4774,7 @@
       "uncommons": [],
       "kana": "ぎんこう",
       "romaji": "ginkō",
-      "wapuro": "ginkou",
+      "wapuro": "ginnkou",
       "audios": [
         {
           "cv": "Hikari",
@@ -4803,7 +4803,7 @@
       "uncommons": [],
       "kana": "としょかん",
       "romaji": "toshokan",
-      "wapuro": "toshokan",
+      "wapuro": "toshokann",
       "audios": [
         {
           "cv": "Hikari",
@@ -4919,7 +4919,7 @@
       "uncommons": [],
       "kana": "きっさてん",
       "romaji": "kissaten",
-      "wapuro": "kissaten",
+      "wapuro": "kissatenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -4948,7 +4948,7 @@
       "uncommons": [],
       "kana": "びょういん",
       "romaji": "byōin",
-      "wapuro": "byouin",
+      "wapuro": "byouinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -5471,7 +5471,7 @@
       "uncommons": [],
       "kana": "しゅうへん",
       "romaji": "shūhen",
-      "wapuro": "shuuhen",
+      "wapuro": "shuuhenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -6000,7 +6000,7 @@
       "uncommons": [],
       "kana": "えん",
       "romaji": "en",
-      "wapuro": "en",
+      "wapuro": "enn",
       "audios": [
         {
           "cv": "Hikari",
@@ -6265,7 +6265,7 @@
       "uncommons": [],
       "kana": "ほんだな",
       "romaji": "hondana",
-      "wapuro": "hondana",
+      "wapuro": "honndana",
       "audios": [
         {
           "cv": "Hikari",
@@ -6613,7 +6613,7 @@
       "uncommons": [],
       "kana": "りょうしん",
       "romaji": "ryōshin",
-      "wapuro": "ryoushin",
+      "wapuro": "ryoushinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -6700,7 +6700,7 @@
       "uncommons": [],
       "kana": "おんな",
       "romaji": "onna",
-      "wapuro": "onna",
+      "wapuro": "onnna",
       "audios": [
         {
           "cv": "Hikari",
@@ -7077,7 +7077,7 @@
       "uncommons": [],
       "kana": "こうえん",
       "romaji": "kōen",
-      "wapuro": "kouen",
+      "wapuro": "kouenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -7135,7 +7135,7 @@
       "uncommons": [],
       "kana": "ばいてん",
       "romaji": "baiten",
-      "wapuro": "baiten",
+      "wapuro": "baitenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -7552,7 +7552,7 @@
       "uncommons": [],
       "kana": "せんしゅう",
       "romaji": "senshū",
-      "wapuro": "senshuu",
+      "wapuro": "sennshuu",
       "audios": [
         {
           "cv": "Hikari",
@@ -7641,7 +7641,7 @@
       "uncommons": [],
       "kana": "こんしゅう",
       "romaji": "konshū",
-      "wapuro": "konshuu",
+      "wapuro": "konnshuu",
       "audios": [
         {
           "cv": "Hikari",
@@ -7848,7 +7848,7 @@
       "uncommons": [],
       "kana": "まいばん",
       "romaji": "maiban",
-      "wapuro": "maiban",
+      "wapuro": "maibann",
       "audios": [
         {
           "cv": "Hikari",
@@ -7906,7 +7906,7 @@
       "uncommons": [],
       "kana": "ごぜん",
       "romaji": "gozen",
-      "wapuro": "gozen",
+      "wapuro": "gozenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -8208,7 +8208,7 @@
       "uncommons": [],
       "kana": "こんばん",
       "romaji": "komban",
-      "wapuro": "komban",
+      "wapuro": "konmban",
       "audios": [
         {
           "cv": "Hikari",
@@ -8237,7 +8237,7 @@
       "uncommons": [],
       "kana": "らいねん",
       "romaji": "rainen",
-      "wapuro": "rainen",
+      "wapuro": "rainenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -8266,7 +8266,7 @@
       "uncommons": [],
       "kana": "きょねん",
       "romaji": "kyonen",
-      "wapuro": "kyonen",
+      "wapuro": "kyonenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -8327,7 +8327,7 @@
       "uncommons": [],
       "kana": "ばん",
       "romaji": "ban",
-      "wapuro": "ban",
+      "wapuro": "bann",
       "audios": [
         {
           "cv": "Hikari",
@@ -8417,7 +8417,7 @@
       "uncommons": [],
       "kana": "しけん",
       "romaji": "shiken",
-      "wapuro": "shiken",
+      "wapuro": "shikenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -8562,7 +8562,7 @@
       "uncommons": [],
       "kana": "けんしゅう",
       "romaji": "kenshū",
-      "wapuro": "kenshuu",
+      "wapuro": "kennshuu",
       "audios": [
         {
           "cv": "Hikari",
@@ -8620,7 +8620,7 @@
       "uncommons": [],
       "kana": "てんらんかい",
       "romaji": "tenrankai",
-      "wapuro": "tenrankai",
+      "wapuro": "tennrankai",
       "audios": [
         {
           "cv": "Hikari",
@@ -8649,7 +8649,7 @@
       "uncommons": [],
       "kana": "かんげいかい",
       "romaji": "kangeikai",
-      "wapuro": "kangeikai",
+      "wapuro": "kanngeikai",
       "audios": [
         {
           "cv": "Hikari",
@@ -8951,7 +8951,7 @@
       "uncommons": [],
       "kana": "べんきょうする",
       "romaji": "benkyōsuru",
-      "wapuro": "benkyousuru",
+      "wapuro": "bennkyousuru",
       "audios": [
         {
           "cv": "Hikari",
@@ -9129,7 +9129,7 @@
       "uncommons": [],
       "kana": "ふん",
       "romaji": "bun",
-      "wapuro": "fun",
+      "wapuro": "funn",
       "audios": [
         {
           "cv": "Hikari",
@@ -9157,7 +9157,7 @@
       "uncommons": [],
       "kana": "はん",
       "romaji": "han",
-      "wapuro": "han",
+      "wapuro": "hann",
       "audios": [
         {
           "cv": "Hikari",
@@ -9241,7 +9241,7 @@
       "uncommons": [],
       "kana": "ねん",
       "romaji": "toshi",
-      "wapuro": "nen",
+      "wapuro": "nenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -9326,7 +9326,7 @@
       "uncommons": [],
       "kana": "せんげつ",
       "romaji": "sengetsu",
-      "wapuro": "sengetsu",
+      "wapuro": "senngetsu",
       "audios": [
         {
           "cv": "Hikari",
@@ -9473,7 +9473,7 @@
       "uncommons": [],
       "kana": "たんじょうび",
       "romaji": "tanjōbi",
-      "wapuro": "tanjoubi",
+      "wapuro": "tannjoubi",
       "audios": [
         {
           "cv": "Hikari",
@@ -9562,7 +9562,7 @@
       "uncommons": [],
       "kana": "こうつうきかん",
       "romaji": "kōtsūkikan",
-      "wapuro": "koutsuukikan",
+      "wapuro": "koutsuukikann",
       "audios": [
         {
           "cv": "Hikari",
@@ -9591,7 +9591,7 @@
       "uncommons": [],
       "kana": "しんかんせん",
       "romaji": "shinkansen",
-      "wapuro": "shinkansen",
+      "wapuro": "shinnkansen",
       "audios": [
         {
           "cv": "Hikari",
@@ -9678,7 +9678,7 @@
       "uncommons": [],
       "kana": "でんしゃ",
       "romaji": "densha",
-      "wapuro": "densha",
+      "wapuro": "dennsha",
       "audios": [
         {
           "cv": "Hikari",
@@ -9765,7 +9765,7 @@
       "uncommons": [],
       "kana": "びじゅつかん",
       "romaji": "bijutsukan",
-      "wapuro": "bijutsukan",
+      "wapuro": "bijutsukann",
       "audios": [
         {
           "cv": "Hikari",
@@ -10218,7 +10218,7 @@
       "uncommons": [],
       "kana": "かんこく",
       "romaji": "kankoku",
-      "wapuro": "kankoku",
+      "wapuro": "kannkoku",
       "audios": [
         {
           "cv": "Hikari",
@@ -10394,7 +10394,7 @@
       "uncommons": [],
       "kana": "ぎんざ",
       "romaji": "ginza",
-      "wapuro": "ginza",
+      "wapuro": "ginnza",
       "audios": [
         {
           "cv": "Hikari",
@@ -10452,7 +10452,7 @@
       "uncommons": [],
       "kana": "しんじゅく",
       "romaji": "shinjuku",
-      "wapuro": "shinjuku",
+      "wapuro": "shinnjuku",
       "audios": [
         {
           "cv": "Hikari",
@@ -10571,7 +10571,7 @@
       "uncommons": [],
       "kana": "たいへんですね",
       "romaji": "taihendesune",
-      "wapuro": "taihendesune",
+      "wapuro": "taihenndesune",
       "audios": [
         {
           "cv": "Hikari",
@@ -10805,7 +10805,7 @@
       "uncommons": [],
       "kana": "ひるごはん",
       "romaji": "hirugohan",
-      "wapuro": "hirugohan",
+      "wapuro": "hirugohann",
       "audios": [
         {
           "cv": "Hikari",
@@ -10834,7 +10834,7 @@
       "uncommons": [],
       "kana": "おべんとう",
       "romaji": "obentō",
-      "wapuro": "obentou",
+      "wapuro": "obenntou",
       "audios": [
         {
           "cv": "Hikari",
@@ -10894,7 +10894,7 @@
       "uncommons": [],
       "kana": "うどん",
       "romaji": "udon",
-      "wapuro": "udon",
+      "wapuro": "udonn",
       "audios": [
         {
           "cv": "Hikari",
@@ -10923,7 +10923,7 @@
       "uncommons": [],
       "kana": "おやこどん",
       "romaji": "oyakodomburi",
-      "wapuro": "oyakodon",
+      "wapuro": "oyakodonn",
       "audios": [
         {
           "cv": "Hikari",
@@ -11340,7 +11340,7 @@
       "uncommons": [],
       "kana": "おんがく",
       "romaji": "ongaku",
-      "wapuro": "ongaku",
+      "wapuro": "onngaku",
       "audios": [
         {
           "cv": "Hikari",
@@ -11398,7 +11398,7 @@
       "uncommons": [],
       "kana": "どうぶつえん",
       "romaji": "dōbutsuen",
-      "wapuro": "doubutsuen",
+      "wapuro": "doubutsuenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -12196,7 +12196,7 @@
       "uncommons": [],
       "kana": "ごぜんちゅう",
       "romaji": "gozennaka",
-      "wapuro": "gozenchuu",
+      "wapuro": "gozennchuu",
       "audios": [
         {
           "cv": "Hikari",
@@ -12312,7 +12312,7 @@
       "uncommons": [],
       "kana": "きねんひん",
       "romaji": "kinenhin",
-      "wapuro": "kinenhin",
+      "wapuro": "kinennhin",
       "audios": [
         {
           "cv": "Hikari",
@@ -12370,7 +12370,7 @@
       "uncommons": [],
       "kana": "しゃしんしゅう",
       "romaji": "shashinshū",
-      "wapuro": "shashinshuu",
+      "wapuro": "shashinnshuu",
       "audios": [
         {
           "cv": "Hikari",
@@ -12515,7 +12515,7 @@
       "uncommons": [],
       "kana": "こうくうびん",
       "romaji": "kōkūbin",
-      "wapuro": "koukuubin",
+      "wapuro": "koukuubinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -12631,7 +12631,7 @@
       "uncommons": [],
       "kana": "でんわばんごう",
       "romaji": "denwabangō",
-      "wapuro": "denwabangou",
+      "wapuro": "dennwabangou",
       "audios": [
         {
           "cv": "Hikari",
@@ -12721,7 +12721,7 @@
       "uncommons": [],
       "kana": "けん",
       "romaji": "ken",
-      "wapuro": "ken",
+      "wapuro": "kenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -12750,7 +12750,7 @@
       "uncommons": [],
       "kana": "しんぶんし",
       "romaji": "shimbunshi",
-      "wapuro": "shimbunshi",
+      "wapuro": "shinmbunshi",
       "audios": [
         {
           "cv": "Hikari",
@@ -12955,7 +12955,7 @@
       "uncommons": [],
       "kana": "おにいさん",
       "romaji": "onīsan",
-      "wapuro": "oniisan",
+      "wapuro": "oniisann",
       "audios": [
         {
           "cv": "Hikari",
@@ -12984,7 +12984,7 @@
       "uncommons": [],
       "kana": "かんこくご",
       "romaji": "kankokugo",
-      "wapuro": "kankokugo",
+      "wapuro": "kannkokugo",
       "audios": [
         {
           "cv": "Hikari",
@@ -13657,7 +13657,7 @@
       "uncommons": [],
       "kana": "ちん",
       "romaji": "chin",
-      "wapuro": "chin",
+      "wapuro": "chinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -14011,7 +14011,7 @@
       "uncommons": [],
       "kana": "まんが",
       "romaji": "manga",
-      "wapuro": "manga",
+      "wapuro": "mannga",
       "audios": [
         {
           "cv": "Hikari",
@@ -14844,7 +14844,7 @@
       "uncommons": [],
       "kana": "にん",
       "romaji": "hito",
-      "wapuro": "nin",
+      "wapuro": "ninn",
       "audios": [
         {
           "cv": "Hikari",
@@ -14900,7 +14900,7 @@
       "uncommons": [],
       "kana": "ほん",
       "romaji": "hon",
-      "wapuro": "hon",
+      "wapuro": "honn",
       "audios": [
         {
           "cv": "Hikari",
@@ -15068,7 +15068,7 @@
       "uncommons": [],
       "kana": "ばん",
       "romaji": "ban",
-      "wapuro": "ban",
+      "wapuro": "bann",
       "audios": [
         {
           "cv": "Hikari",
@@ -15208,7 +15208,7 @@
       "uncommons": [],
       "kana": "じかん",
       "romaji": "jikan",
-      "wapuro": "jikan",
+      "wapuro": "jikann",
       "audios": [
         {
           "cv": "Hikari",
@@ -15236,7 +15236,7 @@
       "uncommons": [],
       "kana": "しゅうかん",
       "romaji": "shūkan",
-      "wapuro": "shuukan",
+      "wapuro": "shuukann",
       "audios": [
         {
           "cv": "Hikari",
@@ -15320,7 +15320,7 @@
       "uncommons": [],
       "kana": "ふなびん",
       "romaji": "funabin",
-      "wapuro": "funabin",
+      "wapuro": "funabinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -15378,7 +15378,7 @@
       "uncommons": [],
       "kana": "げんこう",
       "romaji": "genkō",
-      "wapuro": "genkou",
+      "wapuro": "gennkou",
       "audios": [
         {
           "cv": "Hikari",
@@ -15552,7 +15552,7 @@
       "uncommons": [],
       "kana": "おうだんほどう",
       "romaji": "ōdanhodō",
-      "wapuro": "oudanhodou",
+      "wapuro": "oudannhodou",
       "audios": [
         {
           "cv": "Hikari",
@@ -15639,7 +15639,7 @@
       "uncommons": [],
       "kana": "こうさてん",
       "romaji": "kōsaten",
-      "wapuro": "kousaten",
+      "wapuro": "kousatenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -15726,7 +15726,7 @@
       "uncommons": [],
       "kana": "でんき",
       "romaji": "denki",
-      "wapuro": "denki",
+      "wapuro": "dennki",
       "audios": [
         {
           "cv": "Hikari",
@@ -15755,7 +15755,7 @@
       "uncommons": [],
       "kana": "たいきょくけん",
       "romaji": "taikyokuken",
-      "wapuro": "taikyokuken",
+      "wapuro": "taikyokukenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -15784,7 +15784,7 @@
       "uncommons": [],
       "kana": "あさごはん",
       "romaji": "asagohan",
-      "wapuro": "asagohan",
+      "wapuro": "asagohann",
       "audios": [
         {
           "cv": "Hikari",
@@ -15813,7 +15813,7 @@
       "uncommons": [],
       "kana": "ばんごはん",
       "romaji": "bangohan",
-      "wapuro": "bangohan",
+      "wapuro": "banngohan",
       "audios": [
         {
           "cv": "Hikari",
@@ -16710,7 +16710,7 @@
       "uncommons": [],
       "kana": "たいへん",
       "romaji": "taihen",
-      "wapuro": "taihen",
+      "wapuro": "taihenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -16930,7 +16930,7 @@
       "uncommons": [],
       "kana": "すみませんが",
       "romaji": "sumimasenga",
-      "wapuro": "sumimasenga",
+      "wapuro": "sumimasennga",
       "audios": [
         {
           "cv": "Hikari",
@@ -17043,7 +17043,7 @@
       "uncommons": [],
       "kana": "けいおびでんはなし",
       "romaji": "keitaidenwa",
-      "wapuro": "keiobidenhanashi",
+      "wapuro": "keiobidennhanashi",
       "audios": [
         {
           "cv": "Hikari",
@@ -17071,7 +17071,7 @@
       "uncommons": [],
       "kana": "きんけむり",
       "romaji": "kin'en",
-      "wapuro": "kinkemuri",
+      "wapuro": "kinnkemuri",
       "audios": [
         {
           "cv": "Hikari",
