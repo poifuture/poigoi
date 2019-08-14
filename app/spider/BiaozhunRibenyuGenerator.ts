@@ -65,14 +65,11 @@ const fetchRomaji = async ({ kanji }: { kanji: string }): Promise<string> => {
   })
 }
 const fetchWapuro = async ({ kana }: { kana: string }): Promise<string> => {
-  const wapuro = await KuroshiroModule.Util.kanaToRomaji(
-    kana
-      .replace("ん", "nn")
-      .replace("ン", "nn")
-      .replace("ー", "-"),
-    "hepburn"
-  )
-  console.log("Fetching wapuro... kana:", kana, " wapuro:", wapuro)
+  const replaced = kana
+    .replace(/ん/g, "nn")
+    .replace(/ン/g, "nn")
+    .replace(/ー/g, "-")
+  const wapuro = await KuroshiroModule.Util.kanaToRomaji(replaced, "hepburn")
   return wapuro
 }
 const toGairaigo = ({ katakana }: { katakana: string }): string => {
@@ -311,7 +308,7 @@ const preprocess = async () => {
   let bookChapterCache = ""
   let bookWordIdCache = 0
   let results: SpiderWordType[] = []
-  // for (let index = 60; index < 100; index++) {
+  // for (let index = 555; index < 557; index++) {
   for (let index = 1; index < lines.length; index++) {
     const word = parseLine(lines[index])
     if (!word.wordInput) {
