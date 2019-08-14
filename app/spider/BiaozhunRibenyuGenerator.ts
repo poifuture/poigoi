@@ -295,7 +295,7 @@ const parseLine = (line: string): WordInputType => {
     alterInput: parseWordSplitCells(alterWordCells),
     uncommonInput: parseWordSplitCells(uncommonWordCells),
   }
-  console.log(JSON.stringify(word, null, 2))
+  // console.log(JSON.stringify(word, null, 2))
   return word
 }
 const preprocess = async () => {
@@ -436,6 +436,7 @@ const preprocess = async () => {
         JSON.stringify(processedWord.tone).replace(",", "|"),
         processedWord.textbookTag,
         processedWord.common.manualTag !== "special" &&
+        processedWord.common.manualTag !== "gairaigo" &&
         !validateFurigana(processedWord.common)
           ? "WARNING"
           : "",
