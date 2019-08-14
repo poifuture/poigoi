@@ -22,6 +22,7 @@ const InitialGoiTesterState: GoiTesterStateType = {
   CurrentWord: KanaDictionary.words["あ"],
   JudgeResult: "Pending",
   Record: null,
+  ForcedWordKey: "",
   LearnedCandidates: new Heap<GoiWordRecordDataType>([]),
   PrioritiedCandidates: new Heap<GoiWordRecordDataType>([]),
   PendingCandidates: new Heap<GoiWordRecordDataType>([]),
@@ -52,7 +53,12 @@ export const GoiTesterReducer = (
     case UPDATE_JUDGE_RESULT: {
       debug("Hit UPDATE_JUDGE_RESULT ... ")
       const typedAction = action as UpdateJudgeResultActionType
-      return state.set("JudgeResult", typedAction.JudgeResult)
+      return state.merge({
+        JudgeResult: typedAction.JudgeResult,
+        ...(typedAction.ForcedWordKey && {
+          ForcedWordKey: typedAction.ForcedWordKey,
+        }),
+      })
     }
     case UPDATE_CANDIDATES: {
       debug("Hit UPDATE_CANDIDATES ... ")

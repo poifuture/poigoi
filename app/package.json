@@ -82,7 +82,7 @@
   "scripts": {
     "spider": "ts-node -O '{\"module\":\"commonjs\",\"isolatedModules\":false}'",
     "build": "gatsby build",
-    "develop": "cross-env GATSBY_SOME_VAR=123 NODE_TLS_REJECT_UNAUTHORIZED=0 gatsby develop -H 0.0.0.0 --https",
+    "develop": "cross-env GATSBY_SOME_VAR=123 NODE_TLS_REJECT_UNAUTHORIZED=0 gatsby develop -H 0.0.0.0",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",

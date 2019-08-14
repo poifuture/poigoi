@@ -90,7 +90,7 @@ export class CommandsBar extends React.Component<
         className="commands-bar"
         style={{
           visibility: smDown && this.props.isTyping ? "hidden" : "inherit",
-          position: "absolute",
+          position: "fixed",
           bottom: "20px",
           right: "20px",
           display: "inline-flex",

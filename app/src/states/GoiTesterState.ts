@@ -9,6 +9,7 @@ export interface GoiTesterStateType {
   CurrentWord: GoiWordType
   Record: GoiWordRecordDataType | null
   JudgeResult: GoiJudgeResult
+  ForcedWordKey: string
   LearnedCandidates: Heap<GoiWordRecordDataType>
   PrioritiedCandidates: Heap<GoiWordRecordDataType>
   PendingCandidates: Heap<GoiWordRecordDataType>

@@ -9,9 +9,11 @@ export class TinyTag extends React.Component<TinyTagPropsType> {
     return (
       <Box
         display="inline-flex"
-        border={1}
-        borderRadius={3}
-        marginLeft="5px"
+        fontSize="3vmin"
+        height="auto"
+        color="gray"
+        marginLeft="4px"
+        marginRight="1px"
         {...this.props}
       >
         {this.props.children}

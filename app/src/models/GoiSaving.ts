@@ -333,8 +333,8 @@ export class GoiWordRecordModel {
   Forget = async () => {
     await this.update({ Level: -1, Prioritied: "", Pending: "" })
   }
-  SetFrozenTime = async (nextTime: TimeStamp) => {
-    await this.update({ NextTime: nextTime })
+  SetFrozenTime = async (frozenTime: TimeStamp) => {
+    await this.update({ FrozenTime: frozenTime })
   }
   SetNextTime = async (nextTime: TimeStamp) => {
     await this.update({ NextTime: nextTime })
