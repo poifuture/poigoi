@@ -10,5 +10,9 @@
   "MainInputPendingPlaceholderForJaLearner": "建议使用日语输入法",
   "MainInputWrongPlaceholder": "输入正确答案以继续",
   "WordDetailButtonText": "更多",
-  "ForgetWordButtonText": "忘记该词"
+  "ForgetWordButtonText": "不再出现",
+  "LevelPlusOneButtonText": "练度",
+  "LevelPlusTwoButtonText": "练度",
+  "ReportWordButtonText": "报错",
+  "CloseReportWordButtonText": "关闭"
 }

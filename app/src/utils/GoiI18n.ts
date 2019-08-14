@@ -3,6 +3,7 @@ import i18n from "i18next"
 import Backend from "i18next-xhr-backend"
 import LanguageDetector from "i18next-browser-languagedetector"
 import { initReactI18next } from "react-i18next"
+import ZhCommonLocale from "../locales/zh/Common.json"
 import ZhCommandsBarLocale from "../locales/zh/CommandsBar.json"
 import ZhGoiTesterLocale from "../locales/zh/GoiTester.json"
 import ZhLandingPageLocale from "../locales/zh/LandingPage.json"
@@ -15,6 +16,7 @@ const debug = DebugModule("PoiGoi:GoiI18n")
 
 const resources = {
   zh: {
+    Common: ZhCommonLocale,
     CommandsBar: ZhCommandsBarLocale,
     GoiTester: ZhGoiTesterLocale,
     LandingPage: ZhLandingPageLocale,

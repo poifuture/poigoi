@@ -768,8 +768,8 @@
       "alternatives": [],
       "uncommons": [],
       "kana": "あっ",
-      "romaji": "atsu",
-      "wapuro": "atsu",
+      "romaji": "a",
+      "wapuro": "axtsu",
       "audios": [
         {
           "cv": "Hikari",
@@ -1293,7 +1293,7 @@
       "uncommons": [],
       "kana": "ジェーシーきかく",
       "romaji": "JCkikaku",
-      "wapuro": "jckikaku",
+      "wapuro": "JCkikaku",
       "audios": [
         {
           "cv": "Hikari",
@@ -2208,12 +2208,12 @@
     "オーストラリア人": {
       "key": "オーストラリア人",
       "language": "ja",
-      "common": "<ruby>オーストラリア<rt>Australia</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>人<rt>じん</rt></ruby>",
+      "common": "<ruby>オーストラリア<rt>Australia</rt></ruby><ruby>人<rt>じん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "オーストラリアじんじん",
+      "kana": "オーストラリアじん",
       "romaji": "ōsutorariajin",
-      "wapuro": "o-sutorariajinnjin",
+      "wapuro": "o-sutorariajinn",
       "audios": [
         {
           "cv": "Hikari",
@@ -5233,7 +5233,7 @@
     "バーゲン会場": {
       "key": "バーゲン会場",
       "language": "ja",
-      "common": "バーゲン<ruby>会<rt>かい</rt></ruby><ruby>場<rt>じょう</rt></ruby>",
+      "common": "<ruby>バーゲン<rt>bargain</rt></ruby><ruby>会<rt>かい</rt></ruby><ruby>場<rt>じょう</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "バーゲンかいじょう",
@@ -5262,7 +5262,7 @@
     "エスカレーター": {
       "key": "エスカレーター",
       "language": "ja",
-      "common": "エスカレーター",
+      "common": "<ruby>エスカレーター<rt>Escalator</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "エスカレーター",
@@ -12278,7 +12278,7 @@
     "パンフレット": {
       "key": "パンフレット",
       "language": "ja",
-      "common": "パンフレット",
+      "common": "<ruby>パンフレット<rt>pamphlet</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "パンフレット",

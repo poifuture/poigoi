@@ -26,6 +26,9 @@ import {
   InputAdornment,
   IconButton,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from "@material-ui/core"
 import SpellcheckIcon from "@material-ui/icons/SpellcheckOutlined"
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturnOutlined"
@@ -34,9 +37,14 @@ import ForwardIcon from "@material-ui/icons/ForwardOutlined"
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined"
 import MoreHorizIcon from "@material-ui/icons/MoreHorizOutlined"
 import LinkOffIcon from "@material-ui/icons/LinkOffOutlined"
+import ExposurePlus1Icon from "@material-ui/icons/ExposurePlus1Outlined"
+import ExposurePlus2Icon from "@material-ui/icons/ExposurePlus2Outlined"
+import ReportProblemIcon from "@material-ui/icons/ReportProblemOutlined"
 import { display } from "@material-ui/system"
 import { withTranslation, WithTranslation } from "react-i18next"
 import DebugModule from "debug"
+import { UpdateEnableScrollAction } from "../actions/LayoutActions"
+import ResponsiveDialog from "../components/ResponsiveDialog"
 const debug = DebugModule("PoiGoi:GoiTester")
 
 type GoiTesterPropsType = ReturnType<typeof mapStateToProps> &
@@ -45,6 +53,7 @@ type GoiTesterPropsType = ReturnType<typeof mapStateToProps> &
 interface GoiTesterStateType {
   testerInput: string
   displayDetail: boolean
+  isReportWordDialogOpened: boolean
 }
 export class GoiTester extends React.Component<
   GoiTesterPropsType,
@@ -55,6 +64,7 @@ export class GoiTester extends React.Component<
     this.state = {
       testerInput: "",
       displayDetail: false,
+      isReportWordDialogOpened: false,
     }
   }
   JudgeInputElement: HTMLInputElement | null = null
@@ -65,7 +75,10 @@ export class GoiTester extends React.Component<
     const savingId = await this.props.lazyInitSaving({ poiUserId })
     await this.props.showNextWord({ poiUserId, savingId })
   }
-  requestJudge = async ({ skip }: { skip?: boolean } = {}) => {
+  requestJudge = async ({
+    skip,
+    forceLevelChange,
+  }: { skip?: boolean; forceLevelChange?: number } = {}) => {
     const { poiUserId, savingId } = this.props
     const word: GoiJaWordType = this.props.currentWord.toJS()
     const judgeResult = await this.props.judgeAnswer(
@@ -73,6 +86,7 @@ export class GoiTester extends React.Component<
         answer: this.state.testerInput,
         word,
         skip,
+        forceLevelChange,
       },
       {
         poiUserId,
@@ -244,30 +258,108 @@ export class GoiTester extends React.Component<
         />
         {!wordCardDisplay.startsWith("test") && (
           <div className="word-card-actions">
-            <Button
-              aria-label="detail"
-              onClick={() => {
-                this.setState({ displayDetail: true })
-              }}
-              style={{ color: "gray" }}
-            >
-              <MoreHorizIcon />
-              {t("WordDetailButtonText", "Detail")}
-            </Button>
+            {!this.state.displayDetail && (
+              <Button
+                size="small"
+                aria-label="detail"
+                onClick={() => {
+                  this.setState({ displayDetail: true })
+                  this.props.enableScroll({ enableScroll: true })
+                }}
+                style={{ color: "gray" }}
+              >
+                <MoreHorizIcon fontSize="small" />
+                {t("WordDetailButtonText", "Detail")}
+              </Button>
+            )}
             {this.state.displayDetail && (
               <Button
+                size="small"
                 aria-label="forget"
                 onClick={() => {
                   this.requestNext({ forget: true })
                 }}
                 style={{ color: "gray" }}
               >
-                <LinkOffIcon />
+                <LinkOffIcon fontSize="small" />
                 {t("ForgetWordButtonText", "Forget")}
+              </Button>
+            )}
+            {this.state.displayDetail && this.props.forcedWordKey !== word.key && (
+              <Button
+                size="small"
+                aria-label="level plus one"
+                onClick={() => this.requestJudge({ forceLevelChange: 1 })}
+                style={{ color: "gray" }}
+              >
+                <ExposurePlus1Icon fontSize="small" />
+                {t("LevelPlusOneButtonText", "Level")}
+              </Button>
+            )}
+            {this.state.displayDetail && this.props.forcedWordKey !== word.key && (
+              <Button
+                size="small"
+                aria-label="level plus two"
+                onClick={() => this.requestJudge({ forceLevelChange: 2 })}
+                style={{ color: "gray" }}
+              >
+                <ExposurePlus2Icon fontSize="small" />
+                {t("LevelPlusTwoButtonText", "Level")}
+              </Button>
+            )}
+            {this.state.displayDetail && (
+              <Button
+                size="small"
+                aria-label="report wrong word"
+                onClick={() => {
+                  this.setState({ isReportWordDialogOpened: true })
+                }}
+                style={{ color: "gray" }}
+              >
+                <ReportProblemIcon fontSize="small" />
+                {t("ReportWordButtonText", "Report")}
               </Button>
             )}
           </div>
         )}
+        <div
+          className="word-card-bottom-placeholder"
+          style={{ height: "100px" }}
+        ></div>
+        <ResponsiveDialog open={this.state.isReportWordDialogOpened}>
+          {i18n.language.startsWith("zh") ? (
+            <iframe
+              width="640px"
+              height="480px"
+              src="https://forms.office.com/Pages/ResponsePage.aspx?id=HO2aql64JEqeASBBMrBBF9_J_XUtkrhFhjg9N756g3xUNTBIMThERkFCT0JDS1JSOFhLSk45WFJKMyQlQCN0PWcu&embed=true"
+              frameBorder={0}
+              marginWidth={0}
+              marginHeight={0}
+              style={{ border: "none", maxWidth: "100%", maxHeight: "100vh" }}
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <iframe
+              width="640px"
+              height="480px"
+              src="https://forms.office.com/Pages/ResponsePage.aspx?id=HO2aql64JEqeASBBMrBBF9_J_XUtkrhFhjg9N756g3xUQTNBQUU2NllVUzdZRlcxMzM5Tk1JMkREUCQlQCN0PWcu&embed=true"
+              frameBorder={0}
+              marginWidth={0}
+              marginHeight={0}
+              style={{ border: "none", maxWidth: "100%", maxHeight: "100vh" }}
+              allowFullScreen
+            ></iframe>
+          )}
+          <DialogActions>
+            <Button
+              onClick={() => {
+                this.setState({ isReportWordDialogOpened: false })
+              }}
+            >
+              {t("CloseReportWordButtonText", "Close")}
+            </Button>
+          </DialogActions>
+        </ResponsiveDialog>
       </div>
     )
   }
@@ -284,6 +376,7 @@ const mapStateToProps = (state: RootStateType) => {
       ? (state.GoiTester.getIn(["Record", "Level"]) as number)
       : null,
     judgeResult: state.GoiTester.get("JudgeResult") as GoiJudgeResult,
+    forcedWordKey: state.GoiTester.get("ForcedWordKey") as string,
     saving: state.GoiSaving.get("Saving") as
       | GoiSavingDataType
       | null
@@ -305,6 +398,8 @@ const mapDispatchToProps = (
       dispatch(LazyInitSavingAction({ poiUserId })),
     updateIsTyping: ({ isTyping }: { isTyping: boolean }) =>
       dispatch(UpdateIsTypingAction({ isTyping })),
+    enableScroll: ({ enableScroll }: { enableScroll: boolean }) =>
+      dispatch(UpdateEnableScrollAction({ enableScroll })),
     showNextWord: (
       {
         poiUserId,
@@ -338,10 +433,12 @@ const mapDispatchToProps = (
         answer,
         word,
         skip,
+        forceLevelChange,
       }: {
         answer: string
         word: GoiWordType
         skip?: boolean
+        forceLevelChange?: number
       },
       {
         poiUserId,
@@ -352,7 +449,10 @@ const mapDispatchToProps = (
       }
     ) =>
       dispatch(
-        VerifyAnswerAction({ answer, word, skip }, { poiUserId, savingId })
+        VerifyAnswerAction(
+          { answer, word, skip, forceLevelChange },
+          { poiUserId, savingId }
+        )
       ),
   }
 }

@@ -21,6 +21,7 @@ import Heap from "../algorithm/Heap"
 import { RootStateType } from "../states/RootState"
 import { ThunkAction } from "redux-thunk"
 import DebugModule from "debug"
+import { UpdateEnableScrollAction } from "./LayoutActions"
 const debug = DebugModule("PoiGoi:GoiTesterActions")
 
 export const UPDATE_IS_TYPING = "GOI_TESTER_ACTIONS_UPDATE_IS_TYPING"
@@ -43,6 +44,7 @@ export interface UpdateGoiTesterWordActionType
 export interface UpdateJudgeResultActionType
   extends Action<typeof UPDATE_JUDGE_RESULT> {
   JudgeResult: GoiJudgeResult
+  ForcedWordKey?: string
 }
 
 export interface UpdateCandidatesActionType
@@ -84,12 +86,15 @@ export const UpdateGoiTesterWordAction = ({
 }
 export const UpdateJudgeResultAction = ({
   judgeResult,
+  forcedWordKey,
 }: {
   judgeResult: GoiJudgeResult
+  forcedWordKey?: string
 }): UpdateJudgeResultActionType => {
   return {
     type: UPDATE_JUDGE_RESULT,
     JudgeResult: judgeResult,
+    ForcedWordKey: forcedWordKey,
   }
 }
 export const UpdateCandidatesAction = ({
@@ -265,6 +270,7 @@ const GetLevelChange = (judgeResult: GoiJudgeResult) => {
       return -1
     }
     case "Skipped":
+    case "Forced":
     default: {
       return 0
     }
@@ -311,10 +317,12 @@ export const VerifyAnswerAction = (
     answer,
     word,
     skip,
+    forceLevelChange,
   }: {
     answer: string
     word: GoiWordType
     skip?: boolean
+    forceLevelChange?: number
   },
   {
     poiUserId,
@@ -326,11 +334,17 @@ export const VerifyAnswerAction = (
 ) => {
   return async (dispatch: any): Promise<GoiJudgeResult> => {
     skip = typeof skip !== "undefined" ? skip : false
+    forceLevelChange =
+      typeof forceLevelChange !== "undefined" ? forceLevelChange : 0
     debug("Verifying answer... ", answer)
     const wordKey = word.key
     let judgeResult: GoiJudgeResult = "Wrong"
     if (skip) {
+      debug("Skipping word... ")
       judgeResult = "Skipped"
+    } else if (forceLevelChange) {
+      debug("Forcing level change... ", forceLevelChange)
+      judgeResult = "Forced"
     } else {
       switch (word.language) {
         case "ja":
@@ -346,20 +360,31 @@ export const VerifyAnswerAction = (
         }
       }
     }
-    dispatch(UpdateJudgeResultAction({ judgeResult }))
+    dispatch(
+      UpdateJudgeResultAction({
+        judgeResult,
+        ...(judgeResult === "Forced" && { forcedWordKey: wordKey }),
+      })
+    )
     const judgeTime = new Date().getTime()
     const recordModel = GoiWordRecord(poiUserId, savingId, wordKey)
     const recordBefore = await recordModel.ReadOrCreate()
     const levelBefore = recordBefore.Level
-    const unvalidatedLevelAfter = levelBefore + GetLevelChange(judgeResult)
+    const unvalidatedLevelAfter =
+      levelBefore + GetLevelChange(judgeResult) + forceLevelChange
     const levelAfter =
-      unvalidatedLevelAfter <= 1
+      unvalidatedLevelAfter < 1
         ? 1
+        : forceLevelChange
+        ? unvalidatedLevelAfter
         : judgeTime <= recordBefore.FrozenTime
         ? levelBefore
         : unvalidatedLevelAfter <= levelBefore
         ? unvalidatedLevelAfter
         : unvalidatedLevelAfter
+    debug("Judge time:", judgeTime, "frozen time:", recordBefore.FrozenTime)
+    debug("frozen:", judgeTime <= recordBefore.FrozenTime)
+    debug("Level before:", levelBefore, "level after:", levelAfter)
     const historyDbKey = await GoiWordHistory(
       poiUserId,
       savingId,
@@ -372,6 +397,7 @@ export const VerifyAnswerAction = (
       potentialFrozenTime + Math.floor(timeChange * Math.random())
     if (levelBefore !== levelAfter) {
       await recordModel.SetLevel(levelAfter)
+      debug("Setting frozen time...", potentialFrozenTime)
       await recordModel.SetFrozenTime(potentialFrozenTime)
     }
     await recordModel.SetNextTime(nextTime)
@@ -460,5 +486,6 @@ export const ShowNextWordAction = (
       })
     )
     dispatch(UpdateJudgeResultAction({ judgeResult: "Pending" }))
+    dispatch(UpdateEnableScrollAction({ enableScroll: false }))
   }) as ThunkAction<Promise<void>, RootStateType, void, Action>
 }

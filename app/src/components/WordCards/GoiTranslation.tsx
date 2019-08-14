@@ -3,8 +3,9 @@ import { I18nString } from "../../types/GoiDictionaryTypes"
 import { List as MuiList, Box } from "@material-ui/core"
 import TinyTag from "./TinyTag"
 import { ToggleEvents } from "../../utils/PoiResponsive"
+import { WithTranslation, withTranslation } from "react-i18next"
 
-export type GoiTranslationPropsType = {
+export type GoiTranslationPropsType = WithTranslation & {
   i18nTranslation: {
     translation: I18nString
     hint?: I18nString
@@ -53,6 +54,7 @@ export class GoiTranslation extends React.Component<
     this.setState({ displayHint: display })
   }
   render() {
+    const { t } = this.props
     const { i18nTranslation, from, displayFrom } = this.props
     const displayHint = this.props.displayHint || this.state.displayHint
     return (
@@ -71,12 +73,17 @@ export class GoiTranslation extends React.Component<
         </div>
         {i18nTranslation.hint && (
           <div className="word-card-single-translation-hint">
-            <TinyTag {...ToggleEvents(this.toggleStateHint)}>Hint</TinyTag>
+            <TinyTag {...ToggleEvents(this.toggleStateHint)}>
+              {t("Hint")}
+            </TinyTag>
             {Object.entries(i18nTranslation.hint).map(
               ([hintLanguage, hintText]) => (
                 <span
                   key={hintLanguage}
-                  style={{ visibility: displayHint ? "inherit" : "hidden" }}
+                  style={{
+                    visibility: displayHint ? "inherit" : "hidden",
+                    fontSize: "3vmin",
+                  }}
                 >
                   {Object.keys(i18nTranslation.hint || {}).length > 1 && (
                     <TinyTag>{hintLanguage}</TinyTag>
@@ -109,4 +116,4 @@ export class GoiTranslation extends React.Component<
   }
 }
 
-export default GoiTranslation
+export default withTranslation("Common")(GoiTranslation)
