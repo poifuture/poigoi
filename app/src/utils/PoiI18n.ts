@@ -1,5 +1,4 @@
-import { I18nString } from "../types/GoiDictionaryTypes"
-import { LocaleCode } from "../types/PoiI18nTypes"
+import { LocaleCode, I18nString } from "../types/PoiI18nTypes"
 
 export const LookUp = (i18nString: I18nString, locale: LocaleCode) => {
   // TODO(nagi): Write better lookup

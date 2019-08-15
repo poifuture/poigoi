@@ -1,5 +1,5 @@
 import React from "react"
-import { I18nString } from "../../types/GoiDictionaryTypes"
+import { I18nString } from "../../types/PoiI18nTypes"
 import { List as MuiList, Box } from "@material-ui/core"
 import { BoxProps } from "@material-ui/core/Box"
 

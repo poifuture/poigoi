@@ -1,6 +1,7 @@
 import React from "react"
-import { I18nString } from "../../types/GoiDictionaryTypes"
-import { List as MuiList, Box } from "@material-ui/core"
+import { I18nString } from "../../types/PoiI18nTypes"
+import { List as MuiList, Box, IconButton } from "@material-ui/core"
+import WbSunnyIcon from "@material-ui/icons/WbSunnyOutlined"
 import TinyTag from "./TinyTag"
 import { ToggleEvents } from "../../utils/PoiResponsive"
 import { WithTranslation, withTranslation } from "react-i18next"
@@ -73,16 +74,16 @@ export class GoiTranslation extends React.Component<
         </div>
         {i18nTranslation.hint && (
           <div className="word-card-single-translation-hint">
-            <TinyTag {...ToggleEvents(this.toggleStateHint)}>
-              {t("Hint")}
-            </TinyTag>
+            <IconButton size="small" {...ToggleEvents(this.toggleStateHint)}>
+              <WbSunnyIcon fontSize="small" />
+            </IconButton>
             {Object.entries(i18nTranslation.hint).map(
               ([hintLanguage, hintText]) => (
                 <span
                   key={hintLanguage}
                   style={{
                     visibility: displayHint ? "inherit" : "hidden",
-                    fontSize: "3vmin",
+                    fontSize: "4vmin",
                   }}
                 >
                   {Object.keys(i18nTranslation.hint || {}).length > 1 && (

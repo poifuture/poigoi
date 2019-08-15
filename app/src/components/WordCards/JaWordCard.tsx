@@ -16,6 +16,7 @@ import BatteryChargingFullIcon from "@material-ui/icons/BatteryChargingFullOutli
 import BatteryAlertIcon from "@material-ui/icons/BatteryAlertOutlined"
 import VolumeOffIcon from "@material-ui/icons/VolumeOffOutlined"
 import DebugModule from "debug"
+import GoiUnorderedList from "./GoiUnorderedList"
 const debug = DebugModule("PoiGoi:JaWordCard")
 
 export type WordCardPropsType = {
@@ -181,6 +182,22 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
               )}
             </div>
             <div>
+              {word.alternatives.length > 0 && (
+                <TinyContentTag title="同:">
+                  {word.alternatives.map(furigana => (
+                    <span dangerouslySetInnerHTML={{ __html: furigana }} />
+                  ))}
+                </TinyContentTag>
+              )}
+              {word.uncommons.length > 0 && (
+                <TinyContentTag title="珍:">
+                  {word.uncommons.map(furigana => (
+                    <span dangerouslySetInnerHTML={{ __html: furigana }} />
+                  ))}
+                </TinyContentTag>
+              )}
+            </div>
+            <div>
               {word.pos.includes("KANA") && <TinyTag>仮名</TinyTag>}
               {word.pos.includes("HIRAGANA") && <TinyTag>平仮名</TinyTag>}
               {word.pos.includes("KATAKANA") && <TinyTag>片仮名</TinyTag>}
@@ -216,7 +233,7 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
           </span>
         </div>
         <div className="word-card-translation" style={{ color: statusColor }}>
-          <MuiList>
+          <GoiUnorderedList>
             {filteredTranslationsDictionarys.map(dictionaryName => (
               <GoiTranslation
                 key={dictionaryName}
@@ -226,11 +243,11 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
                 displayFrom={this.props.display === "detailed"}
               />
             ))}
-          </MuiList>
+          </GoiUnorderedList>
         </div>
         {this.props.display !== "test-common" && (
           <div className="word-card-sentences">
-            <MuiList>
+            <GoiUnorderedList>
               {filteredSentences.map((sentence, sentenceId) => (
                 <GoiSentence
                   key={sentenceId}
@@ -238,7 +255,7 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
                   displayFrom={this.props.display === "detailed"}
                 />
               ))}
-            </MuiList>
+            </GoiUnorderedList>
           </div>
         )}
         {this.props.display === "detailed" && (

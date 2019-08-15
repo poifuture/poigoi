@@ -248,23 +248,35 @@ export class GoiTester extends React.Component<
             </Button>
           )}
         </div>
-        <JaWordCard
-          word={word}
-          display={wordCardDisplay}
-          status={wordCardStatus}
-          {...(this.props.currentLevel !== null && {
-            level: this.props.currentLevel,
-          })}
-        />
+        <div
+          style={{
+            overflowY: "auto",
+            maxHeight: this.props.isTyping
+              ? "calc(100vh - 120px)"
+              : "calc(100vh - 200px)",
+          }}
+        >
+          <JaWordCard
+            word={word}
+            display={wordCardDisplay}
+            status={wordCardStatus}
+            {...(this.props.currentLevel !== null && {
+              level: this.props.currentLevel,
+            })}
+          />
+        </div>
         {!wordCardDisplay.startsWith("test") && (
-          <div className="word-card-actions">
+          <div
+            className="word-card-actions"
+            style={{ display: "flex", flexShrink: 0 }}
+          >
             {!this.state.displayDetail && (
               <Button
                 size="small"
                 aria-label="detail"
                 onClick={() => {
                   this.setState({ displayDetail: true })
-                  this.props.enableScroll({ enableScroll: true })
+                  // this.props.enableScroll({ enableScroll: true })
                 }}
                 style={{ color: "gray" }}
               >
@@ -322,10 +334,6 @@ export class GoiTester extends React.Component<
             )}
           </div>
         )}
-        <div
-          className="word-card-bottom-placeholder"
-          style={{ height: "100px" }}
-        ></div>
         <ResponsiveDialog open={this.state.isReportWordDialogOpened}>
           {i18n.language.startsWith("zh") ? (
             <iframe
@@ -368,6 +376,7 @@ export class GoiTester extends React.Component<
 const mapStateToProps = (state: RootStateType) => {
   debug("GoiTester state: ", state)
   const props = {
+    isTyping: state.GoiTester.get("IsTyping") as boolean,
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
     currentWord: state.GoiTester.get("CurrentWord"),
@@ -381,7 +390,6 @@ const mapStateToProps = (state: RootStateType) => {
       | GoiSavingDataType
       | null
       | undefined,
-    tester: state.GoiTester,
     learnedCandidates: state.GoiTester.get("LearnedCandidates"),
     prioritiedCandidates: state.GoiTester.get("PrioritiedCandidates"),
     pendingCandidates: state.GoiTester.get("PendingCandidates"),

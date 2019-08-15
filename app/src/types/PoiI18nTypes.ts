@@ -20,3 +20,9 @@ export type LanguageCode =
   | "ja-c2" // alias for ja-jpan-c2
 
 export type LocaleCode = LanguageCode
+
+export type I18nString = {
+  en?: string
+  zh?: string
+  ja?: string
+}

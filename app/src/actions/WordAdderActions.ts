@@ -5,15 +5,18 @@ import {
   WordAdderQueryType,
   WordFilterType,
 } from "../states/WordAdderState"
-import { GoiDictionarys } from "../models/GoiDictionary"
+import {
+  GoiDictionarys,
+  BulkGetAllDictionaryWords,
+} from "../models/GoiDictionary"
 import Immutable from "immutable"
 import {
   GoiWordType,
-  I18nString,
   JA_POS,
   GoiJaWordType,
-  JA_BASIC_POS,
+  JA_PRIMARY_POS,
 } from "../types/GoiDictionaryTypes"
+import { I18nString } from "../types/PoiI18nTypes"
 import * as PoiUser from "../utils/PoiUser"
 import {
   GoiWordRecord,
@@ -27,6 +30,8 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk"
 import { Action, ActionCreator } from "redux"
 import { RootStateType } from "../states/RootState"
 import DebugModule from "debug"
+import { GoiDb } from "../utils/GoiDb"
+import { query } from "../pages/mamechishiki"
 const debug = DebugModule("PoiGoi:WordAdderActions")
 
 export const DISPLAY_WORD_ADDER = "WORD_ADDER_ACTIONS_DISPLAY_WORD_ADDER"
@@ -36,6 +41,20 @@ export const POP_PENDING_QUERY = "WORD_ADDER_ACTIONS_POP_PENDING_QUERY"
 export const PUSH_COUNT_QUERY = "WORD_ADDER_ACTIONS_PUSH_COUNT_QUERY"
 export const UPDATE_SUBTOTAL = "WORD_ADDER_ACTIONS_UPDATE_SUBTOTAL"
 export const UPDATE_FILTER = "WORD_ADDER_ACTIONS_UPDATE_FILTER"
+
+export const BasicPos: JA_PRIMARY_POS[] = [
+  "VERB", //動詞
+  "ADJ", //形容詞
+  "KEIYODOSHI", //形容動詞
+  "NOUN", //名詞
+  "PRON", //代名詞
+  "RENTAISHI", //連体詞
+  "ADV", //副詞
+  "CONJ", //接続詞
+  "INTERJ", //感動詞
+  "JODOSHI", //助動詞
+  "JOSHI", //助詞
+]
 
 export interface DisplayWordAdderActionType
   extends Action<typeof DISPLAY_WORD_ADDER> {
@@ -111,25 +130,35 @@ const UpdateStatusAction = ({
   }
 }
 
-const CountStatusAction = ({
-  poiUserId,
-  savingId,
-}: {
-  poiUserId: PoiUser.PoiUserId
-  savingId: GoiSavingId
-}) => {
+const CountStatusAction = (
+  {
+    // metadata
+    poiUserId,
+    savingId,
+  }: {
+    poiUserId: PoiUser.PoiUserId
+    savingId: GoiSavingId
+  },
+  cache: {
+    // cache
+    readonly wordRecords?: { [key: string]: GoiWordRecordPouchType }
+  } = {}
+) => {
   return (async dispatch => {
     debug("Counting status... ")
-    const wordRecords = Object.values(
-      await BulkGetWordRecords({ poiUserId, savingId })
-    )
+    const wordRecords =
+      typeof cache.wordRecords !== "undefined"
+        ? cache.wordRecords
+        : await BulkGetWordRecords({ poiUserId, savingId })
     debug("Records:", wordRecords)
-    const learnedCount = wordRecords.filter(wordRecord => wordRecord.Level > 0)
-      .length
-    const prioritiedCount = wordRecords.filter(
+    const wordRecordsArray = Object.values(wordRecords)
+    const learnedCount = wordRecordsArray.filter(
+      wordRecord => wordRecord.Level > 0
+    ).length
+    const prioritiedCount = wordRecordsArray.filter(
       wordRecord => !(wordRecord.Level > 0) && wordRecord.Prioritied
     ).length
-    const pendingCount = wordRecords.filter(
+    const pendingCount = wordRecordsArray.filter(
       wordRecord =>
         !(wordRecord.Level > 0) && !wordRecord.Prioritied && wordRecord.Pending
     ).length
@@ -164,77 +193,126 @@ const PushCountQueryAction = ({
 const queryWords = async (
   {
     query,
-    dictionarys,
+    querys,
+    dictionaryNames,
+    filter,
   }: {
-    query: string
-    dictionarys: string[]
+    query?: string
+    querys?: string[]
+    dictionaryNames: string[]
+    filter: WordFilterType
   },
-  { wordKeys }: { wordKeys?: Immutable.Set<string> } = {}
+  cache: {
+    readonly allDictionaryWords?: { [key: string]: GoiWordType }
+  } = {}
 ): Promise<{ [key: string]: GoiWordType }> => {
-  debug("Query words... ", query)
-  wordKeys =
-    typeof wordKeys !== "undefined"
-      ? wordKeys
-      : await GoiDictionarys(dictionarys).GetAllWordsKeys()
-  debug("AllWordKeys", wordKeys)
-  const queryRegExp = new RegExp(query, "i")
-
-  const words: { [key: string]: GoiWordType } = {}
-  const wordsPromises = wordKeys.map(async wordKey => {
-    const word = await GoiDictionarys(dictionarys).GetWordOrNull(wordKey)
-    if (!word) {
-      return null
+  debug("Query words... ", query, querys)
+  const querysArray =
+    typeof querys !== "undefined"
+      ? querys
+      : typeof query !== "undefined"
+      ? [query]
+      : []
+  const allDictionaryWords =
+    typeof cache.allDictionaryWords !== "undefined"
+      ? cache.allDictionaryWords
+      : await BulkGetAllDictionaryWords({ dictionaryNames })
+  const querysRegExp = querysArray.map(query => new RegExp(query, "i"))
+  const acceptPos = Immutable.Set(filter.AcceptPos)
+  const queriedDictionaryWords: { [key: string]: GoiWordType } = {}
+  for (let wordKey in allDictionaryWords) {
+    const dictionaryWord = allDictionaryWords[wordKey]
+    // filter textbook
+    const textbookMatches = dictionaryWord.textbook.filter(tag => {
+      let isQueryMatched = false
+      for (let queryRegExp of querysRegExp) {
+        if (tag.match(queryRegExp)) {
+          isQueryMatched = true
+          break
+        }
+      }
+      if (isQueryMatched) {
+        if (tag.includes("EXT")) {
+          return filter.AcceptExtra ? true : false
+        }
+        return true
+      }
+      return false
+    })
+    if (textbookMatches.length === 0) {
+      continue
     }
-    const matches = word.textbook.filter(tag => tag.match(queryRegExp))
-    if (matches.length === 0) {
-      return null
+    // filter pos
+    if (!dictionaryWord.pos) {
+      continue
+    } else if (Array.isArray(dictionaryWord.pos)) {
+      if (acceptPos.intersect(dictionaryWord.pos).isEmpty()) {
+        continue
+      }
+    } else if (!acceptPos.includes(dictionaryWord.pos)) {
+      continue
     }
-    words[wordKey] = word
-  })
-  await Promise.all(wordsPromises.toArray())
-  debug("Query words done ", query)
-  return words
+    queriedDictionaryWords[wordKey] = dictionaryWord
+  }
+  debug("Query words done ", queriedDictionaryWords)
+  return queriedDictionaryWords
 }
 
 const CountQueryAction = (
   {
     query,
-  }: {
-    query: string
-  },
-  {
     poiUserId,
     savingId,
+    filter,
   }: {
+    query: string
     poiUserId: PoiUser.PoiUserId
     savingId: GoiSavingId
+    filter: WordFilterType
   },
-  {
-    wordKeys,
-  }: {
-    wordKeys?: Immutable.Set<string>
+  cache: {
+    // cache
+    readonly wordRecords?: { [key: string]: GoiWordRecordPouchType }
+    readonly allDictionaryWords?: { [key: string]: GoiWordType }
   } = {}
 ) => {
   return (async dispatch => {
     debug("Counting Query... ", query)
     query = query.trim()
-    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
-    const words = await queryWords({ query, dictionarys }, { wordKeys })
-    const wordRecords = Object.values(
-      await BulkGetWordRecords(
-        { poiUserId, savingId },
-        { wordKeys: Object.keys(words) }
-      )
+    const dictionaryNames = await GoiSaving(
+      poiUserId,
+      savingId
+    ).GetDictionarys()
+    const allDictionaryWords =
+      typeof cache.allDictionaryWords !== "undefined"
+        ? cache.allDictionaryWords
+        : await BulkGetAllDictionaryWords({ dictionaryNames })
+    const queriedWords = await queryWords(
+      { query, dictionaryNames, filter },
+      { allDictionaryWords }
     )
-    const totalCount = Object.keys(words).length
-    const learnedCount = wordRecords.filter(wordRecord => wordRecord.Level > 0)
-      .length
-    const addedCount = wordRecords.filter(
+    const wordRecords =
+      typeof cache.wordRecords !== "undefined"
+        ? cache.wordRecords
+        : await BulkGetWordRecords({ poiUserId, savingId })
+    const queriedWordRecordsArray = Object.values(wordRecords).filter(
+      wordRecord => typeof queriedWords[wordRecord.WordKey] !== "undefined"
+    )
+    const forgotCount = queriedWordRecordsArray.filter(
+      wordRecord => wordRecord.Level < 0
+    ).length
+    const totalCount =
+      Object.keys(queriedWords).length - (filter.AcceptForgot ? 0 : forgotCount)
+    const learnedCount = queriedWordRecordsArray.filter(
+      wordRecord => wordRecord.Level > 0
+    ).length
+    const addedCount = queriedWordRecordsArray.filter(
       wordRecord =>
-        !(wordRecord.Level > 0) && (wordRecord.Prioritied || wordRecord.Pending)
+        wordRecord.Level === 0 && (wordRecord.Prioritied || wordRecord.Pending)
     ).length
     const newCount = totalCount - learnedCount - addedCount
-    dispatch(
+    debug("Qeury: ", query, " Total: ", totalCount, " Forgot: ", forgotCount)
+    await dispatch(
       PushCountQueryAction({
         query,
         totalCount,
@@ -268,63 +346,57 @@ const getPendingQuerysFromState = ({
 }
 
 export const RefreshWordAdderAction = (
-  {
-    querys,
-  }: {
-    querys: string[]
-  },
-  {
-    poiUserId,
-    savingId,
-  }: {
-    poiUserId: PoiUser.PoiUserId
-    savingId: GoiSavingId
-  },
-  {
-    readState,
-  }: {
-    readState?: boolean
+  cache: {
+    readonly wordRecords?: { [key: string]: GoiWordRecordPouchType }
+    readonly allDictionaryWords?: { [key: string]: GoiWordType }
   } = {}
 ) => {
   return (async (dispatch, getState): Promise<void> => {
-    readState = typeof readState !== "undefined" ? readState : false
-    await dispatch(CountStatusAction({ poiUserId, savingId }))
-    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
-    const wordKeys = await GoiDictionarys(dictionarys).GetAllWordsKeys()
-    const state = getState()
+    const poiUserId = getState().GoiUser.get("PoiUserId") as PoiUser.PoiUserId
+    const savingId = getState().GoiSaving.get("SavingId") as GoiSavingId
+    const wordRecords =
+      typeof cache.wordRecords !== "undefined"
+        ? cache.wordRecords
+        : await BulkGetWordRecords({ poiUserId, savingId })
+    await dispatch(CountStatusAction({ poiUserId, savingId }, { wordRecords }))
+    const dictionaryNames = await GoiSaving(
+      poiUserId,
+      savingId
+    ).GetDictionarys()
+    const allDictionaryWords =
+      typeof cache.allDictionaryWords !== "undefined"
+        ? cache.allDictionaryWords
+        : await BulkGetAllDictionaryWords({ dictionaryNames })
+    const filter = getState()
+      .WordAdder.get("Filter")
+      .toJS() as WordFilterType
+    await dispatch(
+      CountSubtotalAction({
+        querys: getPendingQuerysFromState({ state: getState() }),
+        filter,
+        poiUserId,
+        savingId,
+      })
+    )
     const onScreenQuerys = Immutable.Set.of(
-      ...querys,
-      ...(readState ? getSuggestionQuerysFromState({ state }) : []),
-      ...(readState ? getPendingQuerysFromState({ state }) : [])
+      ...getSuggestionQuerysFromState({ state: getState() }),
+      ...getPendingQuerysFromState({ state: getState() })
     ).toArray()
     for (let i = 0; i < onScreenQuerys.length; i++) {
       await dispatch(
         CountQueryAction(
-          { query: onScreenQuerys[i] },
-          { poiUserId, savingId },
-          { wordKeys }
+          { query: onScreenQuerys[i], filter, poiUserId, savingId },
+          { wordRecords, allDictionaryWords }
         )
       )
     }
   }) as ThunkAction<Promise<void>, RootStateType, void, Action>
 }
 
-export const ShowWordAdderAction = ({
-  poiUserId,
-  savingId,
-}: {
-  poiUserId: PoiUser.PoiUserId
-  savingId: GoiSavingId
-}): ThunkAction<void, RootStateType, void, Action> => {
+export const ShowWordAdderAction = () => {
   return (async (dispatch): Promise<void> => {
     dispatch(DisplayWordAdderAction({ display: true }))
-    await dispatch(
-      RefreshWordAdderAction(
-        { querys: [] },
-        { poiUserId, savingId },
-        { readState: true }
-      )
-    )
+    await dispatch(RefreshWordAdderAction())
   }) as ThunkAction<Promise<void>, RootStateType, void, Action>
 }
 
@@ -352,40 +424,40 @@ const PopPendingQueryAction = ({
   }
 }
 
-export const AddPendingQueryAction = (
-  {
-    query,
-    display,
-  }: {
-    query: string
-    display: I18nString
-  },
-  {
-    poiUserId,
-    savingId,
-  }: {
-    poiUserId: PoiUser.PoiUserId
-    savingId: GoiSavingId
-  }
-) => {
+export const AddPendingQueryAction = ({
+  query,
+  display,
+  filter,
+  poiUserId,
+  savingId,
+}: {
+  query: string
+  display: I18nString
+  filter: WordFilterType
+  poiUserId: PoiUser.PoiUserId
+  savingId: GoiSavingId
+}) => {
   return (async (dispatch): Promise<void> => {
-    dispatch(PushPendingQueryAction({ display, query }))
-    await dispatch(CountQueryAction({ query }, { poiUserId, savingId }))
+    await dispatch(PushPendingQueryAction({ display, query }))
+    await dispatch(CountQueryAction({ query, filter, poiUserId, savingId }))
   }) as ThunkAction<Promise<void>, RootStateType, unknown, Action>
 }
 export const AddPendingQuerysAction = (
   {
     querys,
-  }: {
-    querys: WordAdderQueryType[]
-  },
-  {
+    filter,
     poiUserId,
     savingId,
   }: {
+    querys: WordAdderQueryType[]
+    filter: WordFilterType
     poiUserId: PoiUser.PoiUserId
     savingId: GoiSavingId
-  }
+  },
+  cache: {
+    readonly wordRecords?: { [key: string]: GoiWordRecordPouchType }
+    readonly allDictionaryWords?: { [key: string]: GoiWordType }
+  } = {}
 ) => {
   return (async (dispatch): Promise<void> => {
     for (let i = 0; i < querys.length; i++) {
@@ -395,10 +467,34 @@ export const AddPendingQuerysAction = (
           query: querys[i].Query,
         })
       )
+      dispatch(
+        PushCountQueryAction({
+          query: querys[i].Query,
+          totalCount: -1,
+          learnedCount: -1,
+          addedCount: -1,
+          newCount: -1,
+        })
+      )
     }
+    const wordRecords =
+      typeof cache.wordRecords !== "undefined"
+        ? cache.wordRecords
+        : await BulkGetWordRecords({ poiUserId, savingId })
+    const dictionaryNames = await GoiSaving(
+      poiUserId,
+      savingId
+    ).GetDictionarys()
+    const allDictionaryWords =
+      typeof cache.allDictionaryWords !== "undefined"
+        ? cache.allDictionaryWords
+        : await BulkGetAllDictionaryWords({ dictionaryNames })
     for (let i = 0; i < querys.length; i++) {
       await dispatch(
-        CountQueryAction({ query: querys[i].Query }, { poiUserId, savingId })
+        CountQueryAction(
+          { query: querys[i].Query, filter, poiUserId, savingId },
+          { wordRecords, allDictionaryWords }
+        )
       )
     }
   }) as ThunkAction<Promise<void>, RootStateType, unknown, Action>
@@ -413,55 +509,78 @@ export const RemovePendingQueryAction = ({ query }: { query: string }) => {
 export const AddWordsFromQuerysAction = (
   {
     querys,
-  }: {
-    querys: string[]
-  },
-  {
+    filter,
     poiUserId,
     savingId,
   }: {
+    querys: string[]
+    filter: WordFilterType
     poiUserId: PoiUser.PoiUserId
     savingId: GoiSavingId
-  }
+  },
+  cache: {
+    readonly wordRecords?: { [key: string]: GoiWordRecordPouchType }
+    readonly allDictionaryWords?: { [key: string]: GoiWordType }
+  } = {}
 ) => {
   return (async (): Promise<void> => {
-    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
-    const wordKeys = await GoiDictionarys(dictionarys).GetAllWordsKeys()
+    const dictionaryNames = await GoiSaving(
+      poiUserId,
+      savingId
+    ).GetDictionarys()
+    const allDictionaryWords =
+      typeof cache.allDictionaryWords !== "undefined"
+        ? cache.allDictionaryWords
+        : await BulkGetAllDictionaryWords({ dictionaryNames })
     const timePrefix: string = new Date()
       .getTime()
       .toString()
       .padStart(20, "0")
     // Order matters, can't await all in parallel
+    const potentialPendings: { [key: string]: string } = {}
     for (let i = 0; i < querys.length; i++) {
       const query = querys[i]
       const orderPrefix = i.toString().padStart(5, "0")
-      const words = await queryWords({ query, dictionarys }, { wordKeys })
-      const addedWordKeys = await Promise.all(
-        Object.entries(words).map(async ([wordKey, word]) => {
-          const wordRecord = await GoiWordRecord(
-            poiUserId,
-            savingId,
-            wordKey
-          ).ReadOrCreate()
-          if (
-            wordRecord.Level > 0 ||
-            wordRecord.Prioritied ||
-            wordRecord.Pending
-          ) {
-            debug("Already added word to pendings: ", wordRecord.WordKey)
-            return null
-          }
-          await GoiWordRecord(poiUserId, savingId, wordKey).SetPending(
-            `${timePrefix}-${orderPrefix}-${wordKey}`
-          )
-          return wordKey
-        })
+      const queriedDictionaryWords = await queryWords(
+        { query, filter, dictionaryNames: dictionaryNames },
+        { allDictionaryWords }
       )
-      const filteredWordKeys: string[] = addedWordKeys.filter(
-        (wordKey): wordKey is string => (wordKey ? true : false)
-      )
-      await GoiSaving(poiUserId, savingId).AttachRecords(filteredWordKeys)
+      for (let wordKey in queriedDictionaryWords) {
+        if (typeof potentialPendings[wordKey] === "undefined") {
+          potentialPendings[wordKey] = `${timePrefix}-${orderPrefix}-${wordKey}`
+        }
+      }
     }
+    debug("Updating pendings... ", potentialPendings)
+    const previousWordRecords = await BulkGetWordRecords(
+      { poiUserId, savingId },
+      { wordKeys: Object.keys(potentialPendings) }
+    )
+    const availableWordRecords = Object.values(previousWordRecords).filter(
+      wordRecord => {
+        if (!filter.AcceptForgot && wordRecord.Level < 0) {
+          debug("Already forgot word: ", wordRecord.WordKey)
+          return false
+        }
+        if (
+          wordRecord.Level > 0 ||
+          wordRecord.Prioritied ||
+          wordRecord.Pending
+        ) {
+          debug("Already added word to pendings: ", wordRecord.WordKey)
+          return false
+        }
+        return true
+      }
+    )
+    const pendingUpdateWordRecords = Object.values(availableWordRecords).map(
+      wordRecord => {
+        wordRecord.Pending = potentialPendings[wordRecord.WordKey]
+        return wordRecord
+      }
+    )
+    const bulkUpdateResult = await GoiDb().bulkDocs(pendingUpdateWordRecords)
+    debug("Pendings updated. ", bulkUpdateResult)
   }) as ThunkAction<Promise<void>, RootStateType, void, Action>
 }
 
@@ -478,20 +597,17 @@ export const ClearPendingWordsAction = ({
       await BulkGetWordRecords({ poiUserId, savingId })
     )
     debug("records", wordRecords)
-    const wordKeys = wordRecords
+    const pendingUpdatedWordRecords = wordRecords
       .filter(
         wordRecord =>
           wordRecord.Level === 0 && !wordRecord.Prioritied && wordRecord.Pending
       )
-      .map(wordRecord => wordRecord.WordKey)
-    await GoiSaving(poiUserId, savingId).ClearPendings(wordKeys)
-    await dispatch(
-      RefreshWordAdderAction(
-        { querys: [] },
-        { poiUserId, savingId },
-        { readState: true }
-      )
-    )
+      .map(wordRecord => {
+        wordRecord.Pending = ""
+        return wordRecord
+      })
+    await GoiDb().bulkDocs(pendingUpdatedWordRecords)
+    await dispatch(RefreshWordAdderAction())
   }) as ThunkAction<Promise<void>, RootStateType, void, Action>
 }
 
@@ -536,58 +652,60 @@ export const passFilter = ({
   }
   return true
 }
-export const RefreshSubtotalAction = (
+export const CountSubtotalAction = (
   {
     querys,
     filter,
-  }: {
-    querys: string[]
-    filter: WordFilterType
-  },
-  {
     poiUserId,
     savingId,
   }: {
+    querys: string[]
+    filter: WordFilterType
     poiUserId: PoiUser.PoiUserId
     savingId: GoiSavingId
-  }
+  },
+  cache: {
+    // cache
+    readonly wordRecords?: { [key: string]: GoiWordRecordPouchType }
+    readonly allDictionaryWords?: { [key: string]: GoiWordType }
+  } = {}
 ) => {
   return (async (dispatch): Promise<void> => {
-    const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
-    const wordKeys = await GoiDictionarys(dictionarys).GetAllWordsKeys()
-    // Order matters, can't await all in parallel
-    const querysRegexs = querys.map(query => new RegExp(query))
-    const queryedWordKeys = (await Promise.all(
-      wordKeys.map(async wordKey => {
-        const word = await GoiDictionarys(dictionarys).GetWordOrNull(wordKey)
-        if (!word) {
-          return null
-        }
-        if (!passFilter({ word, filter })) {
-          return null
-        }
-        for (let queryRegex of querysRegexs) {
-          for (let textbook of word.textbook) {
-            if (textbook.match(queryRegex)) {
-              return wordKey
-            }
-          }
-        }
-        return null
-      })
-    )).filter((wordKey): wordKey is string => !!wordKey)
-    const wordRecords = await BulkGetWordRecords(
-      { poiUserId, savingId },
-      { wordKeys: queryedWordKeys }
+    debug("Counting subtotal...", querys, filter)
+    const wordRecords =
+      typeof cache.wordRecords !== "undefined"
+        ? cache.wordRecords
+        : await BulkGetWordRecords({ poiUserId, savingId })
+    const dictionaryNames = await GoiSaving(
+      poiUserId,
+      savingId
+    ).GetDictionarys()
+    const allDictionaryWords =
+      typeof cache.allDictionaryWords !== "undefined"
+        ? cache.allDictionaryWords
+        : await BulkGetAllDictionaryWords({ dictionaryNames })
+    const queriedWords = await queryWords(
+      { querys, dictionaryNames, filter },
+      { allDictionaryWords }
     )
-    const subtotal = Object.values(wordRecords).filter(wordRecord =>
-      filter.AcceptForgot
-        ? wordRecord.Level <= 0 && !wordRecord.Prioritied && !wordRecord.Pending
-        : wordRecord.Level === 0 &&
-          !wordRecord.Prioritied &&
-          !wordRecord.Pending
+    const queriedWordRecordsArray = Object.values(wordRecords).filter(
+      wordRecord => typeof queriedWords[wordRecord.WordKey] !== "undefined"
+    )
+    const forgotCount = queriedWordRecordsArray.filter(
+      wordRecord => wordRecord.Level < 0
     ).length
-    dispatch(UpdateSubtotalAction({ subtotal }))
+    const totalCount =
+      Object.keys(queriedWords).length - (filter.AcceptForgot ? 0 : forgotCount)
+    const learnedCount = queriedWordRecordsArray.filter(
+      wordRecord => wordRecord.Level > 0
+    ).length
+    const addedCount = queriedWordRecordsArray.filter(
+      wordRecord =>
+        wordRecord.Level === 0 && (wordRecord.Prioritied || wordRecord.Pending)
+    ).length
+    const newCount = totalCount - learnedCount - addedCount
+    debug("Qeury: ", querys, " Total: ", totalCount, " Forgot: ", forgotCount)
+    await dispatch(UpdateSubtotalAction({ subtotal: newCount }))
   }) as ThunkAction<Promise<void>, RootStateType, void, Action>
 }
 
@@ -600,4 +718,68 @@ export const UpdateFilterAction = ({
     type: UPDATE_FILTER,
     Filter: filter,
   }
+}
+
+export const ChangeFilterAction = ({
+  acceptBasic,
+  acceptPosFlags,
+  acceptExtra,
+  acceptForgot,
+}: {
+  acceptBasic?: boolean
+  acceptPosFlags?: {
+    [pos: string]: boolean
+  }
+  acceptExtra?: boolean
+  acceptForgot?: boolean
+}) => {
+  return (async (dispatch, getState): Promise<void> => {
+    debug("Changing filter...", acceptBasic, acceptPosFlags)
+    const acceptPosChanged =
+      typeof acceptBasic !== "undefined" ||
+      typeof acceptPosFlags !== "undefined"
+    const acceptPos: string[] = []
+    if (acceptPosChanged) {
+      const filter = getState()
+        .WordAdder.get("Filter")
+        .toJS() as WordFilterType
+      const originalBasicFlags: { [pos: string]: boolean } = {}
+      const allBasicFlagsOn: { [pos: string]: boolean } = {}
+      const allBasicFlagsOff: { [pos: string]: boolean } = {}
+      BasicPos.map(pos => {
+        originalBasicFlags[pos] = filter.AcceptPos.includes(pos)
+        allBasicFlagsOn[pos] = true
+        allBasicFlagsOff[pos] = false
+      })
+      const fullPosFlags: { [pos: string]: boolean } = {
+        ...originalBasicFlags,
+        PROPER: filter.AcceptPos.includes("PROPER"),
+        IDIOM: filter.AcceptPos.includes("IDIOM"),
+        ...(typeof acceptPosFlags !== "undefined" && acceptPosFlags),
+        ...(typeof acceptBasic !== "undefined" &&
+          (acceptBasic ? allBasicFlagsOn : allBasicFlagsOff)),
+      }
+      debug("Full pos flags...", fullPosFlags)
+      for (let pos in fullPosFlags) {
+        if (fullPosFlags[pos]) {
+          acceptPos.push(pos)
+        }
+      }
+      acceptPos.push("KANA", "ROMAJI")
+    }
+    await dispatch(
+      UpdateFilterAction({
+        filter: {
+          ...(acceptPosChanged && { AcceptPos: acceptPos }),
+          ...(typeof acceptExtra !== "undefined" && {
+            AcceptExtra: acceptExtra,
+          }),
+          ...(typeof acceptForgot !== "undefined" && {
+            AcceptForgot: acceptForgot,
+          }),
+        },
+      })
+    )
+    await dispatch(RefreshWordAdderAction())
+  }) as ThunkAction<Promise<void>, RootStateType, void, Action>
 }
