@@ -73,14 +73,9 @@ const lazyInitGoiUser = async ({
 
 export const LazyInitUserAction = ({
   readState,
-}: { readState?: boolean } = {}): ThunkAction<
-  Promise<PoiUser.PoiUserId>,
-  RootStateType,
-  void,
-  Action
-> => {
+}: { readState?: boolean } = {}) => {
   readState = typeof readState !== "undefined" ? readState : true
-  return async (dispatch, getState) => {
+  return (async (dispatch, getState) => {
     if (readState) {
       const state = getState()
       debug("LazyInitUser state: ", state)
@@ -94,5 +89,16 @@ export const LazyInitUserAction = ({
     await lazyInitGoiUser({ poiUserId })
     dispatch(UpdateGoiUserStateAction({ poiUserId }))
     return poiUserId
-  }
+  }) as ThunkAction<Promise<PoiUser.PoiUserId>, RootStateType, void, Action>
+}
+
+export const TestingInitUserAction = ({
+  poiUserId,
+}: {
+  poiUserId: PoiUser.PoiUserId
+}) => {
+  return (async dispatch => {
+    dispatch(UpdateGoiUserStateAction({ poiUserId }))
+    return poiUserId
+  }) as ThunkAction<Promise<PoiUser.PoiUserId>, RootStateType, void, Action>
 }

@@ -29,8 +29,11 @@ import {
   RemovePendingQueryAction,
   AddWordsFromQuerysAction,
   ClearPendingWordsAction,
-  RefreshSubtotalAction,
+  CountSubtotalAction,
   UpdateFilterAction,
+  RefreshWordAdderAction,
+  ChangeFilterAction,
+  BasicPos,
 } from "../actions/WordAdderActions"
 import {
   WordAdderSuggestionQueryType,
@@ -50,7 +53,7 @@ import CloseIcon from "@material-ui/icons/CloseOutlined"
 import ExploreOffIcon from "@material-ui/icons/ExploreOffOutlined"
 import { useTheme } from "@material-ui/styles"
 import ResponsiveDialog from "../components/ResponsiveDialog"
-import { I18nString } from "../types/GoiDictionaryTypes"
+import { I18nString } from "../types/PoiI18nTypes"
 import { withTranslation, WithTranslation } from "react-i18next"
 import { LookUp } from "../utils/PoiI18n"
 import { LocaleCode } from "../types/PoiI18nTypes"
@@ -87,27 +90,27 @@ export class WordAdder extends React.Component<
     suggestion: WordAdderSuggestionQueryType
   ): Promise<void> => {
     const { poiUserId, savingId } = this.props
+    const filter: WordFilterType = this.props.filter.toJS()
     if (Array.isArray(suggestion.SubQuerys)) {
-      await this.props.addPendingQuerys(
-        {
-          querys: [
-            ...suggestion.SubQuerys,
-            { Display: suggestion.Display, Query: suggestion.Query },
-          ],
-        },
-        { poiUserId, savingId }
-      )
-    }
-    this.props.refreshSubtotal(
-      {
+      await this.props.addPendingQuerys({
         querys: [
-          ...this.getPendingQuerys(),
-          ...(suggestion.SubQuerys || []).map(query => query.Query),
+          ...suggestion.SubQuerys,
+          { Display: suggestion.Display, Query: suggestion.Query },
         ],
-        filter: this.props.filter.toJS(),
-      },
-      { poiUserId, savingId }
-    )
+        filter,
+        poiUserId,
+        savingId,
+      })
+    }
+    await this.props.countSubtotal({
+      querys: [
+        ...this.getPendingQuerys(),
+        ...(suggestion.SubQuerys || []).map(query => query.Query),
+      ],
+      filter: this.props.filter.toJS(),
+      poiUserId,
+      savingId,
+    })
   }
   clearAllPendingQuerys = async () => {
     await Promise.all(
@@ -118,54 +121,63 @@ export class WordAdder extends React.Component<
   }
   onClickConfirm = async () => {
     const { poiUserId, savingId } = this.props
+    const filter: WordFilterType = this.props.filter.toJS()
     this.setState({ addingWordsProgress: true })
-    await this.props.addWordsFromQuerys(
-      { querys: this.getPendingQuerys() },
-      { poiUserId, savingId }
-    )
+    await this.props.addWordsFromQuerys({
+      querys: this.getPendingQuerys(),
+      filter,
+      poiUserId,
+      savingId,
+    })
     this.setState({ addingWordsProgress: false })
     this.props.close()
     await this.clearAllPendingQuerys()
     await this.props.showNextWord(poiUserId, savingId)
   }
-  addCustomQuery = () => {
+  addCustomQuery = async () => {
     const { poiUserId, savingId } = this.props
+    const filter: WordFilterType = this.props.filter.toJS()
     const query = this.state.customQuery.trim()
-    this.props.addPendingQuery(
-      {
-        display: { en: "Custom", zh: "自定义搜索条件" },
-        query,
-      },
-      { poiUserId, savingId }
-    )
-    this.props.refreshSubtotal(
-      {
-        querys: [...this.getPendingQuerys(), query],
-        filter: this.props.filter.toJS(),
-      },
-      { poiUserId, savingId }
-    )
+    await this.props.addPendingQuery({
+      display: { en: "Custom", zh: "自定义搜索条件" },
+      query,
+      filter,
+      poiUserId,
+      savingId,
+    })
+    await this.props.countSubtotal({
+      querys: [...this.getPendingQuerys(), query],
+      filter,
+      poiUserId,
+      savingId,
+    })
   }
-  onClickRemovePendingQuery = ({ query }: { query: string }) => {
+  onClickRemovePendingQuery = async ({ query }: { query: string }) => {
     const { poiUserId, savingId } = this.props
-    this.props.removePendingQuery({ query })
+    await this.props.removePendingQuery({ query })
     const newPendingQuerys = this.getPendingQuerys().filter(
       pendingQuery => pendingQuery != query
     )
-    this.props.refreshSubtotal(
-      {
-        querys: newPendingQuerys,
-        filter: this.props.filter.toJS(),
-      },
-      { poiUserId, savingId }
-    )
+    await this.props.countSubtotal({
+      querys: newPendingQuerys,
+      filter: this.props.filter.toJS(),
+      poiUserId,
+      savingId,
+    })
   }
   render() {
     const { t, i18n } = this.props
-    if (!this.props.display) {
-      return <div className="word-adder"></div>
-    }
     const { poiUserId, savingId } = this.props
+    const filter: WordFilterType = this.props.filter.toJS()
+    const includedBasicPos = BasicPos.filter(pos =>
+      filter.AcceptPos.includes(pos)
+    )
+    const isBasicFilterChecked =
+      includedBasicPos.length === 0
+        ? false
+        : includedBasicPos.length === BasicPos.length
+        ? true
+        : null
     const { learnedCount, prioritiedCount, pendingCount } = {
       learnedCount: this.props.status.get("LearnedCount") as number,
       prioritiedCount: this.props.status.get("PrioritiedCount") as number,
@@ -422,23 +434,34 @@ export class WordAdder extends React.Component<
             <Divider component="li" />
             <li>
               <Typography display="block" variant="caption">
-                [WIP]
                 {t("FiltersSectionTitle", "Filters")}
               </Typography>
             </li>
             <div style={{ display: "flux" }}>
               <FormControlLabel
                 control={
-                  <Checkbox checked={true} disabled value="BasicFilter" />
+                  <Checkbox
+                    checked={isBasicFilterChecked === true}
+                    indeterminate={isBasicFilterChecked === null}
+                    onChange={e => {
+                      this.props.changeFilter({
+                        acceptBasic: e.target.checked,
+                      })
+                    }}
+                    value="BasicFilter"
+                  />
                 }
                 label={t("BasicFilterLabel", "Basic")}
               />
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={true}
-                    disabled
-                    onChange={() => {}}
+                    checked={filter.AcceptPos.includes("PROPER")}
+                    onChange={e => {
+                      this.props.changeFilter({
+                        acceptPosFlags: { PROPER: e.target.checked },
+                      })
+                    }}
                     value="ProperFilter"
                   />
                 }
@@ -446,19 +469,43 @@ export class WordAdder extends React.Component<
               />
               <FormControlLabel
                 control={
-                  <Checkbox checked={true} disabled value="IdiomFilter" />
+                  <Checkbox
+                    checked={filter.AcceptPos.includes("IDIOM")}
+                    onChange={e => {
+                      this.props.changeFilter({
+                        acceptPosFlags: { IDIOM: e.target.checked },
+                      })
+                    }}
+                    value="IdiomFilter"
+                  />
                 }
                 label={t("IdiomFilterLabel", "Idiom")}
               />
               <FormControlLabel
                 control={
-                  <Checkbox checked={true} disabled value="ExtraFilter" />
+                  <Checkbox
+                    checked={filter.AcceptExtra}
+                    value="ExtraFilter"
+                    onChange={e => {
+                      this.props.changeFilter({
+                        acceptExtra: e.target.checked,
+                      })
+                    }}
+                  />
                 }
                 label={t("ExtraFilterLabel", "Extra")}
               />
               <FormControlLabel
                 control={
-                  <Checkbox checked={true} disabled value="ForgotFilter" />
+                  <Checkbox
+                    checked={filter.AcceptForgot}
+                    value="ForgotFilter"
+                    onChange={e => {
+                      this.props.changeFilter({
+                        acceptForgot: e.target.checked,
+                      })
+                    }}
+                  />
                 }
                 label={t("ForgotFilterLabel", "Forgot")}
               />
@@ -524,64 +571,94 @@ const mapDispatchToProps = (
       poiUserId: PoiUser.PoiUserId
       savingId: GoiSavingId
     }) => dispatch(ClearPendingWordsAction({ poiUserId, savingId })),
-    addPendingQuery: (
-      { display, query }: { display: I18nString; query: string },
-      {
-        poiUserId,
-        savingId,
-      }: { poiUserId: PoiUser.PoiUserId; savingId: GoiSavingId }
-    ) =>
+    addPendingQuery: ({
+      display,
+      query,
+      filter,
+      poiUserId,
+      savingId,
+    }: {
+      display: I18nString
+      query: string
+      filter: WordFilterType
+      poiUserId: PoiUser.PoiUserId
+      savingId: GoiSavingId
+    }) =>
       dispatch(
-        AddPendingQueryAction({ display, query }, { poiUserId, savingId })
+        AddPendingQueryAction({ display, query, filter, poiUserId, savingId })
       ),
-    addPendingQuerys: (
-      {
-        querys,
-      }: {
-        querys: WordAdderQueryType[]
-      },
-      {
-        poiUserId,
-        savingId,
-      }: {
-        poiUserId: PoiUser.PoiUserId
-        savingId: GoiSavingId
-      }
-    ) => dispatch(AddPendingQuerysAction({ querys }, { poiUserId, savingId })),
+    addPendingQuerys: ({
+      querys,
+      filter,
+      poiUserId,
+      savingId,
+    }: {
+      querys: WordAdderQueryType[]
+      filter: WordFilterType
+      poiUserId: PoiUser.PoiUserId
+      savingId: GoiSavingId
+    }) =>
+      dispatch(AddPendingQuerysAction({ querys, filter, poiUserId, savingId })),
     removePendingQuery: ({ query }: { query: string }) =>
       dispatch(RemovePendingQueryAction({ query })),
-    addWordsFromQuerys: (
-      { querys }: { querys: string[] },
-      {
-        poiUserId,
-        savingId,
-      }: { poiUserId: PoiUser.PoiUserId; savingId: GoiSavingId }
-    ) =>
-      dispatch(AddWordsFromQuerysAction({ querys }, { poiUserId, savingId })),
+    addWordsFromQuerys: ({
+      querys,
+      filter,
+      poiUserId,
+      savingId,
+    }: {
+      querys: string[]
+      filter: WordFilterType
+      poiUserId: PoiUser.PoiUserId
+      savingId: GoiSavingId
+    }) =>
+      dispatch(
+        AddWordsFromQuerysAction({ querys, filter, poiUserId, savingId })
+      ),
     close: () => dispatch(DisplayWordAdderAction({ display: false })),
     showNextWord: (poiUserId: PoiUser.PoiUserId, savingId: GoiSavingId) =>
       dispatch(ShowNextWordAction({ poiUserId, savingId })),
-    refreshSubtotal: (
-      {
-        querys,
-        filter,
-      }: {
-        querys: string[]
-        filter: WordFilterType
-      },
-      {
-        poiUserId,
-        savingId,
-      }: {
-        poiUserId: PoiUser.PoiUserId
-        savingId: GoiSavingId
-      }
-    ) =>
+    refreshWordAdder: () => dispatch(RefreshWordAdderAction()),
+    countSubtotal: ({
+      querys,
+      filter,
+      poiUserId,
+      savingId,
+    }: {
+      querys: string[]
+      filter: WordFilterType
+      poiUserId: PoiUser.PoiUserId
+      savingId: GoiSavingId
+    }) =>
       dispatch(
-        RefreshSubtotalAction({ querys, filter }, { poiUserId, savingId })
+        CountSubtotalAction({
+          querys,
+          filter,
+          poiUserId,
+          savingId,
+        })
       ),
-    updateFilter: ({ filter }: { filter: Partial<WordFilterType> }) =>
-      dispatch(UpdateFilterAction({ filter })),
+    changeFilter: ({
+      acceptBasic,
+      acceptPosFlags,
+      acceptExtra,
+      acceptForgot,
+    }: {
+      acceptBasic?: boolean
+      acceptPosFlags?: {
+        [pos: string]: boolean
+      }
+      acceptExtra?: boolean
+      acceptForgot?: boolean
+    }) =>
+      dispatch(
+        ChangeFilterAction({
+          acceptBasic,
+          acceptPosFlags,
+          acceptExtra,
+          acceptForgot,
+        })
+      ),
   }
 }
 

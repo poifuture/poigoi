@@ -191,6 +191,17 @@ const GoiDictionary = (dictionaryName: string) => {
   const dbKey = GoiDictionaryModel.GetDbKey(dictionaryName)
   return new GoiDictionaryModel(dbKey, { dictionaryName })
 }
+const MergeDictionaryWord = <T extends GoiWordType>({
+  base,
+  supplement,
+}: {
+  base: T
+  supplement: T
+}): T => {
+  return fromJS(supplement)
+    .mergeDeep(fromJS(base))
+    .toJS()
+}
 
 export class GoiDictionaryCollection {
   private dictionaryNames: string[]
@@ -230,4 +241,49 @@ export class GoiDictionaryCollection {
 
 export const GoiDictionarys = (dictionaryNames: string[]) => {
   return new GoiDictionaryCollection(dictionaryNames)
+}
+
+export const BulkGetAllDictionaryWords = async ({
+  dictionaryNames,
+}: {
+  dictionaryNames: string[]
+}): Promise<{
+  [key: string]: GoiWordType
+}> => {
+  const dictionarys: { [name: string]: { [key: string]: GoiWordType } } = {}
+  await Promise.all(
+    dictionaryNames.map(async dictionaryName => {
+      const dictionaryWordKeys = await GoiDictionary(
+        dictionaryName
+      ).GetAllWordsKeys()
+      const dictionaryWords: { [key: string]: GoiWordType } = {}
+      await Promise.all(
+        dictionaryWordKeys.map(async wordKey => {
+          const dictionaryWord = await GoiDictionary(
+            dictionaryName
+          ).GetWordOrNull(wordKey)
+          if (dictionaryWord) {
+            dictionaryWords[wordKey] = dictionaryWord
+          }
+        })
+      )
+      dictionarys[dictionaryName] = dictionaryWords
+    })
+  )
+  const allDictionaryWords: { [key: string]: GoiWordType } = {}
+  for (let i = 0; i < dictionaryNames.length; i++) {
+    const dictionaryName = dictionaryNames[i]
+    const dictionaryWords = dictionarys[dictionaryName]
+    for (let wordKey in dictionaryWords) {
+      if (typeof allDictionaryWords[wordKey] !== "undefined") {
+        allDictionaryWords[wordKey] = MergeDictionaryWord({
+          base: allDictionaryWords[wordKey],
+          supplement: dictionaryWords[wordKey],
+        })
+      } else {
+        allDictionaryWords[wordKey] = dictionaryWords[wordKey]
+      }
+    }
+  }
+  return allDictionaryWords
 }

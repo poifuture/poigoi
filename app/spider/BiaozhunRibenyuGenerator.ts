@@ -5,7 +5,7 @@ const KuromojiAnalyzer = require("kuroshiro-analyzer-kuromoji")
 // import KuromojiAnalyzer from "kuroshiro-analyzer-kuromoji";
 import {
   GoiJaDictionaryType,
-  JA_BASIC_POS,
+  JA_PRIMARY_POS,
   JA_POS,
 } from "../src/types/GoiDictionaryTypes"
 import GairaigoDict from "./Gairaigo"
@@ -349,7 +349,7 @@ const preprocess = async () => {
       word.wapuroInput || (await fetchWapuro({ kana: common.kana }))
     const posArray = word.posInput
       .split(";")
-      .filter((singlePos): singlePos is JA_BASIC_POS => !!singlePos)
+      .filter((singlePos): singlePos is JA_PRIMARY_POS => !!singlePos)
     const pos =
       posArray.length === 0
         ? "IDIOM"

@@ -39,6 +39,7 @@ import VolumeUpIcon from "@material-ui/icons/VolumeUpOutlined"
 import RefreshIcon from "@material-ui/icons/RefreshOutlined"
 import ExposureNeg1Icon from "@material-ui/icons/ExposureNeg1Outlined"
 import DebugModule from "debug"
+import { WordFilterType } from "../states/WordAdderState"
 const debug = DebugModule("PoiGoi:CommandsBar")
 
 type CommandsBarPropsType = ReturnType<typeof mapStateToProps> &
@@ -79,6 +80,7 @@ export class CommandsBar extends React.Component<
   render() {
     const { t } = this.props
     const { poiUserId, savingId } = this.props
+    const filter: WordFilterType = this.props.filter.toJS()
     const smDown: boolean =
       typeof window !== "undefined" ? window.innerWidth < 600 : false
     const savingLanguage =
@@ -222,7 +224,7 @@ export class CommandsBar extends React.Component<
                 variant: "outlined",
               })}
               style={{ whiteSpace: "nowrap" }}
-              onClick={() => this.props.showWordAdder({ poiUserId, savingId })}
+              onClick={() => this.props.showWordAdder()}
             >
               {t("AddWordsButtonText", "Words")}
               <AddIcon fontSize="small" />
@@ -232,6 +234,7 @@ export class CommandsBar extends React.Component<
         <SpeedDial
           ariaLabel="menu"
           open={this.state.isMenuOpened}
+          // open={true}
           icon={<MenuIcon fontSize="small" />}
           {...ToggleEvents(this.toggleMenu)}
           ButtonProps={{
@@ -295,7 +298,7 @@ export class CommandsBar extends React.Component<
             tooltipOpen
             onClick={() => {
               this.closeMenu()
-              this.props.showWordAdder({ poiUserId, savingId })
+              this.props.showWordAdder()
             }}
           ></SpeedDialAction>
           <SpeedDialAction
@@ -320,6 +323,7 @@ export class CommandsBar extends React.Component<
 const mapStateToProps = (state: RootStateType) => {
   debug("CommandsBar state: ", state)
   const props = {
+    filter: state.WordAdder.get("Filter"),
     poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
     savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
     saving: state.GoiSaving.get("Saving") as
@@ -338,13 +342,7 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<RootStateType, void, Action>
 ) => {
   return {
-    showWordAdder: ({
-      poiUserId,
-      savingId,
-    }: {
-      poiUserId: PoiUser.PoiUserId
-      savingId: GoiSavingId
-    }) => dispatch(ShowWordAdderAction({ poiUserId, savingId })),
+    showWordAdder: () => dispatch(ShowWordAdderAction()),
   }
 }
 

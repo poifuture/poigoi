@@ -1,9 +1,10 @@
 import { LanguageCode } from "./PoiI18nTypes"
+import { I18nString } from "./PoiI18nTypes"
 
 export type POS = "POS" | string | string[]
 export type EN_POS = "LETTER" | "NOUN" | "VERB"
 // https://ja.wikipedia.org/wiki/%E5%93%81%E8%A9%9E
-export type JA_BASIC_POS =  // 品詞
+export type JA_PRIMARY_POS =  // 品詞
   | "KANA" //仮名
   | "HIRAGANA" //平仮名
   | "KATAKANA" //片仮名
@@ -30,9 +31,8 @@ export type JA_BASIC_POS =  // 品詞
   | "JODOSHI" //助動詞
   | "JOSHI" //助詞
   | "IDIOM" //熟語
-export type JA_POS = JA_BASIC_POS | JA_BASIC_POS[]
+export type JA_POS = JA_PRIMARY_POS | JA_PRIMARY_POS[]
 export type JA_TONE = number | number[]
-export type I18nString = { en?: string; zh?: string; ja?: string }
 export interface GoiWordType {
   key: string
   language: LanguageCode

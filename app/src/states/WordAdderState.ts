@@ -1,5 +1,6 @@
 import Immutable from "immutable"
-import { I18nString, JA_BASIC_POS } from "../types/GoiDictionaryTypes"
+import { JA_PRIMARY_POS } from "../types/GoiDictionaryTypes"
+import { I18nString } from "../types/PoiI18nTypes"
 
 export interface WordAdderQueryType {
   Display: I18nString
@@ -25,7 +26,7 @@ export interface WordFilterType {
   AcceptForgot: boolean
 }
 export interface JaWordFilterType extends WordFilterType {
-  AcceptPos: JA_BASIC_POS[]
+  AcceptPos: JA_PRIMARY_POS[]
 }
 export interface WordAdderStateType {
   Display: boolean
