@@ -164,12 +164,12 @@ const main = async () => {
         [dictionaryName]: {
           translation: {
             ...(word.jaTranslation && { ja: word.jaTranslation }),
-            ...(word.zhTranslation && { ja: word.zhTranslation }),
+            ...(word.zhTranslation && { zh: word.zhTranslation }),
           },
           ...((word.jaHint || word.zhHint) && {
             hint: {
               ...(word.jaHint && { ja: word.jaHint }),
-              ...(word.zhHint && { ja: word.zhHint }),
+              ...(word.zhHint && { zh: word.zhHint }),
             },
           }),
         },

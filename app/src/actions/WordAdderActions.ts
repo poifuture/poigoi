@@ -43,6 +43,8 @@ export const UPDATE_SUBTOTAL = "WORD_ADDER_ACTIONS_UPDATE_SUBTOTAL"
 export const UPDATE_FILTER = "WORD_ADDER_ACTIONS_UPDATE_FILTER"
 
 export const BasicPos: JA_PRIMARY_POS[] = [
+  "KANA",
+  "ROMAJI",
   "VERB", //動詞
   "ADJ", //形容詞
   "KEIYODOSHI", //形容動詞
@@ -298,6 +300,7 @@ const CountQueryAction = (
     const queriedWordRecordsArray = Object.values(wordRecords).filter(
       wordRecord => typeof queriedWords[wordRecord.WordKey] !== "undefined"
     )
+    debug("Queried records: ", queriedWordRecordsArray)
     const forgotCount = queriedWordRecordsArray.filter(
       wordRecord => wordRecord.Level < 0
     ).length
@@ -621,37 +624,6 @@ const UpdateSubtotalAction = ({
     Subtotal: subtotal,
   }
 }
-export const passFilter = ({
-  word,
-  filter,
-}: {
-  word: GoiWordType
-  filter: WordFilterType
-}) => {
-  if (!filter.AcceptExtra) {
-    if (
-      word.textbook.filter(textbook => !textbook.toLowerCase().includes("ext"))
-        .length === 0
-    ) {
-      return false
-    }
-  }
-  if (word.language.startsWith("ja")) {
-    const jaWord = word as GoiJaWordType
-    if (Array.isArray(jaWord.pos)) {
-      for (let pos of jaWord.pos) {
-        if (filter.AcceptPos.includes(pos)) {
-          return true
-        }
-      }
-    } else {
-      if (filter.AcceptPos.includes(jaWord.pos)) {
-        return true
-      }
-    }
-  }
-  return true
-}
 export const CountSubtotalAction = (
   {
     querys,
@@ -765,7 +737,6 @@ export const ChangeFilterAction = ({
           acceptPos.push(pos)
         }
       }
-      acceptPos.push("KANA", "ROMAJI")
     }
     await dispatch(
       UpdateFilterAction({

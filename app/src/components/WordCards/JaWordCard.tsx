@@ -198,12 +198,21 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
               )}
             </div>
             <div>
+              {word.pos.includes("DEPRECATED") && <TinyTag>歴史的</TinyTag>}
+              {/* KANA START */}
               {word.pos.includes("KANA") && <TinyTag>仮名</TinyTag>}
               {word.pos.includes("HIRAGANA") && <TinyTag>平仮名</TinyTag>}
               {word.pos.includes("KATAKANA") && <TinyTag>片仮名</TinyTag>}
+              {word.pos.includes("HATSUON") && <TinyTag>撥音</TinyTag>}
+              {word.pos.includes("SEION") && <TinyTag>清音</TinyTag>}
               {word.pos.includes("DAKUON") && <TinyTag>濁音</TinyTag>}
+              {word.pos.includes("HANDAKUON") && <TinyTag>半濁音</TinyTag>}
               {word.pos.includes("YOON") && <TinyTag>拗音</TinyTag>}
+              {word.pos.includes("SOKUON") && <TinyTag>促音</TinyTag>}
               {word.pos.includes("CHOON") && <TinyTag>長音</TinyTag>}
+              {word.pos.includes("GAIRAIGO") && <TinyTag>外来語</TinyTag>}
+              {word.pos.includes("ROMAJI") && <TinyTag>ローマ字</TinyTag>}
+              {/* HINSHI START */}
               {word.pos.includes("VERB") && <TinyTag>動詞</TinyTag>}
               {word.pos.includes("GODAN") && <TinyTag>五段活用</TinyTag>}
               {word.pos.includes("KAMIICHIDAN") && (

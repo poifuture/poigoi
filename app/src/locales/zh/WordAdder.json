@@ -8,7 +8,7 @@
   "SavingStatusPrioritiedCountLabel": "优先待学习",
   "SavingStatusPendingCountLabel": "已添加",
   "SuggestionSectionTitle": "推荐列表",
-  "CustomQueryInputLabel": "自定义搜索",
+  "CustomQueryInputLabel": "高级搜索（正则匹配单词所属词书）",
   "CustomQueryInputPlaceholder": "例：BIAORI-01-05代表标日初上第五课",
   "WordsToAddSectionTitle": "本次待添加词汇（将按添加顺序学习）",
   "CountTotalPendingWords": "共计新增{{new}}词",

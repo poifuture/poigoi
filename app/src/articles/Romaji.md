@@ -28,3 +28,4 @@ title: "ローマ字 （罗马字）"
 [ref]: https://kotobank.jp/word/%E6%92%A5%E9%9F%B3-114897
 [ref]: http://www.ipc.hokusei.ac.jp/~z00323/classes/joho/ms_word/basics/romaji.html
 [ref]: http://www.mext.go.jp/b_menu/hakusho/nc/k19910628002/k19910628002.html
+[ref]: https://ja.wikipedia.org/wiki/%E7%8F%BE%E4%BB%A3%E4%BB%AE%E5%90%8D%E9%81%A3%E3%81%84

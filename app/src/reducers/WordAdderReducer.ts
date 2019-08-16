@@ -33,28 +33,50 @@ const InitialWordAdderState: WordAdderStateType = {
   },
   Suggestions: [
     {
-      Display: { en: "Kana", zh: "假名", ja: "仮名" },
-      Query: "^KANA-.*$",
+      Display: { en: "Gojuon", zh: "五十音", ja: "五十音" },
+      Query: "^KANA-(HIRA|KATA).*$",
       SubQuerys: [
         {
           Display: { en: "Hiragana", zh: "平假名", ja: "平仮名" },
-          Query: "^KANA-HIRAGANA.*$",
+          Query: "^KANA-HIRAGANA-.*$",
         },
         {
           Display: { en: "Katakana", zh: "片假名", ja: "片仮名" },
-          Query: "^KANA-KATAKANA.*$",
+          Query: "^KANA-KATAKANA-.*$",
+        },
+      ],
+    },
+    {
+      Display: { en: "Kana", zh: "全部假名", ja: "仮名" },
+      Query: "^(KANA|ROMAJI)-.*$",
+      SubQuerys: [
+        {
+          Display: { en: "Hiragana", zh: "平假名", ja: "平仮名" },
+          Query: "^KANA-HIRAGANA-.*$",
+        },
+        {
+          Display: { en: "Katakana", zh: "片假名", ja: "片仮名" },
+          Query: "^KANA-KATAKANA-.*$",
         },
         {
           Display: { en: "Dakuon", zh: "浊音", ja: "濁音" },
-          Query: "^KANA-DAKUON.*$",
+          Query: "^KANA-DAKUON-.*$",
         },
         {
           Display: { en: "Yoon", zh: "拗音", ja: "拗音" },
-          Query: "^KANA-YOON.*$",
+          Query: "^KANA-YOON-.*$",
         },
         {
           Display: { en: "Choon", zh: "长音", ja: "長音" },
-          Query: "^KANA-CHOON.*$",
+          Query: "^KANA-CHOON-.*$",
+        },
+        {
+          Display: { en: "Gairaigo", zh: "外来语", ja: "外来語" },
+          Query: "^KANA-GAIRAIGO-.*$",
+        },
+        {
+          Display: { en: "Romaji", zh: "罗马字", ja: "ローマ字" },
+          Query: "^ROMAJI-.*$",
         },
       ],
     },
@@ -86,7 +108,13 @@ const InitialWordAdderState: WordAdderStateType = {
   ],
   Pendings: [],
   Counters: {
-    "^KANA-.*$": {
+    "^KANA-(HIRA|KATA).*$": {
+      TotalCount: -1,
+      LearnedCount: -1,
+      AddedCount: -1,
+      NewCount: -1,
+    },
+    "^(KANA|ROMAJI)-.*$": {
       TotalCount: -1,
       LearnedCount: -1,
       AddedCount: -1,
@@ -107,7 +135,6 @@ const InitialWordAdderState: WordAdderStateType = {
   },
   Filter: {
     AcceptPos: [
-      "KANA", //仮名
       ...BasicPos,
       "PROPER", //固有名詞
       "IDIOM", //熟語
