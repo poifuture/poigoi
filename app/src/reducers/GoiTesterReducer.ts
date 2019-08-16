@@ -1,4 +1,5 @@
 import { fromJS, Map } from "immutable"
+import SortedArray from "collections/sorted-array"
 import KanaDictionary from "../dictionary/KanaDictionary"
 import {
   GoiTesterActionTypes,
@@ -13,7 +14,6 @@ import {
 } from "../actions/GoiTesterActions"
 import { GoiTesterStateType } from "../states/GoiTesterState"
 import { GoiWordRecordDataType } from "../models/GoiSaving"
-import Heap from "../algorithm/Heap"
 import DebugModule from "debug"
 const debug = DebugModule("PoiGoi:GoiTesterReducer")
 
@@ -23,9 +23,9 @@ const InitialGoiTesterState: GoiTesterStateType = {
   JudgeResult: "Pending",
   Record: null,
   ForcedWordKey: "",
-  LearnedCandidates: new Heap<GoiWordRecordDataType>([]),
-  PrioritiedCandidates: new Heap<GoiWordRecordDataType>([]),
-  PendingCandidates: new Heap<GoiWordRecordDataType>([]),
+  LearnedCandidates: new SortedArray<GoiWordRecordDataType>(),
+  PrioritiedCandidates: new SortedArray<GoiWordRecordDataType>(),
+  PendingCandidates: new SortedArray<GoiWordRecordDataType>(),
 }
 
 export const GoiTesterReducer = (

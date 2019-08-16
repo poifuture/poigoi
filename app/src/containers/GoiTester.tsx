@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import SortedArray from "collections/sorted-array"
 import JaWordCard from "../components/WordCards/JaWordCard"
 import * as PoiUser from "../utils/PoiUser"
 import { LazyInitUserAction } from "../actions/GoiUserActions"
@@ -15,7 +16,6 @@ import { GoiWordType, GoiJaWordType } from "../types/GoiDictionaryTypes"
 import { RootStateType } from "../states/RootState"
 import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
-import Heap from "../algorithm/Heap"
 import {
   GoiWordRecordDataType,
   GoiSavingDataType,
@@ -429,9 +429,9 @@ const mapDispatchToProps = (
         pendingCandidates,
       }: {
         currentWordKey?: string
-        learnedCandidates?: Heap<GoiWordRecordDataType>
-        prioritiedCandidates?: Heap<GoiWordRecordDataType>
-        pendingCandidates?: Heap<GoiWordRecordDataType>
+        learnedCandidates?: SortedArray<GoiWordRecordDataType>
+        prioritiedCandidates?: SortedArray<GoiWordRecordDataType>
+        pendingCandidates?: SortedArray<GoiWordRecordDataType>
       } = {}
     ) =>
       dispatch(
