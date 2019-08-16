@@ -22,6 +22,10 @@ import { RootStateType } from "../states/RootState"
 import { ThunkAction } from "redux-thunk"
 import DebugModule from "debug"
 import { UpdateEnableScrollAction } from "./LayoutActions"
+import {
+  NewWordsOrderType,
+  RevisitStrategyType,
+} from "../states/GoiSettingsState"
 const debug = DebugModule("PoiGoi:GoiTesterActions")
 
 export const UPDATE_IS_TYPING = "GOI_TESTER_ACTIONS_UPDATE_IS_TYPING"
@@ -118,13 +122,15 @@ export const DecideNextWord = ({
   learnedCandidate,
   prioritiedCandidate,
   pendingCandidate,
+  revisitStrategy,
 }: {
   learnedCandidate?: GoiWordRecordDataType | null
   prioritiedCandidate?: GoiWordRecordDataType | null
   pendingCandidate?: GoiWordRecordDataType | null
+  revisitStrategy: RevisitStrategyType
 }) => {
   debug("DecideNextWord... ")
-  if (learnedCandidate) {
+  if (learnedCandidate && revisitStrategy !== "NoRevisit") {
     if (learnedCandidate.NextTime < new Date().getTime()) {
       return { candidate: learnedCandidate, decision: "leaned" }
     }
@@ -430,7 +436,7 @@ export const ShowNextWordAction = (
     pendingCandidates?: SortedArray<GoiWordRecordDataType>
   } = {}
 ) => {
-  return (async (dispatch): Promise<void> => {
+  return (async (dispatch, getState): Promise<void> => {
     debug("Showing next word... ")
     if (!learnedCandidates || !prioritiedCandidates || !pendingCandidates) {
       debug("No heap found... ")
@@ -461,17 +467,35 @@ export const ShowNextWordAction = (
         }
       }
     }
+    const revisitStrategy = getState().GoiSettings.get(
+      "RevisitStrategy"
+    ) as RevisitStrategyType
     const { decision } = DecideNextWord({
       learnedCandidate: learnedCandidates.min(),
       prioritiedCandidate: prioritiedCandidates.min(),
       pendingCandidate: pendingCandidates.min(),
+      revisitStrategy,
     })
+    const newWordOrder = getState().GoiSettings.get(
+      "NewWordOrder"
+    ) as NewWordsOrderType
+    const popAnyone = (candidates: SortedArray<GoiWordRecordDataType>) => {
+      const one = candidates.one()!
+      candidates.delete(one)
+      return one
+    }
     const candidate: GoiWordRecordDataType =
-      decision === "leaned" || decision === "steady"
+      decision === "leaned"
         ? learnedCandidates.shift()!
         : decision === "prioritied"
-        ? prioritiedCandidates.shift()!
+        ? newWordOrder === "Ordered"
+          ? prioritiedCandidates.shift()!
+          : popAnyone(prioritiedCandidates)
         : decision === "pending"
+        ? newWordOrder === "Ordered"
+          ? pendingCandidates.shift()!
+          : popAnyone(pendingCandidates)
+        : decision === "steady"
         ? pendingCandidates.shift()!
         : await GoiWordRecord(poiUserId, savingId, "あ").ReadOrCreate()
     const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()

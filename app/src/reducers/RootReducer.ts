@@ -3,6 +3,7 @@ import { RootStateType } from "../states/RootState"
 import GoiTesterReducer from "./GoiTesterReducer"
 import GoiUserReducer from "./GoiUserReducer"
 import GoiSavingReducer from "./GoiSavingReducer"
+import GoiSettingsReducer from "./GoiSettingsReducer"
 import WordAdderReducer from "./WordAdderReducer"
 import LayoutReducer from "./LayoutReducer"
 
@@ -13,6 +14,7 @@ export const RootReducer = combineReducers<RootStateType>({
   GoiTester: GoiTesterReducer,
   GoiUser: GoiUserReducer,
   GoiSaving: GoiSavingReducer,
+  GoiSettings: GoiSettingsReducer,
   WordAdder: WordAdderReducer,
   Layout: LayoutReducer,
 })

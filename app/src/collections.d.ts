@@ -12,6 +12,8 @@ declare module "collections/sorted-array" {
     add(value: T)
     shift(): T
     min(): T
+    one(): T | undefined
+    delete(value: T)
   }
   export default SortedArray
 }
