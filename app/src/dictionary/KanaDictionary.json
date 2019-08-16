@@ -5027,41 +5027,6 @@
         "KANA-DAKUON-00125"
       ]
     },
-    "ヴ": {
-      "key": "ヴ",
-      "language": "ja",
-      "common": "<ruby>ヴ<rt>vu</rt></ruby>",
-      "alternatives": [],
-      "uncommons": [],
-      "kana": "ヴ",
-      "romaji": "vu",
-      "wapuro": "vu",
-      "audios": [
-        {
-          "cv": "Hikari",
-          "wav": ""
-        }
-      ],
-      "pos": [
-        "KANA",
-        "KATAKANA",
-        "DAKUON"
-      ],
-      "translations": {
-        "KanaDictionary": {
-          "translation": {
-            "ja": "ヴ"
-          },
-          "hint": {
-            "zh": "仅用于外来语，常直接写作ブ"
-          }
-        }
-      },
-      "sentences": [],
-      "textbook": [
-        "KANA-DAKUON-EXT-00201"
-      ]
-    },
     "きゃ": {
       "key": "きゃ",
       "language": "ja",
@@ -8472,6 +8437,646 @@
       "sentences": [],
       "textbook": [
         "KANA-GAIRAIGO-00013"
+      ]
+    },
+    "イェ": {
+      "key": "イェ",
+      "language": "ja",
+      "common": "<ruby>イェ<rt>ye</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "イェ",
+      "romaji": "ye",
+      "wapuro": "ye",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "イェ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00101"
+      ]
+    },
+    "ウィ": {
+      "key": "ウィ",
+      "language": "ja",
+      "common": "<ruby>ウィ<rt>wi</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ウィ",
+      "romaji": "wi",
+      "wapuro": "uxi",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ウィ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00102"
+      ]
+    },
+    "ウェ": {
+      "key": "ウェ",
+      "language": "ja",
+      "common": "<ruby>ウェ<rt>we</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ウェ",
+      "romaji": "we",
+      "wapuro": "uxe",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ウェ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00103"
+      ]
+    },
+    "ウォ": {
+      "key": "ウォ",
+      "language": "ja",
+      "common": "<ruby>ウォ<rt>wo</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ウォ",
+      "romaji": "wo",
+      "wapuro": "uxo",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ウォ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00104"
+      ]
+    },
+    "クァ": {
+      "key": "クァ",
+      "language": "ja",
+      "common": "<ruby>クァ<rt>kwa</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "クァ",
+      "romaji": "kwa",
+      "wapuro": "kuxa",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "クァ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00105"
+      ]
+    },
+    "クィ": {
+      "key": "クィ",
+      "language": "ja",
+      "common": "<ruby>クィ<rt>kwi</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "クィ",
+      "romaji": "kwi",
+      "wapuro": "kuxi",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "クィ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00106"
+      ]
+    },
+    "クェ": {
+      "key": "クェ",
+      "language": "ja",
+      "common": "<ruby>クェ<rt>kwe</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "クェ",
+      "romaji": "kwe",
+      "wapuro": "kuxe",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "クェ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00107"
+      ]
+    },
+    "クォ": {
+      "key": "クォ",
+      "language": "ja",
+      "common": "<ruby>クォ<rt>kwo</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "クォ",
+      "romaji": "kwo",
+      "wapuro": "kuxo",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "クォ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00108"
+      ]
+    },
+    "ツィ": {
+      "key": "ツィ",
+      "language": "ja",
+      "common": "<ruby>ツィ<rt>tsi</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ツィ",
+      "romaji": "tsi",
+      "wapuro": "tsi",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ツィ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00109"
+      ]
+    },
+    "トゥ": {
+      "key": "トゥ",
+      "language": "ja",
+      "common": "<ruby>トゥ<rt>tu</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "トゥ",
+      "romaji": "tu",
+      "wapuro": "toxu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "トゥ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00110"
+      ]
+    },
+    "テュ": {
+      "key": "テュ",
+      "language": "ja",
+      "common": "<ruby>テュ<rt>tyu</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "テュ",
+      "romaji": "tyu",
+      "wapuro": "texyu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "テュ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00111"
+      ]
+    },
+    "フュ": {
+      "key": "フュ",
+      "language": "ja",
+      "common": "<ruby>フュ<rt>fyu</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "フュ",
+      "romaji": "fyu",
+      "wapuro": "fyu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "フュ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00112"
+      ]
+    },
+    "ヴァ": {
+      "key": "ヴァ",
+      "language": "ja",
+      "common": "<ruby>ヴァ<rt>va</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ヴァ",
+      "romaji": "va",
+      "wapuro": "va",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ヴァ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00113"
+      ]
+    },
+    "ヴィ": {
+      "key": "ヴィ",
+      "language": "ja",
+      "common": "<ruby>ヴィ<rt>vi</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ヴィ",
+      "romaji": "vi",
+      "wapuro": "vi",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ヴィ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00114"
+      ]
+    },
+    "ヴ": {
+      "key": "ヴ",
+      "language": "ja",
+      "common": "<ruby>ヴ<rt>vu</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ヴ",
+      "romaji": "vu",
+      "wapuro": "vu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ヴ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00115"
+      ]
+    },
+    "ヴェ": {
+      "key": "ヴェ",
+      "language": "ja",
+      "common": "<ruby>ヴェ<rt>ve</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ヴェ",
+      "romaji": "ve",
+      "wapuro": "ve",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ヴェ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00116"
+      ]
+    },
+    "ヴォ": {
+      "key": "ヴォ",
+      "language": "ja",
+      "common": "<ruby>ヴォ<rt>vo</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ヴォ",
+      "romaji": "vo",
+      "wapuro": "vo",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ヴォ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00117"
+      ]
+    },
+    "ヴュ": {
+      "key": "ヴュ",
+      "language": "ja",
+      "common": "<ruby>ヴュ<rt>vyu</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ヴュ",
+      "romaji": "vyu",
+      "wapuro": "vyu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ヴュ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00118"
+      ]
+    },
+    "グァ": {
+      "key": "グァ",
+      "language": "ja",
+      "common": "<ruby>グァ<rt>gwa</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "グァ",
+      "romaji": "gwa",
+      "wapuro": "gwa",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "グァ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00119"
+      ]
+    },
+    "ドゥ": {
+      "key": "ドゥ",
+      "language": "ja",
+      "common": "<ruby>ドゥ<rt>du</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ドゥ",
+      "romaji": "du",
+      "wapuro": "doxu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "KANA",
+        "KATAKANA",
+        "GAIRAIGO"
+      ],
+      "translations": {
+        "KanaDictionary": {
+          "translation": {
+            "ja": "ドゥ"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "KANA-GAIRAIGO-EXT-00120"
       ]
     },
     "a": {

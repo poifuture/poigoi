@@ -12,7 +12,7 @@ import { GoiSavingId } from "../types/GoiTypes"
 import { ToggleEvents } from "../utils/PoiResponsive"
 import { GoiWordRecordDataType, GoiSavingDataType } from "../models/GoiSaving"
 import { ShowWordAdderAction } from "../actions/WordAdderActions"
-import Heap from "../algorithm/Heap"
+import SortedArray from "collections/sorted-array"
 
 import AddIcon from "@material-ui/icons/AddOutlined"
 import CloudOffIcon from "@material-ui/icons/CloudOffOutlined"
@@ -40,6 +40,11 @@ import RefreshIcon from "@material-ui/icons/RefreshOutlined"
 import ExposureNeg1Icon from "@material-ui/icons/ExposureNeg1Outlined"
 import DebugModule from "debug"
 import { WordFilterType } from "../states/WordAdderState"
+import {
+  NewWordsOrderType,
+  RevisitStrategyType,
+} from "../states/GoiSettingsState"
+import { UpdateGoiSettingsStateAction } from "../actions/GoiSettingsActions"
 const debug = DebugModule("PoiGoi:CommandsBar")
 
 type CommandsBarPropsType = ReturnType<typeof mapStateToProps> &
@@ -79,8 +84,6 @@ export class CommandsBar extends React.Component<
   }
   render() {
     const { t } = this.props
-    const { poiUserId, savingId } = this.props
-    const filter: WordFilterType = this.props.filter.toJS()
     const smDown: boolean =
       typeof window !== "undefined" ? window.innerWidth < 600 : false
     const savingLanguage =
@@ -178,16 +181,62 @@ export class CommandsBar extends React.Component<
                   [WIP]{t("SearchButtonText", "Search")}
                   <SearchIcon fontSize="small" />
                 </Button>
-                <Button size="small" style={{ whiteSpace: "nowrap" }}>
-                  [WIP]{t("RevisitButtonText", "Revisit")}
-                  <RefreshIcon fontSize="small" />
-                  {false && <ExposureNeg1Icon fontSize="small" />}
-                </Button>
-                <Button size="small" style={{ whiteSpace: "nowrap" }}>
-                  [WIP]{t("OrderButtonText", "Order")}
-                  <PlaylistPlayIcon fontSize="small" />
-                  {false && <ShuffleIcon fontSize="small" />}
-                </Button>
+                {this.props.revisitStrategy === "RevisitFirst" ||
+                this.props.revisitStrategy === "User" ? (
+                  <Button
+                    size="small"
+                    style={{ whiteSpace: "nowrap" }}
+                    onClick={() => {
+                      this.props.updateGoiSettingsState({
+                        revisitStrategy: "NoRevisit",
+                      })
+                    }}
+                  >
+                    {t("RevisitFirstButtonText", "Revisit")}
+                    <RefreshIcon fontSize="small" />
+                  </Button>
+                ) : (
+                  <Button
+                    size="small"
+                    style={{ whiteSpace: "nowrap" }}
+                    onClick={() => {
+                      this.props.updateGoiSettingsState({
+                        revisitStrategy: "RevisitFirst",
+                      })
+                    }}
+                  >
+                    {t("NoRevisitButtonText", "NoRevisit")}
+                    <ExposureNeg1Icon fontSize="small" />
+                  </Button>
+                )}
+                {this.props.newWordsOrder === "Ordered" ||
+                this.props.newWordsOrder === "User" ? (
+                  <Button
+                    size="small"
+                    style={{ whiteSpace: "nowrap" }}
+                    onClick={() => {
+                      this.props.updateGoiSettingsState({
+                        newWordsOrder: "Shuffle",
+                      })
+                    }}
+                  >
+                    {t("OrderedButtonText", "Ordered")}
+                    <PlaylistPlayIcon fontSize="small" />
+                  </Button>
+                ) : (
+                  <Button
+                    size="small"
+                    style={{ whiteSpace: "nowrap" }}
+                    onClick={() => {
+                      this.props.updateGoiSettingsState({
+                        newWordsOrder: "Ordered",
+                      })
+                    }}
+                  >
+                    {t("ShuffleButtonText", "Shuffle")}
+                    <ShuffleIcon fontSize="small" />
+                  </Button>
+                )}
                 <Button size="small" style={{ whiteSpace: "nowrap" }}>
                   {/* type select swipe */}
                   [WIP]{t("ModeButtonText", "Mode")}
@@ -219,7 +268,7 @@ export class CommandsBar extends React.Component<
             {/* TODO: outline the button when all words are learned */}
             <Button
               size="small"
-              {...(this.props.pendingCandidates.isEmpty() && {
+              {...(this.props.pendingCandidates.length === 0 && {
                 color: "secondary",
                 variant: "outlined",
               })}
@@ -323,17 +372,18 @@ export class CommandsBar extends React.Component<
 const mapStateToProps = (state: RootStateType) => {
   debug("CommandsBar state: ", state)
   const props = {
-    filter: state.WordAdder.get("Filter"),
-    poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
-    savingId: state.GoiSaving.get("SavingId") as GoiSavingId,
     saving: state.GoiSaving.get("Saving") as
       | GoiSavingDataType
       | null
       | undefined,
-    pendingCandidates: state.GoiTester.get("PendingCandidates") as Heap<
+    pendingCandidates: state.GoiTester.get("PendingCandidates") as SortedArray<
       GoiWordRecordDataType
     >,
     isTyping: state.GoiTester.get("IsTyping") as boolean,
+    newWordsOrder: state.GoiSettings.get("NewWordsOrder") as NewWordsOrderType,
+    revisitStrategy: state.GoiSettings.get(
+      "RevisitStrategy"
+    ) as RevisitStrategyType,
   }
   debug("CommandsBar props: ", props)
   return props
@@ -343,6 +393,16 @@ const mapDispatchToProps = (
 ) => {
   return {
     showWordAdder: () => dispatch(ShowWordAdderAction()),
+    updateGoiSettingsState: ({
+      newWordsOrder,
+      revisitStrategy,
+    }: {
+      newWordsOrder?: NewWordsOrderType
+      revisitStrategy?: RevisitStrategyType
+    }) =>
+      dispatch(
+        UpdateGoiSettingsStateAction({ newWordsOrder, revisitStrategy })
+      ),
   }
 }
 
