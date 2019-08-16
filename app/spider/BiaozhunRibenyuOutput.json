@@ -14892,8 +14892,8 @@
         "BIAORI-01-13-0039"
       ]
     },
-    "つ": {
-      "key": "つ",
+    "つ-BIAORI-2": {
+      "key": "つ-BIAORI-2",
       "language": "ja",
       "common": "つ",
       "alternatives": [],
@@ -16957,12 +16957,12 @@
     "携帯電話": {
       "key": "携帯電話",
       "language": "ja",
-      "common": "<ruby>携<rt>けい</rt></ruby><ruby>帯<rt>おび</rt></ruby><ruby>電<rt>でん</rt></ruby><ruby>話<rt>はなし</rt></ruby>",
+      "common": "<ruby>携<rt>けい</rt></ruby><ruby>帯<rt>たい</rt></ruby><ruby>電<rt>でん</rt></ruby><ruby>話<rt>わ</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "けいおびでんはなし",
+      "kana": "けいたいでんわ",
       "romaji": "keitaidenwa",
-      "wapuro": "keiobidennhanashi",
+      "wapuro": "keitaidennwa",
       "audios": [
         {
           "cv": "Hikari",
@@ -16986,12 +16986,12 @@
     "禁煙": {
       "key": "禁煙",
       "language": "ja",
-      "common": "<ruby>禁<rt>きん</rt></ruby><ruby>煙<rt>けむり</rt></ruby>",
+      "common": "<ruby>禁<rt>きん</rt></ruby><ruby>煙<rt>えん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "きんけむり",
+      "kana": "きんえん",
       "romaji": "kin'en",
-      "wapuro": "kinnkemuri",
+      "wapuro": "kinnenn",
       "audios": [
         {
           "cv": "Hikari",
@@ -17790,12 +17790,12 @@
     "十分": {
       "key": "十分",
       "language": "ja",
-      "common": "<ruby>十<rt>じゅう</rt></ruby><ruby>分<rt>ふん</rt></ruby>",
+      "common": "<ruby>十<rt>じゅう</rt></ruby><ruby>分<rt>ぶん</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "じゅうふん",
+      "kana": "じゅうぶん",
       "romaji": "jūfun",
-      "wapuro": "juufunn",
+      "wapuro": "juubunn",
       "audios": [
         {
           "cv": "Hikari",

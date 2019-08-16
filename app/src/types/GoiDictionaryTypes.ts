@@ -5,12 +5,19 @@ export type POS = "POS" | string | string[]
 export type EN_POS = "LETTER" | "NOUN" | "VERB"
 // https://ja.wikipedia.org/wiki/%E5%93%81%E8%A9%9E
 export type JA_PRIMARY_POS =  // 品詞
+  | "DEPRECATED"
   | "KANA" //仮名
   | "HIRAGANA" //平仮名
   | "KATAKANA" //片仮名
+  | "HATSUON" //撥音
+  | "SEION" //清音
   | "DAKUON" //濁音
+  | "HANDAKUON" //半濁音
   | "YOON" //拗音
+  | "SOKUON" //促音
   | "CHOON" //長音
+  | "GAIRAIGO" //外来語
+  | "ROMAJI" //ローマ字
   | "VERB" //動詞
   | "GODAN" //五段
   | "KAMIICHIDAN" //上一段

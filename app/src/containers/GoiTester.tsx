@@ -134,7 +134,9 @@ export class GoiTester extends React.Component<
         ? this.props.saving.Language
         : "en"
     const wordCardStatus =
-      this.props.judgeResult === "Pending"
+      this.props.currentLevel === 0
+        ? "first"
+        : this.props.judgeResult === "Pending"
         ? "input"
         : this.props.judgeResult === "Correct"
         ? "perfect"
@@ -146,7 +148,9 @@ export class GoiTester extends React.Component<
         ? "failed"
         : "review"
     const wordCardDisplay =
-      this.props.judgeResult === "Pending"
+      this.props.currentLevel === 0
+        ? "simple"
+        : this.props.judgeResult === "Pending"
         ? "test-common"
         : this.state.displayDetail
         ? "detailed"
@@ -284,7 +288,12 @@ export class GoiTester extends React.Component<
                 {t("WordDetailButtonText", "Detail")}
               </Button>
             )}
-            {this.state.displayDetail && (
+            {(this.state.displayDetail ||
+              word.pos.includes("DEPRECATED") ||
+              word.pos.includes("GAIRAIGO") ||
+              word.pos.includes("INTERJ") ||
+              word.pos.includes("PROPER") ||
+              word.pos.includes("IDIOM")) && (
               <Button
                 size="small"
                 aria-label="forget"

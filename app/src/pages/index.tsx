@@ -51,7 +51,7 @@ class IndexPage extends React.Component<IndexPagePropsType> {
             color: "lightgray",
           }}
         >
-          catfood build v1.20190814.rc2
+          catfood build v1.20190815.rc1
         </div>
       </div>
     )
