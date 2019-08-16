@@ -14,6 +14,8 @@ declare module "collections/sorted-array" {
     min(): T
     one(): T | undefined
     delete(value: T)
+    slice(start: number, end: number): T[]
+    deleteAll(value: T, euqals: EqualsFunction<T>): number
   }
   export default SortedArray
 }

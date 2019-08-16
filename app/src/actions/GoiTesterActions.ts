@@ -477,11 +477,17 @@ export const ShowNextWordAction = (
       revisitStrategy,
     })
     const newWordOrder = getState().GoiSettings.get(
-      "NewWordOrder"
+      "NewWordsOrder"
     ) as NewWordsOrderType
-    const popAnyone = (candidates: SortedArray<GoiWordRecordDataType>) => {
-      const one = candidates.one()!
-      candidates.delete(one)
+    const popRandomOne = async (
+      candidates: SortedArray<GoiWordRecordDataType>
+    ) => {
+      if (candidates.length === 0) {
+        return await GoiWordRecord(poiUserId, savingId, "あ").ReadOrCreate()
+      }
+      const randIndex = Math.round(Math.random() * candidates.length)
+      const one = candidates.slice(randIndex, randIndex + 1)[0]
+      candidates.deleteAll(one, (a, b) => a.WordKey === b.WordKey)
       return one
     }
     const candidate: GoiWordRecordDataType =
@@ -490,13 +496,13 @@ export const ShowNextWordAction = (
         : decision === "prioritied"
         ? newWordOrder === "Ordered"
           ? prioritiedCandidates.shift()!
-          : popAnyone(prioritiedCandidates)
+          : await popRandomOne(prioritiedCandidates)
         : decision === "pending"
         ? newWordOrder === "Ordered"
           ? pendingCandidates.shift()!
-          : popAnyone(pendingCandidates)
+          : await popRandomOne(pendingCandidates)
         : decision === "steady"
-        ? pendingCandidates.shift()!
+        ? learnedCandidates.shift()!
         : await GoiWordRecord(poiUserId, savingId, "あ").ReadOrCreate()
     const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
     const dictionaryWord =
