@@ -180,7 +180,7 @@ const main = async () => {
               from: "KanaDictionary",
               sentence: word.zhSentance,
               audios: [{ cv: "Hikari", wav: "" }],
-              translation: { zh: word.zhTranslation },
+              translation: { zh: word.zhSentanceTranslation },
             },
           ]
         : [],

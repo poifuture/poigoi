@@ -288,7 +288,12 @@ export class GoiTester extends React.Component<
                 {t("WordDetailButtonText", "Detail")}
               </Button>
             )}
-            {this.state.displayDetail && (
+            {(this.state.displayDetail ||
+              word.pos.includes("DEPRECATED") ||
+              word.pos.includes("GAIRAIGO") ||
+              word.pos.includes("INTERJ") ||
+              word.pos.includes("PROPER") ||
+              word.pos.includes("IDIOM")) && (
               <Button
                 size="small"
                 aria-label="forget"
