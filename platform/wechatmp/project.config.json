@@ -1,0 +1,20 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"miniprogramRoot": "miniprogram/",
+	"compileType": "miniprogram",
+	"libVersion": "2.4.0",
+	"projectname": "poigoi",
+	"scripts": {
+		"beforeCompile": "npm run tsc",
+		"beforePreview": "npm run tsc",
+		"beforeUpload": "npm run tsc"
+	},
+	"setting": {},
+	"appid": "wxd598f0b5e26389f4",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {}
+}
