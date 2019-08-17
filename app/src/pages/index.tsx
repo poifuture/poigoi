@@ -17,17 +17,14 @@ type IndexPagePropsType = ReturnType<typeof mapStateToProps> &
 class IndexPage extends React.Component<IndexPagePropsType> {
   render() {
     return (
-      // <div style={{ width: "100%", overflow: "hidden", position: "fixed" }}>
       <div
         className="goi-index-page"
-        {...(!this.props.enableScroll && {
-          style: {
-            width: "100%",
-            height: "100%",
-            overflow: "hidden",
-            position: "fixed",
-          },
-        })}
+        style={{
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+          position: "fixed",
+        }}
       >
         <Hidden xsDown>
           <NavBar />
