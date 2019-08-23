@@ -1,5 +1,5 @@
 import Immutable, { fromJS } from "immutable"
-import SortedArray from "collections/sorted-array"
+import { TreeMultiSet, advance } from "tstl"
 import { GoiWordType, GoiJaWordType } from "../types/GoiDictionaryTypes"
 import * as PoiUser from "../utils/PoiUser"
 import { GoiSavingId, GoiJudgeResult } from "../types/GoiTypes"
@@ -53,9 +53,9 @@ export interface UpdateJudgeResultActionType
 
 export interface UpdateCandidatesActionType
   extends Action<typeof UPDATE_CANDIDATES> {
-  LearnedCandidates?: SortedArray<GoiWordRecordDataType>
-  PrioritiedCandidates?: SortedArray<GoiWordRecordDataType>
-  PendingCandidates?: SortedArray<GoiWordRecordDataType>
+  LearnedCandidates?: TreeMultiSet<GoiWordRecordDataType>
+  PrioritiedCandidates?: TreeMultiSet<GoiWordRecordDataType>
+  PendingCandidates?: TreeMultiSet<GoiWordRecordDataType>
 }
 
 export type GoiTesterActionTypes =
@@ -106,9 +106,9 @@ export const UpdateCandidatesAction = ({
   prioritiedCandidates,
   pendingCandidates,
 }: {
-  learnedCandidates?: SortedArray<GoiWordRecordDataType>
-  prioritiedCandidates?: SortedArray<GoiWordRecordDataType>
-  pendingCandidates?: SortedArray<GoiWordRecordDataType>
+  learnedCandidates?: TreeMultiSet<GoiWordRecordDataType>
+  prioritiedCandidates?: TreeMultiSet<GoiWordRecordDataType>
+  pendingCandidates?: TreeMultiSet<GoiWordRecordDataType>
 }): GoiTesterActionTypes => {
   return {
     type: UPDATE_CANDIDATES,
@@ -159,25 +159,22 @@ export const ReindexCandidates = async ({
     await BulkGetWordRecords({ poiUserId, savingId })
   )
   debug("Records:", wordRecords)
-  const learnedCandidates = new SortedArray<GoiWordRecordDataType>(
+  const learnedCandidates = new TreeMultiSet<GoiWordRecordDataType>(
     wordRecords.filter(wordRecord => wordRecord.Level > 0),
-    (a, b) => a.NextTime === b.NextTime,
-    (a, b) => {
-      return a.NextTime - b.NextTime
+    (x, y) => {
+      return x.NextTime < y.NextTime
     }
   )
-  const prioritiedCandidates = new SortedArray<GoiWordRecordDataType>(
+  const prioritiedCandidates = new TreeMultiSet<GoiWordRecordDataType>(
     wordRecords.filter(wordRecord => wordRecord.Prioritied),
-    (a, b) => a.Prioritied === b.Prioritied,
-    (a, b) => {
-      return a.Prioritied > b.Prioritied ? 1 : -1
+    (x, y) => {
+      return x.Prioritied < y.Prioritied
     }
   )
-  const pendingCandidates = new SortedArray<GoiWordRecordDataType>(
+  const pendingCandidates = new TreeMultiSet<GoiWordRecordDataType>(
     wordRecords.filter(wordRecord => wordRecord.Pending),
-    (a, b) => a.Pending === b.Pending,
-    (a, b) => {
-      return a.Pending > b.Pending ? 1 : -1
+    (x, y) => {
+      return x.Pending < y.Pending
     }
   )
   return { learnedCandidates, prioritiedCandidates, pendingCandidates }
@@ -431,9 +428,9 @@ export const ShowNextWordAction = (
     pendingCandidates,
   }: {
     currentWordKey?: string
-    learnedCandidates?: SortedArray<GoiWordRecordDataType>
-    prioritiedCandidates?: SortedArray<GoiWordRecordDataType>
-    pendingCandidates?: SortedArray<GoiWordRecordDataType>
+    learnedCandidates?: TreeMultiSet<GoiWordRecordDataType>
+    prioritiedCandidates?: TreeMultiSet<GoiWordRecordDataType>
+    pendingCandidates?: TreeMultiSet<GoiWordRecordDataType>
   } = {}
 ) => {
   return (async (dispatch, getState): Promise<void> => {
@@ -455,13 +452,13 @@ export const ShowNextWordAction = (
         ).ReadOrNull()
         if (currentWordRecord) {
           if (currentWordRecord.Level > 0) {
-            learnedCandidates.add(currentWordRecord)
+            learnedCandidates.push(currentWordRecord)
           }
           if (currentWordRecord.Level === 0) {
             if (currentWordRecord.Prioritied) {
-              prioritiedCandidates.add(currentWordRecord)
+              prioritiedCandidates.push(currentWordRecord)
             } else if (currentWordRecord.Pending) {
-              pendingCandidates.add(currentWordRecord)
+              pendingCandidates.push(currentWordRecord)
             }
           }
         }
@@ -471,38 +468,47 @@ export const ShowNextWordAction = (
       "RevisitStrategy"
     ) as RevisitStrategyType
     const { decision } = DecideNextWord({
-      learnedCandidate: learnedCandidates.min(),
-      prioritiedCandidate: prioritiedCandidates.min(),
-      pendingCandidate: pendingCandidates.min(),
+      learnedCandidate: learnedCandidates.begin().value,
+      prioritiedCandidate: prioritiedCandidates.begin().value,
+      pendingCandidate: pendingCandidates.begin().value,
       revisitStrategy,
     })
     const newWordOrder = getState().GoiSettings.get(
       "NewWordsOrder"
     ) as NewWordsOrderType
     const popRandomOne = async (
-      candidates: SortedArray<GoiWordRecordDataType>
+      candidates: TreeMultiSet<GoiWordRecordDataType>
     ) => {
-      if (candidates.length === 0) {
+      if (candidates.size() === 0) {
         return await GoiWordRecord(poiUserId, savingId, "あ").ReadOrCreate()
       }
-      const randIndex = Math.round(Math.random() * candidates.length)
-      const one = candidates.slice(randIndex, randIndex + 1)[0]
-      candidates.deleteAll(one, (a, b) => a.WordKey === b.WordKey)
+      const randIndex = Math.floor(Math.random() * candidates.size())
+      const randIterator = advance(candidates.begin(), randIndex)
+      const one = randIterator.value
+      candidates.erase(randIterator)
+      return one
+    }
+    const popMin = async (candidates: TreeMultiSet<GoiWordRecordDataType>) => {
+      if (candidates.size() === 0) {
+        return await GoiWordRecord(poiUserId, savingId, "あ").ReadOrCreate()
+      }
+      const one = candidates.begin().value
+      candidates.erase(candidates.begin())
       return one
     }
     const candidate: GoiWordRecordDataType =
       decision === "leaned"
-        ? learnedCandidates.shift()!
+        ? await popMin(learnedCandidates)
         : decision === "prioritied"
         ? newWordOrder === "Ordered"
-          ? prioritiedCandidates.shift()!
+          ? await popMin(prioritiedCandidates)
           : await popRandomOne(prioritiedCandidates)
         : decision === "pending"
         ? newWordOrder === "Ordered"
-          ? pendingCandidates.shift()!
+          ? await popMin(pendingCandidates)
           : await popRandomOne(pendingCandidates)
         : decision === "steady"
-        ? learnedCandidates.shift()!
+        ? await popMin(learnedCandidates)
         : await GoiWordRecord(poiUserId, savingId, "あ").ReadOrCreate()
     const dictionarys = await GoiSaving(poiUserId, savingId).GetDictionarys()
     const dictionaryWord =

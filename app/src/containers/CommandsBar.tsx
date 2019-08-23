@@ -12,8 +12,7 @@ import { GoiSavingId } from "../types/GoiTypes"
 import { ToggleEvents } from "../utils/PoiResponsive"
 import { GoiWordRecordDataType, GoiSavingDataType } from "../models/GoiSaving"
 import { ShowWordAdderAction } from "../actions/WordAdderActions"
-import SortedArray from "collections/sorted-array"
-
+import { TreeMultiSet } from "tstl"
 import AddIcon from "@material-ui/icons/AddOutlined"
 import CloudOffIcon from "@material-ui/icons/CloudOffOutlined"
 import CreateIcon from "@material-ui/icons/CreateOutlined"
@@ -268,7 +267,7 @@ export class CommandsBar extends React.Component<
             {/* TODO: outline the button when all words are learned */}
             <Button
               size="small"
-              {...(this.props.pendingCandidates.length === 0 && {
+              {...(this.props.pendingCandidates.size() === 0 && {
                 color: "secondary",
                 variant: "outlined",
               })}
@@ -376,7 +375,7 @@ const mapStateToProps = (state: RootStateType) => {
       | GoiSavingDataType
       | null
       | undefined,
-    pendingCandidates: state.GoiTester.get("PendingCandidates") as SortedArray<
+    pendingCandidates: state.GoiTester.get("PendingCandidates") as TreeMultiSet<
       GoiWordRecordDataType
     >,
     isTyping: state.GoiTester.get("IsTyping") as boolean,

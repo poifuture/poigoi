@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import SortedArray from "collections/sorted-array"
+import { TreeMultiSet } from "tstl"
 import JaWordCard from "../components/WordCards/JaWordCard"
 import * as PoiUser from "../utils/PoiUser"
 import { LazyInitUserAction } from "../actions/GoiUserActions"
@@ -429,9 +429,9 @@ const mapDispatchToProps = (
         pendingCandidates,
       }: {
         currentWordKey?: string
-        learnedCandidates?: SortedArray<GoiWordRecordDataType>
-        prioritiedCandidates?: SortedArray<GoiWordRecordDataType>
-        pendingCandidates?: SortedArray<GoiWordRecordDataType>
+        learnedCandidates?: TreeMultiSet<GoiWordRecordDataType>
+        prioritiedCandidates?: TreeMultiSet<GoiWordRecordDataType>
+        pendingCandidates?: TreeMultiSet<GoiWordRecordDataType>
       } = {}
     ) =>
       dispatch(
