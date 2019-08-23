@@ -8,9 +8,10 @@ import { RootStateType } from "../states/RootState"
 import { ThunkDispatch } from "redux-thunk"
 import { Action } from "redux"
 import NavBar from "../components/NavBar"
-import { Snackbar } from "@material-ui/core"
+import { Snackbar, createMuiTheme } from "@material-ui/core"
 import "../utils/GoiI18n"
 import DebugModule from "debug"
+import { ThemeProvider } from "@material-ui/styles"
 const debug = DebugModule("PoiGoi:Layouts")
 
 if (process.env.GOI_DEBUG && typeof localStorage !== "undefined") {
@@ -30,54 +31,68 @@ export class Layout extends React.Component<
     const supportIndexedDB =
       typeof window !== "undefined" ? !!window.indexedDB : true
 
+    const theme = createMuiTheme()
     return (
-      <div className="goi-layout">
-        <Helmet title="PoiGoi" defer={false}>
-          <title>PoiGoi</title>
-          <meta name="author" content="nagi" />
-          <meta name="description" content="PoiGoi, an app to recite words." />
-          <meta
-            name="keywords"
-            content="vocabulary, words, recite, education, goi, poigoi, poifuture"
-          />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
-          />
-          {iOSSafari ? (
-            "" //TODO:iOS
-          ) : (
-            <link rel="manifest" href="/manifest.webmanifest"></link>
+      <ThemeProvider theme={theme}>
+        <div className="goi-layout">
+          <noscript key="noscript" id="poigoi-noscript-en">
+            This app (PoiGoi) works best with JavaScript enabled.
+            <br />
+            为了正常地使用PoiGoi背单词，请开启JavaScript运行。
+            <br />
+            ぽい語彙のすべての機能を利用するためには、JavaScriptの設定を有効にしてください。
+            <br />
+          </noscript>
+          <Helmet title="PoiGoi" defer={false}>
+            <title>PoiGoi</title>
+            <meta name="author" content="nagi" />
+            <meta
+              name="description"
+              content="PoiGoi, an app to recite words."
+            />
+            <meta
+              name="keywords"
+              content="vocabulary, words, recite, education, goi, poigoi, poifuture"
+            />
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            />
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
+            />
+            {iOSSafari ? (
+              "" //TODO:iOS
+            ) : (
+              <link rel="manifest" href="/manifest.webmanifest"></link>
+            )}
+          </Helmet>
+          {this.props.displayNavBar && <NavBar />}
+
+          <CssBaseline />
+          {!supportIndexedDB && (
+            <Snackbar
+              open={true}
+              message="Your browser doesn't support IndexedDB for offline apps. Please upgrade your browser first."
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              style={{ bottom: "90px" }}
+              ContentProps={{
+                style: { background: "red" },
+              }}
+            />
           )}
-        </Helmet>
-        {this.props.displayNavBar && <NavBar />}
 
-        <CssBaseline />
-        {!supportIndexedDB && (
-          <Snackbar
-            open={true}
-            message="Your browser doesn't support IndexedDB for offline apps. Please upgrade your browser first."
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            style={{ bottom: "90px" }}
-            ContentProps={{
-              style: { background: "red" },
-            }}
-          />
-        )}
-
-        {this.props.children}
-      </div>
+          {this.props.children}
+        </div>
+      </ThemeProvider>
     )
   }
 }

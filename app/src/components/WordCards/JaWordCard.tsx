@@ -1,6 +1,6 @@
 import React from "react"
 import { GoiJaWordType } from "../../types/GoiDictionaryTypes"
-import { List as MuiList, Box } from "@material-ui/core"
+import { List as MuiList, Box, Paper } from "@material-ui/core"
 import GoiTranslation from "./GoiTranslation"
 import TinyTag from "./TinyTag"
 import TinyContentTag from "./TinyContentTag"
@@ -19,7 +19,7 @@ import DebugModule from "debug"
 import GoiUnorderedList from "./GoiUnorderedList"
 const debug = DebugModule("PoiGoi:JaWordCard")
 
-export type WordCardPropsType = {
+export type JaWordCardPropsType = {
   word: GoiJaWordType
   display: "simple" | "detailed" | "test-common" | "test-translation"
   status:
@@ -44,7 +44,7 @@ const circledNumber = (x: number) => {
   }
   return ""
 }
-export class JaWordCard extends React.Component<WordCardPropsType> {
+export class JaWordCard extends React.Component<JaWordCardPropsType> {
   static defaultProps = {
     word: {
       common: "Common Placeholder",
@@ -185,14 +185,20 @@ export class JaWordCard extends React.Component<WordCardPropsType> {
               {word.alternatives.length > 0 && (
                 <TinyContentTag title="同:">
                   {word.alternatives.map(furigana => (
-                    <span dangerouslySetInnerHTML={{ __html: furigana }} />
+                    <span
+                      key={furigana}
+                      dangerouslySetInnerHTML={{ __html: furigana }}
+                    />
                   ))}
                 </TinyContentTag>
               )}
               {word.uncommons.length > 0 && (
                 <TinyContentTag title="珍:">
                   {word.uncommons.map(furigana => (
-                    <span dangerouslySetInnerHTML={{ __html: furigana }} />
+                    <span
+                      key={furigana}
+                      dangerouslySetInnerHTML={{ __html: furigana }}
+                    />
                   ))}
                 </TinyContentTag>
               )}

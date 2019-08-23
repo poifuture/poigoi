@@ -12,7 +12,6 @@ module.exports = {
   /* Your site config here */
   plugins: [
     `gatsby-plugin-typescript`,
-    `gatsby-plugin-styled-components`,
     `gatsby-plugin-layout`,
     `gatsby-transformer-remark`,
     {
@@ -46,7 +45,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        globPatterns: ["**/*.html", "*.js", "manifest.webmanifest"],
+        globPatterns: [
+          "**/*.html",
+          "*.js",
+          "**/*.json",
+          "manifest.webmanifest",
+        ],
         ignoreUrlParametersMatching: [/./],
       },
     }, // This plugin must be at the end of the plugin list
