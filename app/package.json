@@ -25,7 +25,6 @@
     "babel-plugin-styled-components": "^1.10.1",
     "base32-decode": "^1.0.0",
     "base32-encode": "^1.1.1",
-    "collections": "^5.1.9",
     "debug": "^4.1.1",
     "file-saver": "^2.0.2",
     "gatsby": "^2.10.0",
@@ -59,6 +58,7 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "styled-components": "^4.3.2",
+    "tstl": "^2.2.3",
     "typescript": "^3.5.3",
     "uuid": "^3.3.2"
   },

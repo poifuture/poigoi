@@ -1,5 +1,5 @@
 import { fromJS, Map } from "immutable"
-import SortedArray from "collections/sorted-array"
+import { TreeMultiSet } from "tstl"
 import KanaDictionary from "../dictionary/KanaDictionary"
 import {
   GoiTesterActionTypes,
@@ -23,9 +23,9 @@ const InitialGoiTesterState: GoiTesterStateType = {
   JudgeResult: "Pending",
   Record: null,
   ForcedWordKey: "",
-  LearnedCandidates: new SortedArray<GoiWordRecordDataType>(),
-  PrioritiedCandidates: new SortedArray<GoiWordRecordDataType>(),
-  PendingCandidates: new SortedArray<GoiWordRecordDataType>(),
+  LearnedCandidates: new TreeMultiSet<GoiWordRecordDataType>(),
+  PrioritiedCandidates: new TreeMultiSet<GoiWordRecordDataType>(),
+  PendingCandidates: new TreeMultiSet<GoiWordRecordDataType>(),
 }
 
 export const GoiTesterReducer = (
