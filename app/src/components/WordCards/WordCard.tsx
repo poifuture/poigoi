@@ -62,17 +62,18 @@ export interface WordCardStackPropsType {
   onGestureNext?: ({ deltaX }: { deltaX: number }) => void
 }
 export function WordCardStack(props: WordCardStackPropsType) {
+  const windowWidth = typeof window !== "undefined" ? window.innerWidth : 1280
   const { PreviousWordCard, CurrentWordCard, NextWordCard } = props
   const [gestureStopX, setGestureStopX] = useState(0)
   const [gestureProps, setGestrueProps] = useSpring(() => {
-    return { currentX: 0, previousX: -window.innerWidth }
+    return { currentX: 0, previousX: -windowWidth }
   })
   let isGestureReseted = false
   const resetGestureProps = (stopX: number) => {
     setGestureStopX(stopX)
     setGestrueProps({
       currentX: 0,
-      previousX: -window.innerWidth,
+      previousX: -windowWidth,
       config: { duration: 0 },
     })
     isGestureReseted = true
@@ -83,11 +84,7 @@ export function WordCardStack(props: WordCardStackPropsType) {
     const [deltaX] = delta
     const currentX = deltaX > -20 ? 0 : down ? deltaX : 0
     const previousX =
-      deltaX < 20
-        ? -window.innerWidth
-        : down
-        ? deltaX - window.innerWidth
-        : -window.innerWidth
+      deltaX < 20 ? -windowWidth : down ? deltaX - windowWidth : -windowWidth
     if (isActionTriggered && directionX < 0) {
       debug("onGestureNext", deltaX)
       if (typeof props.onGestureNext !== "undefined") {
@@ -116,7 +113,7 @@ export function WordCardStack(props: WordCardStackPropsType) {
     {
       from: { opacity: 0.9, transitionX: 0, zIndex: 0 },
       enter: { opacity: 1, transitionX: 0, zIndex: 0 },
-      leave: { opacity: 0, transitionX: -window.innerWidth, zIndex: 100 },
+      leave: { opacity: 0, transitionX: -windowWidth, zIndex: 100 },
       config: { duration: 400 },
       transitionX: 0,
       opacity: 1,
