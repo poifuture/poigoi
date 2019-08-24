@@ -177,10 +177,10 @@ export class GoiTester extends React.Component<
           word,
           display: wordCardDisplay,
           status: wordCardStatus,
+          ...(this.props.currentLevel !== null && {
+            level: this.props.currentLevel,
+          }),
         }}
-        {...(this.props.currentLevel !== null && {
-          level: this.props.currentLevel,
-        })}
       >
         {!wordCardDisplay.startsWith("test") && (
           <div
@@ -257,6 +257,16 @@ export class GoiTester extends React.Component<
           </div>
         )}
       </WordCard>
+    )
+    const NextWordCard = (
+      <WordCard
+        isTyping={this.props.isTyping}
+        JaWordCardProps={{
+          word: KanaDictionary.words["い"],
+          display: wordCardDisplay,
+          status: wordCardStatus,
+        }}
+      />
     )
     return (
       <div className="goi-tester">
@@ -359,16 +369,7 @@ export class GoiTester extends React.Component<
         <WordCardStack
           PreviousWordCard={PreviousWordCard}
           CurrentWordCard={CurrentWordCard}
-          NextWordCard={
-            <WordCard
-              isTyping={this.props.isTyping}
-              JaWordCardProps={{
-                word: KanaDictionary.words["あ"],
-                display: wordCardDisplay,
-                status: wordCardStatus,
-              }}
-            />
-          }
+          NextWordCard={NextWordCard}
           onGestureNext={({ deltaX }) => {
             this.requestJudge({ skip: true })
           }}

@@ -32,13 +32,13 @@ class IndexPage extends React.Component<IndexPagePropsType> {
         <Hidden smUp>
           <div style={{ background: poisky, height: "1px" }} />
         </Hidden>
-        <CommandsBar />
         <main>
           <WordAdder />
           <Container>
             <GoiTester />
           </Container>
         </main>
+        <CommandsBar />
         <div
           className="buildVersion"
           style={{

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react"
+import React, { PropsWithChildren, useState } from "react"
 import {
   List as MuiList,
   Box,
@@ -7,7 +7,13 @@ import {
   useMediaQuery,
 } from "@material-ui/core"
 import JaWordCard, { JaWordCardPropsType } from "./JaWordCard"
-import { useSpring, animated, useTransition, config } from "react-spring"
+import {
+  useSpring,
+  animated,
+  useTransition,
+  config,
+  interpolate,
+} from "react-spring"
 import { useGesture } from "react-use-gesture"
 import { useTheme } from "@material-ui/styles"
 import DebugModule from "debug"
@@ -57,12 +63,23 @@ export interface WordCardStackPropsType {
 }
 export function WordCardStack(props: WordCardStackPropsType) {
   const { PreviousWordCard, CurrentWordCard, NextWordCard } = props
+  const [gestureStopX, setGestureStopX] = useState(0)
   const [gestureProps, setGestrueProps] = useSpring(() => {
     return { currentX: 0, previousX: -window.innerWidth }
   })
-  const bind = useGesture(({ down, delta, direction, velocity }) => {
+  let isGestureReseted = false
+  const resetGestureProps = (stopX: number) => {
+    setGestureStopX(stopX)
+    setGestrueProps({
+      currentX: 0,
+      previousX: -window.innerWidth,
+      config: { duration: 0 },
+    })
+    isGestureReseted = true
+  }
+  const bindGesture = useGesture(({ down, delta, direction, velocity }) => {
     const directionX = direction[0] < -0.5 ? -1 : direction[0] > 0.5 ? 1 : 0 // Direction should either point left or right
-    const isActionTriggered = !down && velocity > 0.5
+    const isActionTriggered = !down && velocity > 0.2
     const [deltaX] = delta
     const currentX = deltaX > -20 ? 0 : down ? deltaX : 0
     const previousX =
@@ -74,33 +91,41 @@ export function WordCardStack(props: WordCardStackPropsType) {
     if (isActionTriggered && directionX < 0) {
       debug("onGestureNext", deltaX)
       if (typeof props.onGestureNext !== "undefined") {
+        resetGestureProps(deltaX)
         props.onGestureNext({ deltaX })
       }
     }
     if (isActionTriggered && directionX > 0) {
       debug("onGesturePrevious", deltaX)
       if (typeof props.onGesturePrevious !== "undefined") {
+        resetGestureProps(deltaX)
         props.onGesturePrevious({ deltaX })
       }
     }
-    setGestrueProps({
-      currentX,
-      previousX,
-      config: { friction: 50, tension: down ? 1000 : 400 },
-    })
+    if (!isGestureReseted) {
+      setGestrueProps({
+        currentX,
+        previousX,
+        config: { friction: 50, tension: down ? 1000 : 400 },
+      })
+    }
   })
-  const transitions = useTransition(CurrentWordCard.key, item => item, {
-    from: { opacity: 0.5 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-    config: config.molasses,
-  })
-  debug("transitions", transitions)
+  const currentWordCardTransitions = useTransition(
+    CurrentWordCard,
+    item => item.key || "あ",
+    {
+      from: { opacity: 0.9, transitionX: 0, zIndex: 0 },
+      enter: { opacity: 1, transitionX: 0, zIndex: 0 },
+      leave: { opacity: 0, transitionX: -window.innerWidth, zIndex: 100 },
+      config: { duration: 400 },
+      transitionX: 0,
+      opacity: 1,
+      zIndex: 0,
+    }
+  )
+  debug("transitions", currentWordCardTransitions)
   return (
-    <animated.div
-      style={{ position: "relative" }}
-      // {...bind()}
-    >
+    <animated.div style={{ position: "relative" }} {...bindGesture()}>
       <animated.div
         key={NextWordCard.key ? NextWordCard.key : undefined}
         style={{
@@ -112,35 +137,34 @@ export function WordCardStack(props: WordCardStackPropsType) {
       >
         {NextWordCard}
       </animated.div>
-      {transitions.map(({ item, props, key }) => (
-        <animated.div
-          key={key}
-          style={{
-            ...props,
-            position: "absolute",
-            top: 0,
-            width: "100%",
-            height: "100%",
-            // transform: gestureProps.currentX.interpolate(
-            //   x => `translate3d(${x}px,0px,0)`
-            // ),
-          }}
-        >
-          {CurrentWordCard}
-        </animated.div>
-      ))}
-      {/* <animated.div
-        key={CurrentWordCard.key ? CurrentWordCard.key : undefined}
-        style={{
-          width: "100%",
-          height: "100%",
-          transform: gestureProps.currentX.interpolate(
-            x => `translate3d(${x}px,0px,0)`
-          ),
-        }}
-      >
-        {CurrentWordCard}
-      </animated.div> */}
+      {currentWordCardTransitions.map(({ item, props, key }) => {
+        debug("transition props", item.key, props, key)
+        return (
+          <animated.div
+            key={key}
+            style={{
+              zIndex: props.zIndex,
+              opacity: props.opacity,
+              position: "absolute",
+              top: 0,
+              width: "100%",
+              height: "100%",
+              transform: interpolate(
+                [gestureProps.currentX, props.transitionX],
+                (gestureX, transitionX) => {
+                  const translate = transitionX
+                    ? `translate3d(${transitionX + gestureStopX}px,0px,0px)`
+                    : `translate3d(${gestureX}px,0px,0px)`
+                  debug("translate", key, translate)
+                  return translate
+                }
+              ),
+            }}
+          >
+            {item}
+          </animated.div>
+        )
+      })}
       <animated.div
         key={PreviousWordCard.key ? PreviousWordCard.key : undefined}
         style={{
