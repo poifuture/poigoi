@@ -15877,7 +15877,7 @@
     "紅葉": {
       "key": "紅葉",
       "language": "ja",
-      "common": "もみじ",
+      "common": "<ruby>紅葉<rt>もみじ</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "もみじ",
@@ -16466,7 +16466,7 @@
     "日": {
       "key": "日",
       "language": "ja",
-      "common": "ひ",
+      "common": "<ruby>日<rt>ひ</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "ひ",
@@ -16698,8 +16698,10 @@
     "きれい": {
       "key": "きれい",
       "language": "ja",
-      "common": "<ruby>綺麗<rt>きれい</rt></ruby>",
-      "alternatives": [],
+      "common": "きれい",
+      "alternatives": [
+        "<ruby>綺麗<rt>きれい</rt></ruby>"
+      ],
       "uncommons": [],
       "kana": "きれい",
       "romaji": "kirei",
@@ -16756,8 +16758,10 @@
     "にぎやか": {
       "key": "にぎやか",
       "language": "ja",
-      "common": "<ruby>賑<rt>にぎ</rt></ruby>やか",
-      "alternatives": [],
+      "common": "にぎやか",
+      "alternatives": [
+        "<ruby>賑<rt>にぎ</rt></ruby>やか"
+      ],
       "uncommons": [],
       "kana": "にぎやか",
       "romaji": "nigiyaka",
@@ -17171,8 +17175,10 @@
     "いろいろ": {
       "key": "いろいろ",
       "language": "ja",
-      "common": "<ruby>色々<rt>いろいろ</rt></ruby>",
-      "alternatives": [],
+      "common": "いろいろ",
+      "alternatives": [
+        "<ruby>色々<rt>いろいろ</rt></ruby>"
+      ],
       "uncommons": [],
       "kana": "いろいろ",
       "romaji": "iroiro",
@@ -17264,8 +17270,10 @@
     "ところで": {
       "key": "ところで",
       "language": "ja",
-      "common": "<ruby>所<rt>ところ</rt></ruby>で",
-      "alternatives": [],
+      "common": "ところで",
+      "alternatives": [
+        "<ruby>所<rt>ところ</rt></ruby>で"
+      ],
       "uncommons": [],
       "kana": "ところで",
       "romaji": "tokorode",
@@ -17415,12 +17423,12 @@
     "中-2": {
       "key": "中-2",
       "language": "ja",
-      "common": "<ruby>中<rt>なか</rt></ruby>",
+      "common": "<ruby>中<rt>じゅう</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
-      "kana": "なか",
+      "kana": "じゅう",
       "romaji": "naka",
-      "wapuro": "naka",
+      "wapuro": "juu",
       "audios": [
         {
           "cv": "Hikari",
