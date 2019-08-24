@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 import { graphql } from "gatsby"
 import NavBar from "../components/NavBar"
 import Header from "../components/Header"
@@ -7,11 +6,6 @@ import { poisky3 } from "../utils/PoiColors"
 import Helmet from "react-helmet"
 import { Container } from "@material-ui/core"
 
-const Card = styled.div``
-const CardHeader = styled.div`
-  background: ${poisky3};
-`
-const CardBody = styled.div``
 
 export default (props: any) => (
   <div>
@@ -33,14 +27,14 @@ export default (props: any) => (
       </Header>
     </Container>
     {props.data.allMarkdownRemark.edges.map((edge: any) => (
-      <Card key={edge.node.id}>
-        <CardHeader>
+      <div key={edge.node.id}>
+        <div style={{ backgroundColor: poisky3 }}>
           <Container>{edge.node.frontmatter.title}</Container>
-        </CardHeader>
+        </div>
         <Container>
-          <CardBody dangerouslySetInnerHTML={{ __html: edge.node.html }} />
+          <div dangerouslySetInnerHTML={{ __html: edge.node.html }} />
         </Container>
-      </Card>
+      </div>
     ))}
   </div>
 )

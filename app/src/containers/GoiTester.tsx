@@ -29,6 +29,8 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  Paper,
+  Container,
 } from "@material-ui/core"
 import SpellcheckIcon from "@material-ui/icons/SpellcheckOutlined"
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturnOutlined"
@@ -45,6 +47,8 @@ import { withTranslation, WithTranslation } from "react-i18next"
 import DebugModule from "debug"
 import { UpdateEnableScrollAction } from "../actions/LayoutActions"
 import ResponsiveDialog from "../components/ResponsiveDialog"
+import { WordCard, WordCardStack } from "../components/WordCards/WordCard"
+import KanaDictionary from "../dictionary/KanaDictionary"
 const debug = DebugModule("PoiGoi:GoiTester")
 
 type GoiTesterPropsType = ReturnType<typeof mapStateToProps> &
@@ -155,120 +159,29 @@ export class GoiTester extends React.Component<
         : this.state.displayDetail
         ? "detailed"
         : "simple"
-    return (
-      <div className="goi-tester">
-        <Helmet>
-          {savingLanguage.startsWith("ja") ? (
-            this.props.judgeResult === "Pending" ? (
-              <title>{t("PageTitleWhenEmptyForJaLearner", "PoiGoi")}</title>
-            ) : (
-              <title>
-                {t("PageTitleWhenWordIsDisplayedForJaLearner", {
-                  defaultValue: "PoiGoi - {{wordkey}}",
-                  wordkey: word.key,
-                })}
-              </title>
-            )
-          ) : this.props.judgeResult === "Pending" ? (
-            <title>{t("PageTitleWhenEmpty", "PoiGoi")}</title>
-          ) : (
-            <title>
-              {t("PageTitleWhenWordIsDisplayed", {
-                defaultValue: "PoiGoi - {{wordkey}}",
-                wordkey: word.key,
-              })}
-            </title>
-          )}
-        </Helmet>
-        <div
-          style={{
-            height: "50px", // avoid wechat "No password" tip
-          }}
-        />
-        <div style={{ display: "flex" }}>
-          <TextField
-            label={t("MainInputLabel", "Justify your answer")}
-            variant="outlined"
-            value={this.state.testerInput}
-            style={{ flexGrow: 1 }}
-            onFocus={() => {
-              this.props.updateIsTyping({ isTyping: true })
-            }}
-            onBlur={() => {
-              this.props.updateIsTyping({ isTyping: false })
-            }}
-            onChange={e => {
-              this.setState({ testerInput: e.target.value })
-            }}
-            InputProps={{
-              placeholder:
-                this.props.judgeResult === "Rejected" ||
-                this.props.judgeResult === "Wrong"
-                  ? t(
-                      "MainInputWrongPlaceholder",
-                      "Type correct answer to continue"
-                    )
-                  : savingLanguage.startsWith("ja")
-                  ? t(
-                      "MainInputPendingPlaceholderForJaLearner",
-                      "Use japanese IME"
-                    )
-                  : t("MainInputPendingPlaceholder", "Type your answer here"),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="Request judge"
-                    edge="end"
-                    onClick={() => this.requestJudge()}
-                  >
-                    <KeyboardReturnIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              onKeyDown: e => {
-                if (e.key === "Enter") {
-                  this.requestJudge()
-                }
-              },
-            }}
-          ></TextField>
-          {this.props.judgeResult === "Pending" ? (
-            <Button
-              size="small"
-              aria-label="Skip current word"
-              onClick={() => this.requestJudge({ skip: true })}
-            >
-              {t("SkipWordButtonText", "Skip")}
-              <RedoIcon fontSize="small" />
-            </Button>
-          ) : (
-            <Button
-              size="small"
-              aria-label="Show next word"
-              onClick={() => this.requestNext()}
-            >
-              {t("NextWordButtonText", "Skip")}
-              <ForwardIcon fontSize="small" />
-            </Button>
-          )}
-        </div>
-        <div
-          style={{
-            overflowY: "auto",
-            maxHeight: this.props.isTyping
-              ? "calc(100vh - 120px)"
-              : "calc(100vh - 200px)",
-          }}
-        >
-          <JaWordCard
-            word={word}
-            display={wordCardDisplay}
-            status={wordCardStatus}
-            {...(this.props.currentLevel !== null && {
-              level: this.props.currentLevel,
-            })}
-          />
-        </div>
+    const PreviousWordCard = (
+      <WordCard
+        isTyping={this.props.isTyping}
+        JaWordCardProps={{
+          word: KanaDictionary.words["あ"],
+          display: wordCardDisplay,
+          status: wordCardStatus,
+        }}
+      />
+    )
+    const CurrentWordCard = (
+      <WordCard
+        key={word.key}
+        isTyping={this.props.isTyping}
+        JaWordCardProps={{
+          word,
+          display: wordCardDisplay,
+          status: wordCardStatus,
+          ...(this.props.currentLevel !== null && {
+            level: this.props.currentLevel,
+          }),
+        }}
+      >
         {!wordCardDisplay.startsWith("test") && (
           <div
             className="word-card-actions"
@@ -343,6 +256,124 @@ export class GoiTester extends React.Component<
             )}
           </div>
         )}
+      </WordCard>
+    )
+    const NextWordCard = (
+      <WordCard
+        isTyping={this.props.isTyping}
+        JaWordCardProps={{
+          word: KanaDictionary.words["い"],
+          display: wordCardDisplay,
+          status: wordCardStatus,
+        }}
+      />
+    )
+    return (
+      <div className="goi-tester">
+        <Helmet>
+          {savingLanguage.startsWith("ja") ? (
+            this.props.judgeResult === "Pending" ? (
+              <title>{t("PageTitleWhenEmptyForJaLearner", "PoiGoi")}</title>
+            ) : (
+              <title>
+                {t("PageTitleWhenWordIsDisplayedForJaLearner", {
+                  defaultValue: "PoiGoi - {{wordkey}}",
+                  wordkey: word.key,
+                })}
+              </title>
+            )
+          ) : this.props.judgeResult === "Pending" ? (
+            <title>{t("PageTitleWhenEmpty", "PoiGoi")}</title>
+          ) : (
+            <title>
+              {t("PageTitleWhenWordIsDisplayed", {
+                defaultValue: "PoiGoi - {{wordkey}}",
+                wordkey: word.key,
+              })}
+            </title>
+          )}
+        </Helmet>
+        <div
+          style={{
+            display: "flex",
+            marginTop: "50px", // avoid wechat "No password" tip
+            marginBottom: "10px",
+          }}
+        >
+          <TextField
+            label={t("MainInputLabel", "Justify your answer")}
+            variant="outlined"
+            value={this.state.testerInput}
+            style={{ flexGrow: 1 }}
+            onFocus={() => {
+              this.props.updateIsTyping({ isTyping: true })
+            }}
+            onBlur={() => {
+              this.props.updateIsTyping({ isTyping: false })
+            }}
+            onChange={e => {
+              this.setState({ testerInput: e.target.value })
+            }}
+            InputProps={{
+              placeholder:
+                this.props.judgeResult === "Rejected" ||
+                this.props.judgeResult === "Wrong"
+                  ? t(
+                      "MainInputWrongPlaceholder",
+                      "Type correct answer to continue"
+                    )
+                  : savingLanguage.startsWith("ja")
+                  ? t(
+                      "MainInputPendingPlaceholderForJaLearner",
+                      "Use japanese IME"
+                    )
+                  : t("MainInputPendingPlaceholder", "Type your answer here"),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Request judge"
+                    edge="end"
+                    onClick={() => this.requestJudge()}
+                  >
+                    <KeyboardReturnIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+              onKeyDown: e => {
+                if (e.key === "Enter") {
+                  this.requestJudge()
+                }
+              },
+            }}
+          ></TextField>
+          {this.props.judgeResult === "Pending" ? (
+            <Button
+              size="small"
+              aria-label="Skip current word"
+              onClick={() => this.requestJudge({ skip: true })}
+            >
+              {t("SkipWordButtonText", "Skip")}
+              <RedoIcon fontSize="small" />
+            </Button>
+          ) : (
+            <Button
+              size="small"
+              aria-label="Show next word"
+              onClick={() => this.requestNext()}
+            >
+              {t("NextWordButtonText", "Skip")}
+              <ForwardIcon fontSize="small" />
+            </Button>
+          )}
+        </div>
+        <WordCardStack
+          PreviousWordCard={PreviousWordCard}
+          CurrentWordCard={CurrentWordCard}
+          NextWordCard={NextWordCard}
+          onGestureNext={({ deltaX }) => {
+            this.requestJudge({ skip: true })
+          }}
+        />
         <ResponsiveDialog open={this.state.isReportWordDialogOpened}>
           {i18n.language.startsWith("zh") ? (
             <iframe

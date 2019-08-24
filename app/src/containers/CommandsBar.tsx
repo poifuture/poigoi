@@ -93,6 +93,7 @@ export class CommandsBar extends React.Component<
       <div
         className="commands-bar"
         style={{
+          pointerEvents: "none", // prevent blocking wordcard ui
           visibility: smDown && this.props.isTyping ? "hidden" : "inherit",
           position: "fixed",
           bottom: "20px",
@@ -104,6 +105,7 @@ export class CommandsBar extends React.Component<
       >
         <div
           style={{
+            pointerEvents: "auto",
             display: "flex",
             height: "40px",
             marginBottom: "8px",
@@ -134,6 +136,7 @@ export class CommandsBar extends React.Component<
         <div
           ref={this.commandsContainerRef}
           style={{
+            pointerEvents: "auto",
             display: "flex",
             height: "40px",
             marginTop: "8px",

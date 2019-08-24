@@ -237,15 +237,7 @@ const mapStateToProps = (state: RootStateType) => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<RootStateType, void, Action>
 ) => {
-  return {
-    showWordAdder: ({
-      poiUserId,
-      savingId,
-    }: {
-      poiUserId: PoiUser.PoiUserId
-      savingId: GoiSavingId
-    }) => dispatch(ShowWordAdderAction({ poiUserId, savingId })),
-  }
+  return {}
 }
 
 export default connect(
