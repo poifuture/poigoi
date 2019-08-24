@@ -69,8 +69,10 @@ const fetchWapuro = async ({ kana }: { kana: string }): Promise<string> => {
     .replace(/ん/g, "(nn)")
     .replace(/ン/g, "(nn)")
     .replace(/ー/g, "(-)")
+    .replace(/ティ/g, "(thi)")
+    .replace(/ディ/g, "(dhi)")
   const wapuro = await KuroshiroModule.Util.kanaToRomaji(replaced, "hepburn")
-  return wapuro.replace(/[(]nn[)]/g, "nn").replace(/[(]-[)]/g, "-")
+  return wapuro.replace(/[(]/g, "").replace(/[)]/g, "")
 }
 const toGairaigo = ({ katakana }: { katakana: string }): string => {
   if (Object.keys(GairaigoDict).includes(katakana)) {
