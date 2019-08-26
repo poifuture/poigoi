@@ -61,18 +61,21 @@ export interface WordCardStackPropsType {
   onGesturePrevious?: ({ deltaX }: { deltaX: number }) => void
   onGestureNext?: ({ deltaX }: { deltaX: number }) => void
 }
+const getWindowWidth = () => {
+  return typeof window !== "undefined" ? window.innerWidth : 1280
+}
 export function WordCardStack(props: WordCardStackPropsType) {
   const { PreviousWordCard, CurrentWordCard, NextWordCard } = props
   const [gestureStopX, setGestureStopX] = useState(0)
   const [gestureProps, setGestrueProps] = useSpring(() => {
-    return { currentX: 0, previousX: -window.innerWidth }
+    return { currentX: 0, previousX: -getWindowWidth() }
   })
   let isGestureReseted = false
   const resetGestureProps = (stopX: number) => {
     setGestureStopX(stopX)
     setGestrueProps({
       currentX: 0,
-      previousX: -window.innerWidth,
+      previousX: -getWindowWidth(),
       config: { duration: 0 },
     })
     isGestureReseted = true
@@ -84,10 +87,10 @@ export function WordCardStack(props: WordCardStackPropsType) {
     const currentX = deltaX > -20 ? 0 : down ? deltaX : 0
     const previousX =
       deltaX < 20
-        ? -window.innerWidth
+        ? -getWindowWidth()
         : down
-        ? deltaX - window.innerWidth
-        : -window.innerWidth
+        ? deltaX - getWindowWidth()
+        : -getWindowWidth()
     if (isActionTriggered && directionX < 0) {
       debug("onGestureNext", deltaX)
       if (typeof props.onGestureNext !== "undefined") {
@@ -116,7 +119,7 @@ export function WordCardStack(props: WordCardStackPropsType) {
     {
       from: { opacity: 0.9, transitionX: 0, zIndex: 0 },
       enter: { opacity: 1, transitionX: 0, zIndex: 0 },
-      leave: { opacity: 0, transitionX: -window.innerWidth, zIndex: 100 },
+      leave: { opacity: 0, transitionX: -getWindowWidth(), zIndex: 100 },
       config: { duration: 400 },
       transitionX: 0,
       opacity: 1,
@@ -138,7 +141,6 @@ export function WordCardStack(props: WordCardStackPropsType) {
         {NextWordCard}
       </animated.div>
       {currentWordCardTransitions.map(({ item, props, key }) => {
-        debug("transition props", item.key, props, key)
         return (
           <animated.div
             key={key}
@@ -155,7 +157,6 @@ export function WordCardStack(props: WordCardStackPropsType) {
                   const translate = transitionX
                     ? `translate3d(${transitionX + gestureStopX}px,0px,0px)`
                     : `translate3d(${gestureX}px,0px,0px)`
-                  debug("translate", key, translate)
                   return translate
                 }
               ),

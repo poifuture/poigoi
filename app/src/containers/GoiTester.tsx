@@ -39,10 +39,11 @@ import ForwardIcon from "@material-ui/icons/ForwardOutlined"
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined"
 import MoreHorizIcon from "@material-ui/icons/MoreHorizOutlined"
 import LinkOffIcon from "@material-ui/icons/LinkOffOutlined"
+import VisibilityIcon from "@material-ui/icons/VisibilityOutlined"
 import ExposurePlus1Icon from "@material-ui/icons/ExposurePlus1Outlined"
 import ExposurePlus2Icon from "@material-ui/icons/ExposurePlus2Outlined"
 import ReportProblemIcon from "@material-ui/icons/ReportProblemOutlined"
-import { display } from "@material-ui/system"
+import { display, height } from "@material-ui/system"
 import { withTranslation, WithTranslation } from "react-i18next"
 import DebugModule from "debug"
 import { UpdateEnableScrollAction } from "../actions/LayoutActions"
@@ -295,8 +296,39 @@ export class GoiTester extends React.Component<
         </Helmet>
         <div
           style={{
+            height: "50px", // avoid wechat "No password" tip
             display: "flex",
-            marginTop: "50px", // avoid wechat "No password" tip
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+          }}
+        >
+          <div>
+            {this.state.testerInput === "" &&
+              (this.props.judgeResult === "Pending" ? (
+                <Button
+                  size="small"
+                  aria-label="Skip current word"
+                  onClick={() => this.requestJudge({ skip: true })}
+                >
+                  {t("SkipWordButtonText", "Skip")}
+                  <RedoIcon fontSize="small" />
+                </Button>
+              ) : (
+                <Button
+                  size="small"
+                  aria-label="Show next word"
+                  onClick={() => this.requestNext()}
+                >
+                  {t("NextWordButtonText", "Skip")}
+                  <ForwardIcon fontSize="small" />
+                </Button>
+              ))}
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            marginTop: "10px",
             marginBottom: "10px",
           }}
         >
@@ -330,13 +362,26 @@ export class GoiTester extends React.Component<
                   : t("MainInputPendingPlaceholder", "Type your answer here"),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton
-                    aria-label="Request judge"
-                    edge="end"
-                    onClick={() => this.requestJudge()}
-                  >
-                    <KeyboardReturnIcon />
-                  </IconButton>
+                  {this.state.testerInput === "" &&
+                  this.props.judgeResult === "Pending" ? (
+                    <Button
+                      size="small"
+                      aria-label="Direct Fail"
+                      onClick={() => this.requestJudge()}
+                    >
+                      {t("DirectFailWordButtonText", "Show")}
+                      <VisibilityIcon fontSize="small" />
+                    </Button>
+                  ) : (
+                    <Button
+                      size="small"
+                      aria-label="Request Judge"
+                      onClick={() => this.requestJudge()}
+                    >
+                      {t("JudgeWordButtonText", "Judge")}
+                      <KeyboardReturnIcon fontSize="small" />
+                    </Button>
+                  )}
                 </InputAdornment>
               ),
               onKeyDown: e => {
@@ -346,25 +391,6 @@ export class GoiTester extends React.Component<
               },
             }}
           ></TextField>
-          {this.props.judgeResult === "Pending" ? (
-            <Button
-              size="small"
-              aria-label="Skip current word"
-              onClick={() => this.requestJudge({ skip: true })}
-            >
-              {t("SkipWordButtonText", "Skip")}
-              <RedoIcon fontSize="small" />
-            </Button>
-          ) : (
-            <Button
-              size="small"
-              aria-label="Show next word"
-              onClick={() => this.requestNext()}
-            >
-              {t("NextWordButtonText", "Skip")}
-              <ForwardIcon fontSize="small" />
-            </Button>
-          )}
         </div>
         <WordCardStack
           PreviousWordCard={PreviousWordCard}
