@@ -769,7 +769,7 @@
       "uncommons": [],
       "kana": "あっ",
       "romaji": "a",
-      "wapuro": "axtsu",
+      "wapuro": "axtu",
       "audios": [
         {
           "cv": "Hikari",
@@ -1118,7 +1118,7 @@
       "uncommons": [],
       "kana": "ヂュポン",
       "romaji": "jupon",
-      "wapuro": "juponn",
+      "wapuro": "dyuponn",
       "audios": [
         {
           "cv": "Hikari",
@@ -25807,7 +25807,7 @@
       "uncommons": [],
       "kana": "かたづける",
       "romaji": "katazukeru",
-      "wapuro": "katazukeru",
+      "wapuro": "katadukeru",
       "audios": [
         {
           "cv": "Hikari",
@@ -28487,12 +28487,12 @@
     "開く": {
       "key": "開く",
       "language": "ja",
-      "common": "<ruby>開<rt>ひら</rt></ruby>く",
+      "common": "<ruby>開<rt>あ</rt></ruby>く",
       "alternatives": [],
       "uncommons": [],
-      "kana": "ひらく",
-      "romaji": "hiraku",
-      "wapuro": "hiraku",
+      "kana": "あく",
+      "romaji": "aku",
+      "wapuro": "aku",
       "audios": [
         {
           "cv": "Hikari",
@@ -29118,7 +29118,7 @@
     "スキー": {
       "key": "スキー",
       "language": "ja",
-      "common": "<ruby>スキー<rt>skirt</rt></ruby>",
+      "common": "<ruby>スキー<rt>ski</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "スキー",
@@ -30357,7 +30357,7 @@
       "uncommons": [],
       "kana": "てづくり",
       "romaji": "tezukuri",
-      "wapuro": "tezukuri",
+      "wapuro": "tedukuri",
       "audios": [
         {
           "cv": "Hikari",
@@ -32048,7 +32048,7 @@
     "スキー場": {
       "key": "スキー場",
       "language": "ja",
-      "common": "<ruby>スキー<rt>skirt</rt></ruby><ruby>場<rt>じょう</rt></ruby>",
+      "common": "<ruby>スキー<rt>ski</rt></ruby><ruby>場<rt>じょう</rt></ruby>",
       "alternatives": [],
       "uncommons": [],
       "kana": "スキーじょう",
