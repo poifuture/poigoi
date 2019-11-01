@@ -34579,6 +34579,1075 @@
       "textbook": [
         "BIAORI-01-24-0032"
       ]
+    },
+    "数学": {
+      "key": "数学",
+      "language": "ja",
+      "common": "<ruby>数学<rt>すうがく</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "すうがく",
+      "romaji": "sūgaku",
+      "wapuro": "suugaku",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 0,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "数学"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0001"
+      ]
+    },
+    "専門": {
+      "key": "専門",
+      "language": "ja",
+      "common": "<ruby>専門<rt>せんもん</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "せんもん",
+      "romaji": "semmon",
+      "wapuro": "sennmonn",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 0,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "专门"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0002"
+      ]
+    },
+    "女優": {
+      "key": "女優",
+      "language": "ja",
+      "common": "<ruby>女優<rt>じょゆう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "じょゆう",
+      "romaji": "joyū",
+      "wapuro": "joyuu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 0,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "女演员"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0003"
+      ]
+    },
+    "営業課": {
+      "key": "営業課",
+      "language": "ja",
+      "common": "<ruby>営業<rt>えいぎょう</rt></ruby><ruby>課<rt>か</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "えいぎょうか",
+      "romaji": "eigyōka",
+      "wapuro": "eigyouka",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 0,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "营业科"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0004"
+      ]
+    },
+    "市街": {
+      "key": "市街",
+      "language": "ja",
+      "common": "<ruby>市街<rt>しがい</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "しがい",
+      "romaji": "shigai",
+      "wapuro": "shigai",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "市内，市街，繁华街道"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0005"
+      ]
+    },
+    "道路": {
+      "key": "道路",
+      "language": "ja",
+      "common": "<ruby>道路<rt>どうろ</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "どうろ",
+      "romaji": "dōro",
+      "wapuro": "douro",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "道路，马路"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0006"
+      ]
+    },
+    "交通量": {
+      "key": "交通量",
+      "language": "ja",
+      "common": "<ruby>交通<rt>こうつう</rt></ruby><ruby>量<rt>りょう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "こうつうりょう",
+      "romaji": "kōtsūryou",
+      "wapuro": "koutsuuryou",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 3,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "交通流量，通行量"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0007"
+      ]
+    },
+    "空港": {
+      "key": "空港",
+      "language": "ja",
+      "common": "<ruby>空港<rt>くうこう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "くうこう",
+      "romaji": "kūkō",
+      "wapuro": "kuukou",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 0,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "机场"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0008"
+      ]
+    },
+    "高速道路": {
+      "key": "高速道路",
+      "language": "ja",
+      "common": "<ruby>高速<rt>こうそく</rt></ruby><ruby>道路<rt>どうろ</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "こうそくどうろ",
+      "romaji": "kōsokudōro",
+      "wapuro": "kousokudouro",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 5,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "高速公路"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0009"
+      ]
+    },
+    "部品工場": {
+      "key": "部品工場",
+      "language": "ja",
+      "common": "<ruby>部品<rt>ぶひん</rt></ruby><ruby>工場<rt>こうじょう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ぶひんこうじょう",
+      "romaji": "buhinkōjō",
+      "wapuro": "buhinnkoujou",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 4,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "零件制造厂"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0010"
+      ]
+    },
+    "エレベーター": {
+      "key": "エレベーター",
+      "language": "ja",
+      "common": "<ruby>エレベーター<rt></rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "エレベーター",
+      "romaji": "erebētā",
+      "wapuro": "erebe-ta-",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 3,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "电梯"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0011"
+      ]
+    },
+    "絵本": {
+      "key": "絵本",
+      "language": "ja",
+      "common": "<ruby>絵本<rt>えほん</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "えほん",
+      "romaji": "ehon",
+      "wapuro": "ehonn",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 2,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "图画书，连环画"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0012"
+      ]
+    },
+    "自然": {
+      "key": "自然",
+      "language": "ja",
+      "common": "<ruby>自然<rt>しぜん</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "しぜん",
+      "romaji": "shizen",
+      "wapuro": "shizenn",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 0,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "大自然"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0013"
+      ]
+    },
+    "給料": {
+      "key": "給料",
+      "language": "ja",
+      "common": "<ruby>給料<rt>きゅうりょう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "きゅうりょう",
+      "romaji": "kyūryō",
+      "wapuro": "kyuuryou",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "工资"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0014"
+      ]
+    },
+    "今夜": {
+      "key": "今夜",
+      "language": "ja",
+      "common": "<ruby>今夜<rt>こんや</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "こんや",
+      "romaji": "kon'ya",
+      "wapuro": "konnya",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "今天晚上"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0015"
+      ]
+    },
+    "けが": {
+      "key": "けが",
+      "language": "ja",
+      "common": "けが",
+      "alternatives": [
+        "<ruby>怪我<rt>けが</rt></ruby>"
+      ],
+      "uncommons": [],
+      "kana": "けが",
+      "romaji": "kega",
+      "wapuro": "kega",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 2,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "伤"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0016"
+      ]
+    },
+    "時差": {
+      "key": "時差",
+      "language": "ja",
+      "common": "<ruby>時差<rt>じさ</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "じさ",
+      "romaji": "jisa",
+      "wapuro": "jisa",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "时差"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0017"
+      ]
+    },
+    "泊まる": {
+      "key": "泊まる",
+      "language": "ja",
+      "common": "<ruby>泊<rt>と</rt></ruby>まる",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "とまる",
+      "romaji": "tomaru",
+      "wapuro": "tomaru",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "VERB",
+        "GODAN"
+      ],
+      "tone": null,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "住，过夜，住宿"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0018"
+      ]
+    },
+    "結ぶ": {
+      "key": "結ぶ",
+      "language": "ja",
+      "common": "<ruby>結<rt>むす</rt></ruby>ぶ",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "むすぶ",
+      "romaji": "musubu",
+      "wapuro": "musubu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "VERB",
+        "GODAN"
+      ],
+      "tone": null,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "连接，系"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0019"
+      ]
+    },
+    "取る-BIAORI-2": {
+      "key": "取る-BIAORI-2",
+      "language": "ja",
+      "common": "<ruby>取<rt>と</rt></ruby>る",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "とる",
+      "romaji": "toru",
+      "wapuro": "toru",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "VERB",
+        "GODAN"
+      ],
+      "tone": null,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "印，记下"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0020"
+      ]
+    },
+    "生まれる": {
+      "key": "生まれる",
+      "language": "ja",
+      "common": "<ruby>生<rt>う</rt></ruby>まれる",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "うまれる",
+      "romaji": "umareru",
+      "wapuro": "umareru",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "VERB",
+        "SHIMOICHIDAN"
+      ],
+      "tone": null,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "出生，诞生"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0021"
+      ]
+    },
+    "倒産": {
+      "key": "倒産",
+      "language": "ja",
+      "common": "<ruby>倒産<rt>とうさん</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "とうさん",
+      "romaji": "tōsan",
+      "wapuro": "tousann",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "VERB",
+        "SAHEN"
+      ],
+      "tone": null,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "倒闭，破产"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0022"
+      ]
+    },
+    "渋滞": {
+      "key": "渋滞",
+      "language": "ja",
+      "common": "<ruby>渋滞<rt>じゅうたい</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "じゅうたい",
+      "romaji": "jūtai",
+      "wapuro": "juutai",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "VERB",
+        "SAHEN"
+      ],
+      "tone": null,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "堵车，停滞"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0023"
+      ]
+    },
+    "チェック": {
+      "key": "チェック",
+      "language": "ja",
+      "common": "<ruby>チェック<rt></rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "チェック",
+      "romaji": "chekku",
+      "wapuro": "chekku",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": [
+        "VERB",
+        "SAHEN"
+      ],
+      "tone": null,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "确认"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0024"
+      ]
+    },
+    "豊か": {
+      "key": "豊か",
+      "language": "ja",
+      "common": "<ruby>豊<rt>ゆた</rt></ruby>か",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ゆたか",
+      "romaji": "yutaka",
+      "wapuro": "yutaka",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "KEIYODOSHI",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "充裕，丰富"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0025"
+      ]
+    },
+    "大きな": {
+      "key": "大きな",
+      "language": "ja",
+      "common": "<ruby>大<rt>おお</rt></ruby>きな",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "おおきな",
+      "romaji": "ōkina",
+      "wapuro": "ookina",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "RENTAISHI",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "大的"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0026"
+      ]
+    },
+    "小さな": {
+      "key": "小さな",
+      "language": "ja",
+      "common": "<ruby>小<rt>ちい</rt></ruby>さな",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ちいさな",
+      "romaji": "chīsana",
+      "wapuro": "chiisana",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "RENTAISHI",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "小的"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0027"
+      ]
+    },
+    "別に": {
+      "key": "別に",
+      "language": "ja",
+      "common": "<ruby>別<rt>べつ</rt></ruby>に",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "べつに",
+      "romaji": "betsuni",
+      "wapuro": "betsuni",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "ADV",
+      "tone": 0,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "并不"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0028"
+      ]
+    },
+    "戴": {
+      "key": "戴",
+      "language": "ja",
+      "common": "<ruby>戴<rt>たい</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "たい",
+      "romaji": "tai",
+      "wapuro": "tai",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "PROPER",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "戴"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0029"
+      ]
+    },
+    "周": {
+      "key": "周",
+      "language": "ja",
+      "common": "<ruby>周<rt>しゅう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "しゅう",
+      "romaji": "shū",
+      "wapuro": "shuu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "PROPER",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "周"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0030"
+      ]
+    },
+    "唐": {
+      "key": "唐",
+      "language": "ja",
+      "common": "<ruby>唐<rt>とう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "とう",
+      "romaji": "tō",
+      "wapuro": "tou",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "PROPER",
+      "tone": 1,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "唐"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0031"
+      ]
+    },
+    "中国航空": {
+      "key": "中国航空",
+      "language": "ja",
+      "common": "<ruby>中国<rt>ちゅうごく</rt></ruby><ruby>航空<rt>こうくう</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "ちゅうごくこうくう",
+      "romaji": "chūgokukōkū",
+      "wapuro": "chuugokukoukuu",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "PROPER",
+      "tone": 5,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "中国航空"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0032"
+      ]
+    },
+    "天安飯店": {
+      "key": "天安飯店",
+      "language": "ja",
+      "common": "<ruby>天<rt>てん</rt></ruby><ruby>安<rt>あん</rt></ruby><ruby>飯<rt>はん</rt></ruby><ruby>店<rt>てん</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "てんあんはんてん",
+      "romaji": "tenanhanten",
+      "wapuro": "tennannhanntenn",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "PROPER",
+      "tone": 5,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "天安饭店"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0033"
+      ]
+    },
+    "三環路": {
+      "key": "三環路",
+      "language": "ja",
+      "common": "<ruby>三<rt>さん</rt></ruby><ruby>環<rt>かん</rt></ruby><ruby>路<rt>ろ</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "さんかんろ",
+      "romaji": "sankanro",
+      "wapuro": "sannkannro",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "PROPER",
+      "tone": 3,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "三环路"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0034"
+      ]
+    },
+    "このあたり": {
+      "key": "このあたり",
+      "language": "ja",
+      "common": "このあたり",
+      "alternatives": [
+        "この<ruby>辺<rt>あた</rt></ruby>り"
+      ],
+      "uncommons": [],
+      "kana": "このあたり",
+      "romaji": "konoatari",
+      "wapuro": "konoatari",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "IDIOM",
+      "tone": 3,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "这一带，这附近"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-25-0035"
+      ]
+    },
+    "大雨": {
+      "key": "大雨",
+      "language": "ja",
+      "common": "<ruby>大雨<rt>おおあめ</rt></ruby>",
+      "alternatives": [],
+      "uncommons": [],
+      "kana": "おおあめ",
+      "romaji": "ōame",
+      "wapuro": "ooame",
+      "audios": [
+        {
+          "cv": "Hikari",
+          "wav": ""
+        }
+      ],
+      "pos": "NOUN",
+      "tone": 3,
+      "translations": {
+        "BiaozhunRibenyu": {
+          "translation": {
+            "zh": "大雨"
+          }
+        }
+      },
+      "sentences": [],
+      "textbook": [
+        "BIAORI-02-26-0001"
+      ]
     }
   }
 }
