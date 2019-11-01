@@ -284,11 +284,11 @@ export class CommandsBar extends React.Component<
         </div>
         <SpeedDial
           ariaLabel="menu"
-          open={this.state.isMenuOpened}
-          // open={true}
+          // open={this.state.isMenuOpened}
+          open={true}
           icon={<MenuIcon fontSize="small" />}
           {...ToggleEvents(this.toggleMenu)}
-          ButtonProps={{
+          FabProps={{
             color: "default",
             size: "small",
             style: { background: "white", margin: "8px" },
@@ -297,7 +297,11 @@ export class CommandsBar extends React.Component<
           <SpeedDialAction
             key="share"
             icon={<ShareIcon fontSize="small" />}
-            tooltipTitle={"[WIP]" + t("ShareMenuButtonText", "Share")}
+            tooltipTitle={
+              <span style={{ whiteSpace: "nowrap" }}>
+                {"[WIP] " + t("ShareMenuButtonText", "Share")}
+              </span>
+            }
             tooltipOpen
             onClick={() => {
               this.closeMenu()
@@ -308,9 +312,11 @@ export class CommandsBar extends React.Component<
             key="tegami"
             icon={<SmsIcon fontSize="small" />}
             tooltipTitle={
-              savingLanguage.startsWith("ja")
-                ? "作者の手紙"
-                : t("TegamiMenuButtonText", "作者の手紙")
+              <span style={{ whiteSpace: "nowrap" }}>
+                {savingLanguage.startsWith("ja")
+                  ? "作者の手紙"
+                  : t("TegamiMenuButtonText", "作者の手紙")}
+              </span>
             }
             tooltipOpen
             onClick={() => {
@@ -322,9 +328,11 @@ export class CommandsBar extends React.Component<
             key="mamechishiki"
             icon={<HighlightIcon />}
             tooltipTitle={
-              savingLanguage.startsWith("ja")
-                ? "豆知識"
-                : t("MamechishikiMenuButtonText", "豆知識")
+              <span style={{ whiteSpace: "nowrap" }}>
+                {savingLanguage.startsWith("ja")
+                  ? "豆知識"
+                  : t("MamechishikiMenuButtonText", "豆知識")}
+              </span>
             }
             tooltipOpen
             onClick={() => {
@@ -335,7 +343,11 @@ export class CommandsBar extends React.Component<
           <SpeedDialAction
             key="searchwords"
             icon={<SearchIcon />}
-            tooltipTitle={"[WIP]" + t("SearchMenuButtonText", "Search Words")}
+            tooltipTitle={
+              <span style={{ whiteSpace: "nowrap" }}>
+                {"[WIP] " + t("SearchMenuButtonText", "Search Words")}
+              </span>
+            }
             tooltipOpen
             onClick={() => {
               this.closeMenu()
@@ -345,7 +357,11 @@ export class CommandsBar extends React.Component<
           <SpeedDialAction
             key="addwords"
             icon={<AddIcon />}
-            tooltipTitle={t("AddWordsMenuButtonText", "Add Words")}
+            tooltipTitle={
+              <span style={{ whiteSpace: "nowrap" }}>
+                {t("AddWordsMenuButtonText", "Add Words")}
+              </span>
+            }
             tooltipOpen
             onClick={() => {
               this.closeMenu()
@@ -356,8 +372,10 @@ export class CommandsBar extends React.Component<
             key="profile"
             icon={<PersonIcon />}
             tooltipTitle={
-              "[WIP]" +
-              t("ProfileMenuButtonText", "Profile, statics and settings")
+              <span style={{ whiteSpace: "nowrap" }}>
+                {"[WIP] " +
+                  t("ProfileMenuButtonText", "Profile, statics and settings")}
+              </span>
             }
             tooltipOpen
             onClick={() => {
