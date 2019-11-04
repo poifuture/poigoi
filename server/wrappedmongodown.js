@@ -1,7 +1,11 @@
-var inherits = require("inherits");
-var MongoDOWN = require("mongodown");
+// @ts-nocheck
+/* tslint:disable */
+/* eslint-disable */
 
-var WrappedMongoDOWN = function() {
+const inherits = require("inherits");
+const MongoDOWN = require("mongodown");
+
+const WrappedMongoDOWN = function() {
   if (!(this instanceof WrappedMongoDOWN)) {
     return new WrappedMongoDOWN();
   }
