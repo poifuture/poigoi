@@ -43,6 +43,7 @@ class GoiPouchDB extends PouchDB {
 }
 
 let singletonDb: GoiPouchDB | null = null
+let PouchSync = null
 export const GoiDb = (options?: { test?: boolean }) => {
   if (options && options.test) {
     singletonDb = new GoiPouchDB("PoiGoi", { adapter: "memory" })
@@ -54,6 +55,33 @@ export const GoiDb = (options?: { test?: boolean }) => {
       PouchDB.debug.enable("pouchdb:api")
     }
     singletonDb = new GoiPouchDB("PoiGoi")
+    PouchSync = PouchDB.sync("PoiGoi", "http://127.0.0.1:5984/Poi", {
+      live: true,
+      retry: true,
+    })
+      .on("change", info => {
+        debug("change")
+        debug(info)
+      })
+      .on("paused", err => {
+        debug("paused")
+        debug(err)
+      })
+      .on("active", () => {
+        debug("active")
+      })
+      .on("denied", err => {
+        debug("denied")
+        debug(err)
+      })
+      .on("complete", info => {
+        debug("complete")
+        debug(info)
+      })
+      .on("error", err => {
+        debug("error")
+        debug(err)
+      })
   }
   return singletonDb
 }
