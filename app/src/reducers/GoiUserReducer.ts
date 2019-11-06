@@ -11,6 +11,7 @@ const debug = DebugModule("PoiGoi:GoiUserReducer")
 
 const InitialGoiUserState: GoiUserStateType = {
   PoiUserId: "" as PoiUserId,
+  PouchDbPassword: "",
   Domain: "Local",
 }
 
@@ -24,6 +25,9 @@ export const GoiUserReducer = (
       const typedAction = action as UpdateGoiUserStateActionType
       const newState = state.merge({
         PoiUserId: typedAction.PoiUserId,
+        ...(typedAction.PouchDbPassword && {
+          PouchDbPassword: typedAction.PouchDbPassword,
+        }),
         ...(typedAction.Domain && { Domain: typedAction.Domain }),
       })
       return newState

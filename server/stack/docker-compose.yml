@@ -20,7 +20,7 @@ services:
   #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
   #   ports:
   #     - 8081:8081
-  pouchdbserver:
+  poigoiserver:
     # depends_on:
     #   - mongo
     build: .
@@ -29,3 +29,6 @@ services:
     #   MONGO_URI: root:example@mongo:27017/admin
     ports:
       - 5984:5984
+      - 3000:3000
+      - 80:80
+      - 443:443

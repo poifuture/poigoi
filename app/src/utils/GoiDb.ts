@@ -1,8 +1,9 @@
 import "isomorphic-fetch"
 import PouchDB from "pouchdb-browser"
 import PouchDBDebug from "pouchdb-debug"
-import { DbKey } from "./PoiDb"
+import { DbKey, LocalDbKey } from "./PoiDb"
 import DebugModule from "debug"
+import * as PoiUser from "./PoiUser"
 const debug = DebugModule("PoiGoi:GoiDb")
 
 export interface GoiDbRange {
@@ -43,7 +44,7 @@ class GoiPouchDB extends PouchDB {
 }
 
 let singletonDb: GoiPouchDB | null = null
-let PouchSync = null
+let remoteDb = null
 export const GoiDb = (options?: { test?: boolean }) => {
   if (options && options.test) {
     singletonDb = new GoiPouchDB("PoiGoi", { adapter: "memory" })
@@ -55,35 +56,51 @@ export const GoiDb = (options?: { test?: boolean }) => {
       PouchDB.debug.enable("pouchdb:api")
     }
     singletonDb = new GoiPouchDB("PoiGoi")
-    PouchSync = PouchDB.sync("PoiGoi", "http://127.0.0.1:5984/Poi", {
-      live: true,
-      retry: true,
-    })
-      .on("change", info => {
-        debug("change")
-        debug(info)
-      })
-      .on("paused", err => {
-        debug("paused")
-        debug(err)
-      })
-      .on("active", () => {
-        debug("active")
-      })
-      .on("denied", err => {
-        debug("denied")
-        debug(err)
-      })
-      .on("complete", info => {
-        debug("complete")
-        debug(info)
-      })
-      .on("error", err => {
-        debug("error")
-        debug(err)
-      })
   }
   return singletonDb
+}
+
+export const RemotePouchDbAddress: string = "127.0.0.1:3000"
+export const RemoteGoiApiAddress: string = "127.0.0.1:3000"
+
+export const RemoteLogIn = async (
+  remotePouchDBUsername: string,
+  remotePouchDBPassword: string
+) => {
+  const remoteDbUrl = `http://${RemotePouchDbAddress}/${remotePouchDBUsername}`
+  remoteDb = new PouchDB(remoteDbUrl, {
+    auth: {
+      username: remotePouchDBUsername,
+      password: remotePouchDBPassword,
+    },
+  })
+  return PouchDB.sync(GoiDb(), remoteDb, {
+    live: true,
+    retry: true,
+  })
+  // .on("change", info => {
+  //   debug("change")
+  //   debug(info)
+  // })
+  // .on("paused", err => {
+  //   debug("paused")
+  //   debug(err)
+  // })
+  // .on("active", () => {
+  //   debug("active")
+  // })
+  // .on("denied", err => {
+  //   debug("denied")
+  //   debug(err)
+  // })
+  // .on("complete", info => {
+  //   debug("complete")
+  //   debug(info)
+  // })
+  // .on("error", err => {
+  //   debug("error")
+  //   debug(err)
+  // })
 }
 
 export const GoiNS = "3bebe461-2f53-419c-b7b7-e626f9ce0a6b"

@@ -3,7 +3,17 @@ import { connect } from "react-redux"
 import { ThunkDispatch } from "redux-thunk"
 import { withTranslation, WithTranslation } from "react-i18next"
 import { Action } from "redux"
-import { Button, GridList, GridListTile, IconButton } from "@material-ui/core"
+import {
+  Button,
+  GridList,
+  GridListTile,
+  IconButton,
+  Paper,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
+} from "@material-ui/core"
 import { SpeedDial, SpeedDialAction } from "@material-ui/lab"
 import { navigate } from "gatsby"
 import { RootStateType } from "../states/RootState"
@@ -52,6 +62,7 @@ type CommandsBarPropsType = ReturnType<typeof mapStateToProps> &
 interface CommandsBarStateType {
   isMenuOpened: boolean
   isCommandsExpanded: boolean
+  isSyncOpened: boolean
 }
 
 export class CommandsBar extends React.Component<
@@ -64,6 +75,7 @@ export class CommandsBar extends React.Component<
     this.state = {
       isMenuOpened: false,
       isCommandsExpanded: false,
+      isSyncOpened: false,
     }
   }
   navigate(to: string) {
@@ -89,6 +101,8 @@ export class CommandsBar extends React.Component<
       this.props.saving && this.props.saving.Language
         ? this.props.saving.Language
         : "en"
+    const syncUrl = `${window.location.origin}?action=newsync&token=${this.props.poiUserId}:${this.props.pouchDbPassword}`
+    const isSyncing = !!this.props.pouchDbPassword
     return (
       <div
         className="commands-bar"
@@ -260,10 +274,19 @@ export class CommandsBar extends React.Component<
                   [WIP]{t("SwotUpButtonText", "SwotUp")}
                   <FlagIcon fontSize="small" />
                 </Button>
-                <Button size="small" style={{ whiteSpace: "nowrap" }}>
-                  [WIP]{t("SyncButtonText", "Sync")}
-                  <CloudOffIcon fontSize="small" />
-                  {false && <SyncIcon fontSize="small" />}
+                <Button
+                  size="small"
+                  style={{ whiteSpace: "nowrap" }}
+                  onClick={() => {
+                    this.setState({ isSyncOpened: true })
+                  }}
+                >
+                  {t("SyncButtonText", "Sync")}
+                  {!!this.props.pouchDbPassword ? (
+                    <SyncIcon fontSize="small" />
+                  ) : (
+                    <CloudOffIcon fontSize="small" />
+                  )}
                 </Button>
               </>
             )}
@@ -384,6 +407,19 @@ export class CommandsBar extends React.Component<
             }}
           ></SpeedDialAction>
         </SpeedDial>
+        <Dialog open={this.state.isSyncOpened}>
+          <DialogTitle>Sync</DialogTitle>
+          <DialogContent>
+            <a href={syncUrl} style={{ wordBreak: "break-all" }}>
+              {syncUrl}
+            </a>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => this.setState({ isSyncOpened: false })}>
+              {t("WordAdderCancelButtonText", "Close")}
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
@@ -392,6 +428,8 @@ export class CommandsBar extends React.Component<
 const mapStateToProps = (state: RootStateType) => {
   debug("CommandsBar state: ", state)
   const props = {
+    poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
+    pouchDbPassword: state.GoiUser.get("PouchDbPassword") as string,
     saving: state.GoiSaving.get("Saving") as
       | GoiSavingDataType
       | null
