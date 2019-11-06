@@ -133,9 +133,10 @@ const importRemoteUser = async () => {
       const localGoiUsers = await GoiDb().Get<LocalGoiUsersDataType>(
         "_local/GoiUsers" as LocalDbKey
       )
+      const otherPoiUserIds = localGoiUsers.Users.filter(v => v != poiUserId)
       await GoiDb().put<LocalGoiUsersDataType>({
         ...localGoiUsers,
-        Users: [poiUserId],
+        Users: [poiUserId, ...otherPoiUserIds],
       })
       const localPassword = await GoiDb().GetOrNull<
         LocalPouchDBPasswordDataType

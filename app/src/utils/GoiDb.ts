@@ -60,8 +60,10 @@ export const GoiDb = (options?: { test?: boolean }) => {
   return singletonDb
 }
 
-export const RemotePouchDbAddress: string = "127.0.0.1:3000"
-export const RemoteGoiApiAddress: string = "127.0.0.1:3000"
+// export const RemotePouchDbAddress: string = "127.0.0.1:3000"
+// export const RemoteGoiApiAddress: string = "127.0.0.1:3000"
+export const RemotePouchDbAddress: string = "poigoi.poiapis.com"
+export const RemoteGoiApiAddress: string = "poigoi.poiapis.com"
 
 export const RemoteLogIn = async (
   remotePouchDBUsername: string,
