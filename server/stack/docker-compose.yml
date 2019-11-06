@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+  # mongo:
+  #   image: mongo
+  #   restart: always
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: example
+  #   ports:
+  #     - 27017:27017
+  # mongoexpress:
+  #   depends_on:
+  #     - mongo
+  #   image: mongo-express
+  #   restart: always
+  #   environment:
+  #     ME_CONFIG_MONGODB_SERVER: mongo
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  #   ports:
+  #     - 8081:8081
+  poigoiserver:
+    # depends_on:
+    #   - mongo
+    build: .
+    restart: always
+    # environment:
+    #   MONGO_URI: root:example@mongo:27017/admin
+    ports:
+      - 5984:5984
+      - 3000:3000

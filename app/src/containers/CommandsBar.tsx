@@ -3,7 +3,17 @@ import { connect } from "react-redux"
 import { ThunkDispatch } from "redux-thunk"
 import { withTranslation, WithTranslation } from "react-i18next"
 import { Action } from "redux"
-import { Button, GridList, GridListTile, IconButton } from "@material-ui/core"
+import {
+  Button,
+  GridList,
+  GridListTile,
+  IconButton,
+  Paper,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
+} from "@material-ui/core"
 import { SpeedDial, SpeedDialAction } from "@material-ui/lab"
 import { navigate } from "gatsby"
 import { RootStateType } from "../states/RootState"
@@ -52,6 +62,7 @@ type CommandsBarPropsType = ReturnType<typeof mapStateToProps> &
 interface CommandsBarStateType {
   isMenuOpened: boolean
   isCommandsExpanded: boolean
+  isSyncOpened: boolean
 }
 
 export class CommandsBar extends React.Component<
@@ -64,6 +75,7 @@ export class CommandsBar extends React.Component<
     this.state = {
       isMenuOpened: false,
       isCommandsExpanded: false,
+      isSyncOpened: false,
     }
   }
   navigate(to: string) {
@@ -89,6 +101,8 @@ export class CommandsBar extends React.Component<
       this.props.saving && this.props.saving.Language
         ? this.props.saving.Language
         : "en"
+    const syncUrl = `${window.location.origin}?action=newsync&token=${this.props.poiUserId}:${this.props.pouchDbPassword}`
+    const isSyncing = !!this.props.pouchDbPassword
     return (
       <div
         className="commands-bar"
@@ -260,10 +274,19 @@ export class CommandsBar extends React.Component<
                   [WIP]{t("SwotUpButtonText", "SwotUp")}
                   <FlagIcon fontSize="small" />
                 </Button>
-                <Button size="small" style={{ whiteSpace: "nowrap" }}>
-                  [WIP]{t("SyncButtonText", "Sync")}
-                  <CloudOffIcon fontSize="small" />
-                  {false && <SyncIcon fontSize="small" />}
+                <Button
+                  size="small"
+                  style={{ whiteSpace: "nowrap" }}
+                  onClick={() => {
+                    this.setState({ isSyncOpened: true })
+                  }}
+                >
+                  {t("SyncButtonText", "Sync")}
+                  {!!this.props.pouchDbPassword ? (
+                    <SyncIcon fontSize="small" />
+                  ) : (
+                    <CloudOffIcon fontSize="small" />
+                  )}
                 </Button>
               </>
             )}
@@ -284,11 +307,11 @@ export class CommandsBar extends React.Component<
         </div>
         <SpeedDial
           ariaLabel="menu"
-          open={this.state.isMenuOpened}
-          // open={true}
+          // open={this.state.isMenuOpened}
+          open={true}
           icon={<MenuIcon fontSize="small" />}
           {...ToggleEvents(this.toggleMenu)}
-          ButtonProps={{
+          FabProps={{
             color: "default",
             size: "small",
             style: { background: "white", margin: "8px" },
@@ -297,7 +320,11 @@ export class CommandsBar extends React.Component<
           <SpeedDialAction
             key="share"
             icon={<ShareIcon fontSize="small" />}
-            tooltipTitle={"[WIP]" + t("ShareMenuButtonText", "Share")}
+            tooltipTitle={
+              <span style={{ whiteSpace: "nowrap" }}>
+                {"[WIP] " + t("ShareMenuButtonText", "Share")}
+              </span>
+            }
             tooltipOpen
             onClick={() => {
               this.closeMenu()
@@ -308,9 +335,11 @@ export class CommandsBar extends React.Component<
             key="tegami"
             icon={<SmsIcon fontSize="small" />}
             tooltipTitle={
-              savingLanguage.startsWith("ja")
-                ? "作者の手紙"
-                : t("TegamiMenuButtonText", "作者の手紙")
+              <span style={{ whiteSpace: "nowrap" }}>
+                {savingLanguage.startsWith("ja")
+                  ? "作者の手紙"
+                  : t("TegamiMenuButtonText", "作者の手紙")}
+              </span>
             }
             tooltipOpen
             onClick={() => {
@@ -322,9 +351,11 @@ export class CommandsBar extends React.Component<
             key="mamechishiki"
             icon={<HighlightIcon />}
             tooltipTitle={
-              savingLanguage.startsWith("ja")
-                ? "豆知識"
-                : t("MamechishikiMenuButtonText", "豆知識")
+              <span style={{ whiteSpace: "nowrap" }}>
+                {savingLanguage.startsWith("ja")
+                  ? "豆知識"
+                  : t("MamechishikiMenuButtonText", "豆知識")}
+              </span>
             }
             tooltipOpen
             onClick={() => {
@@ -335,7 +366,11 @@ export class CommandsBar extends React.Component<
           <SpeedDialAction
             key="searchwords"
             icon={<SearchIcon />}
-            tooltipTitle={"[WIP]" + t("SearchMenuButtonText", "Search Words")}
+            tooltipTitle={
+              <span style={{ whiteSpace: "nowrap" }}>
+                {"[WIP] " + t("SearchMenuButtonText", "Search Words")}
+              </span>
+            }
             tooltipOpen
             onClick={() => {
               this.closeMenu()
@@ -345,7 +380,11 @@ export class CommandsBar extends React.Component<
           <SpeedDialAction
             key="addwords"
             icon={<AddIcon />}
-            tooltipTitle={t("AddWordsMenuButtonText", "Add Words")}
+            tooltipTitle={
+              <span style={{ whiteSpace: "nowrap" }}>
+                {t("AddWordsMenuButtonText", "Add Words")}
+              </span>
+            }
             tooltipOpen
             onClick={() => {
               this.closeMenu()
@@ -356,8 +395,10 @@ export class CommandsBar extends React.Component<
             key="profile"
             icon={<PersonIcon />}
             tooltipTitle={
-              "[WIP]" +
-              t("ProfileMenuButtonText", "Profile, statics and settings")
+              <span style={{ whiteSpace: "nowrap" }}>
+                {"[WIP] " +
+                  t("ProfileMenuButtonText", "Profile, statics and settings")}
+              </span>
             }
             tooltipOpen
             onClick={() => {
@@ -366,6 +407,19 @@ export class CommandsBar extends React.Component<
             }}
           ></SpeedDialAction>
         </SpeedDial>
+        <Dialog open={this.state.isSyncOpened}>
+          <DialogTitle>Sync</DialogTitle>
+          <DialogContent>
+            <a href={syncUrl} style={{ wordBreak: "break-all" }}>
+              {syncUrl}
+            </a>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => this.setState({ isSyncOpened: false })}>
+              {t("WordAdderCancelButtonText", "Close")}
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
@@ -374,6 +428,8 @@ export class CommandsBar extends React.Component<
 const mapStateToProps = (state: RootStateType) => {
   debug("CommandsBar state: ", state)
   const props = {
+    poiUserId: state.GoiUser.get("PoiUserId") as PoiUser.PoiUserId,
+    pouchDbPassword: state.GoiUser.get("PouchDbPassword") as string,
     saving: state.GoiSaving.get("Saving") as
       | GoiSavingDataType
       | null

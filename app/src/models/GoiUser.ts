@@ -21,6 +21,13 @@ export interface LocalGoiUsersDataType extends PoiLocalDataType {
   Users: PoiUser.PoiUserId[]
 }
 
+export interface LocalPouchDBPasswordDataType extends PoiLocalDataType {
+  // PoiGlobalDbKey: Local/GoiUsers/Password
+  // Schema: Poi/Goi/Local/GoiUsers/v1
+  readonly DbSchema: "Poi/Goi/Local/GoiUsers/Password/v1"
+  PouchDBPassword: string
+}
+
 interface GoiUserDataType extends PoiGlobalDataType {
   // PoiGlobalDbKey: Poi/Goi/PoiUsers/:PoiUserId/Entry
   // Schema: Poi/Goi/PoiUser/Entry/v1

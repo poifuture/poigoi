@@ -62,6 +62,7 @@
   },
   "devDependencies": {
     "@types/pouchdb": "^6.4.0",
+    "@types/query-string": "^6.3.0",
     "babel-jest": "^24.8.0",
     "babel-preset-gatsby": "^0.2.8",
     "cross-env": "^5.2.0",
