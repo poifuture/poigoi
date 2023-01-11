@@ -33,7 +33,7 @@
     "gatsby-plugin-react-helmet": "^3.1.0",
     "gatsby-plugin-typescript": "^2.1.0",
     "gatsby-source-filesystem": "^2.1.0",
-    "gatsby-transformer-remark": "^2.5.0",
+    "gatsby-transformer-remark": "^5.25.1",
     "i18next": "^17.0.10",
     "i18next-browser-languagedetector": "^3.0.3",
     "i18next-sync-fs-backend": "^1.1.1",
